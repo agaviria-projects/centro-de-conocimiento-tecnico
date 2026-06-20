@@ -63,11 +63,13 @@ En esta carpeta se almacenan:
 
 El usuario únicamente debe reemplazar los archivos por las versiones actualizadas.
 
-## 📅 Selección del rango de fechas
+### ▶️ Ejecución y consolidación de la información
 
-Después de ubicar en la carpeta de trabajo los archivos actualizados, se ejecuta el script de Python.
+Después de actualizar los archivos dentro de la carpeta compartida, se ejecuta el script de Python.
 
-Al iniciar el proceso, el sistema muestra una ventana de calendario que permite seleccionar el rango de fechas que se desea analizar.
+El sistema detecta automáticamente los archivos necesarios y comienza el proceso de consolidación y validación de la información.
+
+A continuación, se solicita seleccionar el rango de fechas que se desea analizar.
 
 Seleccionar:
 
