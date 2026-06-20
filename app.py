@@ -109,7 +109,7 @@ st.caption("Base personal para explicar y defender los desarrollos implementados
 
 opciones = [
     "📊 Generador de Informes ANS",
-    "🎓 Portal Formación Elite"
+    "🎓 Portal Formación Elite",
     "📄 Compresor PDF",
     "💬 WhatsApp + ANS + Formularios",
 
@@ -132,6 +132,28 @@ if opcion == "📊 Generador de Informes ANS":
     if ruta.exists():
         st.markdown(ruta.read_text(encoding="utf-8"))
     else:
-        st.error("No se encontró el archivo docs/generador_informes_ans.md")
+        st.error(
+            "No se encontró el archivo docs/generador_informes_ans.md"
+        )
+
+elif opcion == "🎓 Portal Formación Elite":
+    ruta = Path("docs/portal_formacion_elite.md")
+
+    if ruta.exists():
+        st.markdown(ruta.read_text(encoding="utf-8"))
+    else:
+        st.error(
+            "No se encontró el archivo docs/portal_formacion_elite.md"
+        )
+
+elif opcion == "🗺️ Mapa de Geolocalización":
+    st.info("Este módulo se documentará después.")
+
+elif opcion == "📄 Compresor PDF":
+    st.info("Este módulo se documentará después.")
+
+elif opcion == "💬 WhatsApp + ANS + Formularios":
+    st.info("Este módulo se documentará después.")
+
 else:
     st.info("Este módulo se documentará después.")
