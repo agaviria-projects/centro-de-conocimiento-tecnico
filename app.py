@@ -78,9 +78,29 @@ p, li {
     [data-testid="collapsedControl"] {
         display: none;
     }
-}            
+}     
+
+h1 {
+    text-align: center !important;
+    font-size: 1.9rem !important;
+    line-height: 1.25 !important;
+}
+
+div[data-testid="stCaptionContainer"] {
+    text-align: center;
+}
+
+@media (max-width: 768px) {
+
+    h1 {
+        text-align: center !important;
+        font-size: 1.55rem !important;
+    }
+
+}
+
 </style>
-""", unsafe_allow_html=True)
+""", unsafe_allow_html=True)                   
 # ===============================
 # ENCABEZADO
 # ===============================
