@@ -84,7 +84,24 @@ Luego se ejecuta el módulo Generar Informe ANS y se encarga de:
 8. Generar el archivo final para análisis.
 
 ---
----
+El proceso genera un archivo consolidado que contiene tanto la información original proveniente de Fénix como nuevas columnas calculadas por el sistema.
+
+Estas columnas permiten realizar el seguimiento contractual de los pedidos y constituyen la base para la construcción del Dashboard Control ANS.
+
+Entre las principales columnas generadas se encuentran:
+
+- Fecha Inicio ANS.
+- Días Pactados.
+- Fecha Límite ANS.
+- Días Transcurridos.
+- Días Restantes.
+- Estado ANS.
+- Tipo de Dirección.
+- Actividad.
+- Zona.
+- Municipio.
+
+Esta información facilita el análisis operativo, la identificación de cada uno de los pedidos y la toma de decisiones por parte de programadores, ingenieros.
 
 ## 🧮 Cálculo de Días Contractuales
 
@@ -393,6 +410,20 @@ Apoyar la toma de decisiones operativas.
 
 
 ---
+### Resultado Final
+
+El desarrollo genera un archivo consolidado enriquecido con información calculada automáticamente a partir de las reglas contractuales del cliente.
+
+Además de los datos extraídos desde Fénix, el sistema incorpora indicadores de seguimiento que permiten conocer el estado real de cada pedido y alimentar el Dashboard Control ANS.
+
+Este archivo se convierte en la fuente principal para:
+
+- Indicadores de gestión.
+- Gráficos de seguimiento.
+- Tablas de análisis.
+- Geolocalización de pedidos.
+- Priorización operativa.
+- Control de cumplimiento ANS.
 
 ## 🎤 Preguntas que me pueden hacer
 
@@ -431,3 +462,4 @@ Permite ubicar geográficamente los pedidos, buscar un pedido específico y comp
 ### ¿Cuál es el mayor beneficio?
 
 Reduce el trabajo manual y permite priorizar los pedidos críticos antes de que se venzan o cuando ya están vencidos.
+
