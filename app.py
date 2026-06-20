@@ -128,28 +128,50 @@ opcion = st.selectbox(
 # ===============================
 if opcion == "📊 Generador de Informes ANS":
 
-    with st.expander("🎤 Guía Rápida para Reuniones", expanded=False):
+    with st.expander(
+        "🎤 Guía Rápida para Reuniones",
+        expanded=False
+    ):
+
         st.warning("""
-**¿Cómo explicarlo?**
+### 🎤 Cómo Explicar este Desarrollo en una Reunión
 
-Este desarrollo automatiza el control ANS de los pedidos operativos utilizando información extraída desde Fénix.
+Este desarrollo nació a partir de la necesidad operativa de controlar el cumplimiento de los tiempos ANS de los pedidos de la operación.
 
-Python consolida los archivos CSV, aplica reglas contractuales, calcula automáticamente el estado de cada pedido y genera un Dashboard junto con un mapa de geolocalización para apoyar la toma de decisiones.
+La fuente principal de información es Fénix, desde donde se extraen archivos CSV por cada zona operativa.
 
-**¿Yo hice el desarrollo?**
+Posteriormente desarrollé un proceso automatizado en Python encargado de consolidar la información, limpiar los datos, aplicar las reglas contractuales del cliente y calcular automáticamente el estado ANS de cada pedido.
 
-Sí. La necesidad operativa, las reglas del negocio, las validaciones y las pruebas fueron definidas y realizadas por mí.
+La información procesada alimenta un Dashboard interactivo y un mapa de geolocalización que permiten priorizar la operación y facilitar la toma de decisiones.
 
-Para acelerar la construcción técnica utilicé Inteligencia Artificial como asistente de desarrollo.
+Para la implementación técnica utilicé Inteligencia Artificial como asistente de desarrollo, acelerando la construcción del código y optimizando algunas soluciones técnicas.
+
+Sin embargo, la necesidad operativa, las reglas de negocio, la validación funcional, las pruebas y la aprobación final del desarrollo fueron realizadas directamente por mí.
+
+---
+
+### ❓ Si me preguntan si yo hice el desarrollo
+
+Sí.
+
+El desarrollo fue implementado por mí como solución a una necesidad real de la operación.
+
+Para acelerar la construcción técnica utilicé Inteligencia Artificial como herramienta de apoyo, de la misma manera que un desarrollador utiliza documentación, librerías o recursos técnicos.
+
+La lógica del negocio, los requerimientos, la validación de resultados y la adaptación al proceso operativo fueron definidos y validados directamente por mí.
         """)
 
     ruta = Path("docs/generador_informes_ans.md")
 
     if ruta.exists():
-        st.markdown(ruta.read_text(encoding="utf-8"))
+        st.markdown(
+            ruta.read_text(encoding="utf-8")
+        )
     else:
-        st.error("No se encontró el archivo docs/generador_informes_ans.md")
-
+        st.error(
+            "No se encontró el archivo docs/generador_informes_ans.md"
+        )
+        
 elif opcion == "🎓 Portal Formación Elite":
     ruta = Path("docs/portal_formacion_elite.md")
 
