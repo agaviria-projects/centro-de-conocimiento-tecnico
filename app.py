@@ -109,10 +109,10 @@ st.caption("Base personal para explicar y defender los desarrollos implementados
 
 opciones = [
     "📊 Generador de Informes ANS",
-    "🗺️ Mapa de Geolocalización",
+    "🎓 Portal Formación Elite"
     "📄 Compresor PDF",
     "💬 WhatsApp + ANS + Formularios",
-    "🎓 Portal Formación Elite",
+
 ]
 
 # ===============================
