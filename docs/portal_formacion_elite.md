@@ -1,5 +1,3 @@
-# 🎓 Portal de Formación Elite
-
 ## 🎯 Objetivo
 
 El Portal de Formación Elite es un sistema web desarrollado para gestionar formaciones, capacitaciones, charlas, empleados, asistencias y reportes corporativos.
