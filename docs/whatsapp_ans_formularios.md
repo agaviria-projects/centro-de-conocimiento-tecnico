@@ -27,17 +27,13 @@ El sistema permite:
 
 El desarrollo utiliza tres fuentes principales:
 
-### WhatsApp
+## 🧾 Archivos necesarios antes de ejecutar
 
-Archivo TXT exportado directamente desde el grupo operativo.
+Antes de ejecutar el proceso, la carpeta de trabajo debe contener:
 
-### Formulario Digital
-
-Archivo Excel proveniente de Google Forms utilizado por los técnicos.(link)
-
-### Informe ANS
-
-Archivo Excel generado desde Fénix.(Cortes realizados)
+- Archivo exportado de WhatsApp en formato TXT.
+- Archivo del formulario Conexión Clientes(LINK).
+- Informe ANS más reciente.
 
 ---
 ### 📱 Exportación del chat de WhatsApp
@@ -89,16 +85,6 @@ Esto es útil porque el chat de WhatsApp y el formulario pueden contener informa
 Con esta opción, se puede ejecutar el proceso para un día, una semana o un rango definido, evitando reprocesar información que ya fue revisada anteriormente.
 
 ---
-
-## 🧾 Archivos necesarios antes de ejecutar
-
-Antes de ejecutar el proceso, la carpeta de trabajo debe contener:
-
-- Archivo exportado de WhatsApp en formato TXT.
-- Archivo del formulario Conexión Clientes.
-- Informe ANS más reciente.
-
-Una vez estén los archivos en la carpeta, el usuario ejecuta el script, selecciona el rango de fechas y el sistema genera el archivo final de control.
 
 ### 🔍 Validaciones realizadas
 
