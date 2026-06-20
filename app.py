@@ -13,60 +13,72 @@ st.set_page_config(
 st.markdown("""
 <style>
 .block-container {
-    padding-top: 1rem;
+    padding-top: 3.5rem;
     padding-left: 1rem;
     padding-right: 1rem;
     max-width: 1000px;
 }
 
 h1 {
-    font-size: clamp(1.6rem, 6vw, 2.6rem) !important;
-    line-height: 1.15;
+    font-size: 1.9rem !important;
+    line-height: 1.25 !important;
 }
 
 h2 {
-    font-size: clamp(1.25rem, 5vw, 2rem) !important;
-    line-height: 1.2;
-    margin-top: 1.4rem;
+    font-size: 1.35rem !important;
+    line-height: 1.3 !important;
+    margin-top: 1.8rem !important;
 }
 
 h3 {
-    font-size: clamp(1rem, 4vw, 1.35rem) !important;
-    line-height: 1.25;
+    font-size: 1.05rem !important;
+    line-height: 1.35 !important;
 }
 
 p, li {
-    font-size: clamp(0.88rem, 3.4vw, 1rem) !important;
-    line-height: 1.45;
-}
-
-.stMarkdown {
-    max-width: 100%;
+    font-size: 0.95rem !important;
+    line-height: 1.65 !important;
 }
 
 @media (max-width: 768px) {
     .block-container {
-        padding-top: 0.8rem;
-        padding-left: 0.8rem;
-        padding-right: 0.8rem;
+        padding-top: 4.2rem;
+        padding-left: 1rem;
+        padding-right: 1rem;
     }
 
     h1 {
-        font-size: 1.7rem !important;
+        font-size: 1.55rem !important;
     }
 
     h2 {
-        font-size: 1.35rem !important;
+        font-size: 1.2rem !important;
     }
 
     h3 {
-        font-size: 1.05rem !important;
+        font-size: 1rem !important;
     }
 
     p, li {
-        font-size: 0.88rem !important;
+        font-size: 0.9rem !important;
+        line-height: 1.6 !important;
     }
 }
+/* Ocultar sidebar y botón de expansión en móviles */
+@media (max-width: 768px) {
+
+    section[data-testid="stSidebar"] {
+        display: none;
+    }
+
+    button[kind="header"] {
+        display: none;
+    }
+
+    [data-testid="collapsedControl"] {
+        display: none;
+    }
+}            
 </style>
 """, unsafe_allow_html=True)
 # ===============================
@@ -90,9 +102,6 @@ opcion = st.selectbox(
     "Selecciona un desarrollo",
     opciones
 )
-
-st.sidebar.title("📌 Desarrollos")
-st.sidebar.write("Usa el selector principal para navegar mejor desde el celular.")
 
 # ===============================
 # CARGAR DOCUMENTOS
