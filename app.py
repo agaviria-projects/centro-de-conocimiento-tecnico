@@ -190,10 +190,6 @@ La información se almacena en una base de datos PostgreSQL alojada en Supabase,
 
 El portal permite crear charlas o capacitaciones, validar empleados activos, registrar asistencias y generar reportes para facilitar la gestión administrativa y la trazabilidad de la información.
 
-Para la implementación técnica utilicé Inteligencia Artificial como asistente de desarrollo para acelerar la construcción del código y optimizar algunas soluciones técnicas.
-
-Sin embargo, la necesidad operativa, la lógica del negocio, las validaciones, las pruebas y la implementación final fueron realizadas directamente por mí.
-
 ---
 
 ### ❓ Si me preguntan si yo hice el desarrollo
@@ -243,7 +239,7 @@ Formaciones + Empleados + Asistencias + Reportes
         st.error(
             "No se encontró el archivo docs/portal_formacion_elite.md"
         )
-        
+
 elif opcion == "🗺️ Mapa de Geolocalización":
     st.info("Este módulo se documentará después.")
 
