@@ -325,11 +325,11 @@ Su objetivo es facilitar la gestión operativa, la priorización de pedidos y la
 
 El mapa incorpora un panel lateral desde donde el usuario puede:
 
-Buscar un pedido específico.
-Mostrar todos los pedidos.
-Centrar el mapa.
-Copiar el enlace de ubicación.
-Filtrar información.
+- Buscar un pedido específico.
+- Mostrar todos los pedidos.
+- Centrar el mapa.
+- Copiar el enlace de ubicación.
+- Filtrar información.
 
 ---
 
@@ -337,10 +337,10 @@ Filtrar información.
 
 La información puede filtrarse por:
 
-Estado del pedido.
-Concepto.
-Actividad.
-Zona.
+- Estado del pedido.
+- Concepto.
+- Actividad.
+- Zona.
 
 Estos filtros permiten analizar sectores específicos de la operación y facilitar la programación de actividades en campo.
 
@@ -367,20 +367,21 @@ Esto permite identificar visualmente las prioridades operativas dentro del terri
 El usuario puede ingresar un número de pedido para localizarlo automáticamente dentro del mapa.
 
 Al encontrar el pedido, el sistema centra la visualización sobre la ubicación correspondiente para facilitar su análisis.
+
 ---
 
 ### Información Disponible por Pedido
 
 Al seleccionar o posicionarse sobre un pedido, el sistema muestra información relevante como:
 
-Número de pedido.
-Nombre del cliente.
-Dirección.
-Coordenadas.
-Teléfono o celular.
-Estado del pedido.
-Zona.
-Actividad.
+- Número de pedido.
+- Nombre del cliente.
+- Dirección.
+- Coordenadas.
+- Teléfono o celular.
+- Estado del pedido.
+- Zona.
+- Actividad.
 
 ---
 
@@ -388,9 +389,9 @@ Actividad.
 
 Cada pedido dispone de un enlace de ubicación que puede compartirse mediante:
 
-WhatsApp.
-Correo electrónico.
-Otros medios de comunicación.
+- WhatsApp.
+- Correo electrónico.
+- Otros medios de comunicación.
 
 El técnico puede abrir el enlace desde su celular y utilizar aplicaciones de navegación para dirigirse al punto de atención.
 
@@ -400,13 +401,13 @@ El técnico puede abrir el enlace desde su celular y utilizar aplicaciones de na
 
 El mapa permite:
 
-Priorizar pedidos vencidos o críticos.
-Identificar concentraciones de trabajo por zona.
-Optimizar desplazamientos.
-Mejorar la programación de técnicos.
-Reducir tiempos de atención.
-Facilitar la ubicación de direcciones en campo.
-Apoyar la toma de decisiones operativas.
+- Priorizar pedidos vencidos o críticos.
+- Identificar concentraciones de trabajo por zona.
+- Optimizar desplazamientos.
+- Mejorar la programación de técnicos.
+- Reducir tiempos de atención.
+- Facilitar la ubicación de direcciones en campo.
+- Apoyar la toma de decisiones operativas.
 
 
 ---
