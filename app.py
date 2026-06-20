@@ -127,14 +127,28 @@ opcion = st.selectbox(
 # CARGAR DOCUMENTOS
 # ===============================
 if opcion == "📊 Generador de Informes ANS":
+
+    with st.expander("🎤 Guía Rápida para Reuniones", expanded=False):
+        st.warning("""
+**¿Cómo explicarlo?**
+
+Este desarrollo automatiza el control ANS de los pedidos operativos utilizando información extraída desde Fénix.
+
+Python consolida los archivos CSV, aplica reglas contractuales, calcula automáticamente el estado de cada pedido y genera un Dashboard junto con un mapa de geolocalización para apoyar la toma de decisiones.
+
+**¿Yo hice el desarrollo?**
+
+Sí. La necesidad operativa, las reglas del negocio, las validaciones y las pruebas fueron definidas y realizadas por mí.
+
+Para acelerar la construcción técnica utilicé Inteligencia Artificial como asistente de desarrollo.
+        """)
+
     ruta = Path("docs/generador_informes_ans.md")
 
     if ruta.exists():
         st.markdown(ruta.read_text(encoding="utf-8"))
     else:
-        st.error(
-            "No se encontró el archivo docs/generador_informes_ans.md"
-        )
+        st.error("No se encontró el archivo docs/generador_informes_ans.md")
 
 elif opcion == "🎓 Portal Formación Elite":
     ruta = Path("docs/portal_formacion_elite.md")
