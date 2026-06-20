@@ -171,7 +171,7 @@ La lógica del negocio, los requerimientos, la validación de resultados y la ad
         st.error(
             "No se encontró el archivo docs/generador_informes_ans.md"
         )
-
+        
 elif opcion == "🎓 Portal Formación Elite":
 
     with st.expander(
@@ -240,14 +240,84 @@ Formaciones + Empleados + Asistencias + Reportes
             "No se encontró el archivo docs/portal_formacion_elite.md"
         )
 
-elif opcion == "🗺️ Mapa de Geolocalización":
-    st.info("Este módulo se documentará después.")
-
 elif opcion == "📄 Compresor PDF":
     st.info("Este módulo se documentará después.")
 
 elif opcion == "💬 WhatsApp + ANS + Formularios":
-    st.info("Este módulo se documentará después.")
+
+    with st.expander(
+        "🎤 Guía Rápida para Reuniones",
+        expanded=False
+    ):
+
+        st.warning("""
+### 🎤 Cómo Explicar este Desarrollo en una Reunión
+
+Este desarrollo nació a partir de la necesidad de controlar los pedidos que los técnicos reportan por WhatsApp y validar si realmente quedan registrados en el formulario y en el informe ANS.
+
+El proceso inicia exportando el chat de WhatsApp desde el celular en formato TXT, usando la opción **Exportar chat → Sin archivos**.
+
+Luego el usuario coloca en una carpeta compartida el archivo TXT de WhatsApp, el archivo del formulario Conexión Clientes y el Informe ANS más reciente.
+
+Python analiza automáticamente el chat, extrae los números de pedido encontrados en la conversación, cruza esa información contra el formulario y valida si los pedidos todavía aparecen en el Informe ANS.
+
+El resultado final es un archivo Excel con tres hojas: Pedidos WhatsApp, Cruce Control y Estado Fénix.
+
+Cuando un pedido reportado por el técnico continúa apareciendo en el Informe ANS, el sistema resalta la celda en rojo y genera la alerta **VALIDAR CIERRE FÉNIX**.
+
+Esto indica que el pedido posiblemente aún no ha sido cerrado en Fénix y debe ser revisado por el usuario.
+
+---
+
+### ❓ Si me preguntan si yo hice el desarrollo
+
+Sí.
+
+El desarrollo fue implementado por mí como solución a una necesidad real de la operación.
+
+Para acelerar la construcción técnica utilicé Inteligencia Artificial como herramienta de apoyo, de la misma manera que un desarrollador utiliza documentación, librerías o recursos técnicos.
+
+La lógica del negocio, los cruces requeridos, las validaciones, las pruebas y la adaptación al proceso real fueron definidos y validados directamente por mí.
+
+---
+
+### 🏗️ Arquitectura General
+
+WhatsApp TXT
+↓
+Formulario Conexión Clientes
+↓
+Informe ANS
+↓
+Python
+↓
+Cruces y validaciones
+↓
+Excel final de control operativo
+
+---
+
+### ⚡ Tecnologías Utilizadas
+
+- Python
+- Pandas
+- OpenPyXL
+- Tkinter
+- Expresiones regulares
+- Excel
+- WhatsApp Export TXT
+        """)
+
+    ruta = Path("docs/whatsapp_ans_formularios.md")
+
+    if ruta.exists():
+        st.markdown(
+            ruta.read_text(encoding="utf-8")
+        )
+    else:
+        st.error(
+            "No se encontró el archivo docs/whatsapp_ans_formularios.md"
+        )
 
 else:
     st.info("Este módulo se documentará después.")
