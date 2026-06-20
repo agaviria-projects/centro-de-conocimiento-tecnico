@@ -13,37 +13,62 @@ st.set_page_config(
 st.markdown("""
 <style>
 .block-container {
-    padding-top: 2rem;
-    padding-bottom: 2rem;
-    max-width: 1100px;
+    padding-top: 1rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    max-width: 1000px;
 }
 
 h1 {
-    font-size: clamp(1.8rem, 5vw, 3rem);
+    font-size: clamp(1.6rem, 6vw, 2.6rem) !important;
+    line-height: 1.15;
 }
 
 h2 {
-    font-size: clamp(1.4rem, 4vw, 2.2rem);
+    font-size: clamp(1.25rem, 5vw, 2rem) !important;
+    line-height: 1.2;
+    margin-top: 1.4rem;
 }
 
 h3 {
-    font-size: clamp(1.1rem, 3vw, 1.5rem);
+    font-size: clamp(1rem, 4vw, 1.35rem) !important;
+    line-height: 1.25;
 }
 
 p, li {
-    font-size: clamp(0.95rem, 2.5vw, 1.1rem);
-    line-height: 1.6;
+    font-size: clamp(0.88rem, 3.4vw, 1rem) !important;
+    line-height: 1.45;
+}
+
+.stMarkdown {
+    max-width: 100%;
 }
 
 @media (max-width: 768px) {
     .block-container {
-        padding-left: 1rem;
-        padding-right: 1rem;
+        padding-top: 0.8rem;
+        padding-left: 0.8rem;
+        padding-right: 0.8rem;
+    }
+
+    h1 {
+        font-size: 1.7rem !important;
+    }
+
+    h2 {
+        font-size: 1.35rem !important;
+    }
+
+    h3 {
+        font-size: 1.05rem !important;
+    }
+
+    p, li {
+        font-size: 0.88rem !important;
     }
 }
 </style>
 """, unsafe_allow_html=True)
-
 # ===============================
 # ENCABEZADO
 # ===============================
