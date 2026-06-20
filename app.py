@@ -171,17 +171,79 @@ La lógica del negocio, los requerimientos, la validación de resultados y la ad
         st.error(
             "No se encontró el archivo docs/generador_informes_ans.md"
         )
-        
+
 elif opcion == "🎓 Portal Formación Elite":
+
+    with st.expander(
+        "🎤 Guía Rápida para Reuniones",
+        expanded=False
+    ):
+
+        st.warning("""
+### 🎤 Cómo Explicar este Desarrollo en una Reunión
+
+El Portal Formación Elite nació a partir de la necesidad de centralizar la gestión de capacitaciones, empleados y asistencias dentro de la organización.
+
+El sistema fue desarrollado como una aplicación web utilizando Streamlit, permitiendo administrar formaciones, registrar asistentes, generar evaluaciones y consultar reportes corporativos.
+
+La información se almacena en una base de datos PostgreSQL alojada en Supabase, lo que permite mantener la información centralizada y disponible desde cualquier lugar mediante una URL pública.
+
+El portal permite crear charlas o capacitaciones, validar empleados activos, registrar asistencias y generar reportes para facilitar la gestión administrativa y la trazabilidad de la información.
+
+Para la implementación técnica utilicé Inteligencia Artificial como asistente de desarrollo para acelerar la construcción del código y optimizar algunas soluciones técnicas.
+
+Sin embargo, la necesidad operativa, la lógica del negocio, las validaciones, las pruebas y la implementación final fueron realizadas directamente por mí.
+
+---
+
+### ❓ Si me preguntan si yo hice el desarrollo
+
+Sí.
+
+El desarrollo fue implementado por mí como solución a una necesidad real de la organización.
+
+Para acelerar la construcción técnica utilicé Inteligencia Artificial como herramienta de apoyo, de la misma manera que un desarrollador utiliza documentación, librerías o recursos técnicos.
+
+La lógica del negocio, el diseño funcional, las validaciones, las pruebas y la adaptación al proceso real fueron definidos y validados directamente por mí.
+
+---
+
+### 🏗️ Arquitectura General
+
+Usuario
+↓
+Aplicación Web Streamlit
+↓
+SQLAlchemy
+↓
+PostgreSQL (Supabase)
+↓
+Formaciones + Empleados + Asistencias + Reportes
+
+---
+
+### ⚡ Tecnologías Utilizadas
+
+- Python
+- Streamlit
+- PostgreSQL
+- Supabase
+- SQLAlchemy
+- GitHub
+- Streamlit Cloud
+        """)
+
     ruta = Path("docs/portal_formacion_elite.md")
 
     if ruta.exists():
-        st.markdown(ruta.read_text(encoding="utf-8"))
+        st.markdown(
+            ruta.read_text(encoding="utf-8")
+        )
     else:
         st.error(
             "No se encontró el archivo docs/portal_formacion_elite.md"
         )
-
+        
 elif opcion == "🗺️ Mapa de Geolocalización":
     st.info("Este módulo se documentará después.")
 
