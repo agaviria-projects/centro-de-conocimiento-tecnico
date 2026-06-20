@@ -14,6 +14,29 @@ Este desarrollo ayuda a identificar pedidos:
 Además, proporciona herramientas de visualización y geolocalización para facilitar la toma de decisiones operativas.
 
 ---
+## 🎤 Cómo Explicar este Desarrollo en una Reunión
+
+Este desarrollo nació a partir de la necesidad operativa de controlar el cumplimiento de los tiempos ANS de los pedidos de la operación.
+
+La fuente principal de información es Fénix, desde donde se extraen archivos CSV por cada zona operativa.
+
+Posteriormente desarrollé un proceso automatizado en Python encargado de consolidar la información, limpiar los datos, aplicar las reglas contractuales del cliente y calcular automáticamente el estado ANS de cada pedido.
+
+La información procesada alimenta un Dashboard interactivo y un mapa de geolocalización que permiten priorizar la operación y facilitar la toma de decisiones.
+
+Para la implementación técnica utilicé Inteligencia Artificial como asistente de desarrollo, acelerando la construcción del código y optimizando algunas soluciones técnicas.
+
+Sin embargo, la necesidad operativa, las reglas de negocio, la validación funcional, las pruebas y la aprobación final del desarrollo fueron realizadas directamente por mí.
+
+## ❓ Si me preguntan si yo hice el desarrollo
+
+Sí.
+
+El desarrollo fue implementado por mí como solución a una necesidad real de la operación.
+
+Para acelerar la construcción técnica utilicé Inteligencia Artificial como herramienta de apoyo, de la misma manera que un desarrollador utiliza documentación, librerías o recursos técnicos.
+
+La lógica del negocio, los requerimientos, la validación de resultados y la adaptación al proceso operativo fueron definidos y validados directamente por mí.
 
 ## 📥 Fuente principal
 
