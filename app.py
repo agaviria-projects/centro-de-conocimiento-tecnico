@@ -274,24 +274,6 @@ La necesidad, las pruebas, los parámetros de compresión, la validación visual
 
 ---
 
-### 🏗️ Arquitectura General
-
-PDF Originales
-↓
-Python
-↓
-PyMuPDF
-↓
-Conversión de páginas a imágenes
-↓
-Pillow
-↓
-Compresión JPEG
-↓
-PDF Comprimido
-
----
-
 ### ⚡ Tecnologías Utilizadas
 
 - Python
@@ -313,7 +295,7 @@ PDF Comprimido
         st.error(
             "No se encontró el archivo docs/compresor_pdf.md"
         )
-        
+
 elif opcion == "💬 WhatsApp + ANS + Formularios":
 
     with st.expander(
@@ -390,5 +372,44 @@ Excel final de control operativo
             "No se encontró el archivo docs/whatsapp_ans_formularios.md"
         )
 
-else:
-    st.info("Este módulo se documentará después.")
+elif opcion == "🛠️ Validación Mano de Obra Vs Materiales":
+
+    with st.expander(
+        "🎤 Guía Rápida para Reuniones",
+        expanded=False
+    ):
+
+        st.warning("""
+### 🎤 Cómo Explicar este Desarrollo en una Reunión
+
+Este desarrollo nació a partir de la necesidad de validar automáticamente que los materiales reportados por la operación correspondieran realmente a las actividades ejecutadas.
+
+La solución fue desarrollada en Python y permite cruzar información exportada desde Fénix contra una base maestra de negocio.
+
+El sistema identifica faltantes, sobrantes, duplicidades, inconsistencias en cantidades y reglas especiales, generando automáticamente un informe de auditoría en Excel.
+
+Para la implementación técnica utilicé Inteligencia Artificial como asistente de desarrollo; sin embargo, las reglas de negocio, validaciones operativas, pruebas funcionales y criterios de auditoría fueron definidos y validados directamente por mí.
+
+---
+
+### ❓ Si me preguntan si yo hice el desarrollo
+
+Sí.
+
+El desarrollo fue implementado por mí para resolver una necesidad real de auditoría operativa.
+
+La lógica del negocio, las validaciones, las excepciones especiales, las pruebas y la interpretación de resultados fueron definidas y ajustadas directamente por mí.
+
+Para acelerar la construcción técnica utilicé Inteligencia Artificial como herramienta de apoyo, de manera similar a como un desarrollador utiliza documentación técnica o librerías especializadas.
+        """)
+
+    ruta = Path("docs/validacion_mano_obra_materiales.md")
+
+    if ruta.exists():
+        st.markdown(
+            ruta.read_text(encoding="utf-8")
+        )
+    else:
+        st.error(
+            "No se encontró el archivo docs/validacion_mano_obra_materiales.md"
+        )
