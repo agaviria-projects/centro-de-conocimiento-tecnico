@@ -161,8 +161,6 @@ Esto se debe a que los números de serie de medidores o sellos pueden tener la m
 
 De esta manera, el usuario puede validar manualmente estos casos antes de tomar una decisión operativa.
 
-### Y si te preguntan en una reunión:
-
 ## ¿Por qué se requiere revisión manual?
 
 Puedes responder:
