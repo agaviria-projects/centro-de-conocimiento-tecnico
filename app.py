@@ -241,8 +241,79 @@ Formaciones + Empleados + Asistencias + Reportes
         )
 
 elif opcion == "📄 Compresor PDF":
-    st.info("Este módulo se documentará después.")
 
+    with st.expander(
+        "🎤 Guía Rápida para Reuniones",
+        expanded=False
+    ):
+
+        st.warning("""
+### 🎤 Cómo Explicar este Desarrollo en una Reunión
+
+Este desarrollo nació a partir de la necesidad de reducir el tamaño de archivos PDF pesados para facilitar su envío, almacenamiento o cargue en plataformas.
+
+El sistema toma los PDF ubicados en una carpeta de origen, procesa cada página como imagen, reduce su resolución y calidad de compresión, y genera un nuevo PDF más liviano en una carpeta de destino.
+
+La configuración principal utiliza DPI 110 y calidad JPEG 35, manteniendo los colores del documento para conservar información visual importante.
+
+Si el archivo sigue quedando muy pesado, el sistema realiza un segundo intento con compresión más agresiva usando DPI 96 y calidad 25.
+
+El objetivo es intentar que los archivos queden por debajo de 20 MB, manteniendo una calidad suficiente para lectura y revisión.
+
+---
+
+### ❓ Si me preguntan si yo hice el desarrollo
+
+Sí.
+
+El desarrollo fue implementado por mí como solución a una necesidad real de reducir el tamaño de documentos PDF pesados.
+
+Para acelerar la construcción técnica utilicé Inteligencia Artificial como herramienta de apoyo.
+
+La necesidad, las pruebas, los parámetros de compresión, la validación visual y la adaptación al proceso real fueron definidos y validados directamente por mí.
+
+---
+
+### 🏗️ Arquitectura General
+
+PDF Originales
+↓
+Python
+↓
+PyMuPDF
+↓
+Conversión de páginas a imágenes
+↓
+Pillow
+↓
+Compresión JPEG
+↓
+PDF Comprimido
+
+---
+
+### ⚡ Tecnologías Utilizadas
+
+- Python
+- PyMuPDF
+- Pillow
+- pathlib
+- io
+- PDF
+- JPEG
+        """)
+
+    ruta = Path("docs/compresor_pdf.md")
+
+    if ruta.exists():
+        st.markdown(
+            ruta.read_text(encoding="utf-8")
+        )
+    else:
+        st.error(
+            "No se encontró el archivo docs/compresor_pdf.md"
+        )
+        
 elif opcion == "💬 WhatsApp + ANS + Formularios":
 
     with st.expander(
