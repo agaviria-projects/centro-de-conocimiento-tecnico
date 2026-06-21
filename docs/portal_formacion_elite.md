@@ -25,7 +25,7 @@ El portal permite:
 
 ## 🏗️ Arquitectura general
 
-El sistema está construido como una aplicación web en Streamlit.
+El sistema está construido como una aplicación web desarrollada en Streamlit.
 
 La información se almacena en una base de datos PostgreSQL alojada en Supabase.
 
@@ -33,29 +33,185 @@ El despliegue se realiza en Streamlit Cloud, permitiendo el acceso mediante una 
 
 Flujo general:
 
-Streamlit Cloud  
-↓  
-Aplicación Portal Formación Elite  
-↓  
-Conexión segura mediante DATABASE_URL  
-↓  
-Base de datos PostgreSQL en Supabase  
-↓  
-Registro y consulta de empleados, formaciones y asistencias
+Streamlit Cloud
+        ↓
+Portal Formación Elite
+        ↓
+DATABASE_URL
+        ↓
+PostgreSQL (Supabase)
+        ↓
+Empleados + Formaciones + Asistencias
 
+### 🔗 Conexión segura mediante DATABASE_URL
+
+La aplicación utiliza una cadena de conexión segura llamada DATABASE_URL, que contiene la información necesaria para conectarse a la base de datos PostgreSQL.
+
+Esta información se almacena de forma protegida en Streamlit Cloud y no se encuentra visible dentro del código fuente.
 ---
 
 ## 🛠️ Tecnologías utilizadas
 
-- Python.
-- Streamlit.
-- PostgreSQL.
-- Supabase.
-- SQLAlchemy.
-- GitHub.
-- Streamlit Cloud.
+### 🐍 Python
+
+Lenguaje principal utilizado para desarrollar toda la lógica del sistema.
+
+### 🌐 Streamlit
+
+Framework (herramienta que facilita el desarrollo de aplicaciones, reduciendo el tiempo de construcción) utilizado para crear la interfaz web del sistema, permitiendo desarrollar formularios, tablas, reportes y pantallas interactivas de manera rápida y sencilla.
+
+### 🗄️ PostgreSQL
+
+Sistema gestor de base de datos utilizado para almacenar la información.
+
+### ☁️ Supabase
+
+Plataforma donde se encuentra alojada la base de datos PostgreSQL.
+
+### 🔗 SQLAlchemy
+
+Herramienta utilizada para conectar la aplicación desarrollada en Python con PostgreSQL.
+
+### 📦 GitHub
+
+Plataforma utilizada para almacenar y versionar el código fuente.
+
+### 🚀 Streamlit Cloud
+
+Servicio utilizado para publicar la aplicación en internet y permitir el acceso mediante una URL.
+
+## ☁️ Administración de la Base de Datos en Supabase
+
+La base de datos del Portal Formación Elite se encuentra alojada en Supabase.
+
+Para acceder a la plataforma se debe:
+
+1. Ingresar al sitio oficial de Supabase.
+2. Seleccionar la opción **Sign In**.
+3. Iniciar sesión utilizando el mismo método empleado durante la creación de la cuenta:
+
+   - Correo electrónico y contraseña.
+   - Cuenta Google.
+   - Cuenta GitHub: usaurio agaviria-projects contraseña 34@7O5}p
+
+Una vez autenticado, la plataforma muestra el Dashboard con todos los proyectos disponibles.
+
+Posteriormente se debe seleccionar el proyecto correspondiente al Portal Formación Elite.
 
 ---
+
+## 🛠️ Secciones principales utilizadas en Supabase
+
+### 📋 Table Editor
+
+Permite visualizar, consultar y modificar la información almacenada en las tablas del sistema.
+
+Por ejemplo:
+
+- Empleados.
+- Formaciones.
+- Asistencias.
+
+---
+
+### 🔍 SQL Editor
+
+Permite ejecutar consultas SQL directamente sobre la base de datos para realizar validaciones, auditorías o mantenimiento de la información.
+
+---
+
+### ⚙️ Project Settings
+
+Permite administrar la configuración general del proyecto, incluyendo:
+
+- Parámetros de conexión.
+- Variables de configuración.
+- Claves API.
+- Información necesaria para la conexión desde la aplicación.
+
+---
+
+## 📌 Módulos más utilizados en este desarrollo
+
+Para la administración cotidiana del Portal Formación Elite, normalmente se utilizan principalmente:
+
+- **Table Editor:** revisión y administración de la información almacenada.
+- **SQL Editor:** ejecución de consultas y validaciones SQL.
+- **Project Settings:** revisión de la configuración de conexión del sistema.
+
+### 🚀 Streamlit Cloud
+
+Servicio utilizado para desplegar la aplicación en internet y permitir el acceso mediante una URL pública.
+
+## 🚀 Administración de la Aplicación en Streamlit Cloud
+
+La aplicación Portal Formación Elite se encuentra desplegada en Streamlit Cloud.
+
+Para acceder a la plataforma se debe:
+
+1. Ingresar al sitio oficial de Streamlit Cloud.
+2. Seleccionar la opción **Sign In**.
+3. Iniciar sesión utilizando el mismo método empleado durante la creación de la cuenta:
+
+   - Cuenta GitHub: ingersar con el usuario control.elite.drive@gmail.com contraseña 35@El1te}5
+   - Cuenta Google.
+   - Correo electrónico (si aplica).
+
+Una vez autenticado, la plataforma muestra el espacio de trabajo (Workspace) y las aplicaciones desplegadas que seria sistema-capacitaciones∙main∙app.py 
+
+Posteriormente se debe seleccionar la aplicación correspondiente al Portal Formación Elite.
+
+---
+
+## 🛠️ Funciones principales utilizadas en Streamlit Cloud
+
+### 📱 Aplicaciones
+
+Permite visualizar todas las aplicaciones desplegadas y acceder a cada una de ellas.
+
+---
+
+### 🔐 Secrets
+
+Permite almacenar información sensible de forma segura, por ejemplo:
+
+- DATABASE_URL.
+- Contraseñas administrativas.
+- Variables de configuración.
+
+Esta información no queda expuesta dentro del código fuente.
+
+---
+
+### 🔄 Reboot App
+
+Permite reiniciar la aplicación cuando se realizan cambios en el código o se requiere actualizar el servicio.
+
+---
+
+### 📜 Logs
+
+Permite consultar errores, advertencias y mensajes generados durante la ejecución de la aplicación.
+
+Esta funcionalidad es útil para identificar y corregir problemas.
+
+---
+
+## 📌 Flujo de actualización del sistema
+
+Cuando se realizan cambios en el código, el proceso normal es:
+
+GitHub
+↓
+Push de cambios
+↓
+Streamlit Cloud detecta la actualización
+↓
+Despliegue automático
+↓
+Aplicación actualizada
+
+En algunos casos puede ser necesario realizar un **Reboot App** para reiniciar el servicio.
 
 ## 🏠 Pantalla principal
 
@@ -206,28 +362,51 @@ Esto evita registros no autorizados o inconsistentes.
 
 La información se almacena en PostgreSQL mediante Supabase.
 
-Tablas principales:
+### 📋 Tablas principales del sistema
 
-- Empleados.
-- Formaciones.
-- Asistencias.
-- Preguntas.
-- Respuestas.
+- **empleados:** almacena la información de los empleados autorizados para registrar asistencia.
+
+- **formaciones:** almacena la información de las capacitaciones y charlas creadas en el sistema.
+
+- **asistencias:** almacena los registros de asistencia realizados por los empleados.
 
 Esta estructura permite separar la información y mantener una base organizada para consultas y reportes.
 
+La base de datos está compuesta por tres tablas principales: empleados, formaciones y asistencias. Cada tabla almacena información específica y permite mantener la trazabilidad completa del proceso de capacitación
 ---
 
-## 🔐 Seguridad básica
+## 🔐 Seguridad y tratamiento de datos
 
-El sistema utiliza controles básicos de seguridad:
+El sistema incorpora controles básicos de seguridad para proteger la información registrada por los empleados.
 
-- Acceso administrativo con contraseña.
-- Conexión a base de datos mediante secrets.
-- DATABASE_URL protegido en Streamlit Cloud.
-- Validación de empleados activos.
-- Control de registros duplicados.
+Entre las medidas implementadas se encuentran:
 
+- Acceso administrativo protegido mediante contraseña.
+- Credenciales de conexión a la base de datos almacenadas de forma segura en la plataforma de despliegue.
+- Validación de empleados activos antes de permitir el registro de asistencia.
+- Prevención de registros duplicados.
+- Solo los usuarios autorizados pueden acceder a las funciones administrativas del sistema, como crear formaciones, administrar empleados, consultar reportes o modificar información.
+
+La información almacenada en el sistema es utilizada exclusivamente para fines corporativos relacionados con la gestión de capacitaciones, asistencias y generación de reportes internos.
+
+El sistema no comparte ni divulga la información registrada a terceros y únicamente los usuarios autorizados pueden consultar o administrar los datos.
+
+---
+
+## ❓ ¿Cómo se realiza el tratamiento de los datos?
+
+Los datos registrados por los empleados son tratados únicamente para fines administrativos y de gestión de formación dentro de la organización.
+
+La información almacenada permite:
+
+- Validar que el empleado se encuentre activo.
+- Registrar la asistencia a capacitaciones o charlas.
+- Generar reportes corporativos.
+- Mantener trazabilidad de las formaciones realizadas.
+
+El tratamiento de la información se realiza siguiendo las políticas internas definidas por la organización.
+
+El sistema cuenta con un módulo administrativo protegido mediante contraseña. Esto garantiza que únicamente personal autorizado pueda crear formaciones, administrar empleados y consultar reportes, mientras que los demás usuarios solo pueden registrar su asistencia.
 ---
 
 ## 🚀 Beneficios del desarrollo
@@ -272,7 +451,7 @@ La información se guarda en una base de datos PostgreSQL alojada en Supabase.
 
 ### ¿Cómo se protege el acceso administrativo?
 
-El acceso administrativo se protege mediante contraseña.
+Mediante credenciales seguras, validaciones y acceso administrativo protegido.
 
 ### ¿Cómo se registra un empleado a una formación?
 
