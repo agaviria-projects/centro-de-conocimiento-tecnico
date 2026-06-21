@@ -12,7 +12,6 @@ El sistema permite:
 
 - Extraer automáticamente pedidos desde conversaciones de WhatsApp.
 - Validar pedidos reportados mediante formularios.
-- Detectar pedidos no registrados.
 - Verificar si el pedido continúa activo en el Informe ANS.
 - Identificar posibles pendientes de cierre en Fénix.
 - Generar alertas operativas.
