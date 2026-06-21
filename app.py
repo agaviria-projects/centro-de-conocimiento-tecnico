@@ -112,7 +112,7 @@ opciones = [
     "🎓 Portal Formación Elite",
     "📄 Compresor PDF",
     "💬 WhatsApp + ANS + Formularios",
-
+    "🛠️ Validación Mano de Obra Vs Materiales",
 ]
 
 # ===============================
