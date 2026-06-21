@@ -48,6 +48,7 @@ Empleados + Formaciones + Asistencias
 La aplicación utiliza una cadena de conexión segura llamada DATABASE_URL, que contiene la información necesaria para conectarse a la base de datos PostgreSQL.
 
 Esta información se almacena de forma protegida en Streamlit Cloud y no se encuentra visible dentro del código fuente.
+
 ---
 
 ## 🛠️ Tecnologías utilizadas
