@@ -154,7 +154,7 @@ Para acceder a la plataforma se debe:
 2. Seleccionar la opción **Sign In**.
 3. Iniciar sesión utilizando el mismo método empleado durante la creación de la cuenta:
 
-   - Cuenta GitHub: ingersar con el usuario control.elite.drive@gmail.com contraseña 35@El1te}5
+   - Cuenta GitHub: ingresar con el usuario control.elite.drive@gmail.com contraseña 35@El1te}5
    - Cuenta Google.
    - Correo electrónico (si aplica).
 
