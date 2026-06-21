@@ -65,7 +65,7 @@ Framework (herramienta que facilita el desarrollo de aplicaciones, reduciendo el
 
 Sistema gestor de base de datos utilizado para almacenar la información.
 
-### ☁️ Supabase
+### ☁️ Supabase - Súpa-beis
 
 Plataforma donde se encuentra alojada la base de datos PostgreSQL.
 
