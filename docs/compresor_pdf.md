@@ -212,7 +212,17 @@ Porque permite procesar varios archivos PDF de forma automática, convertir pág
 
 ### ¿Qué significa DPI?
 
-Es la resolución con la que se procesa cada página del PDF. A menor DPI, menor peso del archivo, pero también menor nitidez.
+El DPI define la resolución utilizada para convertir temporalmente cada página del PDF en una imagen durante el proceso de compresión.
+
+Un DPI alto genera mejor calidad visual, pero archivos más pesados.
+
+Un DPI bajo reduce el tamaño del archivo, aunque puede producir una ligera pérdida de nitidez.
+
+Después de la compresión, las imágenes se reconstruyen nuevamente dentro de un archivo PDF.
+
+### ¿El sistema convierte el PDF a imágenes?
+
+Internamente sí. Cada página del PDF se convierte temporalmente en una imagen para poder aplicar la compresión. Posteriormente esas imágenes se reconstruyen nuevamente en un archivo PDF comprimido.
 
 ### ¿Qué significa JPEG_QUALITY?
 
