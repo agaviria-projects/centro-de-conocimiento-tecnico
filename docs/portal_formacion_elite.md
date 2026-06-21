@@ -92,7 +92,7 @@ Para acceder a la plataforma se debe:
 
    - Correo electrónico y contraseña.
    - Cuenta Google.
-   - Cuenta GitHub: usaurio agaviria-projects contraseña 34@7O5}p
+   - Cuenta GitHub: usuario agaviria-projects contraseña 34@7O5}p
 
 Una vez autenticado, la plataforma muestra el Dashboard con todos los proyectos disponibles.
 
