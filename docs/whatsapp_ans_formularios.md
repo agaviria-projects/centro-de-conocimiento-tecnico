@@ -147,9 +147,6 @@ Permite:
 - Generar alertas operativas.
 - Cuando un pedido reportado por el técnico continúa apareciendo en el Informe ANS, el sistema resalta la celda en color rojo y genera la alerta: VALIDAR CIERRE FÉNIX,indicando que el pedido posiblemente aún no ha sido cerrado en Fénix y debe ser revisado por el usuario.
 
-
-### ⚠️ Reglas especiales
-
 ## ⚠️ Reglas especiales
 
 El sistema identifica palabras sensibles dentro del chat como:
