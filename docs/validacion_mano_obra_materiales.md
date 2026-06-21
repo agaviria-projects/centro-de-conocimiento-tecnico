@@ -3,13 +3,22 @@
 
 La herramienta de Validación Mano de Obra Vs Materiales fue desarrollada para verificar automáticamente que los materiales reportados en Fénix correspondan correctamente a la mano de obra ejecutada en cada pedido.
 
-Cada mano de obra debe tener asociados uno o varios materiales obligatorios definidos en una base maestra.
+El sistema permite procesar uno o múltiples archivos exportados desde diferentes zonas operativas, consolidando automáticamente toda la información en un único informe de auditoría.
 
-El sistema compara lo reportado en Fénix contra esa base maestra y determina si la información está correcta o si existen materiales faltantes, sobrantes, duplicados o cantidades que requieren revisión.
+Cada código de mano de obra tiene asociados uno o varios materiales definidos en una base maestra de negocio. A partir de esta relación, el sistema compara la información reportada en Fénix y determina si la actividad fue registrada correctamente o si existen inconsistencias.
 
-Más adelante, la base maestra permite explicar qué materiales debe llevar cada mano de obra y qué reglas especiales aplican para cada caso.
+Durante el proceso se identifican automáticamente:
 
-El objetivo principal es detectar inconsistencias operativas antes del cierre del proceso, reduciendo errores manuales y mejorando la calidad de la información reportada.
+Materiales faltantes.
+Materiales sobrantes.
+Manos de obra duplicadas.
+Cantidades que requieren validación.
+Códigos no existentes en la base maestra.
+Reglas especiales definidas por la operación.
+
+La base maestra también permite definir reglas de negocio, como actividades donde basta con reportar uno de varios materiales posibles o actividades que requieren materiales obligatorios específicos.
+
+El objetivo principal es detectar inconsistencias operativas antes del cierre del proceso, reducir errores manuales y mejorar la calidad de la información reportada.
 
 ---
 
