@@ -374,6 +374,7 @@ La información se almacena en PostgreSQL mediante Supabase.
 Esta estructura permite separar la información y mantener una base organizada para consultas y reportes.
 
 La base de datos está compuesta por tres tablas principales: empleados, formaciones y asistencias. Cada tabla almacena información específica y permite mantener la trazabilidad completa del proceso de capacitación
+
 ---
 
 ## 🔐 Seguridad y tratamiento de datos
