@@ -180,7 +180,7 @@ Por ejemplo:
 
 El sistema también puede validar excepciones operativas y generar alertas específicas cuando se incumplen las reglas establecidas.
 
-"El núcleo del desarrollo es una base maestra donde se encuentran definidas todas las reglas de negocio entre actividades y materiales. Python cruza automáticamente la información reportada en Fénix contra esta base y determina si la actividad cumple o no las condiciones establecidas."
+El núcleo del desarrollo es una base maestra donde se encuentran definidas todas las reglas de negocio entre actividades y materiales. Python cruza automáticamente la información reportada en Fénix contra esta base y determina si la actividad cumple o no las condiciones establecidas.
 ---
 
 ## 🎯 Beneficio de la Base Maestra
