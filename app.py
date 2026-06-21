@@ -388,8 +388,6 @@ La solución fue desarrollada en Python y permite cruzar información exportada 
 
 El sistema identifica faltantes, sobrantes, duplicidades, inconsistencias en cantidades y reglas especiales, generando automáticamente un informe de auditoría en Excel.
 
-Para la implementación técnica utilicé Inteligencia Artificial como asistente de desarrollo; sin embargo, las reglas de negocio, validaciones operativas, pruebas funcionales y criterios de auditoría fueron definidos y validados directamente por mí.
-
 ---
 
 ### ❓ Si me preguntan si yo hice el desarrollo
