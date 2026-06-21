@@ -164,6 +164,13 @@ Esto se debe a que los números de serie de medidores o sellos pueden tener la m
 
 De esta manera, el usuario puede validar manualmente estos casos antes de tomar una decisión operativa.
 
+### Y si te preguntan en una reunión:
+
+## ¿Por qué se requiere revisión manual?
+
+Puedes responder:
+
+Porque algunos elementos operativos como medidores, series o sellos contienen secuencias numéricas similares a un pedido. Para evitar errores, el sistema marca estos casos para que el usuario confirme manualmente si realmente corresponde a un pedido reportado.
 ---
 
 ### 💬 Frase de cierre
@@ -193,3 +200,4 @@ Que el pedido continúa apareciendo en el Informe ANS y requiere verificar si re
 ## ¿Cuál es el principal beneficio?
 
 Permite automatizar el seguimiento operativo y reducir el riesgo de omitir pedidos pendientes.
+
