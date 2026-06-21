@@ -8,10 +8,6 @@ El objetivo principal es identificar qué pedidos fueron reportados, cuáles no 
 
 ## 🧩 Problema que resuelve
 
-Antes del desarrollo, la validación de pedidos requería una revisión manual entre varias fuentes de información.
-
-Este proceso consumía tiempo y aumentaba el riesgo de omitir pedidos pendientes de cierre.
-
 El sistema permite:
 
 - Extraer automáticamente pedidos desde conversaciones de WhatsApp.
