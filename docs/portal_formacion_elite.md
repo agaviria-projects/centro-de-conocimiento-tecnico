@@ -8,8 +8,6 @@ El objetivo principal es reemplazar controles manuales por una plataforma centra
 
 ## 🧩 Problema que resuelve
 
-Antes del desarrollo, el control de capacitaciones podía depender de registros manuales, archivos separados o procesos difíciles de auditar.
-
 El portal permite:
 
 - Crear formaciones o charlas.
@@ -25,23 +23,25 @@ El portal permite:
 
 ## 🏗️ Arquitectura general
 
-El sistema está construido como una aplicación web desarrollada en Streamlit.
+El sistema está construido como una aplicación web desarrollada en Streamlit(utilizado para crear la interfaz web del sistema)
 
-La información se almacena en una base de datos PostgreSQL alojada en Supabase.
+La información se almacena en una base de datos PostgreSQL alojada en Supa-beis (Plataforma donde se encuentra alojada la base de datos PostgreSQL.)
 
-El despliegue se realiza en Streamlit Cloud, permitiendo el acceso mediante una URL pública.
+El despliegue se realiza en Streamlit Cloud(Servicio utilizado para publicar la aplicación en internet y permitir el acceso mediante una URL).
 
-Flujo general:
+## 🔐 Acceso y administración de plataformas
 
-Streamlit Cloud
-        ↓
-Portal Formación Elite
-        ↓
-DATABASE_URL
-        ↓
-PostgreSQL (Supabase)
-        ↓
-Empleados + Formaciones + Asistencias
+El acceso a las plataformas utilizadas en el desarrollo requiere autenticación mediante usuario y contraseña.
+
+Las credenciales de administración son de acceso restringido y únicamente son conocidas por el responsable técnico del sistema.(Gaviria)
+
+Esto garantiza que solo personal autorizado pueda administrar:
+
+- La aplicación desplegada en Streamlit Cloud.
+- La base de datos alojada en Supabase.
+
+De esta manera se protege la información corporativa y se evita el acceso no autorizado a la infraestructura del sistema.
+
 
 ### 🔗 Conexión segura mediante DATABASE_URL
 
