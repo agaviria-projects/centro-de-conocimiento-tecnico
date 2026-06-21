@@ -166,7 +166,6 @@ De esta manera, el usuario puede validar manualmente estos casos antes de tomar 
 Puedes responder:
 
 Porque algunos elementos operativos como medidores, series o sellos contienen secuencias numéricas similares a un pedido. Para evitar errores, el sistema marca estos casos para que el usuario confirme manualmente si realmente corresponde a un pedido reportado.
----
 
 ### 💬 Frase de cierre
 
