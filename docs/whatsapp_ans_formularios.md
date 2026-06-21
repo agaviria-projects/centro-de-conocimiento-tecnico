@@ -143,12 +143,14 @@ Consolida la información operativa.
 Permite:
 
 - Validar si el pedido continúa presente en el Informe ANS.
-- Validar la Fecha limite ANS de un pedido
-- Cuando un pedido reportado por el técnico continúa apareciendo en el Informe ANS, el sistema resalta la celda en color rojo y genera la alerta: VALIDAR CIERRE FÉNIX
-Esto indica que el pedido posiblemente aún no ha sido cerrado en Fénix y debe ser revisado por el usuario.
+- Validar la Fecha limite ANS de un pedido.
 - Generar alertas operativas.
+- Cuando un pedido reportado por el técnico continúa apareciendo en el Informe ANS, el sistema resalta la celda en color rojo y genera la alerta: VALIDAR CIERRE FÉNIX,indicando que el pedido posiblemente aún no ha sido cerrado en Fénix y debe ser revisado por el usuario.
+
 
 ### ⚠️ Reglas especiales
+
+## ⚠️ Reglas especiales
 
 El sistema identifica palabras sensibles dentro del chat como:
 
@@ -156,9 +158,13 @@ El sistema identifica palabras sensibles dentro del chat como:
 - Medidor.
 - Sello.
 
-Cuando estas palabras son detectadas, el pedido se marca para revisión manual.
+Cuando estas palabras son detectadas, el registro se marca para revisión manual.
 
-También es capaz de identificar pedidos presentes en nombres de archivos adjuntos enviados por WhatsApp.
+Esto se debe a que los números de serie de medidores o sellos pueden tener la misma longitud que un pedido, lo que podría generar identificaciones incorrectas.
+
+De esta manera, el usuario puede validar manualmente estos casos antes de tomar una decisión operativa.
+
+---
 
 ### 💬 Frase de cierre
 
