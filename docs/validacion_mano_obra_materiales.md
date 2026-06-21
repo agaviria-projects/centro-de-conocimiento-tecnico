@@ -34,6 +34,16 @@ La herramienta automatiza completamente estas validaciones.
 
 El proceso requiere dos fuentes principales de información.
 
+### 📄 Exportación Fénix
+
+- Se exportan los archivos desde Fenix.
+- Se realiza por rangos de fechas.
+- Se exporta por Zonas.
+
+La herramienta permite procesar uno o varios archivos exportados desde Fénix al mismo tiempo.
+
+Cuando se exporta un archivo por cada zona operativa, el sistema consolida automáticamente toda la información en un único informe, facilitando el análisis global de la operación y permitiendo posteriormente filtrar por zona cuando sea necesario.
+
 ### 📘 Base Maestra
 
 La base maestra es el archivo donde se define qué materiales debe llevar cada código de mano de obra.
@@ -48,12 +58,6 @@ La base permite identificar:
 - Materiales permitidos.
 - Reglas especiales como “uno de los dos” o “uno de los cinco”.
 - Excepciones operativas.
-
-### 📄 Exportación Fénix
-
-Archivos TXT exportados desde Fénix.
-
-La herramienta puede procesar uno o múltiples archivos simultáneamente.
 
 ---
 
