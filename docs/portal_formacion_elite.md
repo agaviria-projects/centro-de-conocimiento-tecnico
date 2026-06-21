@@ -409,6 +409,7 @@ La información almacenada permite:
 El tratamiento de la información se realiza siguiendo las políticas internas definidas por la organización.
 
 El sistema cuenta con un módulo administrativo protegido mediante contraseña. Esto garantiza que únicamente personal autorizado pueda crear formaciones, administrar empleados y consultar reportes, mientras que los demás usuarios solo pueden registrar su asistencia.
+
 ---
 
 ## 🚀 Beneficios del desarrollo
