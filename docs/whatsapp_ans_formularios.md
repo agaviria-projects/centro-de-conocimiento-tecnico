@@ -189,6 +189,6 @@ El sistema revisa automáticamente todas las líneas del chat y detecta los núm
 
 Que el pedido continúa apareciendo en el Informe ANS y requiere verificar si realmente fue cerrado.
 
-# ¿Cuál es el principal beneficio?
+## ¿Cuál es el principal beneficio?
 
 Permite automatizar el seguimiento operativo y reducir el riesgo de omitir pedidos pendientes.
