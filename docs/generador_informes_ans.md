@@ -104,7 +104,8 @@ Productos
 | DIPRE-DSPRE-REEQU | PREPAGO | No aplica |
 | ACREV | PUNTOS DE CONEXIÓN | D01R-D01U |
 
-> **Nota:** La actividad **AORDI** ORDENES INTERNAS
+> **Nota 1:** La actividad **AORDI**: ORDENES INTERNAS
+> **Nota 2:** HV : HABILITACIÓN VIVIENDA    
 ---
 El proceso genera un archivo consolidado que contiene tanto la información original proveniente de Fénix como nuevas columnas calculadas por el sistema.
 
