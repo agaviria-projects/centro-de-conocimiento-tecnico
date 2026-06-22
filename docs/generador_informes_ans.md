@@ -26,6 +26,10 @@ Desde Fénix se extraen archivos CSV por cada zona operativa.
 - Fecha Inicial: Día anterior
 - Fecha Final: Día actual
 
+#### Estado
+
+- PENDI
+
 #### Conceptos consultados
 
 - PROG → Pedidos Programados
