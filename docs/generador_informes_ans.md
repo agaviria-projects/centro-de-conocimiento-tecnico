@@ -107,7 +107,7 @@ Productos
 ## 📖 Glosario
 - **AORDI:** Actividad utilizada para la gestión de órdenes internas.
 - **HV:** Habilitación de Vivienda.
-- **AGPE:** Autogeneradores a Pequeña Escala.
+- **AGPE:** Autogeneradores de Pequeña Escala.
 - **ALEGA:** Legalización residencial.
 - **ALEGN:** Legalización No residencial.
 - **ALECA:** Reforma residencial.
