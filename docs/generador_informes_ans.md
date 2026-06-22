@@ -103,6 +103,8 @@ Productos
 | AMRTR | MOVIMIENTO DE REDES | D02R-D02U-D03R-D03U-D04R-D04U |
 | DIPRE-DSPRE-REEQU | PREPAGO | No aplica |
 | ACREV | PUNTOS DE CONEXIÓN | D01R-D01U |
+
+> **Nota:** La actividad **AORDI** ORDENES INTERNAS
 ---
 El proceso genera un archivo consolidado que contiene tanto la información original proveniente de Fénix como nuevas columnas calculadas por el sistema.
 
