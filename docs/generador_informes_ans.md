@@ -324,6 +324,8 @@ El informe incorpora un módulo de geolocalización que permite visualizar los p
 
 Su objetivo es facilitar la gestión operativa, la priorización de pedidos y la ubicación de direcciones en campo.
 
+Al filtrar por subzona se podra generar el mapa exclusivamente para ese filtro aplicado por subzona; generando el mapa y la cantidad de marcadores, puede presentarse que la cantidad de marcadores no sea igual al total de pedidos;  pero esto es debido que desde la extracción en Fenix hayan pedidos sin coordenadas.
+
 ### Panel de Control ANS
 
 El mapa incorpora un panel lateral desde donde el usuario puede:
