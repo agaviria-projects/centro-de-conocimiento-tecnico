@@ -80,12 +80,29 @@ Luego se ejecuta el módulo Generar Informe ANS y se encarga de:
 1. Leer los archivos CSV.
 2. Unificar la información de todas las zonas.
 3. Limpiar y normalizar los datos.
-4. Convertir fechas.
-5. Aplicar reglas contractuales del cliente.
-6. Calcular días ANS.
-7. Clasificar cada pedido por estado.
-8. Generar el archivo final para análisis.
+4. Aplicar reglas contractuales del cliente.
+5. Calcular días ANS.
+6. Clasificar cada pedido por estado.
+7. El informe final se publica en una carpeta compartida llamada **Informes Fénix**, donde programadores y demás usuarios de la operación pueden acceder a la información para realizar el seguimiento y control de los pedidos
+8. En el dia se generan tres extracciones con el fin de mantener actualizado el informe.
 
+Productos 
+
+### Agrupaciones implementadas
+
+| Actividad | Agrupado por actividad | Regla aplicada |
+|-----------|------------------------|----------------|
+| ACVIS | AGPE | C07R-C07U |
+| AORDI | DELINEANTE DE ARQUITECTURA | E05U |
+| AORDI | ORDENES INTERNAS | No aplica |
+| AORDI | TÉCNICOS GPS | E04R-E04U-E06R-E06U-F07R-F07U |
+| AORDI | TECNÓLOGO AIE | E01U-E01R-E02R-E02U |
+| AEJDO | HV | No aplica |
+| ACAMN-ALECA-ALEGA-ALEGN-LEGM | LEGALIZACIÓN | No aplica |
+| VITEC | MOVILIDAD ELÉCTRICA | F01R-F01U |
+| AMRTR | MOVIMIENTO DE REDES | D02R-D02U-D03R-D03U-D04R-D04U |
+| DIPRE-DSPRE-REEQU | PREPAGO | No aplica |
+| ACREV | PUNTOS DE CONEXIÓN | D01R-D01U |
 ---
 El proceso genera un archivo consolidado que contiene tanto la información original proveniente de Fénix como nuevas columnas calculadas por el sistema.
 
