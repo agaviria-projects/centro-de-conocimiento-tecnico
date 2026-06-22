@@ -69,36 +69,84 @@ Estos archivos son la entrada principal del proceso automatizado desarrollado,po
 - PROG → Pedidos Programados(extracción)
 - CUMPL → se cumple cuando los técnicos ejecutan la tarea y le envian el informe al programador de la ejecución del pedido.
 
-### ¿Por qué se extrae por zonas?
-
-
-
-
-
 ---
 
 ## ⚙️ Proceso del desarrollo
 
-Después de descargar los CSV, todos los archivos se guardan en una carpeta de trabajo.
+Después de descargar los archivos CSV desde Fénix, todos los archivos se almacenan en una carpeta de trabajo.
 
-Luego se ejecuta el módulo Generar Informe ANS y se encarga de:
+Posteriormente se ejecuta el módulo **Generar Informe ANS**, el cual realiza automáticamente las siguientes tareas:
 
-1. Leer los archivos CSV.
-2. Unificar la información de todas las zonas.
+1. Leer los archivos CSV exportados desde Fénix.
+2. Unificar la información de todas las zonas operativas.
 3. Limpiar y normalizar los datos.
-4. Aplicar reglas contractuales del cliente.
-5. Calcular días ANS.
-6. Clasificar cada pedido por estado.
-7. El informe ANS que contiene el Dashboard se publica en una carpeta compartida llamada **Informes Fénix**, donde programadores y demás usuarios de la operación pueden acceder a la información para realizar el seguimiento y control de los pedidos
-8. En el dia se generan tres extracciones con el fin de mantener actualizado el informe.
+4. Aplicar las reglas contractuales definidas por el cliente.
+5. Calcular los días ANS de cada pedido.
+6. Clasificar cada pedido según su estado.
+7. Construir automáticamente el Informe ANS, incluye el Dashboard y demás elementos de análisis.
+8. Publicar el informe final en una carpeta compartida denominada **Informes Fénix**, permitiendo que programadores y demás usuarios de la operación puedan consultar la información para realizar seguimiento y control de los pedidos.
+9. En el dia a dia se generan tres extracciones con el fin de mantener el informe permanentemente actualizado.
 
-En este informe ANS se abarcan todos los productos contemplados dentro del contrato como son:
+---
+### 📊 Columnas calculadas y enriquecimiento de la información
 
-- Prepagos.
-- Legalizaciones.
-- Movimientos de Redes.
-- Puntos de Conexión.
-- Movilidad Eléctrica.
+El proceso genera un archivo consolidado que contiene tanto la información original proveniente de Fénix como nuevas columnas calculadas automáticamente por el sistema.
+
+Estas columnas permiten realizar el seguimiento contractual de los pedidos y constituyen la base para la construcción del Dashboard Control ANS.
+
+Entre las principales columnas generadas se encuentran:
+
+- Fecha Inicio ANS.
+- Días Pactados.
+- Fecha Límite ANS.
+- Días Transcurridos.
+- Días Restantes.
+- Estado ANS.
+- Tipo de Dirección.
+- Actividad.
+- Zona.
+- Municipio.
+
+Adicionalmente, el sistema incorpora columnas de clasificación y agrupación que facilitan el análisis operativo y la segmentación de la información.
+
+Toda esta información permite:
+
+- Identificar el estado actual de cada pedido.
+- Priorizar la atención de pedidos próximos a vencer.
+- Realizar seguimiento contractual de la operación.
+- Construir indicadores y tableros de control.
+- Facilitar la toma de decisiones por parte de programadores, ingenieros y demás usuarios involucrados en la operación.
+
+Estas columnas transforman la información operativa proveniente de Fénix en información analítica orientada a la gestión y seguimiento del contrato.
+
+## 🧠 Estados ANS generados
+
+### ✅ A TIEMPO
+
+El pedido todavía está dentro del tiempo contractual permitido.
+
+### 🟡 ALERTA
+
+El pedido está próximo a vencer.
+
+### 🟠 ALERTA 0 DÍAS
+
+El pedido vence el mismo día y debe ser priorizado.
+
+### 🔴 VENCIDO
+
+El pedido superó el tiempo contractual permitido.
+
+## 📦 Productos contemplados dentro del contrato
+
+El Informe ANS consolida información correspondiente a todos los diferentes productos operativos definidos dentro del contrato:
+
+* Prepagos.
+* Legalizaciones.
+* Movimientos de Redes.
+* Puntos de Conexión.
+* Movilidad Eléctrica.
+
 
 ### Agrupaciones implementadas : ver archivo C:\Users\hector.gaviria\Desktop\Proyecto_Actas\CONFIG
 
@@ -131,24 +179,6 @@ En este informe ANS se abarcan todos los productos contemplados dentro del contr
 - **REEQU:** Trabajo prepago.
 
 ---
-El proceso genera un archivo consolidado que contiene tanto la información original proveniente de Fénix como nuevas columnas calculadas por el sistema.
-
-Estas columnas permiten realizar el seguimiento contractual de los pedidos y constituyen la base para la construcción del Dashboard Control ANS.
-
-Entre las principales columnas generadas se encuentran:
-
-- Fecha Inicio ANS.
-- Días Pactados.
-- Fecha Límite ANS.
-- Días Transcurridos.
-- Días Restantes.
-- Estado ANS.
-- Tipo de Dirección.
-- Actividad.
-- Zona.
-- Municipio.
-
-Esta información facilita el análisis operativo, la identificación de cada uno de los pedidos y la toma de decisiones por parte de programadores, ingenieros.
 
 ## 🧮 Cálculo de Días Contractuales
 
@@ -156,52 +186,43 @@ Una vez consolidada la información, el sistema aplica las reglas contractuales 
 
 Estas reglas se encuentran parametrizadas dentro del desarrollo y permiten determinar los días pactados para el cumplimiento de cada pedido.
 
-### Configuración de actividades
+## ⏳ Días Pactados y Margen Operativo
 
-Cada actividad posee una cantidad de días permitidos según:
+Cada actividad definida dentro del contrato posee una cantidad máxima de días permitidos para su ejecución.
 
-- Actividad ejecutada.
-- Tipo de dirección.
-- Urbana.
-- Rural.
+Estos días corresponden al tiempo contractual establecido por el cliente y pueden variar dependiendo de:
 
-Ejemplos:
+* La actividad ejecutada.
+* El tipo de dirección.
+* Si el pedido corresponde a zona urbana o rural.
 
-| Actividad | Descripción | Urbano | Rural |
-|------------|------------|---------|---------|
-| ACREV | Puntos Conexión | 4 | 4 |
-| ALEGN | Legalización | 7 | 10 |
-| ALEGA | Legalización | 7 | 10 |
-| ALECA | Legalización | 7 | 10 |
-| ACAMN | Reforma | 7 | 10 |
-| AMRTR | Movimiento Red | 9 | 14 |
-| REEQU | Prepago | 11 | 11 |
-| INPRE | Instalación | 11 | 11 |
-| DIPRE | Desinstalar | 8 | 11 |
-| ARTER | Replanteo | 5 | 8 |
-| AEJDO | Ejecución | 7 | 12 |
-| VITEC | Movilidad Eléctrica | 2 | 2 |
+El sistema utiliza esta información para calcular automáticamente las fechas límite ANS y determinar el estado de cada pedido.
 
----
+Adicionalmente, Elite define tiempos internos de gestión con el fin de anticiparse a posibles incumplimientos contractuales.
 
-### Selección automática de días pactados
+Este margen operativo permite identificar oportunamente los pedidos que requieren atención prioritaria antes de alcanzar la fecha límite establecida por el cliente.
 
-El sistema identifica:
+### Ejemplos de días pactados
 
-- Actividad del pedido.
-- Tipo de dirección (Urbana o Rural).
+| Actividad | Descripción            | Urbano | Rural |
+| --------- | ---------------------- | ------ | ----- |
+| ACREV     | Puntos de Conexión     | 4      | 4     |
+| ALEGN     | Legalización           | 7      | 10    |
+| ALEGA     | Legalización           | 7      | 10    |
+| ALECA     | Legalización           | 7      | 10    |
+| ACAMN     | Reforma                | 7      | 10    |
+| AMRTR     | Movimiento de Red      | 9      | 14    |
+| REEQU     | Prepago                | 11     | 11    |
+| INPRE     | Instalación Prepago    | 11     | 11    |
+| DIPRE     | Desinstalación Prepago | 8      | 11    |
+| ARTER     | Replanteo              | 5      | 8     |
+| AEJDO     | Ejecución              | 7      | 12    |
+| VITEC     | Movilidad Eléctrica    | 2      | 2     |
 
-Posteriormente asigna automáticamente la cantidad de días pactados correspondiente.
-
-Ejemplo:
-
-Actividad: ALEGA
-
-Dirección: Urbana
-
-Días Pactados: 7
+> **Nota:** El sistema consulta automáticamente esta parametrización para calcular la **Fecha Límite ANS**, los **Días Restantes** y el **Estado ANS** de cada pedido.
 
 ---
+
 
 ### Cálculo de Fecha Límite
 
@@ -245,23 +266,7 @@ El archivo consolidado genera información adicional para cada pedido:
 
 Estas columnas son la base para la construcción de los indicadores, gráficos y mapas del Dashboard Control ANS.
 
-## 🧠 Estados ANS generados
 
-### ✅ A TIEMPO
-
-El pedido todavía está dentro del tiempo contractual permitido.
-
-### 🟡 ALERTA
-
-El pedido está próximo a vencer.
-
-### 🟠 ALERTA 0 DÍAS
-
-El pedido vence el mismo día y debe ser priorizado.
-
-### 🔴 VENCIDO
-
-El pedido superó el tiempo contractual permitido.
 
 ---
 
