@@ -32,8 +32,14 @@ Desde Fénix se extraen archivos CSV por cada zona operativa.
 
 #### Conceptos consultados
 
-- PROG → Pedidos Programados
 - PPRG → Pedidos Pendientes por Programar
+- PROG → Pedidos Programados
+
+### Estados de un pedido
+
+- PPRG → Pedidos Pendientes por Programar(extracción)
+- PROG → Pedidos Programados(extracción)
+- CUMPL → se cumple cuando los técnicos ejecutan la tarea y le envian el informe al programador de la ejecución del pedido.
 
 #### Área Operativa
 
@@ -86,7 +92,15 @@ Luego se ejecuta el módulo Generar Informe ANS y se encarga de:
 7. El informe final se publica en una carpeta compartida llamada **Informes Fénix**, donde programadores y demás usuarios de la operación pueden acceder a la información para realizar el seguimiento y control de los pedidos
 8. En el dia se generan tres extracciones con el fin de mantener actualizado el informe.
 
-Productos 
+Los productos contemplados dentro del contrato abarcan procesos asociados a:
+
+- Prepagos.
+- Legalizaciones.
+- Movimientos de Redes.
+- Puntos de Conexión.
+- Movilidad Eléctrica.
+
+Abarca todos los productos del contrato.
 
 ### Agrupaciones implementadas
 
