@@ -124,7 +124,7 @@ En este informe ANS se abarcan todos los productos contemplados dentro del contr
 - **ALEGN:** Legalización No residencial.
 - **ALECA:** Reforma residencial.
 - **ACAMN:** Reforma No residencial.
-- **AEJDO:** Habilitación vivienda Sencillo.
+- **AEJDO:** Ejecución Habilitación vivienda.
 - **ARTER:** Replanteo HV.
 - **INPRE:** Ejecución prepago.
 - **DIPRE:** Retiro prepago.
