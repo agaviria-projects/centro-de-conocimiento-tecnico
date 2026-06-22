@@ -90,7 +90,7 @@ Productos
 
 ### Agrupaciones implementadas
 
-| Actividad | Agrupado por actividad | Regla aplicada |
+| Actividad | Agrupado por actividad | Item |
 |-----------|------------------------|----------------|
 | ACVIS | AGPE | C07R-C07U |
 | AORDI | DELINEANTE DE ARQUITECTURA | E05U |
