@@ -94,7 +94,7 @@ El proceso genera un archivo consolidado que contiene tanto la información orig
 
 Estas columnas permiten realizar el seguimiento contractual de los pedidos y constituyen la base para la construcción del Dashboard Control ANS.
 
-Entre las principales columnas generadas se encuentran:
+Entre las principales columnas se encuentran:
 
 - Fecha Inicio ANS.
 - Días Pactados.
@@ -106,8 +106,6 @@ Entre las principales columnas generadas se encuentran:
 - Actividad.
 - Zona.
 - Municipio.
-
-Adicionalmente, el sistema incorpora columnas de clasificación y agrupación que facilitan el análisis operativo y la segmentación de la información.
 
 Toda esta información permite:
 
@@ -139,7 +137,7 @@ El pedido superó el tiempo contractual permitido.
 
 ## 📦 Productos contemplados dentro del contrato
 
-El Informe ANS consolida información correspondiente a todos los diferentes productos operativos definidos dentro del contrato:
+El Informe ANS consolida información correspondiente a todos los diferentes productos operativos definidos dentro del contrato:(Columna O - ACTIVIDAD).
 
 * Prepagos.
 * Legalizaciones.
@@ -220,53 +218,6 @@ Este margen operativo permite identificar oportunamente los pedidos que requiere
 | VITEC     | Movilidad Eléctrica    | 2      | 2     |
 
 > **Nota:** El sistema consulta automáticamente esta parametrización para calcular la **Fecha Límite ANS**, los **Días Restantes** y el **Estado ANS** de cada pedido.
-
----
-
-
-### Cálculo de Fecha Límite
-
-Una vez definidos los días pactados, el sistema calcula la fecha límite contractual.
-
-Fórmula conceptual:
-
-Fecha Inicio ANS + Días Pactados = Fecha Límite ANS
-
-Esta fecha representa el último día permitido para cumplir el pedido según las condiciones contractuales.
-
----
-
-### Cálculo de Seguimiento
-
-Con base en la fecha actual, el sistema calcula:
-
-- Días Transcurridos.
-- Días Restantes.
-- Estado ANS.
-
-Estas columnas permiten determinar automáticamente si un pedido se encuentra:
-
-- A Tiempo.
-- En Alerta.
-- En Alerta 0 Días.
-- Vencido.
-
----
-
-### Resultado Final
-
-El archivo consolidado genera información adicional para cada pedido:
-
-- Fecha Inicio ANS.
-- Días Pactados.
-- Fecha Límite ANS.
-- Días Transcurridos.
-- Días Restantes.
-- Estado ANS.
-
-Estas columnas son la base para la construcción de los indicadores, gráficos y mapas del Dashboard Control ANS.
-
-
 
 ---
 
@@ -463,6 +414,52 @@ El mapa permite:
 
 
 ---
+
+
+### Cálculo de Fecha Límite
+
+Una vez definidos los días pactados, el sistema calcula la fecha límite contractual.
+
+Fórmula conceptual:
+
+Fecha Inicio ANS + Días Pactados = Fecha Límite ANS
+
+Esta fecha representa el último día permitido para cumplir el pedido según las condiciones contractuales.
+
+---
+
+### Cálculo de Seguimiento
+
+Con base en la fecha actual, el sistema calcula:
+
+- Días Transcurridos.
+- Días Restantes.
+- Estado ANS.
+
+Estas columnas permiten determinar automáticamente si un pedido se encuentra:
+
+- A Tiempo.
+- En Alerta.
+- En Alerta 0 Días.
+- Vencido.
+
+---
+
+### Resultado Final
+
+El archivo consolidado genera información adicional para cada pedido:
+
+- Fecha Inicio ANS.
+- Días Pactados.
+- Fecha Límite ANS.
+- Días Transcurridos.
+- Días Restantes.
+- Estado ANS.
+
+Estas columnas son la base para la construcción de los indicadores, gráficos y mapas del Dashboard Control ANS.
+
+---
+
 ### Resultado Final
 
 El desarrollo genera un archivo consolidado enriquecido con información calculada automáticamente a partir de las reglas contractuales del cliente.
