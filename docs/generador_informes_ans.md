@@ -89,10 +89,10 @@ Luego se ejecuta el módulo Generar Informe ANS y se encarga de:
 4. Aplicar reglas contractuales del cliente.
 5. Calcular días ANS.
 6. Clasificar cada pedido por estado.
-7. El informe final se publica en una carpeta compartida llamada **Informes Fénix**, donde programadores y demás usuarios de la operación pueden acceder a la información para realizar el seguimiento y control de los pedidos
+7. El informe ANS que contiene el Dashboard se publica en una carpeta compartida llamada **Informes Fénix**, donde programadores y demás usuarios de la operación pueden acceder a la información para realizar el seguimiento y control de los pedidos
 8. En el dia se generan tres extracciones con el fin de mantener actualizado el informe.
 
-Los productos contemplados dentro del contrato abarcan procesos asociados a:
+En este informe ANS se abarcan todos los productos contemplados dentro del contrato como son:
 
 - Prepagos.
 - Legalizaciones.
@@ -100,9 +100,7 @@ Los productos contemplados dentro del contrato abarcan procesos asociados a:
 - Puntos de Conexión.
 - Movilidad Eléctrica.
 
-Abarca todos los productos del contrato.
-
-### Agrupaciones implementadas
+### Agrupaciones implementadas : ver archivo C:\Users\hector.gaviria\Desktop\Proyecto_Actas\CONFIG
 
 | Actividad | Agrupado por actividad | Item |
 |-----------|------------------------|----------------|
