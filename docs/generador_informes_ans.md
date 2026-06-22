@@ -35,12 +35,6 @@ Desde Fénix se extraen archivos CSV por cada zona operativa.
 - PPRG → Pedidos Pendientes por Programar
 - PROG → Pedidos Programados
 
-### Estados de un pedido
-
-- PPRG → Pedidos Pendientes por Programar(extracción)
-- PROG → Pedidos Programados(extracción)
-- CUMPL → se cumple cuando los técnicos ejecutan la tarea y le envian el informe al programador de la ejecución del pedido.
-
 #### Área Operativa
 
 - SUR-ENE
@@ -68,6 +62,12 @@ Ejemplo:
 - SOE.csv
 
 Estos archivos son la entrada principal del proceso automatizado desarrollado en Python.
+
+### Estados de un pedido
+
+- PPRG → Pedidos Pendientes por Programar(extracción)
+- PROG → Pedidos Programados(extracción)
+- CUMPL → se cumple cuando los técnicos ejecutan la tarea y le envian el informe al programador de la ejecución del pedido.
 
 ### ¿Por qué se extrae por zonas?
 
