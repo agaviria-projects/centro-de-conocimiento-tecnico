@@ -67,7 +67,7 @@ Estos archivos son la entrada principal del proceso automatizado desarrollado,po
 
 - PPRG → Pedidos Pendientes por Programar(extracción)
 - PROG → Pedidos Programados(extracción)
-- CUMPL → se cumple cuando los técnicos ejecutan la tarea y le envian el informe al programador de la ejecución del pedido.
+- CUMPL → Cumplido se cumple cuando los técnicos ejecutan la tarea y le envian el informe al programador de la ejecución del pedido.
 
 ---
 
