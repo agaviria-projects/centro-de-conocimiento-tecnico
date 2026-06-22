@@ -87,9 +87,9 @@ Carpeta PDF_COMPRIMIDOS
 
 El sistema utiliza parámetros de compresión que permiten controlar el equilibrio entre peso del archivo y calidad visual.
 
-### DPI
+### DPI - Puntos por pulgada
 
-El DPI define la resolución con la que se convierte cada página del PDF a imagen.
+DPI (Dots Per Inch o Puntos por pulgada) es una medida que indica el nivel de detalle o resolución de una imagen, osea que define la resolución con la que se convierte cada página del PDF a imagen.
 
 En palabras simples:
 
@@ -102,6 +102,12 @@ En este desarrollo se usa:
 
 Esto permite reducir el tamaño del archivo manteniendo una lectura aceptable.
 
+por ejemplo:
+
+- 300 DPI → Muy alta calidad, archivos más pesados.
+- 150 DPI → Buena calidad para lectura normal.
+- 110 DPI → Calidad media, buen equilibrio entre tamaño y legibilidad.
+- 96 DPI → Calidad más baja, archivos más livianos.
 ---
 
 ### JPEG_QUALITY
