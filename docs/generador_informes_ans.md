@@ -92,7 +92,7 @@ Productos
 
 | Actividad | Agrupado por actividad | Item |
 |-----------|------------------------|----------------|
-| ACVIS | AGPE (Autogeneradores de Pequeña Escala) || C07R-C07U |
+| ACVIS | AGPE (Autogeneradores de Pequeña Escala) | C07R-C07U |
 | AORDI | DELINEANTE DE ARQUITECTURA | E05U |
 | AORDI | ORDENES INTERNAS | No aplica |
 | AORDI | TÉCNICOS GPS | E04R-E04U-E06R-E06U-F07R-F07U |
