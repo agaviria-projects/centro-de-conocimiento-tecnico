@@ -332,7 +332,7 @@ El mapa incorpora un panel lateral desde donde el usuario puede:
 
 - Buscar un pedido específico.
 - Mostrar todos los pedidos.
-- Centrar el mapa.
+- Ajustar a marcadores( en el caso de que no se muestren los marcadores)
 - Copiar el enlace de ubicación.
 - Filtrar información.
 
