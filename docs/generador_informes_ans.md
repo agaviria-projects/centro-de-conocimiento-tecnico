@@ -61,7 +61,7 @@ Ejemplo:
 - NDC.csv
 - SOE.csv
 
-Estos archivos son la entrada principal del proceso automatizado desarrollado en Python.
+Estos archivos son la entrada principal del proceso automatizado desarrollado,posteriormente consolida todos los archivos en una única fuente de información para facilitar el análisis y la construcción del dashboard que sera el INFORME ANS.
 
 ### Estados de un pedido
 
@@ -71,9 +71,9 @@ Estos archivos son la entrada principal del proceso automatizado desarrollado en
 
 ### ¿Por qué se extrae por zonas?
 
-Fénix genera la información de forma independiente para cada subzona operativa.
 
-Por esta razón el desarrollo posteriormente consolida todos los archivos en una única fuente de información para facilitar el análisis y la construcción del dashboard.
+
+
 
 ---
 
