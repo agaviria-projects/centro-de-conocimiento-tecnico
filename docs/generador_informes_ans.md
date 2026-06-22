@@ -92,7 +92,7 @@ Productos
 
 | Actividad | Agrupado por actividad | Item |
 |-----------|------------------------|----------------|
-| ACVIS | AGPE (Autogeneradores de Pequeña Escala) | C07R-C07U |
+| ACVIS | AGPE | C07R-C07U |
 | AORDI | DELINEANTE DE ARQUITECTURA | E05U |
 | AORDI | ORDENES INTERNAS | No aplica |
 | AORDI | TÉCNICOS GPS | E04R-E04U-E06R-E06U-F07R-F07U |
@@ -104,10 +104,20 @@ Productos
 | DIPRE-DSPRE-REEQU | PREPAGO | No aplica |
 | ACREV | PUNTOS DE CONEXIÓN | D01R-D01U |
 
-> **Notas importantes:**
->
-> - La actividad **AORDI** corresponde a **Ordenes Internas**.
-> - La agrupación **HV** corresponde a **Habilitación de Vivienda**. 
+## 📖 Glosario
+- **AORDI:** Actividad utilizada para la gestión de órdenes internas.
+- **HV:** Habilitación de Vivienda.
+- **AGPE:** Autogeneradores a Pequeña Escala.
+- **ALEGA:** Legalización residencial.
+- **ALEGN:** Legalización No residencial.
+- **ALECA:** Reforma residencial.
+- **ACAMN:** Reforma No residencial.
+- **AEJDO:** Habilitación vivienda Sencillo.
+- **ARTER:** Replanteo HV.
+- **INPRE:** Ejecución prepago.
+- **DIPRE:** Retiro prepago.
+- **REEQU:** Trabajo prepago.
+
 ---
 El proceso genera un archivo consolidado que contiene tanto la información original proveniente de Fénix como nuevas columnas calculadas por el sistema.
 
