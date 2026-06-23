@@ -83,7 +83,7 @@ Posteriormente se ejecuta el módulo **Generar Informe ANS**, el cual realiza au
 4. Aplicar las reglas contractuales definidas por el cliente.
 5. Calcular los días ANS de cada pedido.
 6. Clasificar cada pedido según su estado.
-7. Construir automáticamente el Informe ANS, incluye el Dashboard y demás elementos de análisis.
+7. Construye automáticamente el Informe ANS, incluye el Dashboard y demás elementos de análisis.
 8. Publicar el informe final en una carpeta compartida denominada **Informes Fénix**, permitiendo que programadores y demás usuarios de la operación puedan consultar la información para realizar seguimiento y control de los pedidos.
 9. En el dia a dia se generan tres extracciones con el fin de mantener el informe permanentemente actualizado.
 
