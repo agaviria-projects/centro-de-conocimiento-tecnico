@@ -135,92 +135,7 @@ El pedido vence el mismo día y debe ser priorizado.
 
 El pedido superó el tiempo contractual permitido.
 
-## 📦 Productos contemplados dentro del contrato
-
-El Informe ANS consolida información correspondiente a todos los diferentes productos operativos definidos dentro del contrato:(Columna O - ACTIVIDAD).
-
-* Prepagos.
-* Legalizaciones.
-* Movimientos de Redes.
-* Puntos de Conexión.
-* Movilidad Eléctrica.
-
-
-### Agrupaciones implementadas : ver archivo C:\Users\hector.gaviria\Desktop\Proyecto_Actas\CONFIG
-
-| Actividad | Agrupado por actividad | Item |
-|-----------|------------------------|----------------|
-| ACVIS | AGPE | C07R-C07U |
-| AORDI | DELINEANTE DE ARQUITECTURA | E05U |
-| AORDI | ORDENES INTERNAS | No aplica |
-| AORDI | TÉCNICOS GPS | E04R-E04U-E06R-E06U-F07R-F07U |
-| AORDI | TECNÓLOGO AIE | E01U-E01R-E02R-E02U |
-| AEJDO | HV | No aplica |
-| ACAMN-ALECA-ALEGA-ALEGN-LEGM | LEGALIZACIÓN | No aplica |
-| VITEC | MOVILIDAD ELÉCTRICA | F01R-F01U |
-| AMRTR | MOVIMIENTO DE REDES | D02R-D02U-D03R-D03U-D04R-D04U |
-| DIPRE-DSPRE-REEQU | PREPAGO | No aplica |
-| ACREV | PUNTOS DE CONEXIÓN | D01R-D01U |
-
-## 📖 Glosario
-- **AORDI:** Actividad utilizada para la gestión de órdenes internas.
-- **HV:** Habilitación de Vivienda.
-- **AGPE:** Autogeneradores de Pequeña Escala.
-- **ALEGA:** Legalización residencial.
-- **ALEGN:** Legalización No residencial.
-- **ALECA:** Reforma residencial.
-- **ACAMN:** Reforma No residencial.
-- **AEJDO:** Ejecución Habilitación vivienda.
-- **ARTER:** Replanteo HV.
-- **INPRE:** Ejecución prepago.
-- **DIPRE:** Retiro prepago.
-- **REEQU:** Trabajo prepago.
-
 ---
-
-## 🧮 Cálculo de Días Contractuales
-
-Una vez consolidada la información, el sistema aplica las reglas contractuales definidas para cada actividad operativa.
-
-Estas reglas se encuentran parametrizadas dentro del desarrollo y permiten determinar los días pactados para el cumplimiento de cada pedido.
-
-## ⏳ Días Pactados y Margen Operativo
-
-Cada actividad definida dentro del contrato posee una cantidad máxima de días permitidos para su ejecución.
-
-Estos días corresponden al tiempo contractual establecido por el cliente y pueden variar dependiendo de:
-
-* La actividad ejecutada.
-* El tipo de dirección.
-* Si el pedido corresponde a zona urbana o rural.
-
-El sistema utiliza esta información para calcular automáticamente las fechas límite ANS y determinar el estado de cada pedido.
-
-Adicionalmente, Elite define tiempos internos de gestión con el fin de anticiparse a posibles incumplimientos contractuales.
-
-Este margen operativo permite identificar oportunamente los pedidos que requieren atención prioritaria antes de alcanzar la fecha límite establecida por el cliente.
-
-### Ejemplos de días pactados
-
-| Actividad | Descripción            | Urbano | Rural |
-| --------- | ---------------------- | ------ | ----- |
-| ACREV     | Puntos de Conexión     | 4      | 4     |
-| ALEGN     | Legalización           | 7      | 10    |
-| ALEGA     | Legalización           | 7      | 10    |
-| ALECA     | Legalización           | 7      | 10    |
-| ACAMN     | Reforma                | 7      | 10    |
-| AMRTR     | Movimiento de Red      | 9      | 14    |
-| REEQU     | Prepago                | 11     | 11    |
-| INPRE     | Instalación Prepago    | 11     | 11    |
-| DIPRE     | Desinstalación Prepago | 8      | 11    |
-| ARTER     | Replanteo              | 5      | 8     |
-| AEJDO     | Ejecución              | 7      | 12    |
-| VITEC     | Movilidad Eléctrica    | 2      | 2     |
-
-> **Nota:** El sistema consulta automáticamente esta parametrización para calcular la **Fecha Límite ANS**, los **Días Restantes** y el **Estado ANS** de cada pedido.
-
----
-
 ## 📊 Dashboard
 
 Con base en el archivo procesado, se construye un dashboard para facilitar el análisis.
@@ -401,18 +316,89 @@ Cada pedido dispone de un enlace de ubicación que puede compartirse mediante:
 El técnico puede abrir el enlace desde su celular y utilizar aplicaciones de navegación para dirigirse al punto de atención.
 
 ---
+## 📦 Productos contemplados dentro del contrato
 
-### Beneficio operativo del mapa
+El Informe ANS consolida información correspondiente a todos los diferentes productos operativos definidos dentro del contrato:(Columna O - ACTIVIDAD).
 
-El mapa permite:
+* Prepagos.
+* Legalizaciones.
+* Movimientos de Redes.
+* Puntos de Conexión.
+* Movilidad Eléctrica.
 
-- Priorizar pedidos vencidos o críticos.
-- Identificar concentraciones de trabajo por zona.
-- Optimizar desplazamientos.
-- Mejorar la programación de técnicos.
-- Reducir tiempos de atención.
-- Facilitar la ubicación de direcciones en campo.
-- Apoyar la toma de decisiones operativas.
+
+### Agrupaciones implementadas : ver archivo C:\Users\hector.gaviria\Desktop\Proyecto_Actas\CONFIG
+
+| Actividad | Agrupado por actividad | Item |
+|-----------|------------------------|----------------|
+| ACVIS | AGPE | C07R-C07U |
+| AORDI | DELINEANTE DE ARQUITECTURA | E05U |
+| AORDI | ORDENES INTERNAS | No aplica |
+| AORDI | TÉCNICOS GPS | E04R-E04U-E06R-E06U-F07R-F07U |
+| AORDI | TECNÓLOGO AIE | E01U-E01R-E02R-E02U |
+| AEJDO | HV | No aplica |
+| ACAMN-ALECA-ALEGA-ALEGN-LEGM | LEGALIZACIÓN | No aplica |
+| VITEC | MOVILIDAD ELÉCTRICA | F01R-F01U |
+| AMRTR | MOVIMIENTO DE REDES | D02R-D02U-D03R-D03U-D04R-D04U |
+| DIPRE-DSPRE-REEQU | PREPAGO | No aplica |
+| ACREV | PUNTOS DE CONEXIÓN | D01R-D01U |
+
+## 📖 Glosario
+- **AORDI:** Actividad utilizada para la gestión de órdenes internas.
+- **HV:** Habilitación de Vivienda.
+- **AGPE:** Autogeneradores de Pequeña Escala.
+- **ALEGA:** Legalización residencial.
+- **ALEGN:** Legalización No residencial.
+- **ALECA:** Reforma residencial.
+- **ACAMN:** Reforma No residencial.
+- **AEJDO:** Ejecución Habilitación vivienda.
+- **ARTER:** Replanteo HV.
+- **INPRE:** Ejecución prepago.
+- **DIPRE:** Retiro prepago.
+- **REEQU:** Trabajo prepago.
+
+---
+
+## 🧮 Cálculo de Días Contractuales
+
+Una vez consolidada la información, el sistema aplica las reglas contractuales definidas para cada actividad operativa.
+
+Estas reglas se encuentran parametrizadas dentro del desarrollo y permiten determinar los días pactados para el cumplimiento de cada pedido.
+
+## ⏳ Días Pactados y Margen Operativo
+
+Cada actividad definida dentro del contrato posee una cantidad máxima de días permitidos para su ejecución.
+
+Estos días corresponden al tiempo contractual establecido por el cliente y pueden variar dependiendo de:
+
+* La actividad ejecutada.
+* El tipo de dirección.
+* Si el pedido corresponde a zona urbana o rural.
+
+El sistema utiliza esta información para calcular automáticamente las fechas límite ANS y determinar el estado de cada pedido.
+
+Adicionalmente, Elite define tiempos internos de gestión con el fin de anticiparse a posibles incumplimientos contractuales.
+
+Este margen operativo permite identificar oportunamente los pedidos que requieren atención prioritaria antes de alcanzar la fecha límite establecida por el cliente.
+
+### Ejemplos de días pactados
+
+| Actividad | Descripción            | Urbano | Rural |
+| --------- | ---------------------- | ------ | ----- |
+| ACREV     | Puntos de Conexión     | 4      | 4     |
+| ALEGN     | Legalización           | 7      | 10    |
+| ALEGA     | Legalización           | 7      | 10    |
+| ALECA     | Legalización           | 7      | 10    |
+| ACAMN     | Reforma                | 7      | 10    |
+| AMRTR     | Movimiento de Red      | 9      | 14    |
+| REEQU     | Prepago                | 11     | 11    |
+| INPRE     | Instalación Prepago    | 11     | 11    |
+| DIPRE     | Desinstalación Prepago | 8      | 11    |
+| ARTER     | Replanteo              | 5      | 8     |
+| AEJDO     | Ejecución              | 7      | 12    |
+| VITEC     | Movilidad Eléctrica    | 2      | 2     |
+
+> **Nota:** El sistema consulta automáticamente esta parametrización para calcular la **Fecha Límite ANS**, los **Días Restantes** y el **Estado ANS** de cada pedido.
 
 
 ---
