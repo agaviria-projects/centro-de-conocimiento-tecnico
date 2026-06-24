@@ -268,7 +268,7 @@ Al seleccionar o posicionarse sobre un pedido, el sistema muestra información r
 
 ---
 
-### 📲 Ccopiar enlace
+### 📲 Copiar enlace
 
 Permite copiar automáticamente la información del pedido seleccionado, incluye:
 
@@ -328,7 +328,7 @@ El visor permite cambiar entre diferentes capas cartográficas:
 
 🌎 Vista Regional
 
-Muestra una vista cartográfica tradicional con carreteras, municipios y nombres geográficos.
+Muestra un mapa tradicional con carreteras, municipios y nombres de lugares.
 
 🏙️ Vista Urbana
 
