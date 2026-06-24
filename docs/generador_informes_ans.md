@@ -241,15 +241,36 @@ Su objetivo es facilitar la gestión operativa, la priorización de pedidos y la
 
 Al filtrar por subzona se podra generar el mapa exclusivamente para ese filtro aplicado por subzona; generando el mapa y la cantidad de marcadores, puede presentarse que la cantidad de marcadores no sea igual al total de pedidos;  pero esto es debido que desde la extracción en Fenix hayan pedidos sin coordenadas.
 
-### Panel de Control ANS
+### 🗺️ Panel de Control Geográfico ANS
 
-El mapa incorpora un panel lateral desde donde el usuario puede:
+El Dashboard incorpora un mapa que permite visualizar geográficamente todos los pedidos de la operación, facilitando su ubicación, seguimiento y la planeación de las visitas técnicas.
 
-- Buscar un pedido específico.
-- Mostrar todos los pedidos.
-- Ajustar a marcadores( en el caso de que no se muestren los marcadores)
-- Copiar el enlace de ubicación.
-- Filtrar información.
+## 🔎 Buscar pedido
+
+Permite localizar rápidamente un pedido específico dentro del mapa.
+
+El usuario digita el número del pedido y el sistema centra automáticamente el mapa sobre la ubicación correspondiente.
+
+## 🔗 Copiar enlace
+
+Permite copiar automáticamente la información del pedido seleccionado, incluyendo:
+
+Enlace de Google Maps.
+Enlace de Street View.
+Ruta desde la bodega.
+
+Esta funcionalidad facilita compartir la ubicación con técnicos y personal operativo.
+
+## 🌍 Ver Street View ( es como la Vista de Calle)
+
+Permite observar fotografías reales del entorno donde se encuentra el pedido antes de realizar la visita técnica.
+Es importante tener en cuenta que esta funcionalidad depende de la información disponible en Google, por lo que algunos pedidos o direcciones pueden no contar con imágenes disponibles o presentar información desactualizada.
+
+## 🚗 Ruta desde Bodega
+
+Genera automáticamente la ruta desde la bodega hasta la ubicación del pedido utilizando Google Maps.
+
+Esta herramienta facilita la planeación y desplazamiento de los técnicos en campo.
 
 ---
 
@@ -258,9 +279,8 @@ El mapa incorpora un panel lateral desde donde el usuario puede:
 La información puede filtrarse por:
 
 - Estado del pedido.
-- Concepto.
-- Actividad.
-- Zona.
+- Concepto:  PROG, PPRG
+- Actividad: LEGALIZACIONES, PREPAGOS, MOVIMIENTO DE REDES ETC.
 
 Estos filtros permiten analizar sectores específicos de la operación y facilitar la programación de actividades en campo.
 
@@ -305,15 +325,42 @@ Al seleccionar o posicionarse sobre un pedido, el sistema muestra información r
 
 ---
 
-### Compartir ubicación al técnico
+### 📲 Compartir ubicación al técnico
 
-Cada pedido dispone de un enlace de ubicación que puede compartirse mediante:
+Cada pedido dispone de un enlace que puede compartirse fácilmente mediante WhatsApp.
 
-- WhatsApp.
-- Correo electrónico.
-- Otros medios de comunicación.
+La información enviada al técnico incluye:
 
-El técnico puede abrir el enlace desde su celular y utilizar aplicaciones de navegación para dirigirse al punto de atención.
+Número del pedido.
+Datos básicos del cliente.
+Enlace de ubicación en Google Maps.
+Enlace de Street View.
+Ruta desde la bodega hasta el punto de atención.
+
+De esta manera, el técnico puede abrir el mensaje desde su celular y utilizar Google Maps para desplazarse directamente al lugar donde debe realizar la atención.
+
+Esta funcionalidad facilita la ubicación del predio, reduce tiempos de búsqueda y mejora la planeación de las visitas en campo.
+
+---
+
+### 🛰️ Tipos de Visualización del Mapa
+
+El visor permite cambiar entre diferentes capas cartográficas:
+
+🌎 Vista Regional
+
+Muestra una vista cartográfica tradicional con carreteras, municipios y nombres geográficos.
+
+🏙️ Vista Urbana
+
+Presenta una vista enfocada en calles, vías y zonas urbanas.
+
+🛰️ Vista Satelital
+
+Muestra imágenes satelitales reales del terreno, facilitando la identificación exacta del entorno donde se encuentra el pedido.
+
+## Si preguntan donde se realizo el mapa  
+el visor geográfico interactivo es desarrollado mediante una macro en Excel y tecnología HTML, permitiendo visualizar espacialmente todos los pedidos de la operación.
 
 ---
 ## 📦 Productos contemplados dentro del contrato
