@@ -251,6 +251,10 @@ Permite localizar rápidamente un pedido específico dentro del mapa.
 
 El usuario digita el número del pedido y el sistema centra automáticamente el mapa sobre la ubicación correspondiente.
 
+Al buscar un pedido, el sistema ubica automáticamente el predio en el mapa y genera la ruta desde la bodega hasta el lugar de atención.
+
+Esto permite al técnico conocer el recorrido sugerido y desplazarse de forma más eficiente hacia el predio.
+
 ---
 
 ### Información Disponible por Pedido
