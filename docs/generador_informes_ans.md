@@ -251,15 +251,34 @@ Permite localizar rápidamente un pedido específico dentro del mapa.
 
 El usuario digita el número del pedido y el sistema centra automáticamente el mapa sobre la ubicación correspondiente.
 
-## 🔗 Copiar enlace
+---
 
-Permite copiar automáticamente la información del pedido seleccionado, incluyendo:
+### Información Disponible por Pedido
+
+Al seleccionar o posicionarse sobre un pedido, el sistema muestra información relevante como:
+
+- Número de pedido.
+- Nombre del cliente.
+- Dirección.
+- Coordenadas.
+- Teléfono o celular.
+- Estado del pedido.
+- Zona.
+- Actividad.
+
+---
+
+### 📲 Ccopiar enlace
+
+Permite copiar automáticamente la información del pedido seleccionado, incluye:
 
 Enlace de Google Maps.
 Enlace de Street View.
 Ruta desde la bodega.
 
-Esta funcionalidad facilita compartir la ubicación con técnicos y personal operativo.
+De esta manera, el técnico puede abrir el mensaje desde su celular y utilizar Google Maps para desplazarse directamente al lugar donde debe realizar la atención.
+
+Esta funcionalidad facilita la ubicación del predio, reduce tiempos de búsqueda y mejora la planeación de las visitas en campo.
 
 ## 🌍 Ver Street View ( es como la Vista de Calle)
 
@@ -302,46 +321,6 @@ Esto permite identificar visualmente las prioridades operativas dentro del terri
 
 ---
 
-### Búsqueda de pedidos
-
-El usuario puede ingresar un número de pedido para localizarlo automáticamente dentro del mapa.
-
-Al encontrar el pedido, el sistema centra la visualización sobre la ubicación correspondiente para facilitar su análisis.
-
----
-
-### Información Disponible por Pedido
-
-Al seleccionar o posicionarse sobre un pedido, el sistema muestra información relevante como:
-
-- Número de pedido.
-- Nombre del cliente.
-- Dirección.
-- Coordenadas.
-- Teléfono o celular.
-- Estado del pedido.
-- Zona.
-- Actividad.
-
----
-
-### 📲 Compartir ubicación al técnico
-
-Cada pedido dispone de un enlace que puede compartirse fácilmente mediante WhatsApp.
-
-La información enviada al técnico incluye:
-
-Número del pedido.
-Datos básicos del cliente.
-Enlace de ubicación en Google Maps.
-Enlace de Street View.
-Ruta desde la bodega hasta el punto de atención.
-
-De esta manera, el técnico puede abrir el mensaje desde su celular y utilizar Google Maps para desplazarse directamente al lugar donde debe realizar la atención.
-
-Esta funcionalidad facilita la ubicación del predio, reduce tiempos de búsqueda y mejora la planeación de las visitas en campo.
-
----
 
 ### 🛰️ Tipos de Visualización del Mapa
 
