@@ -108,8 +108,6 @@ Cada parte tiene un significado:
 3. Mostrar el **Área de Cálculo**.
 4. Escribir la medida.
 
-> **Figura 5.1** Inserta aquí la captura del Área de Cálculo donde creaste la medida **Total Materiales**.
-
 ---
 
 # Primera medida
@@ -166,8 +164,6 @@ Arrastrar:
 - Total Materiales
 
 Observa cómo la medida calcula automáticamente el total para cada material.
-
-> **Figura 5.2** Inserta una captura de la Tabla Dinámica mostrando la medida **Total Materiales** por Material.
 
 ---
 
