@@ -686,7 +686,7 @@ Durante este curso aprenderás:
         "07 - Columnas Calculadas": "07_columnas_calculadas.md",
         "08 - Construcción de Informes y Dashboards con Tablas Dinámicas": "08_Construcción de Informes y Dashboards con Tablas Dinámicas.md",
         "09 - Caso Empresarial Completo": "09_Caso Empresarial Completo.md",
-        "10 - Trucos Power Pivot": "10_trucos_powerpivot.md",
+        "10 - Casos Reales y Lecciones Aprendidas en Excel BI": "10_Casos Reales y Lecciones Aprendidas en Excel BI.md",
         "11 - Buenas Prácticas": "11_buenas_practicas.md",
         "12 - Glosario": "12_glosario.md",
     }
