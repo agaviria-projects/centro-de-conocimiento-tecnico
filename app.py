@@ -602,6 +602,38 @@ elif opcion == "📘 Academia Excel BI":
 
     st.header("📘 Academia Excel BI")
 
+    st.info("""
+# 📚 Curso Excel BI para Analistas de Datos
+
+Aprende desde cero a utilizar Excel como una herramienta de Inteligencia de Negocios (Business Intelligence).
+
+Durante este curso aprenderás:
+
+✅ Power Query
+
+✅ Power Pivot
+
+✅ Modelo de Datos
+
+✅ DAX
+
+✅ Medidas
+
+✅ Columnas Calculadas
+
+✅ Tablas Dinámicas
+
+✅ Casos empresariales reales
+
+---
+
+🎯 **Nivel:** Básico → Avanzado
+
+⏱️ **Duración estimada:** 13 módulos
+
+📱 **Compatible con consulta desde celular.**
+""")
+
     modulos_excel = {
         "00 - Bienvenida": "00_bienvenida.md",
         "01 - Power Query": "01_power_query.md",
@@ -631,10 +663,49 @@ elif opcion == "📘 Academia Excel BI":
 
     st.progress(progreso)
 
+    col1, col2, col3 = st.columns(3)
+
+    with col1:
+        st.metric(
+            "📚 Módulo",
+            f"{indice}/{total_modulos}"
+        )
+
+    with col2:
+        st.metric(
+            "📈 Progreso",
+            f"{int(progreso * 100)}%"
+        )
+
+    with col3:
+        st.metric(
+            "🎯 Nivel",
+            "Básico"
+        )
+
     st.caption(
-        f"📚 Módulo {indice} de {total_modulos} • "
-        f"{int(progreso*100)}% del recorrido"
+        f"Actualmente estás estudiando el módulo {indice} de {total_modulos}."
     )
+
+    with st.expander("📚 Ver contenido completo del curso"):
+
+        st.markdown("""
+### Módulos del Curso
+
+- ✅ 00 - Bienvenida
+- ⬜ 01 - Power Query
+- ⬜ 02 - Power Pivot
+- ⬜ 03 - Modelo de Datos
+- ⬜ 04 - Relaciones
+- ⬜ 05 - DAX
+- ⬜ 06 - Medidas
+- ⬜ 07 - Columnas Calculadas
+- ⬜ 08 - Tablas Dinámicas
+- ⬜ 09 - Casos Reales
+- ⬜ 10 - Trucos Power Pivot
+- ⬜ 11 - Buenas Prácticas
+- ⬜ 12 - Glosario
+""")
 
     st.divider()
 
@@ -650,7 +721,7 @@ elif opcion == "📘 Academia Excel BI":
 
         st.warning(
             f"""
-Todavía no existe el módulo seleccionado.
+⚠️ El módulo aún no ha sido creado.
 
 Archivo esperado:
 
