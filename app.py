@@ -113,6 +113,7 @@ opciones = [
     "📄 Compresor PDF",
     "💬 WhatsApp + ANS + Formularios",
     "🛠️ Validación Mano de Obra Vs Materiales",
+    "📘 Academia Excel BI",
 ]
 
 # ===============================
@@ -596,3 +597,50 @@ Para acelerar la construcción técnica utilicé Inteligencia Artificial como he
         st.error(
             "No se encontró el archivo docs/validacion_mano_obra_materiales.md"
         )
+
+elif opcion == "📘 Academia Excel BI":
+
+    st.header("📘 Academia Excel BI")
+
+    st.info("""
+Bienvenido a la Academia Excel BI.
+
+Aquí encontrarás un curso completo sobre:
+
+• Power Query
+• Power Pivot
+• Modelo de Datos
+• DAX
+• Medidas
+• Columnas Calculadas
+• Tablas Dinámicas
+• Casos Reales
+""")
+
+    modulos_excel = {
+        "00 - Bienvenida": "00_bienvenida.md",
+        "01 - Power Query": "01_power_query.md",
+        "02 - Power Pivot": "02_power_pivot.md",
+        "03 - Modelo de Datos": "03_modelo_datos.md",
+        "04 - Relaciones": "04_relaciones.md",
+        "05 - DAX": "05_dax.md",
+        "06 - Medidas": "06_medidas.md",
+        "07 - Columnas Calculadas": "07_columnas_calculadas.md",
+        "08 - Tablas Dinámicas": "08_tablas_dinamicas.md",
+        "09 - Casos Reales": "09_casos_reales.md",
+        "10 - Trucos": "10_trucos_powerpivot.md",
+        "11 - Buenas Prácticas": "11_buenas_practicas.md",
+        "12 - Glosario": "12_glosario.md",
+    }
+
+    modulo = st.selectbox(
+        "Selecciona un módulo",
+        list(modulos_excel.keys())
+    )
+
+    ruta = Path("docs/excel_bi") / modulos_excel[modulo]
+
+    if ruta.exists():
+        st.markdown(ruta.read_text(encoding="utf-8"))
+    else:
+        st.warning(f"No existe el archivo:\n{ruta}")
