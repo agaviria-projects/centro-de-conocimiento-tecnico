@@ -154,11 +154,13 @@ Pedidos (*)
 
 # 🖼 Modelo obtenido
 
-En esta sección inserta la captura de pantalla del modelo construido en Power Pivot.
+A continuación se muestra el Modelo de Datos construido en Power Pivot después de crear todas las relaciones del laboratorio.
 
-Será la imagen oficial del laboratorio.
+Este será el modelo base sobre el cual construiremos las medidas DAX en los siguientes módulos.
 
----
+![Modelo de Datos Power Pivot](../images/excel_bi/modelo_power_pivot.png)
+
+> **Figura 4.1** Modelo de Datos del laboratorio Empresa_Telecom_ExcelBI_v3.xlsx.
 
 # Interpretando el Modelo
 
