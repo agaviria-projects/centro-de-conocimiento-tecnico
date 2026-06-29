@@ -1,41 +1,40 @@
+
 # 📘 Módulo 05 - Introducción a DAX
 
 > 📚 **Curso:** Excel BI para Analistas de Datos  
 > 📖 **Módulo:** 05 - Introducción a DAX  
 > 🎯 **Nivel:** Básico - Intermedio  
-> ⏱️ **Duración estimada:** 50 minutos
+> ⏱️ **Duración estimada:** 55 minutos
 
 ---
 
 # 🎯 Objetivo
 
-Comprender qué es DAX, cómo funciona dentro del Modelo de Datos y crear las primeras medidas utilizando Power Pivot.
+Comprender qué es DAX, cómo funciona dentro del Modelo de Datos y crear la primera medida del laboratorio utilizando Power Pivot.
 
-Al finalizar este módulo serás capaz de crear medidas básicas y entender por qué DAX es el motor analítico de Power Pivot y Power BI.
+Al finalizar este módulo comprenderás por qué las medidas son el núcleo del análisis en Power Pivot y Power BI.
 
 ---
 
 # 📖 ¿Qué es DAX?
 
-**DAX** significa:
+**DAX** significa **Data Analysis Expressions**.
 
-**Data Analysis Expressions**
-
-Es el lenguaje utilizado por:
+Es el lenguaje de fórmulas utilizado por:
 
 - Microsoft Power Pivot
 - Microsoft Power BI
 - SQL Server Analysis Services (Tabular)
 
-Su objetivo consiste en crear cálculos sobre un Modelo de Datos.
+Su finalidad es crear cálculos dinámicos sobre un Modelo de Datos.
 
-A diferencia de Excel tradicional, DAX no trabaja únicamente sobre celdas; trabaja sobre tablas relacionadas.
+A diferencia de Excel tradicional, DAX no trabaja únicamente sobre celdas, sino sobre tablas relacionadas.
 
 ---
 
 # ¿Por qué existe DAX?
 
-En Excel tradicional utilizamos funciones como:
+En Excel solemos utilizar funciones como:
 
 - SUMA
 - PROMEDIO
@@ -43,9 +42,9 @@ En Excel tradicional utilizamos funciones como:
 - MAX
 - MIN
 
-Cuando los datos provienen de varias tablas relacionadas, estas funciones dejan de ser suficientes.
+Cuando la información proviene de varias tablas relacionadas, estas funciones ya no son suficientes.
 
-DAX fue creado para realizar cálculos utilizando el Modelo de Datos construido en los módulos anteriores.
+DAX aprovecha el Modelo de Datos construido en los módulos anteriores para realizar cálculos inteligentes.
 
 ---
 
@@ -60,7 +59,7 @@ Nuestro modelo contiene:
 - tblInstalaciones
 - tblCalendario
 
-Las medidas que construiremos utilizarán estas relaciones automáticamente.
+Las relaciones creadas en el Módulo 4 serán utilizadas automáticamente por las medidas DAX.
 
 ---
 
@@ -76,10 +75,12 @@ En DAX escribimos:
 
 ```DAX
 Total Materiales :=
-SUM(tblMateriales[Valor])
+SUM ( tblMateriales[Valor] )
 ```
 
-La diferencia es que la medida queda almacenada dentro del Modelo de Datos y puede reutilizarse en cualquier Tabla Dinámica.
+Una fórmula pertenece a una celda.
+
+Una medida pertenece al Modelo de Datos.
 
 ---
 
@@ -87,10 +88,10 @@ La diferencia es que la medida queda almacenada dentro del Modelo de Datos y pue
 
 ```DAX
 Total Materiales :=
-SUM(tblMateriales[Valor])
+SUM ( tblMateriales[Valor] )
 ```
 
-Partes de la expresión:
+Cada parte tiene un significado:
 
 - **Total Materiales** → Nombre de la medida.
 - **:=** → Inicio de la expresión DAX.
@@ -103,11 +104,11 @@ Partes de la expresión:
 # ¿Dónde se crean las medidas?
 
 1. Abrir Power Pivot.
-2. Seleccionar una tabla (por ejemplo, tblMateriales).
-3. Activar el Área de Cálculo.
-4. Escribir la medida en una celda del área inferior.
+2. Seleccionar la tabla **tblMateriales**.
+3. Mostrar el **Área de Cálculo**.
+4. Escribir la medida.
 
-> **Sugerencia:** Inserta aquí una captura del Área de Cálculo de Power Pivot como Figura 5.1.
+> **Figura 5.1** Inserta aquí la captura del Área de Cálculo donde creaste la medida **Total Materiales**.
 
 ---
 
@@ -117,107 +118,149 @@ Crear la siguiente medida:
 
 ```DAX
 Total Materiales :=
-SUM(tblMateriales[Valor])
+SUM ( tblMateriales[Valor] )
 ```
 
-Esta medida calcula el valor total de los materiales utilizados.
+Esta medida calcula el valor total de los materiales utilizados en el laboratorio.
 
 ---
 
-# Más medidas básicas
+# ¿Dónde se utiliza una medida?
 
-## Total Pedidos
+Una medida cobra verdadero sentido cuando se utiliza en una Tabla Dinámica.
 
-```DAX
-Total Pedidos :=
-COUNT(tblPedidos[Pedido])
+## Crear una Tabla Dinámica
+
+Ir a:
+
+```text
+Power Pivot
+      ↓
+Tabla Dinámica
+      ↓
+Nueva Hoja
 ```
 
----
+o
 
-## Valor Promedio
-
-```DAX
-Promedio Materiales :=
-AVERAGE(tblMateriales[Valor])
-```
-
----
-
-## Valor Máximo
-
-```DAX
-Valor Máximo :=
-MAX(tblMateriales[Valor])
-```
-
----
-
-## Valor Mínimo
-
-```DAX
-Valor Mínimo :=
-MIN(tblMateriales[Valor])
+```text
+Insertar
+      ↓
+Tabla Dinámica
+      ↓
+Usar este Modelo de Datos
 ```
 
 ---
 
-## Materiales Diferentes
+# Primer análisis
 
-```DAX
-Materiales Diferentes :=
-DISTINCTCOUNT(tblMateriales[Material])
-```
+Arrastrar:
+
+**Filas**
+
+- Material
+
+**Valores**
+
+- Total Materiales
+
+Observa cómo la medida calcula automáticamente el total para cada material.
+
+> **Figura 5.2** Inserta una captura de la Tabla Dinámica mostrando la medida **Total Materiales** por Material.
+
+---
+
+# Cambiando la dimensión
+
+Ahora reemplaza **Material** por:
+
+- Cliente
+- Técnico
+- Mes
+
+La medida **no cambia**.
+
+Lo único que cambia es la forma de analizar la información.
+
+---
+
+# ¿Qué acaba de ocurrir?
+
+Power Pivot utiliza las relaciones del Modelo de Datos para recalcular automáticamente la medida según el contexto de análisis.
+
+No fue necesario modificar la fórmula.
+
+Esta es una de las principales ventajas de DAX frente a una fórmula tradicional de Excel.
 
 ---
 
 # ¿Qué hace una medida?
 
-Una medida no guarda un resultado fijo.
+Una medida:
 
-Cada vez que cambian los filtros de una Tabla Dinámica, Power Pivot vuelve a calcular automáticamente el resultado.
-
-Ese comportamiento es una de las principales diferencias frente a una fórmula tradicional de Excel.
+- No almacena un valor fijo.
+- Se recalcula automáticamente.
+- Responde a filtros y segmentaciones.
+- Puede reutilizarse en múltiples Tablas Dinámicas.
 
 ---
 
 # Buenas prácticas
 
 - Utilizar nombres descriptivos.
-- Crear medidas reutilizables.
-- Evitar duplicar cálculos.
+- Crear primero medidas sencillas.
 - Mantener una nomenclatura consistente.
-- Crear primero medidas simples antes de utilizar funciones avanzadas.
+- Aprovechar el Modelo de Datos antes de escribir fórmulas complejas.
 
 ---
 
 # Errores frecuentes
 
 - Confundir una medida con una columna calculada.
-- Escribir funciones de Excel dentro de DAX.
-- Crear medidas sin comprender el Modelo de Datos.
-- Utilizar nombres poco descriptivos.
+- Escribir funciones de Excel en lugar de funciones DAX.
+- Crear medidas sin comprender las relaciones del modelo.
+- Intentar resolver todo con una única fórmula.
 
 ---
 
 # 📝 Lo que aprendí
 
-En este módulo comprendí que DAX es el lenguaje de análisis utilizado por Power Pivot y Power BI. Aprendí que una medida es un cálculo dinámico que se evalúa según el contexto de filtros del Modelo de Datos y que puede reutilizarse en cualquier visualización.
+En este módulo comprendí que DAX es el lenguaje de análisis utilizado por Power Pivot y Power BI. Aprendí a crear mi primera medida, a almacenarla en el Modelo de Datos y a utilizarla dentro de una Tabla Dinámica. También observé que una misma medida puede analizar diferentes dimensiones gracias a las relaciones del modelo.
 
 ---
 
 # 🎯 Ejercicio
 
-Crear las siguientes medidas:
+## Ejercicio 1
 
-1. Total Materiales
-2. Total Pedidos
-3. Promedio Materiales
-4. Valor Máximo
-5. Valor Mínimo
-6. Materiales Diferentes
+Crear la medida:
 
-Después insertar una Tabla Dinámica y comprobar que las medidas cambian al aplicar filtros por Cliente, Técnico y Mes.
+```DAX
+Total Materiales :=
+SUM ( tblMateriales[Valor] )
+```
+
+## Ejercicio 2
+
+Crear una Tabla Dinámica utilizando el Modelo de Datos.
+
+## Ejercicio 3
+
+Mostrar el valor de la medida por:
+
+- Material
+- Cliente
+- Técnico
+- Mes
+
+## Ejercicio 4
+
+Responder:
+
+1. ¿Por qué no fue necesario modificar la medida al cambiar las filas?
+2. ¿Qué papel desempeñan las relaciones del Modelo de Datos?
+3. ¿Cuál es la diferencia entre una fórmula de Excel y una medida DAX?
 
 ---
 
@@ -225,4 +268,13 @@ Después insertar una Tabla Dinámica y comprobar que las medidas cambian al apl
 
 ## 📘 Módulo 06 - Medidas DAX
 
-En el siguiente módulo profundizaremos en la creación de medidas profesionales, aprenderemos el contexto de filtro, la función CALCULATE(), DIVIDE(), el uso de VAR y las mejores prácticas para construir indicadores reutilizables.
+En el siguiente módulo aprenderemos las funciones de agregación más utilizadas:
+
+- SUM
+- COUNT
+- AVERAGE
+- MIN
+- MAX
+- DISTINCTCOUNT
+
+y construiremos indicadores reutilizables para comenzar a desarrollar análisis profesionales.
