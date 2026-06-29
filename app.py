@@ -1,5 +1,6 @@
-import streamlit as st
 from pathlib import Path
+import streamlit as st
+import re
 
 st.set_page_config(
     page_title="Centro de Conocimiento Técnico",
@@ -708,14 +709,51 @@ Durante este curso aprenderás:
 """)
 
     st.divider()
+    def mostrar_markdown(md_path: Path):
 
+        contenido = md_path.read_text(encoding="utf-8")
+
+        patron = r'!\[(.*?)\]\((.*?)\)'
+
+        partes = re.split(patron, contenido)
+
+        i = 0
+
+        while i < len(partes):
+
+            if i == 0:
+
+                if partes[i].strip():
+                    st.markdown(partes[i])
+
+                i += 1
+
+            else:
+
+                alt = partes[i]
+                ruta_img = partes[i + 1]
+
+                imagen = (md_path.parent / ruta_img).resolve()
+
+                if imagen.exists():
+                    st.image(
+                        str(imagen),
+                        caption=alt,
+                        use_container_width=True
+                    )
+                else:
+                    st.warning(f"No se encontró la imagen:\n{imagen}")
+
+                if partes[i + 2].strip():
+                    st.markdown(partes[i + 2])
+
+                i += 3
+                
     ruta = Path("docs/excel_bi") / modulos_excel[modulo]
 
     if ruta.exists():
 
-        st.markdown(
-            ruta.read_text(encoding="utf-8")
-        )
+       mostrar_markdown(ruta)
 
     else:
 

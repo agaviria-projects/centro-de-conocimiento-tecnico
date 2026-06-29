@@ -158,7 +158,7 @@ A continuación se muestra el Modelo de Datos construido en Power Pivot después
 
 Este será el modelo base sobre el cual construiremos las medidas DAX en los siguientes módulos.
 
-![Modelo de Datos Power Pivot](../images/excel_bi/modelo_power_pivot.png)
+{{modelo_power_pivot.png}}
 
 > **Figura 4.1** Modelo de Datos del laboratorio Empresa_Telecom_ExcelBI_v3.xlsx.
 
