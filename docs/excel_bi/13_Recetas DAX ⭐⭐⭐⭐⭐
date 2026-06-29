@@ -1,0 +1,861 @@
+# 📘 Módulo 13 - Recetas DAX para Analistas BI
+
+> 📚 Curso: Excel BI para Analistas de Datos
+>
+> 📖 Módulo: 13 - Recetas DAX
+>
+> 🎯 Nivel: Intermedio - Avanzado
+>
+> ⏱️ Duración: Consulta permanente
+
+---
+
+# 🎯 Objetivo
+
+Disponer de una colección de medidas DAX listas para utilizar en proyectos reales.
+
+Este módulo no pretende enseñar todas las funciones DAX existentes.
+
+Su objetivo consiste en responder una pregunta muy sencilla:
+
+> **Tengo este problema... ¿qué medida DAX debo utilizar?**
+
+Cada receta presenta un problema real, la solución mediante DAX y una explicación práctica de cuándo utilizarla.
+
+Este documento crecerá continuamente a medida que se desarrollen nuevos proyectos y aparezcan nuevas necesidades.
+
+---
+
+# 📚 Cómo utilizar este módulo
+
+Todas las recetas siguen la misma estructura.
+
+```text
+Problema
+
+↓
+
+Medida DAX
+
+↓
+
+¿Qué hace?
+
+↓
+
+¿Cuándo utilizarla?
+
+↓
+
+Ejemplo práctico
+
+↓
+
+Resultado esperado
+```
+
+De esta manera podrás localizar rápidamente la solución que necesitas sin recorrer toda la documentación.
+
+---
+# 🧠 Concepto Fundamental
+
+## Funciones Iteradoras vs Funciones No Iteradoras
+
+Antes de aprender nuevas medidas DAX es importante comprender que existen dos grandes grupos de funciones.
+
+---
+
+## 📌 Funciones No Iteradoras
+
+Estas funciones trabajan sobre una única columna.
+
+No recorren fila por fila.
+
+Simplemente toman todos los valores de una columna y realizan un cálculo.
+
+Ejemplos:
+
+- SUM()
+- AVERAGE()
+- MAX()
+- MIN()
+- COUNT()
+- DISTINCTCOUNT()
+
+Ejemplo:
+
+```DAX
+Total Materiales :=
+SUM(tblMateriales[Valor])
+```
+
+Power Pivot únicamente suma todos los valores de la columna **Valor**.
+
+No necesita analizar cada fila individualmente.
+
+---
+
+## 📌 Funciones Iteradoras
+
+Las funciones iteradoras sí recorren la tabla registro por registro.
+
+En cada fila realizan un cálculo.
+
+Al finalizar consolidan todos los resultados.
+
+Las más utilizadas son:
+
+- SUMX()
+- AVERAGEX()
+- COUNTX()
+- MAXX()
+- MINX()
+
+La letra **X** significa que la función recorrerá cada fila de la tabla antes de obtener el resultado final.
+
+---
+
+# Ejemplo
+
+Supongamos la siguiente tabla.
+
+| Material | Cantidad | Valor |
+|----------|---------:|------:|
+| Cable | 2 | 25.000 |
+| Router | 3 | 50.000 |
+
+Si utilizamos:
+
+```DAX
+SUM(tblMateriales[Valor])
+```
+
+El resultado será:
+
+```text
+25.000 + 50.000 = 75.000
+```
+
+Pero si realmente queremos conocer el costo total debemos multiplicar cada fila.
+
+```text
+2 × 25.000 = 50.000
+
+3 × 50.000 = 150.000
+```
+
+Resultado final.
+
+```text
+200.000
+```
+
+Para realizar ese cálculo necesitamos una función iteradora.
+
+```DAX
+SUMX(
+    tblMateriales,
+    tblMateriales[Cantidad] *
+    tblMateriales[Valor]
+)
+```
+
+---
+
+# Regla práctica
+
+Hazte siempre esta pregunta.
+
+> ¿Mi cálculo utiliza únicamente una columna?
+
+Si la respuesta es Sí.
+
+Normalmente utilizarás funciones como:
+
+- SUM
+- MAX
+- MIN
+- COUNT
+- AVERAGE
+
+---
+
+Si la respuesta es No.
+
+Y necesitas combinar dos o más columnas de la misma fila.
+
+Normalmente utilizarás una función terminada en **X**.
+
+- SUMX
+- AVERAGEX
+- MAXX
+- MINX
+- COUNTX
+
+---
+
+# Lo que aprendimos
+
+Las funciones tradicionales trabajan sobre una columna completa.
+
+Las funciones iteradoras recorren cada registro de la tabla para realizar cálculos más complejos.
+
+Comprender esta diferencia permite elegir correctamente la función DAX y evitar muchos errores durante el desarrollo de medidas.
+
+# 📑 Índice de recetas
+
+## 📊 Agregaciones básicas
+
+- Receta 1 - Sumar una columna
+- Receta 2 - Contar registros
+- Receta 3 - Promedio
+- Receta 4 - Valor máximo
+- Receta 5 - Valor mínimo
+- Receta 6 - Contar valores únicos
+
+---
+
+## 📈 Indicadores (KPIs)
+
+- Porcentaje de cumplimiento
+- Promedio diario
+- Promedio mensual
+- Variación porcentual
+- Acumulados
+
+---
+
+## 🧮 Operaciones matemáticas
+
+- Multiplicar columnas
+- Dividir evitando errores
+- Restar medidas
+- Operaciones utilizando SUMX
+
+---
+
+## 📅 Inteligencia de Tiempo
+
+- Año actual
+- Año anterior
+- Acumulado anual
+- Acumulado mensual
+- Comparativos
+
+---
+
+## 🎯 Contexto de filtro
+
+- CALCULATE
+- FILTER
+- ALL
+- ALLEXCEPT
+- REMOVEFILTERS
+
+---
+
+## 🏢 Casos empresariales
+
+- Telecomunicaciones
+- Inventarios
+- Ventas
+- Logística
+- Recursos Humanos
+
+---
+
+# 📌 Recomendación
+
+Antes de crear una nueva medida revisa este módulo.
+
+En la mayoría de ocasiones el cálculo que necesitas ya existe y únicamente deberás adaptarlo a tus tablas.
+
+---
+
+# 📖 Receta 1
+
+## Sumar una columna
+
+### Problema
+
+Necesito obtener el valor total de una columna numérica.
+
+### Medida DAX
+
+```DAX
+Total Materiales :=
+SUM(tblMateriales[Valor])
+```
+
+### ¿Qué hace?
+
+Suma todos los valores contenidos en la columna **Valor**.
+
+### ¿Cuándo utilizarla?
+
+Cuando necesitas calcular el total de:
+
+- Ventas.
+- Costos.
+- Materiales.
+- Cantidades.
+- Horas.
+- Viáticos.
+
+### Ejemplo práctico
+
+```text
+Material         Valor
+
+Cable UTP       25.000
+
+Router          50.000
+
+ONT            100.000
+```
+
+Resultado.
+
+```text
+175.000
+```
+
+### Resultado esperado
+
+Una medida reutilizable que podrá utilizarse en:
+
+- Tablas Dinámicas.
+- KPIs.
+- Dashboards.
+- Gráficos.
+
+---
+
+# 📖 Receta 2
+
+## Contar registros
+
+### Problema
+
+Necesito conocer cuántos pedidos existen.
+
+### Medida DAX
+
+```DAX
+Total Pedidos :=
+COUNT(tblPedidos[Pedido])
+```
+
+### ¿Qué hace?
+
+Cuenta todos los registros de la columna Pedido.
+
+### ¿Cuándo utilizarla?
+
+Cuando necesitas conocer:
+
+- Número de pedidos.
+- Número de facturas.
+- Número de empleados.
+- Número de clientes.
+
+### Ejemplo
+
+```text
+Pedido
+
+P0001
+
+P0002
+
+P0003
+```
+
+Resultado.
+
+```text
+3
+```
+
+---
+
+# 📖 Receta 3
+
+## Calcular un promedio
+
+### Problema
+
+Necesito calcular el promedio de una columna.
+
+### Medida DAX
+
+```DAX
+Promedio Materiales :=
+AVERAGE(tblMateriales[Valor])
+```
+
+### ¿Qué hace?
+
+Calcula el promedio de los valores numéricos.
+
+### ¿Cuándo utilizarla?
+
+- Promedio de ventas.
+- Promedio de costos.
+- Promedio de materiales.
+- Promedio de viáticos.
+
+### Nota importante
+
+Si el promedio debe calcularse por día, por mes o por cliente, primero valida cuál es la unidad de análisis.
+
+Durante la Academia descubrimos que muchos errores no estaban en la fórmula sino en la interpretación del negocio.
+
+---
+
+# 📖 Receta 4
+
+## Obtener el valor máximo
+
+### Medida
+
+```DAX
+Valor Máximo :=
+MAX(tblMateriales[Valor])
+```
+
+Permite obtener el valor más alto de una columna.
+
+---
+
+# 📖 Receta 5
+
+## Obtener el valor mínimo
+
+```DAX
+Valor Mínimo :=
+MIN(tblMateriales[Valor])
+```
+
+Permite obtener el valor más bajo de una columna.
+
+---
+
+# 📖 Receta 6
+
+## Contar valores diferentes
+
+```DAX
+Materiales Diferentes :=
+DISTINCTCOUNT(tblMateriales[Material])
+```
+
+Ideal para conocer:
+
+- Clientes únicos.
+- Materiales diferentes.
+- Técnicos distintos.
+- Pedidos únicos.
+
+---
+
+# 📊 Operaciones Matemáticas
+
+En esta sección aprenderás a crear medidas DAX para realizar cálculos matemáticos reutilizables dentro del Modelo de Datos.
+
+Estas recetas son ampliamente utilizadas en indicadores (KPIs), Tablas Dinámicas y Dashboards.
+
+---
+
+# 📖 MAT-01
+
+# Multiplicar dos columnas (SUMX)
+
+## Problema
+
+Necesito calcular el valor total de cada material multiplicando la cantidad por el valor unitario y posteriormente obtener el total general.
+
+---
+
+## Medida DAX
+
+```DAX
+Valor Total :=
+SUMX(
+    tblMateriales,
+    tblMateriales[Cantidad] *
+    tblMateriales[Valor]
+)
+```
+
+---
+
+## ¿Qué hace?
+
+SUMX recorre cada fila de la tabla.
+
+En cada registro calcula:
+
+```text
+Cantidad × Valor
+```
+
+Finalmente suma todos los resultados.
+
+---
+
+## ¿Cuándo utilizarla?
+
+Cuando necesitas multiplicar columnas como:
+
+- Cantidad × Valor
+- Horas × Tarifa
+- Precio × Cantidad
+- Costo × Unidades
+
+---
+
+## Ejemplo
+
+| Material | Cantidad | Valor |
+|----------|---------:|------:|
+| Cable | 2 | 25.000 |
+| Router | 3 | 50.000 |
+
+Resultado por fila
+
+```text
+50.000
+
+150.000
+```
+
+Resultado final
+
+```text
+200.000
+```
+
+---
+
+## ¿Por qué no funciona SUM?
+
+SUM únicamente suma una columna.
+
+No puede multiplicar dos columnas.
+
+Para eso existe SUMX.
+
+---
+
+## Error frecuente
+
+Intentar escribir:
+
+```DAX
+SUM(tblMateriales[Cantidad] * tblMateriales[Valor])
+```
+
+Esto produce un error.
+
+---
+
+## Lección Aprendida
+
+Cuando el cálculo depende de varias columnas de la misma fila, normalmente la función correcta será **SUMX**.
+
+---
+
+# 📖 MAT-02
+
+# Crear un porcentaje
+
+## Problema
+
+Necesito calcular el porcentaje que representa un valor respecto al total.
+
+---
+
+## Medida DAX
+
+```DAX
+Porcentaje Cumplimiento :=
+DIVIDE(
+    [Pedidos Cerrados],
+    [Total Pedidos],
+    0
+)
+```
+
+---
+
+## ¿Qué hace?
+
+Divide dos medidas.
+
+Si el denominador es cero devuelve cero automáticamente.
+
+---
+
+## Resultado
+
+```text
+Pedidos Cerrados
+
+80
+
+Total Pedidos
+
+100
+
+Resultado
+
+80%
+```
+
+---
+
+## ¿Cuándo utilizarla?
+
+- Cumplimiento
+- Ejecución
+- Avance
+- Participación
+- Indicadores
+
+---
+
+## Buenas prácticas
+
+Formatear la medida como:
+
+```text
+Porcentaje
+```
+
+No como número decimal.
+
+---
+
+# 📖 MAT-03
+
+# Dividir evitando errores
+
+## Problema
+
+Al dividir dos columnas aparece:
+
+```text
+Error
+
+División entre cero
+```
+
+---
+
+## Mala práctica
+
+```DAX
+Ventas/Meta
+```
+
+---
+
+## Buena práctica
+
+```DAX
+Cumplimiento :=
+DIVIDE(
+    [Ventas],
+    [Meta],
+    0
+)
+```
+
+---
+
+## ¿Qué hace?
+
+Si Meta es cero:
+
+Resultado
+
+```text
+0
+```
+
+En lugar de producir un error.
+
+---
+
+## ¿Cuándo utilizarla?
+
+Siempre que exista una división.
+
+En proyectos profesionales prácticamente nunca se utiliza el operador "/".
+
+Se utiliza **DIVIDE()**.
+
+---
+
+## Lección Aprendida
+
+DIVIDE es mucho más seguro que utilizar el operador de división.
+
+---
+
+# 📖 MAT-04
+
+# Restar dos medidas
+
+## Problema
+
+Necesito conocer la diferencia entre dos indicadores.
+
+---
+
+## Medida
+
+```DAX
+Diferencia :=
+[Ventas] - [Costos]
+```
+
+---
+
+## Ejemplo
+
+Ventas
+
+```text
+500.000
+```
+
+Costos
+
+```text
+350.000
+```
+
+Resultado
+
+```text
+150.000
+```
+
+---
+
+## ¿Cuándo utilizarla?
+
+- Utilidad
+- Diferencias
+- Variaciones
+- Saldos
+
+---
+
+# 📖 MAT-05
+
+# Utilizar variables (VAR)
+
+## Problema
+
+La medida comienza a ser muy larga y difícil de leer.
+
+---
+
+## Medida
+
+```DAX
+Utilidad :=
+VAR Ventas =
+    SUM(tblVentas[ValorVenta])
+
+VAR Costos =
+    SUM(tblVentas[Costo])
+
+RETURN
+
+Ventas - Costos
+```
+
+---
+
+## ¿Qué hace?
+
+Guarda cálculos temporales.
+
+Posteriormente los reutiliza.
+
+---
+
+## Ventajas
+
+- Código más limpio.
+- Más fácil de leer.
+- Mejor mantenimiento.
+- Evita repetir cálculos.
+
+---
+
+## Recomendación
+
+Cuando una medida tenga más de dos operaciones, considera utilizar **VAR**.
+
+---
+
+# 📖 MAT-06
+
+# Crear un KPI reutilizable
+
+## Problema
+
+Necesito construir un indicador que pueda utilizarse en diferentes Tablas Dinámicas y Dashboards.
+
+---
+
+## Medida
+
+```DAX
+Valor Total :=
+SUMX(
+    tblMateriales,
+    tblMateriales[Cantidad] *
+    tblMateriales[Valor]
+)
+```
+
+---
+
+## Después...
+
+La misma medida podrá utilizarse para analizar:
+
+- Cliente
+- Técnico
+- Ciudad
+- Zona
+- Mes
+- Año
+- Tipo de Servicio
+
+Sin modificar la fórmula.
+
+---
+
+## Lección Aprendida
+
+Una buena medida DAX se crea una sola vez y puede reutilizarse en todos los informes del proyecto.
+
+---
+
+# ⭐ Consejo Profesional
+
+Antes de crear una nueva medida pregúntate:
+
+> ¿Ya tengo una medida que pueda reutilizar?
+
+En muchos casos no necesitas escribir una nueva fórmula.
+
+Solo debes cambiar el contexto de análisis mediante la Tabla Dinámica, un Segmentador o una Cronología.
+

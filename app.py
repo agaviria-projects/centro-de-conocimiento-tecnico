@@ -689,6 +689,7 @@ Durante este curso aprenderás:
         "10 - Casos Reales I": "10_Casos Reales y Lecciones Aprendidas en Excel BI.md",
         "11 - Casos reales II ": "11_casos_reales_parte2.md",
         "12 - Glosario": "12_glosario.md",
+        "13 - Recetas DAX" : "13_Recetas DAX ⭐⭐⭐⭐⭐",
     }
 
     total_modulos = len(modulos_excel)
