@@ -34,15 +34,18 @@ Power Pivot utiliza el Modelo de Datos como base para realizar todos los cálcul
 
 Supongamos una empresa de telecomunicaciones.
 
-Disponemos de cinco tablas:
+Disponemos de seis tablas:
 
 - Clientes
 - Técnicos
 - Pedidos
 - Materiales
 - Instalaciones
+- Calendario
 
 Cada tabla almacena una parte del proceso del negocio.
+
+La tabla Calendario permitirá posteriormente realizar análisis por fechas, meses, trimestres y funciones de Inteligencia de Tiempo mediante DAX.
 
 El objetivo consiste en relacionarlas correctamente para obtener información consolidada.
 
@@ -63,6 +66,7 @@ Nombre recomendado:
 - tblPedidos
 - tblMateriales
 - tblInstalaciones
+- tblCalendario
 
 ---
 
@@ -86,6 +90,8 @@ Pedidos
 Materiales
 
 Instalaciones
+
+Calendario
 ```
 
 Todas las tablas están independientes.
@@ -153,20 +159,125 @@ En nuestro laboratorio:
 
 ---
 
-# Tablas Dimensión
+# Tipos de tablas del Modelo de Datos
 
-Las demás tablas describen la información de la tabla principal.
+En nuestro laboratorio existen tres tipos de tablas.
 
-En nuestro laboratorio:
+---
+
+## Tablas Dimensión (Dim)
+
+Las dimensiones contienen información descriptiva del negocio.
+
+En nuestro laboratorio son:
 
 - Clientes
 - Técnicos
+- Calendario
+
+Estas tablas responden preguntas como:
+
+- ¿Quién realizó el pedido?
+- ¿Dónde ocurrió?
+- ¿Cuándo ocurrió?
+
+---
+
+## Tabla de Hechos (Fact)
+
+La tabla **Pedidos** representa la operación principal del negocio.
+
+Cada fila corresponde a un pedido realizado por un cliente y atendido por un técnico.
+
+Esta tabla conecta toda la información del modelo.
+
+---
+
+# ¿Por qué Pedidos es la Tabla de Hechos?
+
+Una forma sencilla de identificar la Tabla de Hechos consiste en responder la siguiente pregunta:
+
+> ¿Qué información conecta a todas las demás tablas?
+
+Observemos algunos ejemplos.
+
+Si queremos conocer:
+
+¿Cuánto material utilizó cada técnico?
+
+El recorrido sería:
+
+```text
+Materiales
+
+↓
+
+Pedidos
+
+↓
+
+Técnicos
+```
+
+Si queremos saber:
+
+¿Cuántos pedidos realizó cada cliente?
+
+```text
+Clientes
+
+↓
+
+Pedidos
+```
+
+Si queremos conocer:
+
+¿Cuántas visitas se realizaron por pedido?
+
+```text
+Pedidos
+
+↓
+
+Instalaciones
+```
+
+Todas las consultas pasan por **Pedidos**.
+
+Por esta razón se convierte en la Tabla de Hechos del modelo.
+
+
+## Tablas de Detalle
+
+También existen tablas que almacenan información adicional relacionada con cada pedido.
+
+En nuestro laboratorio:
+
 - Materiales
 - Instalaciones
 
-Estas tablas reciben el nombre de:
+Estas tablas contienen múltiples registros asociados a un mismo pedido.
 
-## Dimensiones
+Por ejemplo:
+
+Pedido 1001
+
+- Cable UTP
+- Router
+- Conectores
+
+o
+
+Pedido 1001
+
+- Visita 1
+- Visita 2
+- Visita 3
+
+Estas tablas no describen el negocio como una dimensión, sino el detalle de la operación.
+
+
 
 ---
 
@@ -417,6 +528,45 @@ Este tipo de diseño recibe el nombre de:
 Es el modelo recomendado para Power Pivot y Power BI.
 
 ---
+# ¿Cómo viaja la información entre las tablas?
+
+Cuando una Tabla Dinámica aplica un filtro, Power Pivot utiliza automáticamente las relaciones del Modelo de Datos.
+
+Por ejemplo.
+
+Si seleccionamos:
+
+Ciudad = Medellín
+
+El filtro sigue el siguiente recorrido:
+
+```text
+Clientes
+
+↓
+
+Pedidos
+
+↓
+
+Materiales
+```
+
+Power Pivot identifica automáticamente los pedidos pertenecientes a Medellín y filtra únicamente los materiales utilizados en esos pedidos.
+
+Este comportamiento será fundamental cuando comencemos a trabajar con medidas DAX.
+
+# Resumen del Modelo
+
+| Tipo de tabla | Tabla |
+|---------------|----------------|
+| Tabla de Hechos | Pedidos |
+| Dimensión | Clientes |
+| Dimensión | Técnicos |
+| Dimensión | Calendario |
+| Tabla de Detalle | Materiales |
+| Tabla de Detalle | Instalaciones |
+| Tipo de Modelo | Star Schema |
 
 # ⭐ Reglas de Oro
 
@@ -497,6 +647,21 @@ Antes de crear cualquier medida debemos responder:
 - ¿Cuál es la llave de relación?
 
 ---
+
+# Pensando como un Analista BI
+
+Un usuario de Excel observa varias hojas con datos.
+
+Un Analista BI observa un modelo de información donde cada tabla cumple una función específica.
+
+- Clientes identifica quién realiza el pedido.
+- Técnicos identifica quién ejecuta el trabajo.
+- Calendario permite analizar el tiempo.
+- Pedidos representa la operación principal.
+- Materiales almacena los recursos utilizados.
+- Instalaciones registra el seguimiento del servicio.
+
+Comprender el papel de cada tabla es el primer paso para construir modelos escalables en Power Pivot y Power BI.
 
 # 📝 Lo que aprendí
 
