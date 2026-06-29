@@ -2,6 +2,46 @@ from pathlib import Path
 import streamlit as st
 import re
 
+def mostrar_markdown(md_path: Path):
+
+        contenido = md_path.read_text(encoding="utf-8")
+
+        patron = r'!\[(.*?)\]\((.*?)\)'
+
+        partes = re.split(patron, contenido)
+
+        i = 0
+
+        while i < len(partes):
+
+            if i == 0:
+
+                if partes[i].strip():
+                    st.markdown(partes[i])
+
+                i += 1
+
+            else:
+
+                alt = partes[i]
+                ruta_img = partes[i + 1]
+
+                imagen = (md_path.parent / ruta_img).resolve()
+
+                if imagen.exists():
+                    st.image(
+                        str(imagen),
+                        caption=alt,
+                        use_container_width=True
+                    )
+                else:
+                    st.warning(f"No se encontró la imagen:\n{imagen}")
+
+                if partes[i + 2].strip():
+                    st.markdown(partes[i + 2])
+
+                i += 3
+
 st.set_page_config(
     page_title="Centro de Conocimiento Técnico",
     page_icon="📚",
@@ -641,7 +681,7 @@ Durante este curso aprenderás:
         "02 - Power Pivot": "02_power_pivot.md",
         "03 - Modelo de Datos": "03_modelo_datos.md",
         "04 - Relaciones": "04_relaciones.md",
-        "05 - DAX": "05_dax.md",
+        "05 - DAX": "05 - Introducción a DAX.md",
         "06 - Medidas": "06_medidas.md",
         "07 - Columnas Calculadas": "07_columnas_calculadas.md",
         "08 - Tablas Dinámicas": "08_tablas_dinamicas.md",
@@ -709,45 +749,6 @@ Durante este curso aprenderás:
 """)
 
     st.divider()
-    def mostrar_markdown(md_path: Path):
-
-        contenido = md_path.read_text(encoding="utf-8")
-
-        patron = r'!\[(.*?)\]\((.*?)\)'
-
-        partes = re.split(patron, contenido)
-
-        i = 0
-
-        while i < len(partes):
-
-            if i == 0:
-
-                if partes[i].strip():
-                    st.markdown(partes[i])
-
-                i += 1
-
-            else:
-
-                alt = partes[i]
-                ruta_img = partes[i + 1]
-
-                imagen = (md_path.parent / ruta_img).resolve()
-
-                if imagen.exists():
-                    st.image(
-                        str(imagen),
-                        caption=alt,
-                        use_container_width=True
-                    )
-                else:
-                    st.warning(f"No se encontró la imagen:\n{imagen}")
-
-                if partes[i + 2].strip():
-                    st.markdown(partes[i + 2])
-
-                i += 3
                 
     ruta = Path("docs/excel_bi") / modulos_excel[modulo]
 
