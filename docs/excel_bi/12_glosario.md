@@ -1,214 +1,316 @@
-# 📘 Módulo 00 - Bienvenida al Curso Excel BI para Analistas de Datos
+# 📘 Glosario de Business Intelligence con Excel
+
+> 📚 Curso: Excel BI para Analistas de Datos
+>
+> 📖 Módulo 12 - Glosario
+>
+> 🎯 Objetivo:
+>
+> Disponer de una guía rápida con los principales conceptos utilizados durante la Academia Excel BI.
 
 ---
 
-# Objetivo
+# Introducción
 
-Bienvenido al módulo de **Excel BI para Analistas de Datos**.
+Durante el desarrollo de esta Academia aparecieron numerosos términos propios del mundo del Business Intelligence.
 
-Este curso está diseñado para aprender desde cero cómo utilizar Excel como una herramienta de Inteligencia de Negocios (Business Intelligence - BI), aprovechando tecnologías como:
+Este glosario reúne los conceptos más importantes explicados a lo largo del curso para facilitar su consulta.
 
-- Power Query
-- Modelo de Datos
-- Power Pivot
-- DAX
-- Tablas Dinámicas
-- Dashboards
+Cada definición incluye:
 
-Al finalizar el curso serás capaz de construir modelos de datos profesionales dentro de Excel sin depender de cientos de fórmulas como BUSCARV, SUMAR.SI o CONTAR.SI.
+- Una explicación sencilla.
+- Un ejemplo práctico.
+- El módulo donde fue trabajado.
 
 ---
 
-# ¿Por qué aprender Power Pivot?
+# 📖 Business Intelligence (BI)
 
-En muchas empresas, Power BI todavía no forma parte de las herramientas de trabajo diario.
+## Definición
 
-Sin embargo, prácticamente todos los usuarios utilizan Excel.
+Business Intelligence (BI) es el conjunto de metodologías, procesos y herramientas utilizadas para transformar datos en información útil que apoye la toma de decisiones.
 
-Power Pivot permite llevar Excel a un nivel completamente diferente, ofreciendo capacidades similares a Power BI sin abandonar el entorno que la mayoría de los usuarios ya conoce.
+En pocas palabras:
 
-Por esta razón, dominar Power Pivot representa una ventaja importante para cualquier Analista de Datos.
-
----
-
-# ¿Qué aprenderás?
-
-Durante este curso aprenderás a:
-
-- Comprender la arquitectura de Excel BI.
-- Diferenciar Power Query de Power Pivot.
-- Construir Modelos de Datos.
-- Relacionar múltiples tablas.
-- Crear Medidas utilizando DAX.
-- Crear Columnas Calculadas.
-- Optimizar modelos grandes.
-- Construir indicadores profesionales.
-- Resolver problemas reales utilizando datos empresariales.
+Convierte grandes cantidades de datos en información comprensible para el negocio.
 
 ---
 
-# ¿Qué NO aprenderás?
+## Ejemplo
 
-Este curso no está orientado a aprender:
+Una empresa de telecomunicaciones registra diariamente miles de pedidos.
 
-- Fórmulas básicas de Excel.
-- Formato de celdas.
-- Funciones como SUMA, PROMEDIO o BUSCARV desde cero.
-- Diseño gráfico de dashboards.
+Mediante BI es posible responder preguntas como:
 
-El enfoque está dirigido exclusivamente al análisis de datos utilizando Excel BI.
-
----
-
-# Arquitectura de Excel BI
-
-Muchas personas creen que Excel únicamente sirve para trabajar con hojas de cálculo.
-
-En realidad, Excel posee un ecosistema completo para el análisis de datos.
-
-```text
-                EXCEL BI
-
-                     │
-     ┌───────────────┼───────────────┐
-     │               │               │
- Power Query     Modelo de Datos   Tablas Dinámicas
-     │               │               │
-     └───────────────┼───────────────┘
-                     │
-                Power Pivot
-                     │
-                    DAX
-                     │
-              Indicadores (KPIs)
-```
-
-Cada una de estas herramientas cumple una función específica.
+- ¿Qué técnico realizó más instalaciones?
+- ¿Qué ciudad presenta más averías?
+- ¿Cuál fue el costo promedio por instalación?
+- ¿Qué materiales se utilizan con mayor frecuencia?
 
 ---
 
-# Flujo de trabajo recomendado
+## Se estudió en
 
-Un proyecto profesional normalmente sigue este flujo:
-
-```text
-Archivos Excel
-CSV
-Base de Datos
-API
-
-      │
-
-      ▼
-
-Power Query
-(Limpieza y transformación)
-
-      │
-
-      ▼
-
-Modelo de Datos
-(Relaciones)
-
-      │
-
-      ▼
-
-Power Pivot
-(Medidas DAX)
-
-      │
-
-      ▼
-
-Tabla Dinámica
-
-      │
-
-      ▼
-
-Dashboard
-```
-
-Cada etapa tiene un propósito diferente.
-
-Comprender este flujo es uno de los objetivos principales del curso.
+Toda la Academia.
 
 ---
 
-# Casos empresariales
+# 📖 Power Query
 
-A diferencia de muchos cursos disponibles en Internet, este material utilizará casos reales desarrollados durante proyectos empresariales.
+## Definición
 
-Entre ellos:
+Power Query es la herramienta de Excel utilizada para importar, limpiar, transformar y preparar datos antes de analizarlos.
 
-- Control ANS.
-- DRACO.
-- Interventoría.
-- Inventarios.
-- SIGEM.
-- Validación de materiales.
-- Actas.
-- Viáticos.
-- Automatización de informes.
-
-Esto permitirá aplicar inmediatamente los conocimientos adquiridos.
+Es el primer paso dentro de un proyecto BI.
 
 ---
 
-# Metodología
+## Ejemplo
 
-Cada módulo del curso seguirá la misma estructura:
-
-1. Explicación conceptual.
-2. Ejemplo sencillo.
-3. Ejemplo empresarial.
-4. Buenas prácticas.
-5. Errores frecuentes.
-6. Resumen.
-7. Próximo módulo.
-
-De esta manera el Centro de Conocimiento Técnico mantendrá una organización uniforme y facilitará la consulta futura.
+Importar cinco archivos CSV de diferentes zonas y consolidarlos automáticamente en una sola tabla.
 
 ---
 
-# Requisitos
+## Se estudió en
 
-Para aprovechar el curso se recomienda tener conocimientos básicos de:
-
-- Manejo de Excel.
-- Tablas.
-- Tablas Dinámicas.
-- Funciones básicas.
-
-No es necesario tener conocimientos previos de Power Pivot ni de DAX.
+Módulo 01.
 
 ---
 
-# Recomendación
+# 📖 Power Pivot
 
-No memorices funciones.
+## Definición
 
-Intenta comprender cómo funciona el Modelo de Datos.
+Power Pivot es el motor analítico de Excel.
 
-Cuando entiendes la arquitectura, aprender DAX resulta mucho más sencillo.
-
----
-
-# Resumen
-
-En este módulo conocimos:
-
-- El objetivo del curso.
-- La arquitectura de Excel BI.
-- El flujo profesional de análisis de datos.
-- La metodología que seguirá todo el Centro de Conocimiento Técnico.
+Permite construir el Modelo de Datos, crear relaciones entre tablas y desarrollar medidas DAX.
 
 ---
 
-# Próximo módulo
+## Ejemplo
 
-**Módulo 01 - Power Query**
+Relacionar Clientes, Pedidos y Materiales para analizarlos en una única Tabla Dinámica.
 
-En el siguiente módulo entenderemos por qué Power Query es el punto de entrada de cualquier proyecto de análisis de datos y cuál es su papel dentro de Excel BI.
+---
+
+## Se estudió en
+
+Módulo 02.
+
+---
+
+# 📖 Modelo de Datos
+
+## Definición
+
+Es la estructura donde se organizan las tablas y las relaciones que representan el funcionamiento del negocio.
+
+El Modelo de Datos es el corazón de cualquier solución BI.
+
+---
+
+## Ejemplo
+
+Clientes
+
+↓
+
+Pedidos
+
+↓
+
+Materiales
+
+↓
+
+Instalaciones
+
+---
+
+## Se estudió en
+
+Módulos 03 y 04.
+
+---
+
+# 📖 Tabla de Hechos
+
+## Definición
+
+Es la tabla principal del Modelo de Datos.
+
+Contiene los eventos que se desean analizar.
+
+Generalmente almacena cantidades, valores o transacciones.
+
+---
+
+## Ejemplo
+
+tblPedidos
+
+Cada registro representa un pedido realizado.
+
+---
+
+## Se estudió en
+
+Módulo 03.
+
+---
+
+# 📖 Tabla Dimensión
+
+## Definición
+
+Es una tabla que describe las características de los datos.
+
+Normalmente contiene información descriptiva utilizada para clasificar o filtrar.
+
+---
+
+## Ejemplo
+
+tblClientes
+
+Permite analizar pedidos por cliente, ciudad o segmento.
+
+---
+
+## Se estudió en
+
+Módulo 03.
+
+---
+
+# 📖 Star Schema
+
+## Definición
+
+Es un modelo donde una Tabla de Hechos se encuentra en el centro y las Tablas Dimensión la rodean.
+
+Es el diseño más utilizado en Business Intelligence.
+
+---
+
+## Ejemplo
+
+             Clientes
+
+                 │
+
+Técnicos ─ Pedidos ─ Materiales
+
+                 │
+
+             Calendario
+
+---
+
+## Se estudió en
+
+Módulos 03 y 04.
+
+---
+
+# 📖 Llave Primaria (Primary Key)
+
+## Definición
+
+Es una columna cuyos valores son únicos.
+
+Permite identificar cada registro sin repetir información.
+
+---
+
+## Ejemplo
+
+IdCliente
+
+Cada cliente posee un identificador diferente.
+
+---
+
+## Se estudió en
+
+Módulo 03.
+
+---
+
+# 📖 Llave Foránea (Foreign Key)
+
+## Definición
+
+Es una columna utilizada para relacionar una tabla con otra.
+
+Puede contener valores repetidos.
+
+---
+
+## Ejemplo
+
+IdCliente dentro de la tabla Pedidos.
+
+Permite identificar a qué cliente pertenece cada pedido.
+
+---
+
+## Se estudió en
+
+Módulos 03 y 04.
+
+---
+
+# 📖 Relación 1:N
+
+## Definición
+
+Representa una relación donde un registro de una tabla puede relacionarse con muchos registros de otra.
+
+Es la relación más utilizada en BI.
+
+---
+
+## Ejemplo
+
+Un cliente puede realizar muchos pedidos.
+
+Un pedido pertenece únicamente a un cliente.
+
+---
+
+## Se estudió en
+
+Módulo 04.
+
+---
+
+# 📖 Cardinalidad
+
+## Definición
+
+Describe cómo se relacionan los registros entre dos tablas.
+
+Las relaciones más comunes son:
+
+- Uno a Uno (1:1)
+- Uno a Muchos (1:N)
+- Muchos a Muchos (N:N)
+
+---
+
+## Ejemplo
+
+Clientes (1)
+
+↓
+
+Pedidos (*)
+
+---
+
+## Se estudió en
+
+Módulo 04.
+
+---
