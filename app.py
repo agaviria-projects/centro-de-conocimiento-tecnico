@@ -602,21 +602,6 @@ elif opcion == "📘 Academia Excel BI":
 
     st.header("📘 Academia Excel BI")
 
-    st.info("""
-Bienvenido a la Academia Excel BI.
-
-Aquí encontrarás un curso completo sobre:
-
-• Power Query
-• Power Pivot
-• Modelo de Datos
-• DAX
-• Medidas
-• Columnas Calculadas
-• Tablas Dinámicas
-• Casos Reales
-""")
-
     modulos_excel = {
         "00 - Bienvenida": "00_bienvenida.md",
         "01 - Power Query": "01_power_query.md",
@@ -628,19 +613,47 @@ Aquí encontrarás un curso completo sobre:
         "07 - Columnas Calculadas": "07_columnas_calculadas.md",
         "08 - Tablas Dinámicas": "08_tablas_dinamicas.md",
         "09 - Casos Reales": "09_casos_reales.md",
-        "10 - Trucos": "10_trucos_powerpivot.md",
+        "10 - Trucos Power Pivot": "10_trucos_powerpivot.md",
         "11 - Buenas Prácticas": "11_buenas_practicas.md",
         "12 - Glosario": "12_glosario.md",
     }
 
+    total_modulos = len(modulos_excel)
+
     modulo = st.selectbox(
-        "Selecciona un módulo",
+        "📖 Selecciona un módulo",
         list(modulos_excel.keys())
     )
+
+    indice = list(modulos_excel.keys()).index(modulo) + 1
+
+    progreso = indice / total_modulos
+
+    st.progress(progreso)
+
+    st.caption(
+        f"📚 Módulo {indice} de {total_modulos} • "
+        f"{int(progreso*100)}% del recorrido"
+    )
+
+    st.divider()
 
     ruta = Path("docs/excel_bi") / modulos_excel[modulo]
 
     if ruta.exists():
-        st.markdown(ruta.read_text(encoding="utf-8"))
+
+        st.markdown(
+            ruta.read_text(encoding="utf-8")
+        )
+
     else:
-        st.warning(f"No existe el archivo:\n{ruta}")
+
+        st.warning(
+            f"""
+Todavía no existe el módulo seleccionado.
+
+Archivo esperado:
+
+{ruta}
+"""
+        )
