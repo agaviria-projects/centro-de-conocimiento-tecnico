@@ -834,7 +834,7 @@ Para acelerar la construcción técnica utilicé Inteligencia Artificial como he
             "No se encontró el archivo docs/proyecto_actas.md"
         )
 
-elif opcion == "🚗 SERVITRAVEL ETL":
+elif opcion == "🚗 Servitravel ETL":
 
     with st.expander(
         "🎤 Guía Rápida para Reuniones",
