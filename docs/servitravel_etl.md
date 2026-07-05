@@ -298,6 +298,54 @@ Cada archivo representa la información origen que será consolidada.
 
 ---
 
+## ⚠️ Consideración Operativa Importante
+
+### Evitar la duplicación de información
+
+El proceso de consolidación está diseñado para **anexar nuevos registros** al final de cada hoja del archivo consolidado.
+
+El sistema **no valida si un registro ya existe**, por lo que cada archivo ubicado en la carpeta `entrada` será procesado nuevamente en cada ejecución.
+
+Por esta razón, si los archivos permanecen en la carpeta `entrada` después de una consolidación exitosa, al ejecutar nuevamente el proceso se duplicará toda la información previamente consolidada.
+
+### Flujo actual
+
+```text
+entrada/
+│
+├── METROPOLITANO.xlsx
+├── OCCIDENTE.xlsx
+├── ORIENTE.xlsx
+├── NORDESTE.xlsx
+└── SUROESTE.xlsx
+
+↓
+
+Ejecutar SERVITRAVEL
+
+↓
+
+Los registros se anexan al consolidado
+
+↓
+
+Los archivos permanecen en entrada
+
+↓
+
+Nueva ejecución
+
+↓
+
+Los mismos archivos vuelven a procesarse
+
+↓
+
+❌ Información duplicada
+
+```
+---
+
 ### salida
 
 Contiene el archivo maestro:
