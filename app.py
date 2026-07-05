@@ -155,6 +155,8 @@ opciones = [
     "💬 WhatsApp + ANS + Formularios",
     "🛠️ Validación Mano de Obra Vs Materiales",
     "📘 Academia Excel BI",
+    "📄 Proyecto Actas",
+    ""
 ]
 
 # ===============================
@@ -168,6 +170,7 @@ opcion = st.selectbox(
 # ===============================
 # CARGAR DOCUMENTOS
 # ===============================
+
 if opcion == "📊 Generador de Informes ANS":
 
     with st.expander(
@@ -767,4 +770,66 @@ Archivo esperado:
 
 {ruta}
 """
+        )
+
+elif opcion == "📄 Proyecto Actas":
+
+    with st.expander(
+        "🎤 Guía Rápida para Reuniones",
+        expanded=False
+    ):
+
+        st.warning("""
+### 🎤 Cómo Explicar este Desarrollo en una Reunión
+
+Este desarrollo nació a partir de la necesidad de automatizar la consolidación de las actas operativas generadas por las diferentes zonas de la organización.
+
+Anteriormente el proceso se realizaba manualmente, abriendo múltiples archivos Excel, copiando la información y consolidándola en un histórico.
+
+Con el crecimiento del volumen de datos, el proceso comenzó a consumir demasiado tiempo y aumentó el riesgo de errores.
+
+Para solucionar esta necesidad desarrollé un proceso ETL en Python que busca automáticamente todas las actas, limpia la información, aplica las reglas de negocio, consolida los registros y genera un histórico único junto con varios indicadores operativos.
+
+El sistema cuenta con dos modos de ejecución:
+
+• RECONSTRUIR
+Reconstruye completamente el histórico.
+
+• ANEXAR
+Procesa únicamente las nuevas Actas + Zonas, evitando reprocesar información existente.
+
+Durante el desarrollo también se realizó un proceso de optimización de rendimiento que permitió reducir el tiempo de ejecución aproximadamente de 10–12 minutos a 2–4 minutos, manteniendo exactamente las mismas reglas de negocio.
+
+---
+
+### ❓ Si me preguntan si yo hice el desarrollo
+
+Sí.
+
+El desarrollo fue implementado por mí para resolver una necesidad real de la operación.
+
+La lógica del negocio, las reglas de validación, las pruebas, la optimización del rendimiento y la validación de resultados fueron realizadas directamente por mí.
+
+Para acelerar la construcción técnica utilicé Inteligencia Artificial como herramienta de apoyo, similar a como un desarrollador consulta documentación o utiliza librerías especializadas.
+
+---
+
+### ⚙️ Tecnologías utilizadas
+
+- Python
+- Pandas
+- XlsxWriter
+- Pathlib
+- Git
+- GitHub
+- Excel
+        """)
+
+    ruta = Path("docs/servitravel_etl.md")
+
+    if ruta.exists():
+        mostrar_markdown(ruta)
+    else:
+        st.error(
+            "No se encontró el archivo docs/servitravel_etl.md"
         )
