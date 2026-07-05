@@ -156,7 +156,6 @@ opciones = [
     "🛠️ Validación Mano de Obra Vs Materiales",
     "📘 Academia Excel BI",
     "📄 Consolidador de Actas",
-    ""
 ]
 
 # ===============================
