@@ -155,7 +155,7 @@ opciones = [
     "💬 WhatsApp + ANS + Formularios",
     "🛠️ Validación Mano de Obra Vs Materiales",
     "📘 Academia Excel BI",
-    "📄 Proyecto Actas",
+    "📄 Consolidador de Actas",
     ""
 ]
 
@@ -772,7 +772,7 @@ Archivo esperado:
 """
         )
 
-elif opcion == "📄 Proyecto Actas":
+elif opcion == "📄 Consolidador de Actas":
 
     with st.expander(
         "🎤 Guía Rápida para Reuniones",
@@ -825,11 +825,11 @@ Para acelerar la construcción técnica utilicé Inteligencia Artificial como he
 - Excel
         """)
 
-    ruta = Path("docs/servitravel_etl.md")
+    ruta = Path("docs/proyecto_actas.md")
 
     if ruta.exists():
         mostrar_markdown(ruta)
     else:
         st.error(
-            "No se encontró el archivo docs/servitravel_etl.md"
+            "No se encontró el archivo docs/proyecto_actas.md"
         )
