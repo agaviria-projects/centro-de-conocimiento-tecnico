@@ -156,6 +156,7 @@ opciones = [
     "🛠️ Validación Mano de Obra Vs Materiales",
     "📘 Academia Excel BI",
     "📄 Consolidador de Actas",
+    "🚗 Servitravel ETL" 
 ]
 
 # ===============================
@@ -831,4 +832,103 @@ Para acelerar la construcción técnica utilicé Inteligencia Artificial como he
     else:
         st.error(
             "No se encontró el archivo docs/proyecto_actas.md"
+        )
+
+elif opcion == "🚗 SERVITRAVEL ETL":
+
+    with st.expander(
+        "🎤 Guía Rápida para Reuniones",
+        expanded=False
+    ):
+
+        st.warning("""
+### 🎤 Cómo Explicar este Desarrollo en una Reunión
+
+SERVITRAVEL nació como una necesidad de automatizar la consolidación de información operativa proveniente de diferentes zonas, eliminando procesos manuales repetitivos y reduciendo tiempos de ejecución.
+
+El sistema fue desarrollado en Python siguiendo una arquitectura modular, separando la configuración, las utilidades de Excel, la lógica de negocio y el flujo principal del proceso.
+
+Actualmente automatiza la consolidación de cuatro procesos:
+
+- Año 2026
+- Viáticos
+- Parqueaderos
+- Peajes
+
+Toda la información se consolida directamente sobre un archivo maestro en formato XLSB, conservando su estructura y formato original.
+
+Durante la ejecución el sistema:
+
+• Crea automáticamente un Backup.
+
+• Abre el consolidado.
+
+• Procesa todas las zonas.
+
+• Consolida la información.
+
+• Guarda los cambios.
+
+• Cierra Excel de forma segura.
+
+---
+
+### ❓ Si me preguntan si yo hice el desarrollo
+
+Sí.
+
+El desarrollo fue implementado por mí para resolver una necesidad real de automatización de procesos operativos.
+
+La arquitectura, las reglas de negocio, las validaciones, las pruebas y la documentación fueron definidas y validadas directamente por mí.
+
+Para acelerar el desarrollo utilicé Inteligencia Artificial como herramienta de apoyo técnico, similar al uso de documentación oficial o librerías especializadas.
+
+---
+
+### 🏗️ Arquitectura General
+
+Archivos Excel
+
+↓
+
+Python
+
+↓
+
+ETL
+
+↓
+
+Transformación
+
+↓
+
+Consolidado XLSB
+
+↓
+
+Reporte Final
+
+---
+
+### ⚙️ Tecnologías utilizadas
+
+- Python
+- Pandas
+- xlwings
+- openpyxl
+- pathlib
+- Excel (.xlsx / .xlsb)
+- Git
+- GitHub
+
+        """)
+
+    ruta = Path("docs/servitravel_etl.md")
+
+    if ruta.exists():
+        mostrar_markdown(ruta)
+    else:
+        st.error(
+            "No se encontró el archivo docs/servitravel_etl.md"
         )
