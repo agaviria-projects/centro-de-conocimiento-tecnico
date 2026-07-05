@@ -844,73 +844,87 @@ elif opcion == "🚗 Servitravel ETL":
         st.warning("""
 ### 🎤 Cómo Explicar este Desarrollo en una Reunión
 
-SERVITRAVEL nació como una necesidad de automatizar la consolidación de información operativa proveniente de diferentes zonas, eliminando procesos manuales repetitivos y reduciendo tiempos de ejecución.
+SERVITRAVEL nació como una necesidad de automatizar la consolidación de información operativa proveniente de diferentes zonas, eliminando procesos manuales repetitivos y reduciendo el riesgo de errores.
 
 El sistema fue desarrollado en Python siguiendo una arquitectura modular, separando la configuración, las utilidades de Excel, la lógica de negocio y el flujo principal del proceso.
 
-Actualmente automatiza la consolidación de cuatro procesos:
+Actualmente automatiza la consolidación de cuatro hojas del archivo maestro:
 
 - Año 2026
 - Viáticos
 - Parqueaderos
 - Peajes
 
-Toda la información se consolida directamente sobre un archivo maestro en formato XLSB, conservando su estructura y formato original.
+El proceso **no reemplaza la información existente**.
 
-Durante la ejecución el sistema:
+Para cada hoja del consolidado, el sistema:
 
-• Crea automáticamente un Backup.
+- Detecta automáticamente la última fila con información.
+- Lee los archivos Excel ubicados en la carpeta **entrada**.
+- Transforma los datos según las reglas de negocio.
+- Agrega (anexa) únicamente los nuevos registros al final de la hoja correspondiente.
+- Conserva el formato existente del archivo Excel, copiando el formato de la fila anterior.
 
-• Abre el consolidado.
+Antes de iniciar cualquier modificación, el sistema genera automáticamente una copia de seguridad (Backup) del archivo consolidado, garantizando la recuperación de la información en caso de cualquier inconveniente.
 
-• Procesa todas las zonas.
+Al finalizar el proceso:
 
-• Consolida la información.
-
-• Guarda los cambios.
-
-• Cierra Excel de forma segura.
-
----
-
-### ❓ Si me preguntan si yo hice el desarrollo
-
-Sí.
-
-El desarrollo fue implementado por mí para resolver una necesidad real de automatización de procesos operativos.
-
-La arquitectura, las reglas de negocio, las validaciones, las pruebas y la documentación fueron definidas y validadas directamente por mí.
-
-Para acelerar el desarrollo utilicé Inteligencia Artificial como herramienta de apoyo técnico, similar al uso de documentación oficial o librerías especializadas.
+- Guarda el archivo consolidado.
+- Cierra correctamente todas las instancias de Excel.
+- Presenta un resumen con la cantidad de registros agregados por cada zona y el total procesado.
 
 ---
 
-### 🏗️ Arquitectura General
+### 🏗️ Flujo General
 
-Archivos Excel
-
-↓
-
-Python
+Archivos Excel (entrada)
 
 ↓
 
-ETL
+Crear Backup
 
 ↓
 
-Transformación
+Abrir INFORME_LIQUIDACION.xlsb
 
 ↓
 
-Consolidado XLSB
+Buscar última fila disponible de cada hoja
 
 ↓
 
-Reporte Final
+Transformar la información
+
+↓
+
+Anexar los nuevos registros al final de cada hoja
+
+↓
+
+Copiar formato de la fila anterior
+
+↓
+
+Guardar archivo
+
+↓
+
+Cerrar Excel
+
+↓
+
+Resumen del proceso
 
 ---
+                                      
+### **Nota técnica**
 
+El sistema no elimina ni sobrescribe registros existentes.
+
+Cada consolidación obtiene la última fila utilizada mediante la función `ultima_fila()` y escribe los nuevos registros a partir de la siguiente fila disponible utilizando `escribir_dataframe()`. Posteriormente copia el formato de la fila anterior para mantener la consistencia visual del archivo Excel.                                                         
+
+---
+                                      
 ### ⚙️ Tecnologías utilizadas
 
 - Python
