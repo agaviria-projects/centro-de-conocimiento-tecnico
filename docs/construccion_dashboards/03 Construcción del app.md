@@ -439,12 +439,6 @@ Se recomienda mantener siempre la siguiente estructura.
 ```text
 Importaciones
 
-## ¿Por qué este paso es importante?
-
-Las importaciones representan todos los recursos que el Dashboard utilizará durante su ejecución.
-
-Una buena organización permite identificar rápidamente las dependencias del proyecto y facilita el mantenimiento del código.
-
 ↓
 
 Configuración
