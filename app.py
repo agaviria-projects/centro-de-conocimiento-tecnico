@@ -1020,7 +1020,7 @@ reutilizar componentes en futuros proyectos.
         "00 - Introducción": "00_introduccion.md",
         "01 - Arquitectura": "01_arquitectura.md",
         "02 - Estructura del Proyecto": "02_estructura_proyecto.md",
-        "03 - Construcción del app.py": "03_Construcción del app.md",
+        "03 - Construcción del app.md": "03_Construcción del app.md",
         "04 - Sidebar": "04_sidebar.md",
         "05 - Banner": "05_banner.md",
         "06 - Navegación": "06_navegacion.md",
