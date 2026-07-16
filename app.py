@@ -157,7 +157,7 @@ opciones = [
     "📘 Academia Excel BI",
     "📄 Consolidador de Actas",
     "🚗 Servitravel ETL",
-    "🏗️ Framework Dashboards Streamlit"
+    "🏗️ Framework Dashboards Streamlit" 
 ]
 
 # ===============================
@@ -1004,3 +1004,51 @@ Los mismos archivos vuelven a procesarse
         st.error(
             "No se encontró el archivo docs/servitravel_etl.md"
         )
+elif opcion == "🏗️ Framework Dashboards Streamlit":
+
+    st.header("🏗️ Framework Dashboards Streamlit")
+
+    st.info("""
+Este Framework documenta paso a paso la metodología utilizada para construir
+Dashboards profesionales con Streamlit.
+
+Cada capítulo explica una parte específica de la arquitectura, permitiendo
+reutilizar componentes en futuros proyectos.
+""")
+
+    capitulos = {
+        "00 - Introducción": "00_introduccion.md",
+        "01 - Arquitectura": "01_arquitectura.md",
+        "02 - Estructura del Proyecto": "02_estructura_proyecto.md",
+        "03 - Construcción del app.py": "03_Construcción del app.md",
+        "04 - Sidebar": "04_sidebar.md",
+        "05 - Banner": "05_banner.md",
+        "06 - Navegación": "06_navegacion.md",
+        "07 - CSS": "07_css.md",
+        "08 - Diseño Visual": "08_diseno_visual.md",
+        "09 - KPIs": "09_kpis.md",
+        "10 - Filtros": "10_filtros.md",
+        "11 - Tablas": "11_tablas.md",
+        "12 - AgGrid": "12_aggrid.md",
+        "13 - Gráficos": "13_graficos.md",
+        "14 - Responsive": "14_responsive.md",
+        "15 - Optimización": "15_optimizacion.md",
+        "16 - Buenas Prácticas": "16_buenas_practicas.md",
+        "17 - Errores Comunes": "17_errores_comunes.md",
+    }
+
+    capitulo = st.selectbox(
+        "📖 Selecciona un capítulo",
+        list(capitulos.keys())
+    )
+
+    ruta = (
+        Path("docs")
+        / "construccion_dashboards"
+        / capitulos[capitulo]
+    )
+
+    if ruta.exists():
+        mostrar_markdown(ruta)
+    else:
+        st.warning(f"No existe el archivo:\n{ruta}")        
