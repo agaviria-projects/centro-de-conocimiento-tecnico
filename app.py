@@ -156,7 +156,8 @@ opciones = [
     "🛠️ Validación Mano de Obra Vs Materiales",
     "📘 Academia Excel BI",
     "📄 Consolidador de Actas",
-    "🚗 Servitravel ETL" 
+    "🚗 Servitravel ETL",
+    "🏗️ Framework Dashboards Streamlit"
 ]
 
 # ===============================
