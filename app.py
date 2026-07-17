@@ -1022,7 +1022,7 @@ reutilizar componentes en futuros proyectos.
         "02 - Estructura del Proyecto": "02_estructura_proyecto.md",
         "03 - Construcción del app.md": "03_Construcción del app.md",
         "04 - Sidebar": "04_sidebar.md",
-        "05 - Banner": "05_banner.md",
+        "05 - Banner": "05_Construcción del Banner Corporativo",
         "06 - Navegación": "06_navegacion.md",
         "07 - CSS": "07_css.md",
         "08 - Diseño Visual": "08_diseno_visual.md",
