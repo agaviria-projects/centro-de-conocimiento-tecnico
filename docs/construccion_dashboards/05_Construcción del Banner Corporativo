@@ -105,9 +105,19 @@ Esta distribución permite que el usuario identifique rápidamente el propósito
 
 ---
 
+
+> ⚠️ **Importante**
+>
+> El archivo `banner.py` únicamente define la estructura del Banner mediante HTML.
+>
+> La apariencia visual mostrada en este capítulo (colores, bordes, sombras, espaciados, tipografía y distribución) es aplicada por el archivo `styles.py`.
+>
+> Ambos archivos forman un único componente del Framework y deben utilizarse conjuntamente.
 # ⭐ Plantilla Oficial del Framework
 
 Una vez comprendida la filosofía del componente, es momento de incorporar el archivo oficial utilizado por el Framework.
+
+---
 
 ──────────────────────────────────────────────
 
@@ -118,8 +128,6 @@ Copie y pegue el siguiente archivo como:
 **banner.py**
 
 Mantenga exactamente la misma estructura.
-
-Únicamente personalice el contenido indicado.
 
 ```python
 import streamlit as st
