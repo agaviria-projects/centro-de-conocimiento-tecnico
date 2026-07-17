@@ -455,10 +455,22 @@ VERSION = "1.0"
 LOGO = (
     Path(__file__).resolve().parent.parent
     / "assets"
-    / "logo.png"
+    / "logo.png" **nombre del archivo del logo**
 )
 
 Nota: HOJA_PRINCIPAL solo aplica cuando el Dashboard obtiene la información desde un archivo Excel. Si la fuente de datos corresponde a una base de datos, una API, archivos CSV u otro origen, este parámetro puede omitirse sin afectar el funcionamiento del Sidebar.
+
+# 📦 Componentes necesarios
+
+Para reutilizar correctamente este Sidebar deberán copiarse los siguientes archivos del Framework:
+
+✔ sidebar.py
+
+✔ styles.py
+
+✔ assets/logo.png
+
+Estos tres componentes trabajan de forma conjunta y garantizan la apariencia visual mostrada en este capítulo.
 
 > 💡 **Regla del Framework**
 >
