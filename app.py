@@ -1031,7 +1031,7 @@ reutilizar componentes en futuros proyectos.
         "11 - Tablas": "11_tablas.md",
         "12 - AgGrid": "12_aggrid.md",
         "13 - Gráficos": "13_graficos.md",
-        "14 - Errores Comunes": "14_dashboard_base.md",
+        "14 - Dashboard Base": "14_dashboard_base.md",
     }
 
     capitulo = st.selectbox(
