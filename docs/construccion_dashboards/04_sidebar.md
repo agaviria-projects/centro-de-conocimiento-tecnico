@@ -295,8 +295,6 @@ sidebar.py
 
 Mantenga la estructura general.
 
-Únicamente modifique el contenido específico del Dashboard.
-
 ```python
 from pathlib import Path
 
