@@ -416,36 +416,48 @@ if opcion == "📋 Detalle":
 
 ---
 
-# ¿Qué debo modificar?
+# 🔄 ¿Qué debo personalizar al reutilizar esta plantilla?
 
-Cuando reutilices esta plantilla normalmente solo será necesario modificar los siguientes elementos.
+Uno de los principales objetivos de este Framework es evitar comenzar cada Dashboard desde cero.
 
-| Elemento | ¿Debe modificarse? |
-|-----------|--------------------|
-| page_title | ✅ Sí |
-| page_icon | ✅ Sí |
-| Banner | ✅ Sí |
-| Sidebar | ✅ Sí |
-| Lector de datos | ✅ Sí |
-| Componentes del Dashboard | ✅ Sí |
-| Navegación | ✅ Sí |
+Cuando reutilices la plantilla oficial de **app.py**, no será necesario desarrollar nuevamente su arquitectura. Únicamente deberás personalizar aquellos elementos que dependen del proyecto que estás construyendo.
+
+Los cambios normalmente se limitarán a los siguientes componentes.
+
+| Componente | ¿Qué se personaliza? |
+|------------|----------------------|
+| **page_title** | Nombre del Dashboard que aparecerá en la pestaña del navegador. |
+| **page_icon** | Ícono representativo del proyecto. |
+| **Banner** | Título, subtítulo, estado del sistema o información corporativa. |
+| **Sidebar** | Logo, nombre del Dashboard, archivo fuente, versión y demás información de contexto. |
+| **Lector de datos** | Función encargada de leer archivos Excel, CSV, bases de datos u otros orígenes de información. |
+| **Navegación** | Opciones del menú principal según los módulos del Dashboard. |
+| **Componentes** | KPIs, tablas, gráficos, filtros, mapas, reportes y cualquier componente específico del negocio. |
+
+> 💡 **Regla del Framework**
+>
+> Al crear un nuevo Dashboard **no construirás un nuevo `app.py`**.
+>
+> Lo que harás será **personalizar los componentes**, manteniendo siempre la arquitectura oficial del Framework.
 
 ---
 
-# ¿Qué NO debo modificar?
+# 🏛️ ¿Qué hace parte de la arquitectura del Framework?
 
-Se recomienda mantener siempre la siguiente estructura.
+Aunque el contenido de cada componente cambiará según el proyecto, la estructura general del archivo **app.py** debe mantenerse.
+
+La siguiente secuencia representa la arquitectura oficial del Framework.
 
 ```text
 Importaciones
 
 ↓
 
-Configuración
+Configuración de Streamlit
 
 ↓
 
-Estilos
+Carga de estilos
 
 ↓
 
@@ -453,7 +465,7 @@ Banner
 
 ↓
 
-Datos
+Carga de datos
 
 ↓
 
@@ -466,29 +478,49 @@ Navegación
 ↓
 
 Componentes
+
+↓
+
+Footer (Opcional)
 ```
 
-Este orden hace parte de la arquitectura oficial del Framework.
+Mantener este orden facilita la lectura del código, mejora el mantenimiento del proyecto y permite reutilizar la misma plantilla en cualquier Dashboard.
 
-Modificarlo puede dificultar el mantenimiento del proyecto.
+---
+
+# 🧩 ¿Qué se personaliza y qué se conserva?
+
+| Elemento | Personalizar | Conservar |
+|-----------|:------------:|:---------:|
+| page_title | ✅ | ❌ |
+| page_icon | ✅ | ❌ |
+| styles.css | ✅ Colores y estilos corporativos | ✅ Forma de cargar los estilos |
+| banner.py | ✅ Contenido | ✅ Ubicación dentro del flujo del Dashboard |
+| sidebar.py | ✅ Información mostrada | ✅ Organización general |
+| lector_datos.py | ✅ Según el origen de los datos | ❌ |
+| Navegación | ✅ Opciones del menú | ✅ Ubicación dentro del Dashboard |
+| Componentes | ✅ | ❌ |
+| Arquitectura de app.py | ❌ | ✅ Siempre debe mantenerse |
 
 ---
 
 # Buenas prácticas
 
-✔ Mantener app.py pequeño.
+✔ Mantener **app.py** pequeño y fácil de leer.
 
-✔ Utilizar comentarios para dividir cada sección.
+✔ Utilizar comentarios para dividir claramente cada sección.
 
 ✔ Leer la información una única vez.
 
-✔ Mantener siempre el mismo orden.
+✔ Mantener siempre el mismo flujo de ejecución.
 
-✔ Separar la lógica del negocio de la interfaz.
+✔ Separar la lógica del negocio de la interfaz gráfica.
 
 ✔ Importar únicamente los componentes necesarios.
 
-✔ Reutilizar esta plantilla en todos los proyectos.
+✔ Reutilizar la plantilla oficial del Framework en todos los nuevos proyectos.
+
+✔ Crear un archivo independiente para cada componente visual.
 
 ---
 
@@ -496,19 +528,19 @@ Modificarlo puede dificultar el mantenimiento del proyecto.
 
 Durante el desarrollo de diferentes Dashboards empresariales se identificaron los siguientes errores.
 
-❌ Colocar toda la lógica dentro de app.py.
+❌ Colocar toda la lógica del negocio dentro de **app.py**.
 
-❌ Leer el mismo archivo Excel desde varios componentes.
+❌ Leer el mismo archivo Excel desde diferentes componentes.
 
-❌ Mezclar estilos CSS con lógica Python.
+❌ Mezclar estilos CSS con código Python.
 
-❌ Crear componentes demasiado grandes.
+❌ Crear componentes demasiado grandes y difíciles de mantener.
 
-❌ Duplicar funciones.
+❌ Duplicar funciones entre módulos.
 
-❌ Colocar la navegación dentro del Sidebar.
+❌ Utilizar el Sidebar como menú principal del Dashboard.
 
-❌ Modificar el orden general del archivo.
+❌ Alterar el orden de la arquitectura del Framework.
 
 ---
 
@@ -516,17 +548,19 @@ Durante el desarrollo de diferentes Dashboards empresariales se identificaron lo
 
 Después de desarrollar diferentes Dashboards empresariales se adoptaron las siguientes reglas.
 
-- app.py únicamente coordina la aplicación.
+- **app.py** únicamente coordina la aplicación.
 
 - Cada componente debe tener una única responsabilidad.
 
-- Los estilos siempre se cargan antes del Banner.
+- Los estilos siempre deben cargarse antes del Banner.
 
-- Los datos siempre se leen una única vez.
+- La información debe leerse una única vez.
 
-- La navegación principal nunca debe depender del Sidebar.
+- El Sidebar proporciona información de contexto; la navegación principal pertenece al cuerpo del Dashboard.
 
-- Todo nuevo Dashboard debe comenzar reutilizando esta plantilla.
+- Todos los nuevos proyectos deben comenzar reutilizando la plantilla oficial del Framework.
+
+- **No modificamos la arquitectura; personalizamos los componentes.**
 
 ---
 
@@ -538,24 +572,32 @@ Antes de continuar con el siguiente capítulo verifica que:
 
 ☐ No existen errores en consola.
 
+☐ La configuración de Streamlit se aplica correctamente.
+
+☐ Los estilos CSS se cargan sin errores.
+
 ☐ El Banner aparece correctamente.
 
-☐ El Sidebar carga la información.
+☐ El Sidebar muestra la información esperada.
 
-☐ La navegación funciona.
+☐ La navegación funciona correctamente.
 
-☐ Los componentes responden correctamente.
+☐ Los componentes responden sin errores.
 
-☐ La estructura del app.py coincide con la arquitectura oficial del Framework.
+☐ La estructura del **app.py** coincide con la arquitectura oficial del Framework.
 
 ---
 
 # Conclusión
 
-El archivo **app.py** representa el núcleo organizativo del Dashboard.
+El archivo **app.py** constituye el núcleo organizativo del Framework.
 
-Aunque contiene muy poco código de negocio, define el flujo completo de la aplicación y coordina el funcionamiento de todos los componentes.
+Aunque contiene muy poca lógica de negocio, define el flujo completo de ejecución del Dashboard y coordina el funcionamiento de todos los componentes.
 
-Una correcta organización desde este punto facilitará enormemente el crecimiento del proyecto.
+La filosofía de este Framework es sencilla:
 
-En el siguiente capítulo construiremos el primer componente visual del Framework: **el Sidebar profesional**.
+> **No modificamos la arquitectura; personalizamos los componentes.**
+
+Aplicando esta metodología será posible construir nuevos Dashboards de forma mucho más rápida, manteniendo siempre una estructura uniforme, escalable y fácil de mantener.
+
+En el siguiente capítulo construiremos el primer componente visual del Framework: el **Sidebar profesional**.

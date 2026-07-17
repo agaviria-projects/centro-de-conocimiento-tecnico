@@ -54,6 +54,118 @@ Esta decisión mejoró considerablemente la experiencia de usuario.
 
 ---
 
+# 🧠 Decisión de Arquitectura
+
+Durante el desarrollo del Dashboard Servitravel se evaluaron diferentes alternativas para construir la navegación principal.
+
+La primera opción consistía en utilizar el Sidebar como menú principal de la aplicación, ya que Streamlit lo incorpora de forma nativa.
+
+Sin embargo, durante las pruebas realizadas se identificó una limitación importante.
+
+Cuando el usuario presiona el botón **<<** ubicado en la esquina superior izquierda, Streamlit contrae completamente el Sidebar.
+
+Como consecuencia:
+
+- Desaparece el menú principal.
+- Desaparecen los botones de navegación.
+- Desaparecen los botones de actualización.
+- El usuario puede perder rápidamente la referencia de cómo volver a abrir el Sidebar.
+
+Aunque Streamlit permite volver a mostrarlo, muchos usuarios finales no identifican fácilmente este comportamiento.
+
+En aplicaciones empresariales esto genera llamadas de soporte innecesarias y una mala experiencia de usuario.
+
+Por esta razón se tomó la decisión de adoptar una arquitectura diferente.
+
+## Arquitectura adoptada
+
+Dentro del Framework la navegación principal siempre permanecerá visible en el cuerpo del Dashboard.
+
+El Sidebar quedará reservado únicamente para información de contexto y acciones secundarias.
+
+Esta decisión garantiza que el usuario nunca pierda acceso a las funciones principales de la aplicación.
+
+---
+
+# Comparación de enfoques
+
+| Sidebar como menú | Navegación horizontal |
+|-------------------|-----------------------|
+| ❌ Puede ocultarse completamente | ✅ Siempre visible |
+| ❌ Mayor dependencia del Sidebar | ✅ Independiente del Sidebar |
+| ❌ Usuarios pueden perder el menú | ✅ Menú siempre disponible |
+| ❌ Mayor cantidad de soporte | ✅ Mejor experiencia de usuario |
+| ❌ Difícil para usuarios nuevos | ✅ Mucho más intuitivo |
+
+---
+
+# ⚠️ Problemas encontrados durante el desarrollo
+
+Durante la construcción del Dashboard Servitravel se identificaron los siguientes inconvenientes.
+
+## Problema 1
+
+El usuario contraía accidentalmente el Sidebar.
+
+### Consecuencia
+
+Perdía acceso al menú principal.
+
+### Solución
+
+Mover la navegación al cuerpo del Dashboard.
+
+---
+
+## Problema 2
+
+El Sidebar comenzaba a llenarse de componentes.
+
+### Consecuencia
+
+La interfaz se veía saturada.
+
+### Solución
+
+Mantener únicamente información de contexto.
+
+---
+
+# 🚫 Componentes prohibidos en el Sidebar
+
+Como estándar del Framework no se recomienda colocar en el Sidebar:
+
+❌ KPIs.
+
+❌ Tablas.
+
+❌ AgGrid.
+
+❌ Gráficos.
+
+❌ Reportes.
+
+❌ Información extensa.
+
+❌ Navegación principal.
+
+❌ Botones críticos para la operación.
+
+---
+
+> 💡 Filosofía del Framework
+>
+> El Sidebar proporciona contexto.
+>
+> El Banner proporciona identidad.
+>
+> La navegación dirige la aplicación.
+>
+> El contenido genera valor.
+
+---
+
+
 # Responsabilidades del Sidebar
 
 Dentro de este Framework el Sidebar únicamente tendrá las siguientes responsabilidades.
@@ -186,7 +298,105 @@ Mantenga la estructura general.
 Únicamente modifique el contenido específico del Dashboard.
 
 ```python
-<< PEGAR AQUÍ sidebar.py >>
+from pathlib import Path
+
+import streamlit as st
+
+
+# ==========================================================
+# RUTA LOGO
+# ==========================================================
+
+BASE = Path(__file__).resolve().parent.parent
+
+LOGO = BASE / "assets" / "logo_elite.png"
+
+
+# ==========================================================
+# SIDEBAR
+# ==========================================================
+
+def mostrar_sidebar(hojas):
+
+    with st.sidebar:
+
+        # ==================================================
+        # LOGO
+        # ==================================================
+
+        if LOGO.exists():
+
+            st.image(
+                str(LOGO),
+                use_container_width=True
+            )
+
+        st.markdown(
+            """
+            <div class="sidebar-title">
+                Dashboard Operativo
+            </div>
+
+            <div class="sidebar-subtitle">
+                Analizador de Costos ELITE
+            </div>
+            """,
+            unsafe_allow_html=True,
+        )
+
+        st.divider()
+
+        # ==================================================
+        # ARCHIVO FUENTE
+        # ==================================================
+
+        st.markdown("**📄 Archivo fuente**")
+
+        st.info(
+            """
+**INFORME_LIQUIDACION.xlsb**
+
+🟢 Conectado
+"""
+        )
+
+        # ==================================================
+        # ACTUALIZAR
+        # ==================================================
+
+        if st.button(
+
+            "🔄 Actualizar datos",
+
+            use_container_width=True,
+
+            type="primary",
+
+        ):
+
+            st.cache_data.clear()
+
+            st.rerun()
+
+        st.divider()
+
+        st.caption("Versión 1.0")
+
+    # ======================================================
+    # COMPATIBILIDAD
+    # ======================================================
+
+    hoja = "RODAMIENTOS"
+
+    df = hojas.get(hoja)
+
+    return {
+
+        "hoja": hoja,
+
+        "df": df,
+
+    }
 ```
 
 ──────────────────────────────────────────────
