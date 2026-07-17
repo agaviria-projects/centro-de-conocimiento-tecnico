@@ -38,15 +38,8 @@ Dashboard/
 │
 
 ├── assets/
-
-│   ├── css/
-
-│   ├── icons/
-
-│   ├── images/
-
-│   └── logos/
-
+       ├─ styles.css
+       ├─ logo_elite.png
 │
 
 ├── components/
