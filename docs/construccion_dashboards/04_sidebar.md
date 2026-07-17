@@ -304,19 +304,33 @@ import streamlit as st
 
 
 # ==========================================================
-# RUTA LOGO
+# PERSONALIZACIÓN DEL DASHBOARD
 # ==========================================================
 
-BASE = Path(__file__).resolve().parent.parent
+NOMBRE_DASHBOARD = "Dashboard Operativo"
 
-LOGO = BASE / "assets" / "logo_elite.png"
+SUBTITULO = "Descripción del Dashboard"
+
+ARCHIVO_FUENTE = "archivo_principal.xlsx"
+
+ESTADO = "🟢 Conectado"
+
+VERSION = "1.0"
+
+HOJA_PRINCIPAL = "HOJA_PRINCIPAL"
+
+LOGO = (
+    Path(__file__).resolve().parent.parent
+    / "assets"
+    / "logo.png"
+)
 
 
 # ==========================================================
 # SIDEBAR
 # ==========================================================
 
-def mostrar_sidebar(hojas):
+def mostrar_sidebar(datos):
 
     with st.sidebar:
 
@@ -331,14 +345,18 @@ def mostrar_sidebar(hojas):
                 use_container_width=True
             )
 
+        # ==================================================
+        # TÍTULO
+        # ==================================================
+
         st.markdown(
-            """
+            f"""
             <div class="sidebar-title">
-                Dashboard Operativo
+                {NOMBRE_DASHBOARD}
             </div>
 
             <div class="sidebar-subtitle">
-                Analizador de Costos ELITE
+                {SUBTITULO}
             </div>
             """,
             unsafe_allow_html=True,
@@ -353,10 +371,10 @@ def mostrar_sidebar(hojas):
         st.markdown("**📄 Archivo fuente**")
 
         st.info(
-            """
-**INFORME_LIQUIDACION.xlsb**
+            f"""
+**{ARCHIVO_FUENTE}**
 
-🟢 Conectado
+{ESTADO}
 """
         )
 
@@ -380,25 +398,75 @@ def mostrar_sidebar(hojas):
 
         st.divider()
 
-        st.caption("Versión 1.0")
+        st.caption(
+            f"Versión {VERSION}"
+        )
 
     # ======================================================
-    # COMPATIBILIDAD
+    # RETORNO
     # ======================================================
-
-    hoja = "RODAMIENTOS"
-
-    df = hojas.get(hoja)
 
     return {
 
-        "hoja": hoja,
+        "hoja": HOJA_PRINCIPAL,
 
-        "df": df,
+        "df": datos.get(HOJA_PRINCIPAL),
 
     }
 ```
+# 📌 Antes de copiar esta plantilla
 
+Esta plantilla corresponde al **Sidebar Oficial del Framework Dashboards Streamlit**.
+
+Fue diseñada para ser reutilizada en cualquier Dashboard desarrollado con este Framework.
+
+Para adaptarla a un nuevo proyecto **no será necesario modificar la estructura del código**.
+
+Únicamente deberá personalizar los siguientes parámetros ubicados al inicio del archivo.
+
+| Parámetro | Descripción |
+|-----------|-------------|
+| **NOMBRE_DASHBOARD** | Nombre principal del Dashboard. |
+| **SUBTITULO** | Descripción corta del proyecto. |
+| **ARCHIVO_FUENTE** | Nombre del archivo o fuente de información utilizada. |
+| **HOJA_PRINCIPAL** | Nombre de la hoja principal que utilizará el Dashboard (solo cuando la fuente de datos sea un archivo Excel). |
+| **ESTADO** | Estado mostrado al usuario (Conectado, Actualizado, En proceso, etc.). |
+| **VERSION** | Versión actual del Dashboard. |
+| **LOGO** | Ruta del logotipo corporativo. |
+
+EJEMPLO
+
+# ==========================================================
+# PERSONALIZACIÓN DEL DASHBOARD
+# ==========================================================
+
+NOMBRE_DASHBOARD = "Dashboard Operativo"
+
+SUBTITULO = "Analizador de Costos"
+
+ARCHIVO_FUENTE = "LIQUIDACION_JULIO_2026.xlsx"
+
+HOJA_PRINCIPAL = "RODAMIENTOS"
+
+ESTADO = "🟢 Conectado"
+
+VERSION = "1.0"
+
+LOGO = (
+    Path(__file__).resolve().parent.parent
+    / "assets"
+    / "logo.png"
+)
+
+Nota: HOJA_PRINCIPAL solo aplica cuando el Dashboard obtiene la información desde un archivo Excel. Si la fuente de datos corresponde a una base de datos, una API, archivos CSV u otro origen, este parámetro puede omitirse sin afectar el funcionamiento del Sidebar.
+
+> 💡 **Regla del Framework**
+>
+> Al reutilizar esta plantilla no modifiques la estructura del componente.
+>
+> Personaliza únicamente los parámetros definidos al inicio del archivo.
+>
+> Esto garantiza que todos los Dashboards mantengan una arquitectura uniforme y facilita el mantenimiento futuro.
 ──────────────────────────────────────────────
 
 ---
