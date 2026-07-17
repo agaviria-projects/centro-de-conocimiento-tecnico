@@ -198,6 +198,19 @@ Para reutilizarla en un nuevo Dashboard no será necesario modificar el código 
 > Únicamente personalice las variables ubicadas al inicio del archivo.
 >
 > Esto garantiza la compatibilidad con `styles.py` y mantiene el diseño corporativo del Framework.
+> 
+>Todo Dashboard desarrollado con este Framework deberá iniciar con el mismo Banner Corporativo.
+Únicamente cambiarán:
+
+• El icono.
+
+• El título.
+
+• El subtítulo.
+
+• El estado.
+
+La estructura HTML y los estilos CSS permanecerán iguales.
 
 ---
 
