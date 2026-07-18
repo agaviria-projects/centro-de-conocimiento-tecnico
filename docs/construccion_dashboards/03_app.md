@@ -504,6 +504,68 @@ Mantener este orden facilita la lectura del código, mejora el mantenimiento del
 
 ---
 
+---
+
+# Nota Técnica - Sidebar Colapsado
+
+## Problema
+
+En Streamlit el usuario puede colapsar accidentalmente el Sidebar utilizando el botón « ubicado en la esquina superior izquierda.
+
+Cuando esto ocurre:
+
+- El menú desaparece.
+- Los módulos dejan de verse.
+- Puede dar la impresión de que el Dashboard presenta un error.
+
+---
+
+## Solución Recomendada
+
+Dentro del Framework ELITE todos los Dashboards deberán iniciar con el Sidebar expandido.
+
+```python
+st.set_page_config(
+
+    layout="wide",
+
+    initial_sidebar_state="expanded"
+
+)
+```
+
+---
+
+## Recomendaciones
+
+✔ Configurar siempre `initial_sidebar_state="expanded"`.
+
+✔ Diseñar el Dashboard para que continúe funcionando incluso si el Sidebar es colapsado.
+
+✔ Evitar colocar información crítica únicamente dentro del Sidebar.
+
+✔ Ubicar los filtros principales dentro del contenido del Dashboard cuando sea posible.
+
+---
+
+## Buenas prácticas
+
+El Sidebar debe utilizarse principalmente para:
+
+- Navegación.
+- Información general.
+- Configuración.
+
+Los elementos necesarios para el análisis (filtros, KPIs y gráficos) deben permanecer visibles en el área principal del Dashboard.
+
+---
+
+## Resultado esperado
+
+Al iniciar la aplicación el usuario visualizará automáticamente el Sidebar desplegado, reduciendo la posibilidad de confusión y mejorando la experiencia de uso.
+
+---
+
 # Buenas prácticas
 
 ✔ Mantener **app.py** pequeño y fácil de leer.
