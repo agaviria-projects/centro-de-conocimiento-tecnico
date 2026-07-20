@@ -1026,7 +1026,7 @@ reutilizar componentes en futuros proyectos.
         "06 - Navegación": "06_Navegación Principal.md",
         "07 - Styles": "07_Sistema de Estilos (cargar los estilos).md",
         "08 - Estilos.css": "08_Sistema de Diseño (styles.css).md",
-        "09 - KPIs": "09_kpis.md",
+        "09 - KPIs": "09_Biblioteca Oficial de KPIs para Dashboards Empresariales.md",
         "10 - Filtros": "10_filtros.md",
         "11 - Tablas": "11_tablas.md",
         "12 - AgGrid": "12_aggrid.md",
