@@ -212,7 +212,7 @@ opcion = mostrar_navigation(
     titulo="Módulos",
 
     opciones=[
-        "📂 Datos",
+        "📂 Estados",
         "📊 KPIs",
         "📈 Indicadores",
         "📋 Reportes",
