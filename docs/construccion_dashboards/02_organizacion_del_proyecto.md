@@ -145,6 +145,7 @@ banner.py
 sidebar.py
 navigation.py
 subnavigation.py
+styles.py
 filtros.py
 kpis.py
 graficos.py
