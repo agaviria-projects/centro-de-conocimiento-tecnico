@@ -1,1112 +1,202 @@
+# 🎨 Capítulo 08 - Sistema de Diseño (styles.css)
+
+# Introducción
+
+Después de construir la arquitectura del Dashboard y el Sistema de
+Estilos, el siguiente paso consiste en definir la identidad visual
+oficial del Framework.
+
+El archivo **styles.css** constituye el Sistema de Diseño del Framework
+Dashboards Streamlit.
+
+No es un archivo de ejemplo; es la plantilla oficial que servirá como
+base para cualquier Dashboard desarrollado con este Framework.
+
+------------------------------------------------------------------------
+
+# Objetivo
+
+Construir una identidad visual reutilizable, consistente y fácil de
+mantener.
+
+Todos los Dashboards compartirán la misma base visual, modificando
+únicamente los bloques que requiera cada proyecto.
+
+------------------------------------------------------------------------
+
+# Filosofía del Sistema de Diseño
+
+> **Los componentes construyen la estructura.**
+
+> **styles.py carga el Sistema de Estilos.**
+
+> **styles.css define la identidad visual.**
+
+Esto permite mantener una apariencia uniforme en todos los proyectos.
+
+------------------------------------------------------------------------
+
+# Responsabilidad de styles.css
+
+El archivo controla la apariencia de:
+
+-   Banner
+-   Sidebar
+-   Navigation
+-   Subnavigation
+-   Botones
+-   Inputs
+-   SelectBox
+-   KPIs
+-   Tablas
+-   AgGrid
+-   Responsive
+
+No contiene lógica de negocio ni procesamiento de datos.
+
+------------------------------------------------------------------------
+
+# Arquitectura
+
+``` text
+app.py
+    │
+    ▼
+styles.py
+    │
+    ▼
+assets/styles.css
+    │
+    ├── Banner
+    ├── Sidebar
+    ├── Navigation
+    ├── Subnavigation
+    ├── Botones
+    ├── KPIs
+    ├── Tablas
+    ├── AgGrid
+    └── Responsive
+```
+
+------------------------------------------------------------------------
+
 # ⭐ Plantilla Oficial del Framework
-
-Una vez comprendida la filosofía del Sistema de Diseño es momento de incorporar el archivo oficial utilizado por el Framework.
-
-──────────────────────────────────────────────
-
-📌 ACCIÓN
 
 Crear el archivo:
 
-**assets/styles.css**
-
-Copiar exactamente el siguiente contenido.
-
-```css
-/* ==========================================================
-   ELITE DESIGN SYSTEM V3
-   Analizador de Costos Operativos
-==========================================================*/
-
-
-/*==========================================================
-FUENTE
-==========================================================*/
-
-html,
-body,
-[class*="css"]{
-
-    font-family:
-        "Segoe UI Variable",
-        "Segoe UI",
-        "Inter",
-        "Roboto",
-        sans-serif !important;
-
-}
-
-
-/*==========================================================
-VARIABLES
-==========================================================*/
-
-:root{
-
-    --elite-primary:#198754;
-
-    --elite-primary-dark:#146C43;
-
-    --elite-primary-light:#28A745;
-
-    --elite-background:#F3F5F7;
-
-    --elite-card:#FFFFFF;
-
-    --elite-border:#DDE5EC;
-
-    --elite-text:#1F2937;
-
-    --elite-text-light:#6B7280;
-
-    --elite-radius:22px;
-
-}
-
-
-/*==========================================================
-STREAMLIT
-==========================================================*/
-#MainMenu{
-    visibility:hidden;
-}
-
-
-
-footer{
-    visibility:hidden;
-}
-
-
-/*==========================================================
-APP
-==========================================================*/
-
-.stApp{
-
-    background:var(--elite-background);
-
-}
-
-
-/*==========================================================
-CONTENEDOR
-==========================================================*/
-
-.block-container{
-
-    padding-top:0.5rem !important;
-
-    padding-left:22px;
-
-    padding-right:22px;
-
-    padding-bottom:35px;
-
-}
-
-/*==========================================================
-HEADER STREAMLIT
-==========================================================*/
-
-/* Elimina el espacio superior reservado por Streamlit */
-
-header[data-testid="stHeader"]{
-
-    background:transparent !important;
-
-    height:0 !important;
-
-} */
-
-/* div[data-testid="stToolbar"]{
-
-    height:0 !important;
-
-    visibility:hidden;
-
-} */
-/* 
-div[data-testid="stDecoration"]{
-
-    display:none !important;
-
-} */
-
-.block-container{
-
-    padding-top:0rem !important;
-
-}
-
-/*==========================================================
-SIDEBAR
-==========================================================*/
-
-section[data-testid="stSidebar"]{
-
-    background:#EEF2F6;
-
-    border-right:4px solid #16A34A;
-
-}
-
-/*==========================================================
-LOGO
-==========================================================*/
-
-section[data-testid="stSidebar"] img{
-
-    display:block;
-
-    margin:auto;
-
-    padding-bottom:18px;
-
-}
-
-
-/*==========================================================
-SCROLL
-==========================================================*/
-
-::-webkit-scrollbar{
-
-    width:10px;
-
-}
-
-::-webkit-scrollbar-thumb{
-
-    background:#C9D2DB;
-
-    border-radius:50px;
-
-}
-
-
-/*==========================================================
-TEXTOS SIDEBAR
-==========================================================*/
-
-.sidebar-section,
-.section-title{
-
-    color:#111827;
-
-    font-weight:800;
-
-}
-
-
-/*==========================================================
-LABELS
-==========================================================*/
-
-label,
-label p{
-
-    color:#111827;
-
-    font-size:15px;
-
-    font-weight:700;
-
-}
-
-
-/*==========================================================
-INPUTS
-==========================================================*/
-
-.stTextInput input,
-.stNumberInput input,
-.stDateInput input,
-.stTextArea textarea{
-
-    border-radius:14px;
-
-    border:1px solid var(--elite-border);
-
-    background:white;
-
-    font-size:15px;
-
-    color:#111827;
-
-    font-weight:600;
-
-}
-
-
-/*==========================================================
-SELECTBOX
-==========================================================*/
-
-.stSelectbox div[data-baseweb="select"]{
-
-    border-radius:14px;
-
-    border:1px solid var(--elite-border);
-
-}
-
-
-/*==========================================================
-TÍTULOS
-==========================================================*/
-
-h1,
-h2,
-h3,
-h4{
-
-    color:#065F46;
-
-    font-weight:900;
-
-}
-
-
-/*==========================================================
-BANNER
-==========================================================*/
-
-.banner{
-
-    background:
-
-        radial-gradient(
-
-            600px 250px
-
-            at
-
-            100px 40px,
-
-            rgba(255,255,255,.08),
-
-            transparent
-
-        ),
-
-        linear-gradient(
-
-            90deg,
-
-            #166534,
-
-            #15803D,
-
-            #14532D
-
-        );
-
-    border-radius:28px;
-
-    padding:26px 34px;
-
-    min-height:140px;
-
-    display:flex;
-
-    justify-content:space-between;
-
-    align-items:center;
-
-    box-shadow:
-
-        0 18px 45px rgba(0,0,0,.22);
-
-    margin-bottom:30px;
-
-}
-
-
-/*==========================================================
-BANNER IZQUIERDA
-==========================================================*/
-
-.banner-left{
-
-    display:flex;
-
-    flex-direction:column;
-
-    gap:6px;
-
-}
-
-
-/*==========================================================
-TÍTULO
-==========================================================*/
-
-.banner-title{
-
-    display:flex;
-
-    align-items:center;
-
-    color:white;
-
-    font-size:34px;
-
-    font-weight:900;
-
-    letter-spacing:.3px;
-
-}
-
-
-/*==========================================================
-SUBTÍTULO
-==========================================================*/
-
-.banner-sub{
-
-    color:#BBF7D0;
-
-    font-size:15px;
-
-    font-weight:500;
-
-}
-
-
-/*==========================================================
-BADGE
-==========================================================*/
-
-.banner-badge{
-
-    background:
-
-        rgba(
-
-            255,
-
-            255,
-
-            255,
-
-            .12
-
-        );
-
-    border-radius:999px;
-
-    padding:10px 18px;
-
-    border:
-
-        1px solid
-
-        rgba(
-
-            255,
-
-            255,
-
-            255,
-
-            .20
-
-        );
-
-    color:white;
-
-    font-size:13px;
-
-    font-weight:700;
-
-    backdrop-filter:blur(8px);
-
-}
-
-/* ==========================================================
-   BOTONES CORPORATIVOS
-========================================================== */
-
-div.stButton>button{
-
-    width:100%;
-
-    height:46px;
-
-    border:none;
-
-    border-radius:14px;
-
-    background:
-        linear-gradient(
-            180deg,
-            #1FA856,
-            #198754
-        );
-
-    color:white;
-
-    font-size:15px;
-
-    font-weight:700;
-
-    letter-spacing:.2px;
-
-    box-shadow:
-        0 8px 18px rgba(25,135,84,.18);
-
-    transition:all .20s ease;
-
-}
-
-div.stButton>button:hover{
-
-    background:
-        linear-gradient(
-            180deg,
-            #27B763,
-            #1FA856
-        );
-
-    transform:translateY(-2px);
-
-    box-shadow:
-        0 12px 25px rgba(25,135,84,.25);
-
-}
-
-div.stButton>button:active{
-
-    transform:scale(.98);
-
-}
-
-
-/* ==========================================================
-   DOWNLOAD BUTTON
-========================================================== */
-
-div.stDownloadButton>button{
-
-    border-radius:14px;
-
-    font-weight:700;
-
-}
-
-
-/* ==========================================================
-   INPUTS
-========================================================== */
-
-.stTextInput input:focus,
-.stNumberInput input:focus,
-textarea:focus{
-
-    border:2px solid #198754 !important;
-
-    box-shadow:
-        0 0 0 4px rgba(25,135,84,.10);
-
-}
-
-
-/* ==========================================================
-   SELECTBOX
-========================================================== */
-
-div[data-baseweb="select"]>div{
-
-    min-height:46px;
-
-    border-radius:14px;
-
-    border:1px solid #DDE5EC;
-
-    background:white;
-
-}
-
-
-div[data-baseweb="select"]>div:hover{
-
-    border-color:#198754;
-
-}
-
-
-/* ==========================================================
-   DROPDOWN
-========================================================== */
-
-div[role="listbox"]{
-
-    background:#F8FAFC;
-
-}
-
-
-div[role="option"]{
-
-    color:#111827;
-
-    font-weight:600;
-
-    background:#F8FAFC;
-
-}
-
-
-div[role="option"]:hover{
-
-    background:#DCFCE7;
-
-    color:#065F46;
-
-}
-
-
-div[aria-selected="true"]{
-
-    background:#BBF7D0;
-
-    color:#065F46;
-
-}
-
-
-/* ==========================================================
-   KPIs
-========================================================== */
-
-div[data-testid="metric-container"]{
-
-    background:white;
-
-    border-radius:18px;
-
-    border:1px solid #DDE5EC;
-
-    padding:18px;
-
-    box-shadow:
-
-        0 8px 22px rgba(0,0,0,.05);
-
-}
-
-
-div[data-testid="metric-container"]:hover{
-
-    transform:translateY(-2px);
-
-    box-shadow:
-
-        0 14px 30px rgba(0,0,0,.08);
-
-}
-
-
-div[data-testid="stMetricLabel"]{
-
-    color:#64748B;
-
-    font-weight:700;
-
-    font-size:13px;
-
-}
-
-
-div[data-testid="stMetricValue"]{
-
-    color:#111827;
-
-    font-size:30px;
-
-    font-weight:900;
-
-}
-
-
-div[data-testid="stMetricDelta"]{
-
-    font-weight:700;
-
-}
-
-
-/* ==========================================================
-   TABS
-========================================================== */
-
-.stTabs{
-
-    margin-top:8px;
-
-}
-
-
-.stTabs [data-baseweb="tab-list"]{
-
-    gap:10px;
-
-    border-bottom:none;
-
-}
-
-
-.stTabs [data-baseweb="tab"]{
-
-    height:46px;
-
-    border-radius:14px;
-
-    background:white;
-
-    border:1px solid #DDE5EC;
-
-    color:#64748B;
-
-    font-weight:700;
-
-    transition:all .18s ease;
-
-}
-
-
-.stTabs [data-baseweb="tab"]:hover{
-
-    background:#F0FDF4;
-
-    color:#198754;
-
-}
-
-
-.stTabs [aria-selected="true"]{
-
-    background:#198754 !important;
-
-    color:white !important;
-
-    border:none !important;
-
-}
-
-
-/* ==========================================================
-   EXPANDERS
-========================================================== */
-
-details{
-
-    border-radius:18px;
-
-    border:1px solid #DDE5EC;
-
-    background:white;
-
-    overflow:hidden;
-
-}
-
-
-summary{
-
-    font-weight:700;
-
-}
-
-
-/* ==========================================================
-   ALERTAS
-========================================================== */
-
-div[data-baseweb="notification"]{
-
-    border-radius:18px;
-
-}
-
-
-/* ==========================================================
-   PLACEHOLDER
-========================================================== */
-
-input::placeholder,
-textarea::placeholder{
-
-    color:#94A3B8;
-
-    font-weight:500;
-
-}
-
-
-/* ==========================================================
-   TOOLTIP
-========================================================== */
-
-div[data-testid="stTooltipIcon"]{
-
-    color:#94A3B8;
-
-}
-
-/*==========================================================
-SIDEBAR HEADER
-==========================================================*/
-
-.sidebar-title{
-
-    text-align:center;
-
-    font-size:24px;
-
-    font-weight:800;
-
-    color:#166534;
-
-    margin-top:8px;
-
-    margin-bottom:4px;
-
-}
-
-.sidebar-subtitle{
-
-    text-align:center;
-
-    color:#64748B;
-
-    font-size:14px;
-
-    margin-bottom:10px;
-
-}
-
-section[data-testid="stSidebar"] img{
-
-    width:220px;
-
-    display:block;
-
-    margin:0 auto;
-
-    padding-top:0px;
-
-    padding-bottom:12px;
-
-}
-
-/*==========================================================
-OCULTAR SOLO EL LISTADO DE PÁGINAS
-SIN OCULTAR EL BOTÓN << DEL SIDEBAR
-==========================================================*/
-
-/* Oculta únicamente los enlaces de páginas */
-[data-testid="stSidebarNavItems"]{
-    display:none !important;
-}
-
-/* Oculta el separador si existe */
-[data-testid="stSidebarNavSeparator"]{
-    display:none !important;
-}
-
-.banner-logo{
-
-    height:56px;
-
-    margin-right:18px;
-
-}
-
-
-/*==========================================================
-BANNER ELITE
-==========================================================*/
-
-.elite-banner{
-
-    display:flex;
-    justify-content:space-between;
-    align-items:center;
-
-    background:
-        radial-gradient(
-            600px 250px
-            at 120px 40px,
-            rgba(255,255,255,.08),
-            transparent
-        ),
-        linear-gradient(
-            90deg,
-            #166534,
-            #15803D,
-            #14532D
-        );
-
-    border-radius:28px;
-
-    padding:26px 34px;
-
-    min-height:140px;
-
-    box-shadow:
-        0 20px 45px rgba(0,0,0,.22);
-
-    margin-bottom:30px;
-
-}
-
-.elite-banner-title{
-
-    color:white;
-
-    font-size:34px;
-
-    font-weight:900;
-
-    letter-spacing:.3px;
-
-}
-
-.elite-banner-subtitle{
-
-    margin-top:8px;
-
-    color:#BBF7D0;
-
-    font-size:15px;
-
-    font-weight:500;
-
-}
-
-.elite-banner-status{
-
-    background:rgba(255,255,255,.12);
-
-    border:1px solid rgba(255,255,255,.20);
-
-    border-radius:999px;
-
-    padding:10px 18px;
-
-    color:white;
-
-    font-size:13px;
-
-    font-weight:700;
-
-    backdrop-filter:blur(8px);
-
-}
-/* ==========================================
-   OCULTAR SOLO DEPLOY
-========================================== */
-
-/* [data-testid="stToolbar"] a[href*="share"]{
-    display:none !important;
-}
-
-[data-testid="stToolbar"] button[aria-label*="Deploy"]{
-    display:none !important;
-}
-
-[data-testid="stToolbar"] button[title="Deploy"]{
-    display:none !important;
-} */
-
-
-
-/* 🔥 OCULTAR BOTÓN DEPLOY */
-button[kind="header"] {
-    display: none !important;
-}   
-
-/*==========================================
-TABS EXPLORADOR
-==========================================*/
-
-.stTabs [data-baseweb="tab"]{
-
-    border-radius:18px !important;
-
-    padding:10px 18px !important;
-
-    margin-right:8px !important;
-
-    background:#f5f7fa !important;
-
-    border:1px solid #d9e2ec !important;
-
-    transition:.25s;
-
-    font-weight:600 !important;
-
-}
-
-
-.stTabs [data-baseweb="tab"]:hover{
-
-    background:#e8f5e9 !important;
-
-    color:#166534 !important;
-
-}
-
-
-.stTabs [aria-selected="true"]{
-
-    background:linear-gradient(
-        90deg,
-        #198754,
-        #157347
-    ) !important;
-
-    color:white !important;
-
-    border:none !important;
-
-    box-shadow:0 6px 18px rgba(0,0,0,.18);
-
-}
-
-/*==========================================================
-MENÚ EXPLORADOR
-==========================================================*/
-
-div[role="radiogroup"]{
-
-    gap:12px;
-
-    margin-bottom:18px;
-
-}
-
-div[role="radiogroup"] label{
-
-    background:#FFFFFF;
-
-    border:1px solid #DDE5EC;
-
-    border-radius:14px;
-
-    padding:8px 12px;
-
-    min-width:115px;
-
-    justify-content:center;
-
-    transition:.20s;
-
-    box-shadow:0 3px 8px rgba(0,0,0,.05);
-
-}
-
-div[role="radiogroup"] label:hover{
-
-    border-color:#198754;
-
-    background:#F0FDF4;
-
-}
-
-div[role="radiogroup"] input:checked + div{
-
-    color:white !important;
-
-    font-weight:700;
-
-}
-
-/*==========================================================
-AGGRID - ENCABEZADO CORPORATIVO
-==========================================================*/
-
-.ag-theme-streamlit .ag-header {
-
-    background:#166534 !important;
-
-    border-bottom:0 !important;
-
-}
-
-.ag-theme-streamlit .ag-header-cell {
-
-    background:#166534 !important;
-
-    border-right:1px solid rgba(255,255,255,.10) !important;
-
-}
-
-.ag-theme-streamlit .ag-header-cell-label {
-
-    color:white !important;
-
-    font-size:13px !important;
-
-    font-weight:700 !important;
-
-}
-
-.ag-theme-streamlit .ag-header-cell-text {
-
-    color:white !important;
-
-}
-
-.ag-theme-streamlit .ag-icon {
-
-    color:white !important;
-
-}
+``` text
+assets/
+    styles.css
 ```
 
-──────────────────────────────────────────────
+Copiar exactamente el contenido oficial del archivo CSS del Framework.
 
----
+Esta plantilla fue refinada durante el desarrollo de Dashboards
+empresariales y constituye la base visual oficial.
 
-# 📌 Antes de copiar esta plantilla
+------------------------------------------------------------------------
 
-Esta plantilla corresponde al **Sistema de Diseño Oficial del Framework Dashboards Streamlit**.
+# Antes de utilizar esta plantilla
 
-Fue construida y refinada durante el desarrollo del Dashboard Servitravel.
+El archivo **styles.css** forma parte del Framework.
 
-No es un archivo de ejemplo.
+No se recomienda crear un CSS nuevo para cada Dashboard.
 
-Constituye la plantilla oficial que deberá reutilizarse como punto de partida para cualquier nuevo Dashboard desarrollado con este Framework.
+El procedimiento recomendado consiste en reutilizar esta plantilla y
+personalizar únicamente los bloques que requiera el nuevo proyecto.
 
-Se recomienda modificar únicamente aquellos bloques que requiera el nuevo proyecto, manteniendo la estructura general del archivo.
+------------------------------------------------------------------------
 
-----
+# Organización del archivo
 
-# Estructura del archivo
+El archivo se encuentra dividido en bloques independientes:
 
-El archivo `styles.css` se encuentra organizado en los siguientes bloques.
+-   Fuente
+-   Variables
+-   Streamlit
+-   Aplicación
+-   Sidebar
+-   Banner
+-   Navigation
+-   Subnavigation
+-   Botones
+-   Inputs
+-   SelectBox
+-   KPIs
+-   Tabs
+-   AgGrid
+-   Responsive
 
-- Fuente
-- Variables
-- Streamlit
-- Aplicación
-- Sidebar
-- Banner
-- Botones
-- Inputs
-- SelectBox
-- KPIs
-- Tabs
-- AgGrid
-- Responsive
+Cada bloque posee una única responsabilidad.
 
-Cada bloque posee una única responsabilidad y puede modificarse de manera independiente.
+------------------------------------------------------------------------
 
-> 📎 **Archivo Oficial del Framework**
->
-> El archivo completo `styles.css` forma parte de la plantilla oficial del Framework y deberá copiarse directamente al nuevo proyecto.
->
-> La documentación explica su organización y funcionamiento, mientras que el archivo CSS constituye la implementación oficial.
+# ¿Qué debo personalizar?
+
+Normalmente solo será necesario modificar:
+
+-   Colores corporativos.
+-   Logo.
+-   Banner.
+-   Variables CSS.
+-   Componentes específicos del proyecto.
+
+La estructura general deberá mantenerse.
+
+------------------------------------------------------------------------
+
+# ¿Qué NO debo modificar?
+
+-   La organización del archivo.
+-   La filosofía de bloques.
+-   La separación de responsabilidades entre componentes y estilos.
+
+------------------------------------------------------------------------
+
+# Buenas prácticas
+
+-   Mantener un único archivo **styles.css**.
+-   Reutilizar la plantilla oficial.
+-   Evitar estilos embebidos en componentes.
+-   Centralizar todos los cambios visuales.
+
+------------------------------------------------------------------------
+
+# Errores comunes
+
+-   Crear múltiples archivos CSS.
+-   Duplicar reglas.
+-   Escribir CSS dentro de `app.py`.
+-   Modificar directamente la apariencia desde los componentes.
+
+------------------------------------------------------------------------
+
+# Regla del Framework
+
+El archivo **styles.css** constituye la implementación oficial del
+Sistema de Diseño.
+
+Todo Dashboard nuevo deberá partir de esta plantilla y adaptar
+únicamente los bloques necesarios, preservando la arquitectura visual
+del Framework.
+
+------------------------------------------------------------------------
+
+# Checklist
+
+-   [ ] Existe `assets/styles.css`.
+-   [ ] `styles.py` carga correctamente el archivo.
+-   [ ] Banner utiliza los estilos.
+-   [ ] Sidebar utiliza los estilos.
+-   [ ] Navigation utiliza los estilos.
+-   [ ] Subnavigation utiliza los estilos.
+-   [ ] No existen reglas CSS duplicadas.
+-   [ ] El Dashboard mantiene una identidad visual uniforme.
+
+------------------------------------------------------------------------
+
+# Próximo capítulo
+
+A partir del siguiente capítulo comenzará la construcción de los
+componentes funcionales del Dashboard (filtros, KPIs, gráficos y
+tablas), reutilizando el Sistema de Diseño definido en este capítulo.
