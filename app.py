@@ -1019,7 +1019,7 @@ reutilizar componentes en futuros proyectos.
     capitulos = {
         "00 - Introducción": "00_introduccion.md",
         "01 - Arquitectura": "01_arquitectura.md",
-        "02 - Estructura del Proyecto": "02_estructura_proyecto.md",
+        "02 - Estructura del Proyecto": "02_organizacion_del_proyecto.md",
         "03 - Construcción del app.py": "03_app.md",
         "04 - Sidebar": "04_sidebar.md",
         "05 - Banner": "05_Construcción del Banner Corporativo.md",
