@@ -133,6 +133,21 @@ def cargar_estilos():
         )
 ```
 
+---
+
+## Luego en app.py:
+
+``` python
+from components.styles import cargar_estilos
+
+y después de st.set_page_config():
+
+cargar_estilos()
+
+```
+
+---
+
 ------------------------------------------------------------------------
 
 # ¿Qué debo personalizar?

@@ -286,28 +286,29 @@ if opcion == "📂 Estados del ANS":
 
 Una vez construida la navegación Principal, el siguiente paso consiste en mostrar el contenido correspondiente a la opción seleccionada.
 
+OJO:  con la indentación debe ser debajo del )
 por ejemplo:
 
 ```python
 
-# ==========================================================
-# MOSTRAR SUB-NAVIGATION
-# ==========================================================
-if subopcion == "A tiempo":
+    # ==========================================================
+    # MOSTRAR SUB-NAVIGATION
+    # ==========================================================
+    if subopcion == "A tiempo":
 
-    st.write("Aquí irá la información de A tiempo.")
+        st.write("Aquí irá la información de A tiempo.")
 
-elif subopcion == "Alerta":
+    elif subopcion == "Alerta":
 
-    st.write("Aquí irá la información de Alerta.")
+        st.write("Aquí irá la información de Alerta.")
 
-elif subopcion == "Alerta Cero Días":
+    elif subopcion == "Alerta Cero Días":
 
-    st.write("Aquí irá la información de Alerta Cero Días.")
+        st.write("Aquí irá la información de Alerta Cero Días.")
 
-elif subopcion == "Vencidos":
+    elif subopcion == "Vencidos":
 
-    st.write("Aquí irá la información de Vencidos.") 
+        st.write("Aquí irá la información de Vencidos.") 
 
 ```
 ---
