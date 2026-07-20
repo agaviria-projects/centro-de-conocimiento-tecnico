@@ -144,6 +144,7 @@ components/
 banner.py
 sidebar.py
 navigation.py
+subnavigation.py
 filtros.py
 kpis.py
 graficos.py
