@@ -178,7 +178,7 @@ navigation.py
 
 ---
 
-# Plantilla Oficial
+# Plantilla Oficial en navigation.py
 
 ```python
 import streamlit as st
@@ -225,6 +225,121 @@ La navegación únicamente devuelve la opción seleccionada.
 `app.py` será el responsable de decidir qué componente cargar.
 
 ---
+### Navegación Secundaria (Opcional)
+
+```python
+
+import streamlit as st
+
+def mostrar_subnavigation(
+    opciones,
+    titulo=None,
+):
+
+    if titulo:
+        st.caption(titulo)
+
+    return st.segmented_control(
+        "",
+        options=opciones,
+        selection_mode="single",
+        default=opciones[0] if opciones else None,
+        key="subnavigation",
+    )
+
+```
+
+---
+
+# Integración con app.py
+
+```python
+
+from components.subnavigation import mostrar_subnavigation
+
+
+if opcion == "📂 Estados del ANS":
+
+    subopcion = mostrar_subnavigation(
+
+        titulo="Origen de información",
+
+        opciones=[
+
+            "A tiempo",
+
+            "Alerta",
+
+            "Alerta Cero Días",
+
+            "Vencidos",
+
+        ],
+
+    )
+
+```
+
+----
+
+## Lo que Sigue debajo
+
+Una vez construida la navegación Principal, el siguiente paso consiste en mostrar el contenido correspondiente a la opción seleccionada.
+
+por ejemplo:
+
+```python
+
+# ==========================================================
+# MOSTRAR SUB-NAVIGATION
+# ==========================================================
+if subopcion == "A tiempo":
+
+    st.write("Aquí irá la información de A tiempo.")
+
+elif subopcion == "Alerta":
+
+    st.write("Aquí irá la información de Alerta.")
+
+elif subopcion == "Alerta Cero Días":
+
+    st.write("Aquí irá la información de Alerta Cero Días.")
+
+elif subopcion == "Vencidos":
+
+    st.write("Aquí irá la información de Vencidos.") 
+
+```
+---
+
+## Entocnes:
+
+El lector entiende:
+
+A tiempo
+
+↓
+
+muestra
+
+Tabla Rodamientos
+A tiempo
+
+↓
+
+muestra
+
+Tabla Viáticos
+Alerta
+
+↓
+
+muestra
+
+Tabla Alerta
+
+---
+
 
 # Personalización
 
