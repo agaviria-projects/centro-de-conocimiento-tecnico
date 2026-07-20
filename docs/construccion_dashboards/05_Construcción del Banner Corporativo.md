@@ -1,278 +1,174 @@
 # 🟩 Capítulo 05 - Construcción del Banner Corporativo
 
-## Introducción
+# Introducción
 
-El Banner representa la identidad visual del Dashboard.
+Después de construir el **Sidebar**, el siguiente componente del Framework es el **Banner Corporativo**.
 
-Es el primer componente que observa el usuario al ingresar a la aplicación y su función consiste en comunicar inmediatamente el propósito del sistema, reforzar la identidad corporativa y mostrar el estado general de la aplicación.
+El Banner constituye la identidad visual del Dashboard y será el primer elemento que observará el usuario al ingresar a la aplicación.
 
-Dentro del Framework Dashboards Streamlit el Banner constituye un componente reutilizable cuya estructura fue validada durante el desarrollo de diferentes Dashboards empresariales.
-
-Por esta razón se adopta una única implementación oficial que será reutilizada en todos los proyectos desarrollados con este Framework.
+Dentro del Framework ELITE el Banner es un componente reutilizable e independiente de cualquier proyecto específico.
 
 ---
 
 # Objetivo
 
-Construir un Banner profesional, reutilizable y completamente compatible con el Framework.
-
-Al finalizar este capítulo tendrás un Banner que podrá copiarse y reutilizarse en cualquier Dashboard sin necesidad de rediseñarlo.
+Construir un Banner corporativo reutilizable que pueda utilizarse en cualquier Dashboard desarrollado con este Framework.
 
 ---
 
-# Filosofía del Banner
-
-Existe una regla muy importante dentro de este Framework.
+# Filosofía del Framework
 
 > **El Banner identifica.**
 
-> **El Dashboard informa.**
+> **El Dashboard analiza.**
 
-El Banner no tiene como objetivo mostrar indicadores, tablas o filtros.
+El Banner no calcula indicadores ni contiene lógica de negocio.
 
-Su responsabilidad consiste únicamente en presentar la identidad visual del Dashboard y proporcionar información general al usuario.
-
----
-
-# ¿Por qué no utilizamos columnas de Streamlit?
-
-Durante el desarrollo de diferentes Dashboards empresariales se evaluaron varias alternativas para construir el encabezado de la aplicación.
-
-Entre ellas:
-
-- `st.columns()`
-- `st.container()`
-- Componentes nativos de Streamlit
-
-Aunque todas funcionan correctamente, se identificaron varias limitaciones cuando se buscaba un diseño corporativo uniforme.
-
-Entre los principales inconvenientes encontrados estuvieron:
-
-❌ Espaciados inconsistentes.
-
-❌ Dificultad para alinear todos los elementos.
-
-❌ Menor control sobre colores, bordes y sombras.
-
-❌ Cambios visuales entre versiones de Streamlit.
-
-Después de múltiples pruebas se concluyó que la alternativa más estable consistía en construir el Banner utilizando HTML y CSS mediante `st.markdown()`.
-
-Esta solución permitió mantener exactamente el mismo diseño visual en todos los Dashboards desarrollados.
+Su única responsabilidad es presentar la identidad del Dashboard.
 
 ---
 
-# 🧠 Decisión de Arquitectura
+# Responsabilidades
 
-El Framework adopta una única implementación oficial para el Banner.
+El Banner debe:
 
-La estructura HTML fue diseñada para trabajar conjuntamente con las clases CSS definidas en `styles.py`.
-
-Modificar dicha estructura puede ocasionar que:
-
-- Se pierdan los estilos corporativos.
-- Se rompa la alineación de los elementos.
-- Se altere el comportamiento responsive.
-- El Banner deje de verse como fue diseñado.
-
-Por esta razón únicamente se personalizará el contenido del Banner, manteniendo intacta su estructura HTML.
+- Mostrar el nombre del Dashboard.
+- Mostrar un subtítulo.
+- Mostrar el estado del sistema.
+- Mantener una apariencia corporativa.
 
 ---
 
-# Resultado esperado
+# Qué NO debe contener
 
-Al finalizar este capítulo el Banner deberá mostrar una apariencia similar a la siguiente.
+Nunca colocar dentro del Banner:
 
-El Banner debe transmitir identidad corporativa, mantener una distribución uniforme y mostrar claramente el estado general del sistema.
-
-![Banner Corporativo](../images/dashboards/05_banner.png)
-
-**Figura 5.1.** Banner corporativo desarrollado para el Dashboard Servitravel y adoptado como plantilla oficial del Framework Dashboards Streamlit.
-
----
-
-# Análisis de la Figura 5.1
-
-La Figura 5.1 muestra el diseño definitivo del Banner utilizado como estándar dentro del Framework.
-
-El componente se encuentra dividido en tres zonas principales.
-
-- Icono representativo del Dashboard.
-- Información principal (título y subtítulo).
-- Estado general del sistema.
-
-Esta distribución permite que el usuario identifique rápidamente el propósito de la aplicación sin distraer la atención del contenido principal.
+- KPIs.
+- Gráficos.
+- Tablas.
+- AgGrid.
+- Filtros.
+- Botones de negocio.
+- Lectura de datos.
 
 ---
 
+# Arquitectura del Banner
 
-> ⚠️ **Importante**
->
-> El archivo `banner.py` únicamente define la estructura del Banner mediante HTML.
->
-> La apariencia visual mostrada en este capítulo (colores, bordes, sombras, espaciados, tipografía y distribución) es aplicada por el archivo `styles.py`.
->
-> Ambos archivos forman un único componente del Framework y deben utilizarse conjuntamente.
-# ⭐ Plantilla Oficial del Framework
+```text
+Icono
 
-Una vez comprendida la filosofía del componente, es momento de incorporar el archivo oficial utilizado por el Framework.
+↓
+
+Título
+
+↓
+
+Subtítulo
+
+↓
+
+Estado
+```
 
 ---
 
-──────────────────────────────────────────────
-
-📌 ACCIÓN
-
-Copie y pegue el siguiente archivo como:
-
-**banner.py**
-
-Mantenga exactamente la misma estructura.
+# Plantilla Oficial del Framework
 
 ```python
 import streamlit as st
 
+def mostrar_banner(
+    titulo: str,
+    subtitulo: str,
+    estado: str,
+    icono: str = "📊",
+):
 
-# ==========================================================
-# PERSONALIZACIÓN DEL BANNER
-# ==========================================================
-
-TITULO = "Analizador de Costos Operativos"
-
-SUBTITULO = "Control y análisis de costos operativos · Servitravel"
-
-ESTADO = "🟢 Sistema Activo"
-
-
-# ==========================================================
-# BANNER
-# ==========================================================
-
-def mostrar_banner():
-
-    st.markdown(f"""
+    st.markdown(
+        f'''
 <div class="elite-banner">
 
 <div>
 
 <div class="elite-banner-title">
-📊 Analizador de Costos Operativos  
+{icono} {titulo}
 </div>
 
 <div class="elite-banner-subtitle">
-Control y análisis de costos operativos · Servitravel
+{subtitulo}
 </div>
 
 </div>
 
 <div class="elite-banner-status">
-🟢 Sistema Activo
+{estado}
 </div>
 
 </div>
-""", unsafe_allow_html=True)
+''',
+        unsafe_allow_html=True,
+    )
 ```
 
-──────────────────────────────────────────────
+---
+
+# ¿Por qué utilizar parámetros?
+
+El Banner no debe contener información fija.
+
+Cada Dashboard personaliza únicamente los datos enviados desde **app.py**.
+
+Ejemplo:
+
+```python
+from components.banner import mostrar_banner
+
+mostrar_banner(
+    titulo="Dashboard FENIX ANS",
+    subtitulo="Control de Acuerdos de Nivel de Servicio",
+    estado="🟢 Operativo",
+    icono="📈",
+)
+```
+
+Con esta arquitectura el mismo componente podrá reutilizarse en cualquier Dashboard.
 
 ---
 
-# 📌 Antes de copiar esta plantilla
+# Integración con styles.css
 
-Esta plantilla corresponde al **Banner Oficial del Framework Dashboards Streamlit**.
-
-Para reutilizarla en un nuevo Dashboard no será necesario modificar el código HTML.
-
-Únicamente deberán personalizarse los siguientes parámetros.
-
-| Parámetro | Descripción |
-|-----------|-------------|
-| **TITULO** | Nombre principal del Dashboard. |
-| **SUBTITULO** | Descripción corta del proyecto. |
-| **ESTADO** | Estado mostrado al usuario. |
-
-> 💡 **Regla del Framework**
->
-> No modifique la estructura HTML del Banner.
->
-> Únicamente personalice las variables ubicadas al inicio del archivo.
->
-> Esto garantiza la compatibilidad con `styles.py` y mantiene el diseño corporativo del Framework.
-> 
->Todo Dashboard desarrollado con este Framework deberá iniciar con el mismo Banner Corporativo.
-Únicamente cambiarán:
-
-• El icono.
-
-• El título.
-
-• El subtítulo.
-
-• El estado.
-
-La estructura HTML y los estilos CSS permanecerán iguales.
-
----
-
-# ¿Qué NO debo modificar?
-
-No se recomienda modificar la siguiente estructura.
+La apariencia visual del Banner depende del archivo:
 
 ```text
-elite-banner
+assets/
 
-↓
-
-elite-banner-title
-
-↓
-
-elite-banner-subtitle
-
-↓
-
-elite-banner-status
+styles.css
 ```
 
-Estas clases forman parte de la arquitectura visual del Framework y trabajan conjuntamente con el archivo `styles.py`.
+El componente únicamente define la estructura HTML.
 
-Modificar cualquiera de ellas ocasionará que el Banner pierda su apariencia corporativa.
+Los colores, tipografía, bordes, sombras y espaciados pertenecen al CSS del Framework.
 
 ---
 
 # Buenas prácticas
 
-✔ Mantener un título corto y descriptivo.
-
-✔ Utilizar un subtítulo que explique el propósito del Dashboard.
-
-✔ Mostrar siempre el estado del sistema.
-
-✔ Mantener la misma estructura HTML.
-
-✔ Reutilizar la plantilla oficial en todos los proyectos.
+- Mantener títulos cortos.
+- Utilizar subtítulos descriptivos.
+- Mostrar siempre el estado del sistema.
+- Mantener la estructura HTML.
+- Reutilizar el mismo componente.
 
 ---
 
 # Errores comunes
 
-❌ Construir el Banner utilizando columnas.
-
-❌ Modificar las clases HTML.
-
-❌ Cambiar los nombres de las clases CSS.
-
-❌ Mezclar lógica Python dentro del HTML.
-
-❌ Agregar indicadores, filtros o botones al Banner.
-
----
-
-# Lecciones aprendidas
-
-Después de desarrollar diferentes Dashboards empresariales se comprobó que una única implementación basada en HTML y CSS proporciona una apariencia mucho más consistente que las alternativas basadas en componentes nativos de Streamlit.
-
-Por esta razón el Framework adopta esta implementación como estándar para todos los nuevos proyectos.
+- Copiar el Banner de otro proyecto.
+- Escribir información fija dentro del componente.
+- Agregar lógica de negocio.
+- Modificar innecesariamente las clases CSS.
+- Colocar KPIs o filtros en el Banner.
 
 ---
 
@@ -280,24 +176,17 @@ Por esta razón el Framework adopta esta implementación como estándar para tod
 
 Antes de continuar verifica que:
 
-☐ El Banner aparece correctamente.
-
-☐ El título se visualiza correctamente.
-
-☐ El subtítulo es legible.
-
-☐ El estado del sistema aparece alineado.
-
-☐ El diseño coincide con la imagen de referencia.
-
-☐ El archivo `styles.py` se encuentra cargado.
-
-☐ No se modificó la estructura HTML del componente.
+- [ ] El Banner se muestra correctamente.
+- [ ] El título cambia mediante parámetros.
+- [ ] El subtítulo cambia mediante parámetros.
+- [ ] El estado cambia mediante parámetros.
+- [ ] El CSS del Framework se aplica correctamente.
+- [ ] El componente no contiene lógica de negocio.
 
 ---
 
-# Próximo capítulo
+# Conclusión
 
-En el siguiente capítulo construiremos la navegación principal del Dashboard.
+El Banner constituye la identidad visual del Dashboard.
 
-Aprenderemos por qué el Framework utiliza navegación horizontal en lugar de depender del Sidebar y cómo reutilizar esta arquitectura en cualquier proyecto.
+A partir de este capítulo todos los Dashboards desarrollados con el Framework reutilizarán el mismo componente, personalizando únicamente el icono, el título, el subtítulo y el estado desde **app.py**, manteniendo intacta la arquitectura oficial.
