@@ -294,6 +294,42 @@ Interfaz
 
 ---
 
+## Checklist de validación
+
+□ app.py creado
+
+□ requirements.txt creado
+
+□ README.md creado
+
+□ analytics creada
+
+□ assets creada
+
+□ styles.css creado
+
+□ logo_elite.png agregado
+
+□ components creada
+
+□ config creada
+
+□ data creada
+
+□ entrada creada
+
+□ salida creada
+
+□ docs creada
+
+□ output creada
+
+□ utils creada
+
+□ helpers.py creado
+
+---
+
 # Conclusión
 
 La organización del proyecto es un estándar del Framework. Todos los Dashboards deberán respetar esta estructura para garantizar mantenibilidad, reutilización y escalabilidad.
