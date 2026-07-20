@@ -231,20 +231,189 @@ La navegación únicamente devuelve la opción seleccionada.
 
 import streamlit as st
 
+
+# ==========================================================
+# ESTILOS DE LA SUBNAVEGACIÓN
+# ==========================================================
+
+def cargar_estilos_subnavigation():
+
+    st.markdown(
+        """
+        <style>
+
+        /* Separación entre botones */
+        .st-key-subnavigation [data-baseweb="button-group"] {
+            gap: 12px;
+        }
+
+        /* Diseño general */
+        .st-key-subnavigation button {
+            min-height: 44px;
+            padding: 9px 22px;
+            border-radius: 10px !important;
+            border-width: 2px !important;
+
+            font-size: 14px !important;
+            font-weight: 700 !important;
+
+            transition:
+                transform 0.20s ease,
+                box-shadow 0.20s ease,
+                background-color 0.20s ease;
+
+            box-shadow: 0 4px 9px rgba(15, 23, 42, 0.15);
+        }
+
+        .st-key-subnavigation button p {
+            font-size: 14px !important;
+            font-weight: 700 !important;
+            color: inherit !important;
+        }
+
+
+        /* ==================================================
+           A TIEMPO — VERDE
+        ================================================== */
+
+        .st-key-subnavigation button:nth-child(1) {
+            background-color: #22C55E !important;
+            border-color: #16A34A !important;
+            color: #FFFFFF !important;
+        }
+
+        .st-key-subnavigation button:nth-child(1):hover {
+            background-color: #16A34A !important;
+            border-color: #15803D !important;
+            transform: translateY(-2px);
+            box-shadow: 0 7px 15px rgba(22, 163, 74, 0.35);
+        }
+
+        .st-key-subnavigation
+        button:nth-child(1)[data-testid$="Active"] {
+            background-color: #15803D !important;
+            border-color: #14532D !important;
+            color: #FFFFFF !important;
+            transform: translateY(-3px) scale(1.04);
+            box-shadow:
+                0 0 0 3px rgba(34, 197, 94, 0.25),
+                0 8px 18px rgba(21, 128, 61, 0.45);
+        }
+
+
+        /* ==================================================
+           ALERTA — AMARILLO
+        ================================================== */
+
+        .st-key-subnavigation button:nth-child(2) {
+            background-color: #FACC15 !important;
+            border-color: #EAB308 !important;
+            color: #422006 !important;
+        }
+
+        .st-key-subnavigation button:nth-child(2):hover {
+            background-color: #EAB308 !important;
+            border-color: #CA8A04 !important;
+            transform: translateY(-2px);
+            box-shadow: 0 7px 15px rgba(234, 179, 8, 0.40);
+        }
+
+        .st-key-subnavigation
+        button:nth-child(2)[data-testid$="Active"] {
+            background-color: #CA8A04 !important;
+            border-color: #854D0E !important;
+            color: #FFFFFF !important;
+            transform: translateY(-3px) scale(1.04);
+            box-shadow:
+                0 0 0 3px rgba(250, 204, 21, 0.30),
+                0 8px 18px rgba(202, 138, 4, 0.45);
+        }
+
+
+        /* ==================================================
+           ALERTA CERO DÍAS — NARANJA
+        ================================================== */
+
+        .st-key-subnavigation button:nth-child(3) {
+            background-color: #F97316 !important;
+            border-color: #EA580C !important;
+            color: #FFFFFF !important;
+        }
+
+        .st-key-subnavigation button:nth-child(3):hover {
+            background-color: #EA580C !important;
+            border-color: #C2410C !important;
+            transform: translateY(-2px);
+            box-shadow: 0 7px 15px rgba(234, 88, 12, 0.40);
+        }
+
+        .st-key-subnavigation
+        button:nth-child(3)[data-testid$="Active"] {
+            background-color: #C2410C !important;
+            border-color: #9A3412 !important;
+            color: #FFFFFF !important;
+            transform: translateY(-3px) scale(1.04);
+            box-shadow:
+                0 0 0 3px rgba(249, 115, 22, 0.25),
+                0 8px 18px rgba(194, 65, 12, 0.45);
+        }
+
+
+        /* ==================================================
+           VENCIDOS — ROJO
+        ================================================== */
+
+        .st-key-subnavigation button:nth-child(4) {
+            background-color: #EF4444 !important;
+            border-color: #DC2626 !important;
+            color: #FFFFFF !important;
+        }
+
+        .st-key-subnavigation button:nth-child(4):hover {
+            background-color: #DC2626 !important;
+            border-color: #B91C1C !important;
+            transform: translateY(-2px);
+            box-shadow: 0 7px 15px rgba(220, 38, 38, 0.40);
+        }
+
+        .st-key-subnavigation
+        button:nth-child(4)[data-testid$="Active"] {
+            background-color: #B91C1C !important;
+            border-color: #7F1D1D !important;
+            color: #FFFFFF !important;
+            transform: translateY(-3px) scale(1.04);
+            box-shadow:
+                0 0 0 3px rgba(239, 68, 68, 0.25),
+                0 8px 18px rgba(185, 28, 28, 0.45);
+        }
+
+        </style>
+        """,
+        unsafe_allow_html=True,
+    )
+
+
+# ==========================================================
+# MOSTRAR SUBNAVEGACIÓN
+# ==========================================================
+
 def mostrar_subnavigation(
     opciones,
     titulo=None,
 ):
 
+    cargar_estilos_subnavigation()
+
     if titulo:
         st.caption(titulo)
 
     return st.segmented_control(
-        "",
+        label="Estados del ANS",
         options=opciones,
         selection_mode="single",
         default=opciones[0] if opciones else None,
         key="subnavigation",
+        label_visibility="collapsed",
     )
 
 ```
