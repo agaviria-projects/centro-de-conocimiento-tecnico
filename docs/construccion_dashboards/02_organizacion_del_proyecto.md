@@ -143,6 +143,7 @@ components/
 
 banner.py
 sidebar.py
+navigation.py
 filtros.py
 kpis.py
 graficos.py
