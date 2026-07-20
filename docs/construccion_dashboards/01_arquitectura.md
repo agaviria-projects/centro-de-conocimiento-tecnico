@@ -58,29 +58,47 @@ Esta forma de trabajar hace que cualquier desarrollador pueda entender rápidame
 La estructura utilizada será la siguiente:
 
 ```text
-PROYECTO
+Dashboard/
 
 │
 
 ├── app.py
 
+├── requirements.txt
+
+├── README.md
+
+│
+
 ├── assets/
 
-├── components/
-
-├── data/
+│
 
 ├── analytics/
 
-├── utils/
+│
+
+├── components/
+
+│
 
 ├── config/
 
+│
+
+├── data/
+
+│
+
 ├── docs/
 
-├── requirements.txt
+│
 
-└── README.md
+├── output/
+
+│
+
+└── utils/
 ```
 
 Esta será la base para todos los Dashboards desarrollados con este Framework.
