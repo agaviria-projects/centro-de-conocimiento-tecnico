@@ -4,15 +4,15 @@
 
 Después de construir el **Banner** y el **Sidebar**, el siguiente componente del Framework es la **Navegación Principal**.
 
-La navegación tiene una única responsabilidad: permitir que el usuario seleccione el módulo que desea visualizar.
+Su responsabilidad consiste en permitir que el usuario acceda a los diferentes módulos del Dashboard sin depender del Sidebar.
 
-Dentro del Framework ELITE la navegación es un componente independiente y reutilizable.
+Dentro del Framework ELITE la navegación es un componente reutilizable e independiente de la lógica del negocio.
 
 ---
 
 # Objetivo
 
-Construir un componente de navegación desacoplado de la lógica del negocio y reutilizable en cualquier Dashboard.
+Construir una navegación profesional, desacoplada y reutilizable que pueda utilizarse en cualquier Dashboard desarrollado con este Framework.
 
 ---
 
@@ -26,13 +26,13 @@ Construir un componente de navegación desacoplado de la lógica del negocio y r
 
 > **El Contenido genera valor.**
 
-La navegación nunca realiza cálculos ni procesa información.
+La navegación nunca calcula indicadores ni procesa información.
 
 ---
 
 # Responsabilidades
 
-La navegación únicamente debe:
+La Navegación Principal únicamente debe:
 
 - Mostrar los módulos disponibles.
 - Permitir seleccionar un módulo.
@@ -49,8 +49,8 @@ Nunca colocar en este componente:
 - KPIs.
 - Gráficos.
 - Tablas.
-- Lectura de Excel.
-- SQL.
+- Consultas SQL.
+- Lectura de archivos.
 - Lógica de negocio.
 - Cálculos.
 
@@ -67,7 +67,11 @@ Sidebar
 
 ↓
 
-Navigation
+Navigation Principal
+
+↓
+
+Subnavigation (Opcional)
 
 ↓
 
@@ -76,9 +80,95 @@ Contenido
 
 ---
 
+# Niveles de Navegación
+
+## Nivel 1 - Navegación Principal
+
+Es obligatoria en todos los Dashboards.
+
+Permite acceder a los módulos principales.
+
+Ejemplo:
+
+```text
+📂 Datos
+
+📊 KPIs
+
+📈 Indicadores
+
+📋 Reportes
+```
+
+Archivo oficial:
+
+```text
+components/
+
+navigation.py
+```
+
+---
+
+## Nivel 2 - Navegación Secundaria (Opcional)
+
+Algunos módulos requieren dividir su contenido.
+
+Ejemplo:
+
+```text
+📂 Datos
+
+↓
+
+Rodamientos
+
+Viáticos
+
+Parqueaderos
+
+Peajes
+```
+
+Otro ejemplo:
+
+```text
+💰 Finanzas
+
+↓
+
+Ingresos
+
+Costos
+
+Utilidad
+
+Presupuesto
+```
+
+Archivo recomendado:
+
+```text
+components/
+
+subnavigation.py
+```
+
+Este componente solo deberá utilizarse cuando un módulo necesite subdividir su contenido.
+
+---
+
+# Regla del Framework
+
+Todo Dashboard deberá tener una **Navegación Principal**.
+
+La **Navegación Secundaria** será opcional.
+
+---
+
 # Archivo del Framework
 
-Crear el archivo:
+Crear:
 
 ```text
 components/
@@ -92,7 +182,6 @@ navigation.py
 
 ```python
 import streamlit as st
-
 
 def mostrar_navigation(
     opciones,
@@ -131,9 +220,9 @@ opcion = mostrar_navigation(
 )
 ```
 
-La navegación solo devuelve la opción seleccionada.
+La navegación únicamente devuelve la opción seleccionada.
 
-La decisión sobre qué componente mostrar pertenece exclusivamente a `app.py`.
+`app.py` será el responsable de decidir qué componente cargar.
 
 ---
 
@@ -141,9 +230,9 @@ La decisión sobre qué componente mostrar pertenece exclusivamente a `app.py`.
 
 Puede modificarse:
 
-- Título.
-- Lista de opciones.
-- Iconografía.
+- El título.
+- Las opciones.
+- La iconografía.
 
 La estructura del componente debe mantenerse.
 
@@ -153,8 +242,8 @@ La estructura del componente debe mantenerse.
 
 - Mantener pocas opciones por nivel.
 - Utilizar iconografía consistente.
-- Mantener la navegación visible.
-- Reutilizar el mismo componente en todos los proyectos.
+- Mantener la navegación siempre visible.
+- Reutilizar el mismo componente.
 - Enviar las opciones mediante parámetros.
 
 ---
@@ -162,9 +251,10 @@ La estructura del componente debe mantenerse.
 # Errores comunes
 
 - Escribir opciones fijas dentro del componente.
+- Colocar la navegación en el Sidebar.
 - Mezclar navegación con lógica de negocio.
 - Agregar consultas o cálculos.
-- Duplicar menús en distintos lugares.
+- Duplicar menús.
 
 ---
 
@@ -175,11 +265,14 @@ La estructura del componente debe mantenerse.
 - [ ] No contiene lógica de negocio.
 - [ ] Se integra correctamente con `app.py`.
 - [ ] Las opciones se reciben mediante parámetros.
+- [ ] La arquitectura contempla una Subnavigation opcional.
 
 ---
 
 # Conclusión
 
-La navegación constituye el punto de unión entre la estructura del Dashboard y sus módulos.
+La Navegación Principal constituye el primer nivel de acceso a los módulos del Dashboard.
 
-A partir de este capítulo todos los Dashboards desarrollados con el Framework utilizarán el mismo componente de navegación, personalizando únicamente las opciones mostradas y manteniendo intacta su arquitectura.
+Cuando un módulo requiera subdividir su contenido, el Framework incorpora una **Navegación Secundaria** como componente opcional, manteniendo una arquitectura escalable, organizada y reutilizable.
+
+A partir de este capítulo todos los Dashboards desarrollados con el Framework reutilizarán esta misma arquitectura de navegación.
