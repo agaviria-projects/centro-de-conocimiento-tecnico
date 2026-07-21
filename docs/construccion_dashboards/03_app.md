@@ -120,15 +120,6 @@ st.set_page_config(
     initial_sidebar_state="expanded"
 )
 
-# ==========================================================
-# APLICACIÓN
-# ==========================================================
-
-st.title("Dashboard")
-
-st.write(
-    "Proyecto creado con el Framework Dashboards Streamlit."
-)
 ```
 
 ---
