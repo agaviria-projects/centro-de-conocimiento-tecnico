@@ -301,150 +301,6 @@ def mostrar_kpi(
 
 ## Paso 3. Coordinar el Dashboard
 
-El archivo `app.py` actúa como el orquestador del Framework.
-
-Primero importa los cálculos.
-
-```python
-from analytics.indicadores import (
-
-    calcular_ventas,
-
-    calcular_clientes,
-
-)
-```
-
-Después importa el componente visual.
-
-```python
-from components.kpis import mostrar_kpi
-```
-
-Obtiene los indicadores.
-
-```python
-ventas = calcular_ventas(df)
-
-clientes = calcular_clientes(df)
-```
-
-Finalmente los publica en el Dashboard.
-
-```python
-col1, col2 = st.columns(2)
-
-with col1:
-
-    mostrar_kpi(
-
-        titulo="Ventas",
-
-        valor=ventas,
-
-        icono="💰"
-
-    )
-
-with col2:
-
-    mostrar_kpi(
-
-        titulo="Clientes",
-
-        valor=clientes,
-
-        icono="👥"
-
-    )
-```
-
-### Responsabilidad
-
-- Cargar los datos.
-- Invocar los cálculos.
-- Enviar los resultados a los componentes.
-- Construir el Dashboard.
-
-**No debe contener reglas de negocio complejas.**
-
----
-
-# Flujo Oficial del Framework
-
-```text
-Excel / Base de Datos
-
-        │
-
-        ▼
-
-DataFrame
-
-        │
-
-        ▼
-
-analytics/
-
-Calcula el KPI
-
-        │
-
-        ▼
-
-Resultado
-
-ventas = 458250000
-
-        │
-
-        ▼
-
-app.py
-
-Coordina
-
-        │
-
-        ▼
-
-components/kpis.py
-
-Presenta el KPI
-
-        │
-
-        ▼
-
-Dashboard
-```
-
----
-
-# Plantilla Oficial del Framework
-
-| Archivo | Responsabilidad |
-|----------|-----------------|
-| `analytics/indicadores.py` | Calcular los indicadores y aplicar las reglas de negocio. |
-| `components/kpis.py` | Diseñar y mostrar visualmente los KPIs. |
-| `app.py` | Coordinar el Dashboard, invocar los cálculos y enviar los resultados a los componentes visuales. |
-
----
-
-# Regla de Oro del Framework
-
-Antes de construir un nuevo KPI recuerda siempre esta regla:
-
-- **`analytics/` piensa y calcula.**
-- **`app.py` coordina.**
-- **`components/` presenta la información.**
-
-Si respetas estas tres responsabilidades, podrás reutilizar la misma arquitectura en cualquier Dashboard desarrollado con Streamlit.
-
----
----
-
 # Organización de `app.py`
 
 El archivo `app.py` debe mantenerse limpio y organizado.
@@ -565,6 +421,29 @@ components/
         ▼
 Dashboard
 ```
+
+---
+
+# Plantilla Oficial del Framework
+
+| Archivo | Responsabilidad |
+|----------|-----------------|
+| `analytics/indicadores.py` | Calcular los indicadores y aplicar las reglas de negocio. |
+| `components/kpis.py` | Diseñar y mostrar visualmente los KPIs. |
+| `app.py` | Coordinar el Dashboard, invocar los cálculos y enviar los resultados a los componentes visuales. |
+
+---
+
+# Regla de Oro del Framework
+
+Antes de construir un nuevo KPI recuerda siempre esta regla:
+
+- **`analytics/` piensa y calcula.**
+- **`app.py` coordina.**
+- **`components/` presenta la información.**
+
+Si respetas estas tres responsabilidades, podrás reutilizar la misma arquitectura en cualquier Dashboard desarrollado con Streamlit.
+
 ---
 
 # Filosofía del Framework
