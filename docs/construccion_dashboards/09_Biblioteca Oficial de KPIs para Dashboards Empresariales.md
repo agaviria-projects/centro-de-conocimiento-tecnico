@@ -230,30 +230,6 @@ def calcular_clientes(df):
 
 ---
 
-## Si aparece un error extraño de importación:
-
-ImportError
-AttributeError
-module has no attribute...
-
-hacer siempre este procedimiento:
-
-## 1.Eliminar
-
-__pycache__
-
-de las carpetas del proyecto.
-
-## 2.Reiniciar Streamlit
-
-streamlit run app.py
-
-## 3.Si continúa:
-
-pip cache purge.....(no suele ser necesario).
-
----
-
 ### Responsabilidad
 
 - Construir indicadores.
@@ -555,7 +531,7 @@ mostrar_kpi(
 
 > **Un componente nunca debe mezclar lógica de negocio con presentación.**
 
-Los cálculos pertenecen a `app.py` o a los módulos de análisis.
+Los cálculos pertenecen a `indicadores.py` o a los módulos de análisis.
 
 La visualización pertenece a `kpis.py`.
 
@@ -904,6 +880,31 @@ MUESTRA
 ```
 
 Nunca mezcles lógica de negocio con presentación.
+
+---
+
+
+## Si aparece un error extraño de importación:
+
+ImportError
+AttributeError
+module has no attribute...
+
+hacer siempre este procedimiento:
+
+## 1.Eliminar
+
+__pycache__
+
+de las carpetas del proyecto.
+
+## 2.Reiniciar Streamlit
+
+streamlit run app.py
+
+## 3.Si continúa:
+
+pip cache purge.....(no suele ser necesario).
 
 ---
 
