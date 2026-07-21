@@ -165,108 +165,104 @@ Como puede observarse, responder correctamente la pregunta del negocio requiere 
 
 # Filosofía del Framework
 
-Dentro de este Framework todos los KPIs se desarrollan siguiendo un mismo principio.
+Dentro de este Framework todos los KPIs siguen exactamente la misma arquitectura.
 
-Primero se comprende el negocio.
+Un KPI nunca comienza escribiendo una tarjeta en Streamlit.
 
-Después se comprenden los datos.
+Antes de llegar a la visualización debemos comprender el negocio, construir la lógica del indicador y finalmente mostrar el resultado dentro del Dashboard.
 
-Luego se diseña el indicador.
+Cada KPI se desarrolla siguiendo tres responsabilidades claramente definidas.
 
-Y únicamente al final se escribe código.
+```text
+analytics/
 
-Nunca comenzaremos un KPI escribiendo:
+        │
 
-```python
-st.metric(...)
+        ▼
+
+app.py
+
+        │
+
+        ▼
+
+components/kpis.py
+
+        │
+
+        ▼
+
+Dashboard
 ```
 
-Antes de llegar a la visualización ya debemos tener completamente definida la lógica del indicador.
-
-Esta metodología garantiza que cualquier KPI pueda ser auditado, validado y reutilizado en diferentes proyectos.
-
-# Construcción de un Componente KPI
-
-Hasta este momento hemos aprendido a calcular indicadores utilizando Pandas.
-
-Ahora construiremos un componente reutilizable que será el encargado de mostrar cualquier KPI dentro del Dashboard.
+Esta separación permite que cualquier indicador pueda reutilizarse, mantenerse y validarse fácilmente en cualquier Dashboard.
 
 ---
 
-# Objetivo
+# Arquitectura Oficial para Construir un KPI
 
-El archivo `kpis.py` será el responsable de **dibujar** las tarjetas KPI.
+Cada nuevo KPI debe construirse siguiendo siempre este proceso.
 
-> **Importante:** este componente **no realiza cálculos**. Su única responsabilidad es mostrar la información que recibe.
+## Paso 1. Construir el indicador
 
-Los cálculos (sumas, promedios, conteos, porcentajes, etc.) deben realizarse previamente en `app.py` o en un módulo de análisis.
+La lógica del negocio se desarrolla dentro de:
+
+```text
+analytics/
+
+└── indicadores.py
+```
+
+Aquí se realizan todos los cálculos utilizando Pandas.
+
+Ejemplo.
+
+```python
+def calcular_ventas(df):
+
+    return df["Venta"].sum()
+
+
+def calcular_clientes(df):
+
+    return df["Cliente"].nunique()
+```
+
+### Responsabilidad
+
+- Construir indicadores.
+- Aplicar reglas de negocio.
+- Utilizar Pandas.
+- Devolver el resultado.
+
+**Nunca debe utilizar Streamlit.**
+
+Osea que no existe:
+
+- st.metric()
+- st.write()
+- st.dataframe()
+
+Este módulo debe contener únicamente lógica de negocio y cálculos. No debe incluir componentes visuales de Streamlit (st.metric, st.write, st.dataframe, st.plotly_chart, etc.), ya que la presentación pertenece a la capa components/.
 
 ---
 
-# Paso 1. Crear el componente
+## Paso 2. Construir el componente visual
 
-Creamos el archivo:
+La presentación del KPI se desarrolla dentro de:
 
 ```text
 components/
-│
+
 └── kpis.py
 ```
 
-Importamos Streamlit.
-
-```python
-import streamlit as st
-```
-
-Creamos la función que posteriormente será utilizada por cualquier Dashboard.
+Plantilla base.
 
 ```python
 import streamlit as st
 
 
-def mostrar_kpi():
-
-    pass
-```
-
-En este punto la función todavía no hace nada.
-
-Simplemente estamos definiendo la estructura del componente.
-
----
-
-# Paso 2. Pensar qué información necesita un KPI
-
-Antes de escribir código debemos preguntarnos:
-
-> ¿Qué información necesita una tarjeta KPI para poder dibujarse?
-
-Por ejemplo, queremos mostrar la siguiente tarjeta.
-
-```
-💰
-
-Ventas Totales
-
-$450.000.000
-
-▲ 12 %
-```
-
-Observando esta tarjeta podemos identificar los datos necesarios.
-
-| Parámetro | Descripción |
-|-----------|-------------|
-| titulo | Nombre del indicador. |
-| valor | Valor que se mostrará. |
-| icono | Emoji o icono representativo. |
-| delta | Variación respecto al período anterior (opcional). |
-| color | Color de la tarjeta (opcional). |
-
-Con esta información comenzamos a definir la función.
-
-```python
 def mostrar_kpi(
 
     titulo,
@@ -278,39 +274,171 @@ def mostrar_kpi(
     delta=None,
 
 ):
+
+    st.metric(
+
+        label=f"{icono} {titulo}",
+
+        value=valor,
+
+        delta=delta
+
+    )
 ```
 
-Todavía no estamos dibujando el KPI.
+### Responsabilidad
 
-Únicamente estamos definiendo los datos que recibirá el componente.
+- Dibujar la tarjeta KPI.
+- Mostrar iconos.
+- Mostrar títulos.
+- Mostrar colores y estilos.
+
+**Nunca debe realizar cálculos de negocio.**
 
 ---
 
-# Paso 3. Utilizar el componente desde app.py
+## Paso 3. Coordinar el Dashboard
 
-Una vez creada la función, la importamos en `app.py`.
+El archivo `app.py` actúa como el orquestador del Framework.
+
+Primero importa los cálculos.
+
+```python
+from analytics.indicadores import (
+
+    calcular_ventas,
+
+    calcular_clientes,
+
+)
+```
+
+Después importa el componente visual.
 
 ```python
 from components.kpis import mostrar_kpi
 ```
 
-Posteriormente llamamos la función enviando la información que deseamos mostrar.
+Obtiene los indicadores.
 
 ```python
-mostrar_kpi(
+ventas = calcular_ventas(df)
 
-    titulo="Ventas Totales",
-
-    valor="$450.000.000",
-
-    icono="💰",
-
-    delta="+12 %"
-
-)
+clientes = calcular_clientes(df)
 ```
 
-El componente recibe estos valores y será el encargado de dibujar la tarjeta dentro del Dashboard.
+Finalmente los publica en el Dashboard.
+
+```python
+col1, col2 = st.columns(2)
+
+with col1:
+
+    mostrar_kpi(
+
+        titulo="Ventas",
+
+        valor=ventas,
+
+        icono="💰"
+
+    )
+
+with col2:
+
+    mostrar_kpi(
+
+        titulo="Clientes",
+
+        valor=clientes,
+
+        icono="👥"
+
+    )
+```
+
+### Responsabilidad
+
+- Cargar los datos.
+- Invocar los cálculos.
+- Enviar los resultados a los componentes.
+- Construir el Dashboard.
+
+**No debe contener reglas de negocio complejas.**
+
+---
+
+# Flujo Oficial del Framework
+
+```text
+Excel / Base de Datos
+
+        │
+
+        ▼
+
+DataFrame
+
+        │
+
+        ▼
+
+analytics/
+
+Calcula el KPI
+
+        │
+
+        ▼
+
+Resultado
+
+ventas = 458250000
+
+        │
+
+        ▼
+
+app.py
+
+Coordina
+
+        │
+
+        ▼
+
+components/kpis.py
+
+Presenta el KPI
+
+        │
+
+        ▼
+
+Dashboard
+```
+
+---
+
+# Plantilla Oficial del Framework
+
+| Archivo | Responsabilidad |
+|----------|-----------------|
+| `analytics/indicadores.py` | Calcular los indicadores y aplicar las reglas de negocio. |
+| `components/kpis.py` | Diseñar y mostrar visualmente los KPIs. |
+| `app.py` | Coordinar el Dashboard, invocar los cálculos y enviar los resultados a los componentes visuales. |
+
+---
+
+# Regla de Oro del Framework
+
+Antes de construir un nuevo KPI recuerda siempre esta regla:
+
+- **`analytics/` piensa y calcula.**
+- **`app.py` coordina.**
+- **`components/` presenta la información.**
+
+Si respetas estas tres responsabilidades, podrás reutilizar la misma arquitectura en cualquier Dashboard desarrollado con Streamlit.
 
 ---
 
@@ -419,11 +547,13 @@ Su única responsabilidad es **dibujar** la información que recibe.
 >
 > `kpis.py` **no calcula indicadores**.
 >
-> Todos los cálculos deben realizarse previamente en `app.py` o en un módulo de análisis.
+> Los cálculos deben realizarse en los módulos de analytics/. app.py únicamente coordina el flujo del Dashboard, invoca los cálculos y envía los resultados a los componentes visuales.
 
 ---
 
 # Arquitectura
+
+                   # Arquitectura
 
 ```text
                    Dashboard
@@ -433,6 +563,7 @@ Su única responsabilidad es **dibujar** la información que recibe.
                         ▼
 
                     app.py
+                 (Orquestador)
 
                         │
 
@@ -440,9 +571,11 @@ Su única responsabilidad es **dibujar** la información que recibe.
 
          ▼                             ▼
 
- analytics.py                    kpis.py
+analytics/                    components/
 
- (Calcula KPIs)              (Muestra KPIs)
+indicadores.py                  kpis.py
+
+(Calcula KPIs)              (Muestra KPIs)
 
          │
 
@@ -460,6 +593,11 @@ Su única responsabilidad es **dibujar** la información que recibe.
 
  mostrar_kpi()
 ```
+## Regla de Oro del Framework
+
+analytics/ piensa y calcula.
+app.py coordina.
+components/ presenta la información.
 
 ---
 
@@ -575,9 +713,7 @@ promedio = df["Venta"].mean()
 
 Estos cálculos normalmente se realizan en:
 
-- `app.py`
 - `analytics.py`
-- otro módulo de análisis
 
 Nunca dentro de `kpis.py`.
 
@@ -688,7 +824,10 @@ Responsable de:
 - Leer archivos.
 - Limpiar datos.
 - Filtrar información.
-- Calcular indicadores.
+
+## analytics/
+
+piensa y calcula
 
 Ejemplo.
 
@@ -725,7 +864,7 @@ mostrar_kpi(
 # Regla del Framework
 
 ```text
-app.py
+analytics : piensa y calcula
 
 CALCULA
 
