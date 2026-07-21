@@ -228,6 +228,32 @@ def calcular_clientes(df):
     return df["Cliente"].nunique()
 ```
 
+---
+
+## Si aparece un error extraño de importación:
+
+ImportError
+AttributeError
+module has no attribute...
+
+hacer siempre este procedimiento:
+
+## 1.Eliminar
+
+__pycache__
+
+de las carpetas del proyecto.
+
+## 2.Reiniciar Streamlit
+
+streamlit run app.py
+
+## 3.Si continúa:
+
+pip cache purge.....(no suele ser necesario).
+
+---
+
 ### Responsabilidad
 
 - Construir indicadores.
