@@ -453,7 +453,19 @@ Su trabajo consiste en coordinar el Dashboard, separando claramente el cálculo 
 
 ## Paso 1. Calcular los indicadores
 
-Primero obtiene todos los resultados desde la capa de análisis.
+Cuando el usuario selecciona el módulo **KPIs**, `app.py` ingresa a esta sección del Dashboard.
+
+```python
+# ==========================================================
+# MÓDULO KPIs
+# ==========================================================
+
+elif opcion == "📊 KPIs":
+```
+
+A partir de este punto, el primer paso consiste en obtener todos los indicadores que se mostrarán en el Dashboard.
+
+Para ello, `app.py` invoca las funciones definidas en la capa de análisis (`analytics/indicadores.py`).
 
 ```python
 # ==========================================================
