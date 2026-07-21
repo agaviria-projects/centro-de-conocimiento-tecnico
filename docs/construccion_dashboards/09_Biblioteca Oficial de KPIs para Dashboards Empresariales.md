@@ -833,13 +833,52 @@ piensa y calcula
 
 Ejemplo.
 
+Agrupar primero todos los cálculos:
+
 ```python
-ventas = df["Venta"].sum()
+# ==========================================================
+# CALCULAR INDICADORES
+# ==========================================================
 
-clientes = df["Cliente"].nunique()
-
-promedio = df["Venta"].mean()
+ventas = indicadores.calcular_ventas()
+clientes = indicadores.calcular_clientes()
+promedio = indicadores.calcular_tiempo_promedio()
 ```
+Y después la parte visual:
+
+```python
+# ==========================================================
+# MOSTRAR KPIs
+# ==========================================================
+
+st.subheader("Indicadores Principales")
+
+col1, col2, col3 = st.columns(3)
+
+with col1:
+    mostrar_kpi(
+        titulo="Ventas",
+        valor=ventas,
+        icono="💰",
+        delta="+12 %"
+    )
+
+with col2:
+    mostrar_kpi(
+        titulo="Clientes",
+        valor=clientes,
+        icono="👥",
+        delta="+8"
+    )
+
+with col3:
+    mostrar_kpi(
+        titulo="Tiempo Promedio",
+        valor=promedio,
+        icono="⏱",
+        delta="-0.8"
+    )
+```    
 
 ---
 
