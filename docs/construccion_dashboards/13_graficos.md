@@ -1658,7 +1658,7 @@ El Dashboard FENIX ANS implementa este patrón mediante un componente de subnave
 
 La siguiente imagen muestra el resultado esperado.
 
-![Subnavegación basada en estados](images/dashboards/07_subnavigation_estados.png)
+![Subnavigation](../images/dashboards/07_subnavigation_estados.png)
 
 Características implementadas:
 
