@@ -146,18 +146,23 @@ Tablas
    ▼
 Footer
 ```
+![Dashboard Base](../images/dashboards/08_dashboard.png)
 
 ------------------------------------------------------------------------
 
 ## Estructura Visual
 
-La siguiente imagen presenta la distribución oficial de los componentes que conforman un Dashboard desarrollado bajo el Framework ELITE.
+La siguiente figura ilustra la disposición recomendada de los componentes visuales que conforman un Dashboard desarrollado bajo el Framework ELITE.
 
-![Dashboard Base](../images/dashboards/08_dashboard.png)
+<p align="center">
+    <img src="../images/dashboards/08_dashboard.png" width="900">
+</p>
 
+**Figura 14.1.** Arquitectura visual del Dashboard Base.
 
-Esta distribución constituye el estándar oficial del Framework ELITE.
+---
 
+Esta distribución constituye el estándar oficial del Framework ELITE y servirá como plantilla para todos los nuevos proyectos.
 ------------------------------------------------------------------------
 
 # Componentes del Framework
