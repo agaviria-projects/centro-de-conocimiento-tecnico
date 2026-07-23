@@ -2425,3 +2425,364 @@ Modificar el dato original para obtener el formato.
 # Próximo patrón
 
 En el siguiente patrón construiremos los **KPIs Corporativos**, donde desarrollaremos un componente reutilizable para indicadores ejecutivos con identidad visual propia, completamente alineado con el Framework ELITE.
+
+# Patrón 05
+
+# KPIs Corporativos ELITE
+
+---
+
+# Objetivo
+
+Los KPIs (Key Performance Indicators) representan la información más importante del Dashboard.
+
+Su función es ofrecer una lectura inmediata del estado del negocio sin necesidad de revisar tablas o gráficos.
+
+En el Framework ELITE todos los Dashboards utilizarán el mismo componente visual para garantizar:
+
+- Consistencia visual.
+- Reutilización del código.
+- Fácil mantenimiento.
+- Identidad corporativa.
+- Escalabilidad.
+
+---
+
+# ¿Qué es un KPI?
+
+Un KPI es un indicador resumido que muestra un dato crítico para la toma de decisiones.
+
+Ejemplos:
+
+- Total de registros
+- Valor facturado
+- Pedidos procesados
+- Técnicos activos
+- ANS vencidos
+- Tiempo promedio
+- Cumplimiento
+- Productividad
+
+---
+
+# Principios del Framework ELITE
+
+Todos los KPIs deberán cumplir las siguientes reglas.
+
+## Diseño uniforme
+
+Todos tendrán exactamente:
+
+- misma altura
+- mismo ancho
+- mismo espaciado
+- mismo borde
+- mismo radio
+- misma tipografía
+
+Nunca se diseñarán KPIs diferentes dentro del mismo Dashboard.
+
+---
+
+## Información mínima
+
+Cada KPI debe contener únicamente:
+
+✔ Icono
+
+✔ Nombre
+
+✔ Valor
+
+Opcionalmente podrá incluir:
+
+- porcentaje
+- variación
+- comparación
+- tendencia
+
+pero nunca debe sobrecargarse.
+
+---
+
+## Jerarquía Visual
+
+La información debe leerse en este orden.
+
+```
+Icono
+
+Nombre
+
+Valor
+```
+
+El usuario debe identificar el dato importante en menos de un segundo.
+
+---
+
+# Estructura visual
+
+Todos los KPIs del Framework seguirán esta composición.
+
+```
+┌────────────────────────────┐
+
+📊
+
+Total Pedidos
+
+18.425
+
+└────────────────────────────┘
+```
+
+No se agregarán botones.
+
+No se agregarán tablas.
+
+No se agregarán gráficos.
+
+El KPI debe comunicar una única métrica.
+
+---
+
+# Colores corporativos
+
+Los colores deben ser discretos.
+
+La atención debe centrarse en el valor y no en el color.
+
+Ejemplo:
+
+| Estado | Color |
+|---------|--------|
+| Información | Gris ELITE |
+| Correcto | Verde |
+| Advertencia | Amarillo |
+| Riesgo | Naranja |
+| Crítico | Rojo |
+
+---
+
+# Espaciado
+
+Todos los KPIs deberán mantener espacios uniformes.
+
+Ejemplo
+
+```
+╔════════════════════════════╗
+
+        📊
+
+ Total Pedidos
+
+      18.425
+
+╚════════════════════════════╝
+```
+
+Evitar elementos muy juntos.
+
+Evitar elementos demasiado separados.
+
+---
+
+# Tipografía
+
+Se recomienda utilizar tres tamaños.
+
+Título
+
+Pequeño.
+
+```
+Total Pedidos
+```
+
+Valor
+
+Grande.
+
+```
+18.425
+```
+
+Texto auxiliar
+
+Muy pequeño.
+
+```
+Actualizado hace 5 minutos
+```
+
+---
+
+# Iconografía
+
+Cada indicador debe tener un icono fácilmente identificable.
+
+Ejemplos
+
+| KPI | Icono |
+|------|--------|
+| Pedidos | 📦 |
+| Clientes | 👤 |
+| Técnicos | 👷 |
+| Vehículos | 🚚 |
+| Dinero | 💰 |
+| Tiempo | ⏱ |
+| Alertas | ⚠ |
+| Cumplimiento | ✅ |
+
+No utilizar iconos diferentes para representar el mismo concepto.
+
+---
+
+# Distribución
+
+Los KPIs deben aparecer siempre al inicio del Dashboard.
+
+Orden recomendado.
+
+```
+Banner
+
+↓
+
+Navegación
+
+↓
+
+KPIs
+
+↓
+
+Gráficos
+
+↓
+
+Tablas
+```
+
+Nunca colocar KPIs debajo de las tablas.
+
+---
+
+# Adaptabilidad
+
+El componente debe adaptarse automáticamente al ancho disponible.
+
+Ejemplo
+
+Pantalla grande
+
+```
+□ □ □ □ □ □
+```
+
+Pantalla mediana
+
+```
+□ □ □
+
+□ □ □
+```
+
+Pantalla pequeña
+
+```
+□ □
+
+□ □
+
+□ □
+```
+
+El usuario nunca debe desplazarse horizontalmente para visualizar los KPIs.
+
+---
+
+# Reutilización
+
+El componente deberá poder utilizarse en cualquier Dashboard.
+
+Ejemplos
+
+- Dashboard ANS
+- Dashboard Costos
+- Dashboard Materiales
+- Dashboard Actas
+- Dashboard Inventario
+- Dashboard Logística
+- Dashboard Comercial
+
+Sin modificar el diseño.
+
+Solo cambiarán:
+
+- título
+- valor
+- icono
+- color (cuando aplique)
+
+---
+
+# Buenas prácticas
+
+✔ Mostrar únicamente indicadores importantes.
+
+✔ Mantener títulos cortos.
+
+✔ Utilizar números fáciles de leer.
+
+✔ Aplicar separador de miles.
+
+✔ Mantener todos los KPIs con el mismo tamaño.
+
+✔ Utilizar suficiente espacio en blanco.
+
+✔ Resaltar únicamente la información relevante.
+
+---
+
+# Errores comunes
+
+❌ Colores excesivos.
+
+❌ KPIs de diferentes tamaños.
+
+❌ Mucho texto.
+
+❌ Valores pequeños difíciles de leer.
+
+❌ Demasiados indicadores en una sola fila.
+
+❌ Mezclar gráficos dentro del KPI.
+
+❌ Usar estilos diferentes en el mismo Dashboard.
+
+---
+
+# Caso práctico
+
+El Dashboard FENIX ANS implementa este patrón mostrando indicadores ejecutivos al inicio de la pantalla.
+
+Cada tarjeta presenta una única métrica crítica del proceso operativo, permitiendo al usuario conocer el estado general antes de analizar gráficos o tablas.
+
+La distribución horizontal facilita la comparación entre indicadores y mantiene una lectura rápida.
+
+Este será el estándar oficial del Framework ELITE para todos los Dashboards desarrollados en Streamlit.
+
+---
+
+# Resultado esperado
+
+Al finalizar este patrón el Framework contará con un componente reutilizable de KPIs que ofrecerá:
+
+- Diseño corporativo uniforme.
+- Excelente legibilidad.
+- Alta reutilización.
+- Escalabilidad para futuros proyectos.
+- Identidad visual consistente en todos los Dashboards ELITE.
