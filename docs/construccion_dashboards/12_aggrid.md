@@ -1,124 +1,107 @@
 # Capítulo 12 - AgGrid
 
----
+# AgGrid Profesional para el Framework ELITE
+
+------------------------------------------------------------------------
 
 # Objetivo
 
-AgGrid es el componente oficial utilizado por el Framework ELITE para visualizar DataFrames de forma profesional dentro de los Dashboards desarrollados en Streamlit.
+En el capítulo anterior aprendimos **cómo diseñar una tabla
+profesional** dentro del Framework.
 
-Su principal objetivo es transformar grandes volúmenes de datos en tablas rápidas, organizadas e interactivas, permitiendo al usuario consultar, filtrar, ordenar y analizar información sin necesidad de exportarla a Excel.
+En este capítulo aprenderemos **cómo construirla** utilizando AgGrid.
 
----
+La meta no es aprender todas las opciones de la librería, sino disponer
+de una **plantilla oficial reutilizable** para cualquier Dashboard
+desarrollado con Streamlit.
 
-# ¿Qué es AgGrid?
-
-AgGrid es una librería especializada en la construcción de tablas interactivas.
-
-Dentro del Framework actúa como la capa de presentación de los DataFrames generados por Pandas.
-
-```
-
-Excel
-
-↓
-
-Pandas
-
-↓
-
-DataFrame
-
-↓
-
-AgGrid
-
-↓
-
-Usuario
-
-```
-
----
-
-# ¿Por qué utilizar AgGrid?
-
-Un DataFrame mostrado con:
-
-```python
-st.dataframe(df)
-```
-
-permite únicamente visualizar la información.
-
-AgGrid agrega funcionalidades avanzadas como:
-
-✔ Ordenamiento
-
-✔ Filtros
-
-✔ Búsqueda
-
-✔ Scroll virtual
-
-✔ Redimensionamiento
-
-✔ Selección de texto
-
-✔ Paginación
-
-✔ Personalización visual
-
-✔ Alto rendimiento
-
----
+------------------------------------------------------------------------
 
 # Arquitectura
 
+``` text
+Excel / Base de Datos
+        │
+        ▼
+Pandas
+        │
+        ▼
+DataFrame
+        │
+        ▼
+analytics/
+        │
+        ▼
+components/tablas.py
+        │
+        ▼
+GridOptionsBuilder
+        │
+        ▼
+AgGrid
+        │
+        ▼
+Dashboard
 ```
 
-Excel
+------------------------------------------------------------------------
+
+# Filosofía del Framework
+
+AgGrid es únicamente el motor que renderiza la tabla.
+
+Toda la lógica del negocio ya debe estar resuelta antes de llegar a
+AgGrid.
+
+``` text
+Filtros
 
 ↓
 
-Lectura
+df_filtrado
 
 ↓
 
-Pandas
-
-↓
-
-DataFrame
-
-↓
-
-GridOptionsBuilder
-
-↓
-
-Configuración
+Analytics
 
 ↓
 
 AgGrid
-
-↓
-
-Dashboard
-
 ```
 
----
+Nunca utilizar AgGrid para calcular información.
 
-# Flujo del Framework
+------------------------------------------------------------------------
 
+# Instalación
+
+``` bash
+pip install streamlit-aggrid
 ```
 
+------------------------------------------------------------------------
+
+# Importaciones Oficiales
+
+``` python
+from st_aggrid import (
+    AgGrid,
+    GridOptionsBuilder,
+    ColumnsAutoSizeMode,
+    JsCode,
+)
+```
+
+------------------------------------------------------------------------
+
+# Flujo Oficial
+
+``` text
 DataFrame
 
 ↓
 
-Configurar columnas
+Configurar Columnas
 
 ↓
 
@@ -126,416 +109,197 @@ Configurar Grid
 
 ↓
 
-Aplicar estilos
+Aplicar Estilos
 
 ↓
 
-Mostrar Tabla
-
+Renderizar AgGrid
 ```
 
----
+------------------------------------------------------------------------
 
-# Instalación
+# Plantilla Oficial del Framework
 
-```bash
-pip install streamlit-aggrid
-```
+Esta es la estructura recomendada para **components/tablas.py**.
 
----
-
-# Importaciones
-
-```python
+``` python
 from st_aggrid import (
-
     AgGrid,
-
     GridOptionsBuilder,
-
     ColumnsAutoSizeMode,
-
-    JsCode
-
+    JsCode,
 )
+
+import pandas as pd
+
+
+def mostrar_tabla(
+    df: pd.DataFrame,
+    height: int = 420,
+):
+
+    if df is None or df.empty:
+        return
+
+    gb = GridOptionsBuilder.from_dataframe(df)
+
+    # ======================================================
+    # COLUMNAS
+    # ======================================================
+
+    gb.configure_default_column(
+        sortable=True,
+        filter=True,
+        floatingFilter=True,
+        editable=False,
+        resizable=True,
+    )
+
+    # ======================================================
+    # GRID
+    # ======================================================
+
+    gb.configure_grid_options(
+        pagination=True,
+        paginationPageSize=20,
+        animateRows=True,
+        rowHeight=38,
+        headerHeight=42,
+        enableCellTextSelection=True,
+    )
+
+    # ======================================================
+    # TABLA
+    # ======================================================
+
+    AgGrid(
+        df,
+        gridOptions=gb.build(),
+        theme="streamlit",
+        height=height,
+        allow_unsafe_jscode=True,
+        columns_auto_size_mode=ColumnsAutoSizeMode.FIT_CONTENTS,
+    )
 ```
 
----
+------------------------------------------------------------------------
 
-# Componentes principales
+# ¿Por qué esta plantilla?
 
-| Componente | Función |
-|------------|----------|
-| AgGrid | Renderiza la tabla |
-| GridOptionsBuilder | Configura la tabla |
-| JsCode | Personaliza estilos |
-| ColumnsAutoSizeMode | Ajusta columnas |
+Porque ya incorpora los estándares del Framework:
 
----
+-   Ordenamiento.
+-   Filtros.
+-   Responsive.
+-   Paginación.
+-   Selección de texto.
+-   Autoajuste de columnas.
 
-# Filosofía del Framework
+Será el punto de partida para todos los proyectos.
 
-Toda tabla profesional debe construirse mediante un proceso organizado.
+------------------------------------------------------------------------
 
-Nunca debe llamarse AgGrid directamente sin configurar previamente el Grid.
+# Configuración de Columnas
 
-# 12.1 - GridOptionsBuilder
-
----
-
-# Objetivo
-
-GridOptionsBuilder permite construir toda la configuración de la tabla antes de visualizarla.
-
-Es el corazón de AgGrid.
-
----
-
-## Crear configuración
-
-```python
-gb = GridOptionsBuilder.from_dataframe(df)
-```
-
-A partir de este objeto se configuran todas las características de la tabla.
-
----
-
-## ¿Qué permite configurar?
-
-✔ Columnas
-
-✔ Filtros
-
-✔ Ordenamiento
-
-✔ Paginación
-
-✔ Altura
-
-✔ Selección
-
-✔ Eventos
-
-✔ Estilos
-
----
-
-## Flujo
-
-```
-
-DataFrame
-
-↓
-
-GridOptionsBuilder
-
-↓
-
-GridOptions
-
-↓
-
-AgGrid
-
-```
-
----
-
-## Buenas prácticas
-
-✔ Crear siempre el GridOptionsBuilder al inicio.
-
-✔ Configurar primero las columnas.
-
-✔ Configurar luego la tabla.
-
-✔ Aplicar estilos al final.
-
-# 12.2 - Configuración de Columnas
-
----
-
-# Objetivo
-
-Las columnas representan la estructura de la información.
-
-Una buena configuración mejora la lectura y la experiencia del usuario.
-
----
-
-## Configuración general
-
-```python
+``` python
 gb.configure_default_column(
-
     sortable=True,
-
     filter=True,
-
+    floatingFilter=True,
     editable=False,
-
-    resizable=True
-
+    resizable=True,
 )
 ```
 
----
+Recomendaciones:
 
-## Opciones más utilizadas
+-   Todas las columnas deben ordenarse.
+-   Todas deben permitir filtros.
+-   No deben ser editables por defecto.
 
-| Parámetro | Función |
-|-----------|----------|
-| sortable | Permite ordenar |
-| filter | Activa filtros |
-| editable | Permite editar |
-| resizable | Cambiar ancho |
-| floatingFilter | Filtro bajo el encabezado |
-| minWidth | Ancho mínimo |
+------------------------------------------------------------------------
 
----
+# Configuración del Grid
 
-## Recomendación
-
-Dentro del Framework todas las columnas deberán:
-
-✔ Poder ordenarse.
-
-✔ Poder filtrarse.
-
-✔ Ser redimensionables.
-
-✔ No ser editables por defecto.
-
-# 12.3 - Configuración del Grid
-
----
-
-# Objetivo
-
-Controlar el comportamiento general de la tabla.
-
----
-
-## Ejemplo
-
-```python
+``` python
 gb.configure_grid_options(
-
     pagination=True,
-
     paginationPageSize=20,
-
     animateRows=True,
-
     rowHeight=38,
-
     headerHeight=42,
-
-    enableCellTextSelection=True
-
+    enableCellTextSelection=True,
 )
 ```
 
----
+------------------------------------------------------------------------
 
-## Opciones recomendadas
+# Personalización con JsCode
 
-| Parámetro | Uso |
-|-----------|-----|
-| pagination | Activar paginación |
-| paginationPageSize | Registros por página |
-| animateRows | Animación |
-| rowHeight | Alto filas |
-| headerHeight | Alto encabezado |
-| enableCellTextSelection | Copiar texto |
+Utilizar `JsCode` únicamente para reglas visuales como:
 
----
+-   Estados.
+-   Colores.
+-   Alineaciones.
+-   Formatos especiales.
 
-## Buenas prácticas
+Evitar colocar lógica de negocio.
 
-✔ Mantener alturas uniformes.
+------------------------------------------------------------------------
 
-✔ Activar paginación.
+# Renderizar la Tabla
 
-✔ Permitir copiar información.
-
-# 12.4 - Personalización con JsCode
-
----
-
-# Objetivo
-
-JsCode permite aplicar estilos avanzados directamente sobre la tabla.
-
-Es especialmente útil cuando se requiere cambiar colores, alineaciones o formatos de las celdas.
-
----
-
-## Ejemplo
-
-```python
-cellstyle = JsCode("""
-
-function(params){
-
-    return{
-
-        textAlign:'center'
-
-    }
-
-}
-
-""")
-```
-
----
-
-## Aplicaciones
-
-✔ Centrar texto.
-
-✔ Colorear filas.
-
-✔ Formatear números.
-
-✔ Resaltar estados.
-
-✔ Aplicar reglas visuales.
-
----
-
-## Recomendación
-
-Utilizar JsCode únicamente cuando las opciones nativas de AgGrid no sean suficientes.
-
-# 12.5 - Renderizar la Tabla
-
----
-
-# Objetivo
-
-Después de configurar el Grid, la tabla se presenta al usuario mediante AgGrid.
-
----
-
-## Ejemplo
-
-```python
+``` python
 AgGrid(
-
     df,
-
     gridOptions=gb.build(),
-
     theme="streamlit",
-
     allow_unsafe_jscode=True,
-
-    columns_auto_size_mode=
-
-    ColumnsAutoSizeMode.FIT_CONTENTS,
-
-    height=500
-
+    columns_auto_size_mode=ColumnsAutoSizeMode.FIT_CONTENTS,
+    height=420,
 )
 ```
 
----
+------------------------------------------------------------------------
 
-## Parámetros importantes
+# Buenas prácticas
 
-| Parámetro | Función |
-|-----------|----------|
-| gridOptions | Configuración |
-| theme | Tema visual |
-| height | Altura |
-| allow_unsafe_jscode | Habilita JsCode |
-| columns_auto_size_mode | Ajuste automático |
+-   Filtrar antes de mostrar.
+-   Mostrar únicamente columnas necesarias.
+-   Mantener alturas uniformes.
+-   Utilizar un único estilo corporativo.
+-   Reutilizar siempre la plantilla oficial.
 
----
+------------------------------------------------------------------------
 
-## Resultado
+# Errores comunes
 
-El usuario obtiene una tabla profesional con filtros, ordenamiento, paginación y alto rendimiento.
+-   Crear AgGrid sin configurar GridOptionsBuilder.
+-   Calcular datos dentro de la tabla.
+-   Mostrar columnas técnicas.
+-   No utilizar paginación.
+-   Mezclar lógica de negocio con presentación.
 
-# 12.6 - Optimización
+------------------------------------------------------------------------
 
----
+# Checklist
 
-# Recomendaciones
+-   [ ] Existe `components/tablas.py`.
+-   [ ] Se utiliza la plantilla oficial.
+-   [ ] GridOptionsBuilder está configurado.
+-   [ ] Filtros activos.
+-   [ ] Ordenamiento activo.
+-   [ ] Paginación activa.
+-   [ ] Responsive.
+-   [ ] Compatible con el diseño corporativo.
 
-✔ Evitar columnas innecesarias.
-
-✔ Filtrar antes de mostrar.
-
-✔ Reducir cálculos dentro de AgGrid.
-
-✔ Utilizar paginación.
-
-✔ Evitar estilos excesivos.
-
-✔ Mantener un número razonable de columnas visibles.
-
----
-
-# Grandes volúmenes
-
-Cuando el DataFrame contiene miles de registros:
-
-```
-
-Base de Datos
-
-↓
-
-Pandas
-
-↓
-
-Filtrar
-
-↓
-
-AgGrid
-
-```
-
-No es recomendable enviar información que el usuario no utilizará.
-
-# 12.7 - Estándar Oficial del Framework
-
----
-
-Toda tabla desarrollada para el Framework ELITE deberá cumplir con el siguiente estándar:
-
-□ GridOptionsBuilder.
-
-□ Columnas configuradas.
-
-□ Filtros activos.
-
-□ Ordenamiento activo.
-
-□ Columnas redimensionables.
-
-□ Paginación.
-
-□ Selección de texto.
-
-□ Alturas uniformes.
-
-□ Tema corporativo.
-
-□ Compatible con el diseño general del Dashboard.
-
----
+------------------------------------------------------------------------
 
 # Conclusión
 
-AgGrid constituye el componente oficial para la visualización tabular dentro del Framework ELITE.
+AgGrid constituye la implementación oficial de tablas del Framework
+ELITE.
 
-Su correcta configuración garantiza una experiencia consistente en todos los módulos del Dashboard, permitiendo consultar grandes volúmenes de información de forma rápida, organizada y alineada con los estándares definidos para el proyecto.
-
+A partir de esta plantilla podrás construir tablas reutilizables para
+cualquier Dashboard, manteniendo una arquitectura limpia, consistente y
+fácil de mantener.
