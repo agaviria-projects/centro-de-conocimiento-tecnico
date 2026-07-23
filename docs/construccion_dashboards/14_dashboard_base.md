@@ -151,12 +151,68 @@ Footer
 
 ## Estructura Visual
 
-La siguiente imagen presenta la distribución oficial de los componentes que conforman un Dashboard desarrollado bajo el Framework ELITE.
+El Framework ELITE admite dos patrones oficiales para organizar la interfaz de un Dashboard.
 
-![Dashboard Base](../images/dashboards/08_dashboard.png)
+La elección dependerá de las necesidades del proyecto y de la experiencia de usuario que se desee ofrecer.
 
+---
 
-Esta distribución constituye el estándar oficial del Framework ELITE.
+## Patrón A — Navegación Principal en el Sidebar
+
+Este patrón corresponde al diseño tradicional utilizado por la mayoría de aplicaciones empresariales.
+
+La navegación principal se encuentra ubicada dentro del Sidebar, permitiendo acceder a los diferentes módulos del Dashboard desde el panel lateral.
+
+![Patrón A - Navegación en Sidebar](../images/dashboards/08_dashboard.png)
+
+**Figura 14.1.** Dashboard con navegación principal ubicada en el Sidebar.
+
+### Ventajas
+
+- Diseño ampliamente conocido por los usuarios.
+- Mayor espacio para organizar múltiples módulos.
+- Arquitectura sencilla de implementar.
+- Adecuado para aplicaciones donde el Sidebar permanece siempre visible.
+
+### Consideraciones
+
+> En aplicaciones desarrolladas con **Streamlit**, el Sidebar puede contraerse mediante el control integrado (**<<**). Cuando esto ocurre, la navegación principal deja de estar visible hasta que el usuario vuelva a expandir el panel lateral.
+
+---
+
+## Patrón B — Navegación Principal Integrada al Dashboard (Recomendado)
+
+Este patrón traslada la navegación principal al área central del Dashboard, inmediatamente después del Banner Principal (Hero).
+
+De esta forma, la navegación permanece visible incluso cuando el Sidebar se encuentra contraído.
+
+![Patrón B - Navegación Integrada](../images/dashboards/09_dashboard.png)
+
+**Figura 14.2.** Dashboard con navegación principal integrada al área de trabajo.
+
+### Ventajas
+
+- La navegación principal nunca desaparece.
+- Mejor experiencia de usuario en aplicaciones desarrolladas con Streamlit.
+- Mayor claridad sobre el módulo activo.
+- Compatible con el colapso automático del Sidebar.
+- Arquitectura utilizada por el Dashboard FENIX ANS.
+
+---
+
+## Recomendación Oficial del Framework ELITE
+
+> **Recomendación**
+>
+> Aunque ambos patrones son válidos, el Framework ELITE recomienda implementar la **Navegación Principal dentro del Dashboard**.
+>
+> En Streamlit, el Sidebar puede contraerse accidentalmente mediante el control integrado (**<<**). Cuando esto ocurre, toda la navegación ubicada en el panel lateral deja de estar disponible temporalmente.
+>
+> Para garantizar una experiencia de usuario consistente, el Sidebar debería reservarse para información institucional, configuración general o elementos auxiliares, mientras que la navegación funcional (módulos, pestañas, subnavegación y filtros) debe permanecer visible dentro del área principal del Dashboard.
+
+---
+
+Ambos patrones forman parte del Framework ELITE y pueden utilizarse según las necesidades del proyecto. No obstante, para nuevos desarrollos realizados en Streamlit se recomienda adoptar el **Patrón B**, ya que ofrece una experiencia de navegación más robusta y consistente.
 
 ------------------------------------------------------------------------
 
