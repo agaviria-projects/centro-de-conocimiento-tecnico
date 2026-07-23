@@ -153,9 +153,8 @@ Footer
 
 La siguiente imagen presenta la distribución oficial de los componentes que conforman un Dashboard desarrollado bajo el Framework ELITE.
 
-![Dashboard Base](images/dashboards/08_dashboard.png)
+![Dashboard Base](../images/dashboards/08_dashboard.png)
 
----
 
 Esta distribución constituye el estándar oficial del Framework ELITE.
 
