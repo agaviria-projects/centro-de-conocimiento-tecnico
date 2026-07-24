@@ -1,4 +1,4 @@
-# 🎨 Capítulo 07 - Sistema de Estilos (Carga de styles.css)
+# 🎨 Plantilla Oficial del Framework
 
 # Introducción
 

@@ -19,6 +19,104 @@ Todo nuevo Dashboard deberá construirse a partir de esta arquitectura,
 modificando únicamente aquellos componentes específicos del negocio.
 
 ------------------------------------------------------------------------
+------------------------------------------------------------------------
+
+# Metodología de Construcción del Dashboard
+
+Antes de comenzar el desarrollo de un Dashboard es recomendable seguir una secuencia lógica de construcción.
+
+El Framework ELITE propone la siguiente metodología, basada en la experiencia obtenida durante el desarrollo del Dashboard **FENIX ANS**.
+
+Cada componente se construye sobre el anterior, permitiendo desarrollar la aplicación de forma progresiva hasta obtener un Dashboard completamente funcional.
+
+```text
+Crear el Proyecto
+
+        │
+        ▼
+
+Construir el Sidebar
+
+        │
+        ▼
+
+Construir el Banner Principal (Hero)
+
+        │
+        ▼
+
+Agregar la Navegación Principal
+
+        │
+        ▼
+
+Crear la Subnavegación (Si lo requiere)
+
+        │
+        ▼
+
+Diseñar los Filtros
+
+        │
+        ▼
+
+Conectar el DataFrame Maestro
+
+        │
+        ▼
+
+Aplicar el Pipeline de Filtrado
+
+        │
+        ▼
+
+Construir los KPIs
+
+        │
+        ▼
+
+Construir los Gráficos
+
+        │
+        ▼
+
+Construir las Tablas
+
+        │
+        ▼
+
+Obtener el Dashboard Completo
+```
+
+## Descripción de cada etapa
+
+| Etapa | Objetivo |
+|--------|----------|
+| Crear el Proyecto | Definir la estructura inicial del Dashboard. |
+| Sidebar | Incorporar la identidad institucional y la información general del proyecto. |
+| Banner Principal (Hero) | Mostrar el nombre del Dashboard, descripción y estado del sistema. |
+| Navegación Principal | Permitir acceder a los diferentes módulos funcionales. |
+| Subnavegación | Organizar las vistas internas del módulo seleccionado. |
+| Filtros | Permitir al usuario personalizar el análisis de la información. |
+| DataFrame Maestro | Centralizar la información proveniente de Excel, CSV, SQL o APIs. |
+| Pipeline de Filtrado | Aplicar todos los filtros sobre un único DataFrame para garantizar consistencia en el análisis. |
+| KPIs | Construir los indicadores ejecutivos a partir del DataFrame filtrado. |
+| Gráficos | Representar visualmente la información mediante gráficos dinámicos. |
+| Tablas | Mostrar el detalle de los registros analizados. |
+| Dashboard Completo | Integrar todos los componentes en una única interfaz funcional. |
+
+---
+
+
+## Filosofía del Framework
+
+El Framework ELITE propone construir un Dashboard de manera incremental.
+
+Cada nuevo componente depende del anterior, permitiendo validar el funcionamiento del sistema en cada etapa del desarrollo.
+
+Este enfoque facilita el aprendizaje, simplifica el mantenimiento del código y permite reutilizar la misma metodología en cualquier proyecto de analítica desarrollado con Streamlit.
+
+------------------------------------------------------------------------
 
 # Arquitectura General
 
