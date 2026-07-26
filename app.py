@@ -150,6 +150,7 @@ st.caption("Base personal para explicar y defender los desarrollos implementados
 
 opciones = [
     "📊 Generador de Informes ANS",
+    "📧 Seguimiento ANS",
     "🎓 Portal Formación Elite",
     "📄 Compresor PDF",
     "💬 WhatsApp + ANS + Formularios",
@@ -217,6 +218,67 @@ La lógica del negocio, los requerimientos, la validación de resultados y la ad
         st.error(
             "No se encontró el archivo docs/generador_informes_ans.md"
         )
+elif opcion == "📧 Seguimiento ANS":
+
+    with st.expander(
+        "🎤 Guía Rápida para Reuniones",
+        expanded=False,
+    ):
+
+        st.warning("""
+### 🎤 Cómo explicar este desarrollo en una reunión
+
+Seguimiento ANS es un módulo integrado en DataSuite que automatiza la
+generación, revisión y envío controlado de correos de seguimiento.
+
+El proceso toma como fuente el archivo FENIX, valida su estructura, filtra la
+información correspondiente a la operación y organiza los pedidos por grupo,
+producto, actividad y estado ANS.
+
+Posteriormente calcula los indicadores, construye las tablas y genera correos
+HTML profesionales compatibles con Microsoft Outlook.
+
+El proceso que anteriormente requería más de una hora de trabajo manual ahora
+puede realizarse en pocos minutos, con mayor uniformidad y menor riesgo de
+errores.
+
+---
+
+### ❓ Si me preguntan si yo hice el desarrollo
+
+Sí.
+
+El desarrollo fue implementado por mí para solucionar una necesidad real de la
+operación.
+
+Para acelerar la construcción técnica utilicé Inteligencia Artificial como
+herramienta de apoyo, de manera similar a como un desarrollador utiliza
+documentación, librerías o recursos especializados.
+
+La necesidad operativa, las reglas de negocio, la estructura de los informes,
+las validaciones, las pruebas y la aprobación de los resultados fueron
+definidas y realizadas directamente por mí.
+
+---
+
+### 🏗️ Arquitectura general
+
+```text
+Archivo FENIX
+      ↓
+Validación de estructura
+      ↓
+Lectura y filtrado
+      ↓
+Agrupación por grupo, producto y actividad
+      ↓
+Clasificación por estado ANS
+      ↓
+Generación de KPIs y tablas
+      ↓
+Construcción del correo HTML
+      ↓
+Revisión o envío mediante Outlook
         
 elif opcion == "🎓 Portal Formación Elite":
 
@@ -1032,7 +1094,6 @@ reutilizar componentes en futuros proyectos.
         "12 - AgGrid": "12_aggrid.md",
         "13 - Gráficos": "13_graficos.md",
         "14 - Dashboard Base": "14_dashboard_base.md",
-        "15 - Seguimientos ANS": "15_seguimientos_ans.md",
     }
 
     capitulo = st.selectbox(
@@ -1050,3 +1111,4 @@ reutilizar componentes en futuros proyectos.
         mostrar_markdown(ruta)
     else:
         st.warning(f"No existe el archivo:\n{ruta}")        
+

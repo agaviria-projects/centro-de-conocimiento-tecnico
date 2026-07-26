@@ -1,91 +1,178 @@
-# Seguimientos de Informes ANS
+# DataSuite — Módulo Seguimiento ANS
 
-## 1. Objetivo
+## 1. Descripción general
 
-Automatizar la generación de informes de seguimiento ANS a partir de un archivo Excel, organizando los pedidos por grupo operativo, producto, actividad y estado.
+**Seguimiento ANS** es un módulo desarrollado en Python e integrado en **DataSuite** para automatizar la generación, revisión y envío controlado de correos de seguimiento de Acuerdos de Nivel de Servicio —ANS—.
 
-El sistema genera correos HTML profesionales y los prepara en Microsoft Outlook para su validación y envío.
+El módulo utiliza como fuente el archivo **FENIX_ANS.xlsx**, valida su estructura, filtra la información operativa, clasifica los pedidos y genera correos HTML profesionales compatibles con Microsoft Outlook.
 
----
-
-## 2. Problema que resuelve
-
-Antes, la elaboración del informe requería más de una hora de trabajo manual:
-
-- Abrir y filtrar el archivo Excel.
-- Identificar pedidos vencidos y en alerta.
-- Separar la información por grupos.
-- Calcular cantidades y porcentajes.
-- Construir tablas.
-- Redactar observaciones.
-- Preparar los correos en Outlook.
-
-Con la automatización, el proceso tarda aproximadamente cinco minutos.
-
-> **Reducción estimada del tiempo operativo: 92 %.**
+Su propósito es transformar un procedimiento manual, repetitivo y propenso a errores en un flujo estandarizado, trazable y ejecutable desde una interfaz gráfica.
 
 ---
 
-## 3. Flujo del proceso
+## 2. Objetivo del desarrollo
+
+Automatizar el procesamiento del archivo FENIX para:
+
+- Validar que la fuente de información sea correcta.
+- Filtrar los registros correspondientes a la operación configurada.
+- Organizar los pedidos por grupo, producto y actividad.
+- Clasificar los registros según su estado ANS.
+- Calcular indicadores ejecutivos.
+- Construir tablas de resumen y detalle.
+- Generar correos HTML con una presentación uniforme.
+- Permitir la revisión previa o el envío automático desde Outlook.
+- Mostrar los resultados de la ejecución dentro de DataSuite.
+
+---
+
+## 3. Problema que resuelve
+
+Antes de implementar la automatización, la elaboración del seguimiento requería realizar manualmente actividades como:
+
+1. Abrir el archivo Excel.
+2. Aplicar filtros operativos.
+3. Separar la información por grupos.
+4. Identificar pedidos vencidos y próximos a vencer.
+5. Calcular cantidades y porcentajes.
+6. Construir tablas.
+7. Redactar observaciones.
+8. Preparar cada correo en Outlook.
+9. Revisar destinatarios, asunto y contenido.
+10. Repetir el mismo procedimiento para cada grupo operativo.
+
+Este proceso podía tardar más de una hora.
+
+Con **Seguimiento ANS**, el motor de procesamiento puede completar la generación en segundos y el ciclo operativo completo, incluida la revisión, puede realizarse en pocos minutos.
+
+> **Resultado esperado:** reducción considerable del tiempo operativo, mayor uniformidad y menor riesgo de errores manuales.
+
+---
+
+## 4. Alcance funcional
+
+El módulo cubre las siguientes etapas:
 
 ```text
-Archivo Excel FENIX
-        ↓
-Validación de estructura
-        ↓
-Lectura y filtrado de datos
-        ↓
-Clasificación por grupo, producto y actividad
-        ↓
-Cálculo de estados ANS
-        ↓
-Generación de KPIs y tablas
-        ↓
-Creación del correo HTML
-        ↓
-Apertura del correo en Microsoft Outlook
+Archivo FENIX
+      ↓
+Validación de existencia y estructura
+      ↓
+Lectura del archivo Excel
+      ↓
+Filtrado de la información
+      ↓
+Agrupación por grupo, producto y actividad
+      ↓
+Clasificación por estado ANS
+      ↓
+Cálculo de KPIs
+      ↓
+Construcción de tablas
+      ↓
+Generación del correo HTML
+      ↓
+Revisión o envío mediante Outlook
+      ↓
+Presentación de resultados en DataSuite
 ```
 
+El archivo original se utiliza únicamente como fuente de información y no es modificado por el proceso.
+
 ---
 
-## 4. Estados utilizados
+## 5. Fuente de información
 
-El sistema clasifica automáticamente cada pedido en uno de los siguientes estados:
+El módulo procesa el archivo:
 
-| Estado | Descripción |
+```text
+modules/informe_ans/entrada/FENIX_ANS.xlsx
+```
+
+La ubicación controlada del archivo permite:
+
+- Evitar que se procese una fuente incorrecta.
+- Mantener una estructura estándar del proyecto.
+- Facilitar las validaciones automáticas.
+- Simplificar el uso para el usuario final.
+- Conservar la trazabilidad del proceso.
+
+---
+
+## 6. Columnas requeridas
+
+Para ejecutar correctamente el proceso, el archivo debe contener las columnas definidas por el módulo.
+
+Entre las columnas utilizadas se encuentran:
+
+```text
+PEDIDO
+FECHA_INICIO_ANS
+DIRECCION
+MUNICIPIO
+TIPO_DIRECCION
+CONCEPTO
+ACTIVIDAD
+PRODUCTO
+DIAS_PACTADOS
+FECHA_LIMITE_ANS
+DIAS_RESTANTES
+ESTADO
+SUBZONA
+```
+
+Si falta una columna obligatoria, el proceso debe detenerse e informar la inconsistencia antes de generar los correos.
+
+---
+
+## 7. Clasificación de los estados ANS
+
+Cada pedido se organiza de acuerdo con su condición operativa.
+
+| Estado | Interpretación |
 |---|---|
-| A TIEMPO | Pedido dentro del plazo ANS. |
-| ALERTA | Pedido próximo a vencer. |
-| ALERTA 0 DÍAS | Pedido que debe gestionarse durante la jornada. |
-| VENCIDO | Pedido que superó la fecha límite del ANS. |
+| **A TIEMPO** | El pedido continúa dentro del plazo establecido. |
+| **ALERTA** | El pedido se aproxima a su fecha límite. |
+| **ALERTA 0 DÍAS** | El pedido debe gestionarse durante la jornada actual. |
+| **VENCIDO** | El pedido superó el plazo definido en el ANS. |
+
+Estos estados se utilizan en:
+
+- Tarjetas de indicadores.
+- Resumen por estados.
+- Detalle de pedidos.
+- Observaciones automáticas.
+- Priorización de la gestión operativa.
 
 ---
 
-## 5. Estructura del correo
+## 8. Reglas de agrupación
 
-Cada correo conserva la siguiente estructura:
+El sistema organiza los registros por grupos operativos, productos y actividades previamente configurados.
 
-1. Encabezado.
-2. Información general.
-3. KPIs ejecutivos.
-4. Instrucciones de gestión.
-5. Producto.
-6. Actividad.
-7. Resumen por estados.
-8. Detalle de pedidos.
-9. Observaciones.
-10. Firma.
+La configuración evita que las reglas queden dispersas dentro del código y permite administrar de forma centralizada:
 
-Los KPIs muestran de forma inmediata la cantidad de pedidos:
+- Grupos.
+- Productos.
+- Actividades.
+- Destinatarios.
+- Asuntos de correo.
+- Reglas de presentación.
 
-- Vencidos.
-- En alerta 0 días.
-- En alerta.
-- A tiempo.
+Ejemplo conceptual:
+
+```text
+Grupo operativo
+    └── Producto
+          └── Actividad
+                └── Pedidos clasificados por estado
+```
+
+Cada grupo configurado produce un correo independiente o un correo consolidado, según las reglas definidas.
 
 ---
 
-## 6. Componentes principales
+## 9. Arquitectura del módulo
 
 ```text
 modules/informe_ans/
@@ -97,6 +184,7 @@ modules/informe_ans/
 │   └── parametros.py
 │
 ├── entrada/
+│   └── FENIX_ANS.xlsx
 │
 ├── salida/
 │   ├── correos/
@@ -123,292 +211,436 @@ modules/informe_ans/
 └── runner.py
 ```
 
+Esta estructura separa la configuración, la lógica de negocio, las plantillas, las entradas y las salidas.
+
 ---
 
-## 7. Responsabilidad de cada componente
+## 10. Responsabilidad de los componentes
 
-### `validador.py`
+### 10.1. `config/parametros.py`
 
-Verifica que el archivo exista y que contenga las columnas requeridas.
+Centraliza las rutas y parámetros generales del módulo.
 
-### `lector_excel.py`
+Ejemplos:
 
-Lee el archivo FENIX y aplica los filtros definidos.
+- Ruta base.
+- Archivo de entrada.
+- Carpetas de salida.
+- Subzona que debe procesarse.
+- Opciones generales de ejecución.
 
-### `agrupador.py`
+---
 
-Organiza los registros por grupo operativo, producto y actividad.
+### 10.2. `config/columnas.py`
 
-### `generador_html.py`
+Define las columnas obligatorias y los nombres utilizados durante el procesamiento.
 
-Construye los KPIs, el resumen por estados y la tabla de detalle.
+Su función es impedir que la lógica dependa de nombres escritos repetidamente en diferentes archivos.
 
-### `correo_ans.html`
+---
+
+### 10.3. `config/grupos.py`
+
+Contiene las reglas para clasificar la información por:
+
+- Grupo operativo.
+- Producto.
+- Actividad.
+
+Permite modificar la matriz de procesamiento sin alterar el flujo principal.
+
+---
+
+### 10.4. `config/correos.py`
+
+Administra la configuración relacionada con:
+
+- Destinatarios.
+- Copias.
+- Asuntos.
+- Reglas particulares de envío.
+
+---
+
+### 10.5. `src/validador.py`
+
+Comprueba que:
+
+- El archivo FENIX exista.
+- La extensión sea correcta.
+- La hoja requerida esté disponible.
+- Las columnas obligatorias estén presentes.
+- Los componentes necesarios para ejecutar el módulo estén disponibles.
+
+Si una validación falla, el proceso se detiene antes de generar resultados incorrectos.
+
+---
+
+### 10.6. `src/lector_excel.py`
+
+Lee el archivo Excel y prepara los datos para el procesamiento.
+
+Entre sus responsabilidades se encuentran:
+
+- Cargar la hoja configurada.
+- Normalizar valores.
+- Aplicar filtros.
+- Conservar únicamente los registros correspondientes a la operación requerida.
+- Entregar un conjunto de datos limpio al agrupador.
+
+---
+
+### 10.7. `src/agrupador.py`
+
+Organiza los registros de acuerdo con las reglas de negocio.
+
+Sus funciones principales son:
+
+- Separar la información por grupo.
+- Identificar productos.
+- Identificar actividades.
+- Consolidar registros relacionados.
+- Preparar la información que será utilizada en cada correo.
+
+---
+
+### 10.8. `src/generador_html.py`
+
+Construye la representación visual del informe.
+
+Genera:
+
+- Información general.
+- KPIs ejecutivos.
+- Resumen por estados.
+- Tabla de detalle.
+- Bloques de producto y actividad.
+- Observaciones.
+- Contenido compatible con Outlook.
+
+---
+
+### 10.9. `src/generador_correo.py`
+
+Organiza los elementos necesarios para cada mensaje:
+
+- Destinatarios.
+- Asunto.
+- Contenido HTML.
+- Grupo procesado.
+- Datos utilizados.
+- Opciones de revisión o envío.
+
+---
+
+### 10.10. `src/outlook.py`
+
+Gestiona la integración con Microsoft Outlook.
+
+Según el modo seleccionado, puede:
+
+- Crear el correo.
+- Cargar destinatarios.
+- Asignar el asunto.
+- Insertar el contenido HTML.
+- Abrir el mensaje para revisión.
+- Enviar el correo automáticamente.
+
+---
+
+### 10.11. `src/comparador.py`
+
+Está destinado a comparar diferentes cortes de información.
+
+Puede utilizarse para identificar:
+
+- Pedidos que continúan pendientes.
+- Pedidos que cambiaron de estado.
+- Registros nuevos.
+- Registros gestionados entre dos ejecuciones.
+
+---
+
+### 10.12. `src/historial.py`
+
+Administra la conservación de información histórica para futuras comparaciones y trazabilidad.
+
+---
+
+### 10.13. `templates/correo_ans.html`
 
 Define la estructura visual principal del correo.
 
-### `footer.html`
+Contiene la distribución de:
 
-Genera las observaciones, instrucciones finales y firma.
-
-### `outlook.py`
-
-Crea el correo en Microsoft Outlook con el asunto, destinatarios y contenido HTML.
-
-### `runner.py`
-
-Coordina la ejecución completa del proceso.
+- Encabezado.
+- Bloques informativos.
+- Indicadores.
+- Tablas.
+- Secciones de gestión.
 
 ---
 
-## 8. Beneficios
+### 10.14. `templates/footer.html`
 
-- Reduce significativamente el tiempo de elaboración.
-- Disminuye errores manuales.
-- Estandariza todos los correos.
-- Prioriza automáticamente vencidos y alertas.
-- Facilita la validación operativa.
-- Permite generar varios informes en una sola ejecución.
-- Se encuentra integrado al Launcher ELITE.
-- Deja los correos preparados en Outlook antes del envío.
+Define el bloque final del correo, incluyendo:
+
+- Observaciones.
+- Recomendaciones.
+- Mensajes de prioridad.
+- Información de cierre.
 
 ---
 
-## 9. Integración con Launcher ELITE
+### 10.15. `templates/firma.html`
 
-El módulo está integrado dentro del Launcher ELITE para que el usuario no tenga que utilizar la terminal.
+Contiene la firma institucional utilizada en los correos.
 
-El flujo para el usuario es:
+---
+
+### 10.16. `models.py`
+
+Define las estructuras de datos utilizadas para transferir información entre los componentes.
+
+Su propósito es mantener contratos claros entre:
+
+- Lectura.
+- Agrupación.
+- Generación.
+- Envío.
+- Resultado de la ejecución.
+
+---
+
+### 10.17. `controller.py`
+
+Conecta la interfaz de DataSuite con el motor de Seguimiento ANS.
+
+Recibe las opciones seleccionadas por el usuario y ejecuta el flujo correspondiente.
+
+---
+
+### 10.18. `runner.py`
+
+Es el coordinador principal del proceso.
+
+Ejecuta de forma ordenada:
+
+1. Validación.
+2. Lectura.
+3. Filtrado.
+4. Agrupación.
+5. Construcción de informes.
+6. Generación HTML.
+7. Apertura o envío de correos.
+8. Consolidación de resultados.
+
+---
+
+## 11. Estructura del correo generado
+
+Cada correo conserva un orden uniforme:
+
+1. Encabezado.
+2. Saludo inicial.
+3. Información general.
+4. KPIs ejecutivos.
+5. Instrucciones de gestión.
+6. Producto.
+7. Actividad.
+8. Resumen por estados.
+9. Detalle de pedidos.
+10. Observaciones.
+11. Firma.
+
+Esta estructura permite que la información sea comprendida rápidamente tanto a nivel ejecutivo como operativo.
+
+---
+
+## 12. Indicadores del correo
+
+Los KPIs muestran la cantidad de pedidos clasificados como:
+
+- Vencidos.
+- Alerta 0 días.
+- Alerta.
+- A tiempo.
+
+La finalidad de estas tarjetas es ofrecer una lectura inmediata del estado general del grupo antes de revisar el detalle.
+
+---
+
+## 13. Priorización operativa
+
+El correo debe facilitar la atención en el siguiente orden:
 
 ```text
-Abrir Launcher ELITE
-        ↓
-Seleccionar Generador Informe ANS
-        ↓
-Cargar o validar el archivo
-        ↓
-Ejecutar el proceso
-        ↓
-Revisar los correos generados en Outlook
+1. VENCIDOS
+2. ALERTA 0 DÍAS
+3. ALERTA
+4. A TIEMPO
 ```
 
----
-
-## 10. Cómo explicarlo en 30 segundos
-
-> El Seguimiento de Informes ANS es una automatización desarrollada en Python que toma el archivo FENIX, valida su estructura, filtra la información, clasifica los pedidos por grupo, producto, actividad y estado ANS, genera indicadores y tablas, y finalmente crea los correos en Outlook listos para revisar y enviar. Un proceso que antes tardaba más de una hora ahora se realiza aproximadamente en cinco minutos.
+Esta priorización ayuda a dirigir la gestión hacia los registros con mayor riesgo de incumplimiento.
 
 ---
 
-## 11. Preguntas frecuentes
+# Interfaz del módulo en DataSuite
 
-### ¿El sistema envía los correos automáticamente?
+## 14. Encabezado de DataSuite
 
-Actualmente los correos se generan y se abren en Outlook para revisión antes del envío.
+En la parte superior se presenta la identidad de la plataforma:
 
-### ¿Se modifican los datos del archivo original?
+```text
+DataSuite
+Plataforma de Automatización
+Enterprise Automation Suite | Versión 1.0
+```
 
-No. El archivo original se utiliza como fuente de información y no se altera.
-
-### ¿Qué sucede si falta una columna?
-
-El validador detiene el proceso e informa cuáles columnas hacen falta.
-
-### ¿Cómo se calculan los estados?
-
-Se utilizan las fechas límite, los días restantes y las reglas ANS definidas para el proceso.
-
-### ¿Se pueden agregar nuevos grupos?
-
-Sí. Los grupos, productos y actividades se administran desde los archivos de configuración.
-
-### ¿Por qué se genera HTML?
-
-Porque permite construir un correo profesional, con KPIs, colores, tablas y compatibilidad con Microsoft Outlook.
-
----
-# DataSuite — Módulo Seguimiento ANS
-
-## 1. Descripción general
-
-**DataSuite** es la plataforma de automatización donde se encuentran integrados diferentes desarrollos operativos.
-
-Dentro de esta plataforma, el módulo **Seguimiento ANS** permite generar, revisar y enviar correos de seguimiento a partir del archivo FENIX.
-
-El objetivo principal es reducir el trabajo manual y estandarizar la preparación de los informes ANS.
+Este encabezado permite identificar la aplicación y la versión utilizada.
 
 ---
 
-## 2. Encabezado principal de DataSuite
+## 15. Menú lateral
 
-En la parte superior se presenta la identidad de la aplicación:
+El menú lateral centraliza el acceso a los desarrollos integrados.
 
-- **DataSuite**
-- **Plataforma de Automatización**
-- **Enterprise Automation Suite**
-- **Versión 1.0**
-
-Este encabezado identifica la solución y la versión actualmente utilizada.
-
----
-
-## 3. Menú lateral de módulos
-
-El menú ubicado en el lado izquierdo permite navegar entre los diferentes desarrollos integrados en DataSuite.
-
-Para este proceso se selecciona:
+Para ingresar al proceso se selecciona:
 
 ```text
 Seguimiento ANS
 ```
 
-Cuando el módulo está activo:
+Cuando el módulo se encuentra activo:
 
 - El nombre aparece resaltado.
-- Se muestra una barra vertical de color.
-- El contenido central cambia a la interfaz de Seguimiento ANS.
+- Se muestra una barra vertical de selección.
+- El área central cambia a la interfaz del módulo.
 
 ---
 
-## 4. Encabezado del módulo
+## 16. Encabezado del módulo
 
-Al ingresar al módulo se presenta:
+La interfaz presenta el título:
 
 ```text
 Seguimiento ANS
+```
+
+Y la descripción:
+
+```text
 Generación, revisión y envío controlado de correos de seguimiento ANS.
 ```
 
-Este encabezado indica la función principal del desarrollo.
+Este bloque resume la función principal del desarrollo.
 
 ---
 
-## 5. Archivo de entrada
+## 17. Sección Archivo de entrada
 
-La sección **Archivo de entrada** muestra la ruta del archivo utilizado por el proceso.
+Muestra la ruta exacta del archivo que será procesado.
 
 Ejemplo:
 
 ```text
-modules/informe_ans/entrada/FENIX_ANS.xlsx
+C:\...\modules\informe_ans\entrada\FENIX_ANS.xlsx
 ```
 
-El sistema utiliza este archivo como fuente de información.
+### Finalidad
 
-### Funciones de esta sección
-
-- Mostrar la ruta del archivo FENIX.
-- Confirmar cuál archivo será procesado.
-- Evitar que el usuario seleccione un archivo incorrecto.
-- Mantener una estructura controlada dentro del proyecto.
-
-El archivo debe estar ubicado en:
-
-```text
-modules/informe_ans/entrada/
-```
+- Confirmar la fuente de datos.
+- Evitar selecciones incorrectas.
+- Facilitar el diagnóstico de rutas.
+- Mantener el archivo dentro de una ubicación controlada.
 
 ---
 
-## 6. Estado del módulo
+## 18. Panel Estado del módulo
 
-El panel **Estado del módulo** valida que los elementos necesarios estén disponibles antes de ejecutar el proceso.
+Antes de ejecutar, el sistema valida los componentes esenciales.
 
-Se verifican los siguientes componentes:
-
-| Componente | Función |
+| Componente | Validación |
 |---|---|
-| Archivo FENIX | Confirma que el archivo de entrada existe. |
-| Plantilla principal | Verifica la plantilla general del correo. |
-| Plantilla footer | Verifica el bloque de observaciones y firma. |
-| Carpeta de salida | Confirma que existe la ruta donde se guardan los resultados. |
-| Motor Seguimiento ANS | Valida que el módulo pueda ejecutar el proceso. |
+| Archivo FENIX | Confirma que la fuente de entrada exista. |
+| Plantilla principal | Verifica el diseño general del correo. |
+| Plantilla footer | Comprueba el bloque final del mensaje. |
+| Carpeta de salida | Confirma dónde se almacenarán los resultados. |
+| Motor Seguimiento ANS | Verifica que el proceso pueda ejecutarse. |
 
-Cuando todos los elementos están disponibles, el sistema se encuentra listo para operar.
+Cuando todos los elementos se encuentran disponibles, el módulo está listo para operar.
 
 ---
 
-## 7. Sección de proceso
+## 19. Sección Proceso
 
-La sección **Proceso** contiene los controles utilizados para ejecutar el módulo.
+La sección **Proceso** contiene las opciones que controlan la ejecución.
 
-### 7.1. Modo de ejecución
+### 19.1. Modo revisión
 
-El sistema dispone de dos modos:
-
-#### Modo revisión
-
-```text
-Modo revisión
-```
-
-Características:
+En este modo el sistema:
 
 - Genera los correos.
 - Los abre en Microsoft Outlook.
-- Permite revisar destinatarios, asunto y contenido.
+- Permite revisar destinatarios.
+- Permite validar el asunto.
+- Permite inspeccionar el contenido.
 - No realiza el envío automático.
 
-Este modo es recomendado para pruebas, validaciones y controles previos.
+Es el modo recomendado durante pruebas y validaciones.
 
-#### Envío automático
+---
 
-```text
-Envío automático
-```
+### 19.2. Envío automático
 
-Características:
+En este modo el sistema:
 
 - Genera los correos.
-- Utiliza la configuración definida para cada grupo.
-- Realiza el envío sin requerir revisión manual.
+- Carga los destinatarios configurados.
+- Construye el asunto y el contenido.
+- Envía los mensajes sin revisión manual.
 
-Este modo debe utilizarse cuando las reglas, destinatarios y plantillas hayan sido validados.
-
----
-
-### 7.2. Procesar únicamente el primer correo
-
-Este control permite limitar la ejecución a un solo correo.
-
-Su finalidad es:
-
-- Probar el proceso.
-- Validar el diseño HTML.
-- Revisar el contenido en Outlook.
-- Evitar generar todos los correos durante una prueba.
-
-Cuando está desactivado, el sistema procesa todos los grupos configurados.
+Debe utilizarse únicamente cuando las reglas, plantillas y destinatarios ya hayan sido validados.
 
 ---
 
-### 7.3. Botón Generar correos
+### 19.3. Procesar únicamente el primer correo
 
-El botón:
+Esta opción permite ejecutar una prueba controlada.
 
-```text
-Generar correos
-```
+Cuando está activada:
 
-inicia el proceso completo.
+- Solo se procesa el primer grupo.
+- Se genera un único correo.
+- Se puede revisar el diseño.
+- Se evita abrir o enviar todos los mensajes.
+
+Cuando está desactivada, se procesan todos los grupos configurados.
+
+---
+
+### 19.4. Botón Generar correos
+
+El botón inicia el flujo completo.
 
 Al presionarlo, el sistema:
 
-1. Valida el archivo FENIX.
-2. Lee la información.
-3. Filtra la subzona configurada.
+1. Valida la fuente.
+2. Lee el archivo.
+3. Aplica los filtros.
 4. Agrupa los pedidos.
-5. Calcula los estados ANS.
-6. Genera los KPIs.
+5. Clasifica los estados.
+6. Calcula los indicadores.
 7. Construye las tablas.
-8. Genera los archivos HTML.
-9. Prepara o envía los correos según el modo seleccionado.
+8. Genera los HTML.
+9. Prepara o envía los correos.
+10. Presenta el resultado en la consola.
 
 ---
 
-## 8. Consola de resultados
+## 20. Consola de resultados
 
-La consola muestra el resultado de la ejecución.
+La consola permite verificar rápidamente el resultado de la ejecución.
 
 Ejemplo:
 
@@ -420,101 +652,261 @@ Tiempo ejecución  : 9.22 segundos
 Ruta de salida    : modules/informe_ans/salida/html
 ```
 
-### Información presentada
-
-| Resultado | Descripción |
+| Resultado | Significado |
 |---|---|
-| Correos generados | Cantidad de correos creados. |
+| Correos generados | Cantidad de mensajes creados. |
 | Total grupos | Número de grupos procesados. |
-| Total pedidos | Cantidad total de registros incluidos. |
-| Tiempo de ejecución | Duración total del proceso. |
+| Total pedidos | Registros incluidos en los informes. |
+| Tiempo de ejecución | Duración del motor de procesamiento. |
 | Ruta de salida | Ubicación de los archivos HTML generados. |
 
-La consola permite comprobar rápidamente si la ejecución terminó correctamente.
+> Los valores mostrados dependen del contenido del archivo utilizado en cada ejecución.
 
 ---
 
-## 9. Estado general del sistema
+## 21. Estado general de DataSuite
 
-En la parte inferior izquierda se muestra:
+En la barra inferior se presenta el mensaje:
 
 ```text
 Sistema listo
 ```
 
-Este mensaje indica que DataSuite está disponible y preparado para ejecutar módulos.
-
-En la parte inferior derecha aparece la identificación institucional de la solución.
+Este estado indica que la plataforma se encuentra disponible para ejecutar sus módulos.
 
 ---
 
-## 10. Flujo operativo dentro de DataSuite
+## 22. Flujo de uso desde la interfaz
 
 ```text
 Abrir DataSuite
         ↓
 Seleccionar Seguimiento ANS
         ↓
-Verificar archivo de entrada
+Verificar el archivo de entrada
         ↓
-Confirmar estado del módulo
+Confirmar el estado del módulo
         ↓
-Seleccionar modo de ejecución
+Seleccionar el modo de ejecución
         ↓
-Activar o desactivar prueba de un solo correo
+Definir si se procesará un solo correo
         ↓
 Presionar Generar correos
         ↓
-Revisar resultados en la consola
+Revisar la consola
         ↓
-Validar correos en Outlook o confirmar envío
+Validar los mensajes en Outlook
+        ↓
+Enviar o confirmar el envío automático
 ```
 
 ---
 
-## 11. Beneficios de la integración en DataSuite
+## 23. Archivos de salida
 
-- Evita ejecutar comandos desde la terminal.
-- Centraliza el proceso en una sola aplicación.
-- Reduce errores de operación.
-- Permite seleccionar el modo de ejecución.
-- Facilita las pruebas controladas.
-- Presenta validaciones antes de procesar.
-- Muestra resultados en tiempo real.
-- Permite integrar el desarrollo con otros módulos empresariales.
-- Reduce un proceso de más de una hora a pocos minutos.
+El módulo puede generar resultados en las siguientes carpetas:
+
+```text
+modules/informe_ans/salida/html/
+modules/informe_ans/salida/excel/
+modules/informe_ans/salida/correos/
+```
+
+### `salida/html`
+
+Almacena las versiones HTML de los informes.
+
+### `salida/excel`
+
+Puede utilizarse para guardar archivos de respaldo o información procesada.
+
+### `salida/correos`
+
+Puede conservar elementos relacionados con la preparación de los mensajes.
 
 ---
 
-## 12. Explicación breve
+## 24. Controles de seguridad y calidad
 
-> El módulo Seguimiento ANS se encuentra integrado en DataSuite para centralizar la generación de los correos de seguimiento. Desde la interfaz se valida el archivo FENIX, se selecciona el modo de ejecución, se inicia el proceso y se visualizan los resultados. El sistema procesa los pedidos, genera los indicadores y construye los correos en Outlook, reduciendo significativamente el tiempo operativo.
+El desarrollo incorpora controles para reducir errores operativos:
+
+- Validación de existencia del archivo.
+- Validación de columnas obligatorias.
+- Rutas centralizadas.
+- Reglas de grupos separadas del motor.
+- Plantillas HTML independientes.
+- Modo revisión.
+- Prueba con un solo correo.
+- Consola de resultados.
+- Conservación del archivo original.
+- Separación entre entrada y salida.
 
 ---
 
-## 13. Resumen de las partes de la pantalla
+## 25. Beneficios del desarrollo
 
-| Sección | Propósito |
-|---|---|
-| Encabezado DataSuite | Identifica la plataforma y su versión. |
-| Menú lateral | Permite ingresar al módulo Seguimiento ANS. |
-| Encabezado del módulo | Describe la función del desarrollo. |
-| Archivo de entrada | Muestra el archivo FENIX que será procesado. |
-| Estado del módulo | Valida archivos, plantillas, carpetas y motor. |
-| Modo de ejecución | Define revisión o envío automático. |
-| Procesar primer correo | Permite realizar una prueba controlada. |
-| Generar correos | Inicia la automatización. |
-| Consola | Presenta resultados, tiempos y ruta de salida. |
-| Estado del sistema | Confirma que DataSuite está disponible. |
+### Beneficios operativos
 
+- Reduce el tiempo de elaboración.
+- Evita repetir filtros manuales.
+- Genera varios informes en una sola ejecución.
+- Facilita la priorización de pedidos.
+- Centraliza el flujo dentro de DataSuite.
 
-----
+### Beneficios de calidad
 
-## 12. Próximas mejoras
+- Estandariza los correos.
+- Disminuye errores de transcripción.
+- Mantiene una estructura visual uniforme.
+- Valida la información antes de procesarla.
+- Permite revisar antes de enviar.
+
+### Beneficios técnicos
+
+- Arquitectura modular.
+- Separación de responsabilidades.
+- Configuración centralizada.
+- Plantillas reutilizables.
+- Facilidad para agregar nuevos grupos.
+- Base preparada para históricos y comparaciones.
+
+---
+
+## 26. Diferencia entre tiempo técnico y tiempo operativo
+
+Es importante diferenciar dos mediciones:
+
+### Tiempo técnico
+
+Es el tiempo utilizado por el motor para:
+
+- Leer el archivo.
+- Filtrar los datos.
+- Agrupar los registros.
+- Generar los HTML.
+- Preparar los correos.
+
+Este tiempo puede ser de pocos segundos, como se observa en la consola.
+
+### Tiempo operativo
+
+Incluye además:
+
+- Ubicar o actualizar el archivo.
+- Abrir DataSuite.
+- Ejecutar el módulo.
+- Revisar los correos.
+- Confirmar la información.
+- Realizar el envío.
+
+Por esta razón, puede afirmarse que el ciclo completo tarda pocos minutos, aunque el motor se ejecute en segundos.
+
+---
+
+## 27. Limitaciones actuales
+
+El funcionamiento depende de:
+
+- Que el archivo FENIX se encuentre en la ruta configurada.
+- Que las columnas mantengan los nombres esperados.
+- Que las reglas de grupos estén actualizadas.
+- Que Outlook esté instalado y configurado.
+- Que los destinatarios hayan sido validados.
+- Que las plantillas HTML sean compatibles con Outlook.
+
+---
+
+## 28. Próximas mejoras
 
 - Comparación entre primer y segundo corte.
-- Identificación de pedidos que continúan sin gestión.
-- Histórico de ejecuciones.
-- Envío automático controlado.
+- Comparación entre cortes posteriores.
+- Identificación de pedidos sin gestión.
+- Registro histórico de ejecuciones.
 - Alertas por reincidencia.
-- Registro de fecha y hora de los cambios.
+- Registro de cambios de estado.
+- Conservación de fecha y hora de cada corte.
+- Movimiento automático de archivos procesados.
+- Reporte de diferencias entre ejecuciones.
+- Mayor trazabilidad del envío automático.
+
+---
+
+## 29. Cómo explicarlo en 30 segundos
+
+> Seguimiento ANS es un módulo integrado en DataSuite que toma el archivo FENIX, valida su estructura, filtra la información y organiza los pedidos por grupo, producto, actividad y estado. Después calcula indicadores, construye tablas y genera correos HTML profesionales en Outlook. El proceso que antes requería más de una hora de trabajo manual ahora puede ejecutarse en pocos minutos, con mayor control y menor riesgo de errores.
+
+---
+
+## 30. Explicación técnica breve
+
+> El desarrollo utiliza una arquitectura modular en Python. La configuración administra rutas, columnas, grupos y correos; el motor valida y lee el Excel; el agrupador aplica las reglas de negocio; el generador HTML construye los indicadores y tablas; y el componente de Outlook crea o envía los mensajes. DataSuite actúa como interfaz para ejecutar el proceso sin utilizar la terminal.
+
+---
+
+## 31. Preguntas frecuentes
+
+### ¿El archivo original se modifica?
+
+No. El archivo FENIX se utiliza como fuente y no se altera.
+
+### ¿Qué sucede si falta una columna?
+
+El validador detiene la ejecución e informa la inconsistencia.
+
+### ¿Se pueden revisar los correos antes de enviarlos?
+
+Sí. Para eso se utiliza el modo revisión.
+
+### ¿El sistema puede enviar los correos automáticamente?
+
+Sí. El modo de envío automático utiliza los destinatarios y reglas configurados.
+
+### ¿Se puede generar un solo correo de prueba?
+
+Sí. Se activa la opción **Procesar únicamente el primer correo**.
+
+### ¿Dónde se guardan los archivos HTML?
+
+En:
+
+```text
+modules/informe_ans/salida/html/
+```
+
+### ¿Se pueden agregar nuevos grupos?
+
+Sí. Las reglas se administran desde los archivos de configuración.
+
+### ¿Por qué se utiliza HTML?
+
+Porque permite construir correos con:
+
+- Indicadores.
+- Colores.
+- Tablas.
+- Encabezados.
+- Observaciones.
+- Diseño compatible con Microsoft Outlook.
+
+### ¿Por qué el tiempo de la consola puede ser menor a cinco minutos?
+
+Porque la consola mide principalmente la ejecución técnica. Los cinco minutos corresponden al ciclo operativo completo, incluida la revisión.
+
+---
+
+## 32. Resumen final
+
+**Seguimiento ANS** convierte un procedimiento manual en un proceso automatizado, controlado y reutilizable.
+
+La solución:
+
+- Procesa el archivo FENIX.
+- Aplica reglas operativas.
+- Clasifica estados ANS.
+- Genera indicadores.
+- Construye correos profesionales.
+- Permite revisar o enviar.
+- Presenta resultados.
+- Se ejecuta directamente desde DataSuite.
+
+El desarrollo no solo reduce tiempo: también crea una base técnica para incorporar históricos, comparación entre cortes, alertas y trazabilidad.
