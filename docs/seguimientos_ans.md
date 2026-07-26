@@ -843,70 +843,814 @@ El funcionamiento depende de:
 
 ---
 
-## 31. Preguntas frecuentes
+## 31. Configuración de destinatarios y envío de correos
 
-### ¿El archivo original se modifica?
-
-No. El archivo FENIX se utiliza como fuente y no se altera.
-
-### ¿Qué sucede si falta una columna?
-
-El validador detiene la ejecución e informa la inconsistencia.
-
-### ¿Se pueden revisar los correos antes de enviarlos?
-
-Sí. Para eso se utiliza el modo revisión.
-
-### ¿El sistema puede enviar los correos automáticamente?
-
-Sí. El modo de envío automático utiliza los destinatarios y reglas configurados.
-
-### ¿Se puede generar un solo correo de prueba?
-
-Sí. Se activa la opción **Procesar únicamente el primer correo**.
-
-### ¿Dónde se guardan los archivos HTML?
-
-En:
+La configuración de correos del módulo se administra principalmente desde el archivo:
 
 ```text
-modules/informe_ans/salida/html/
+modules/informe_ans/config/correos.py
 ```
 
-### ¿Se pueden agregar nuevos grupos?
+Este archivo permite controlar:
 
-Sí. Las reglas se administran desde los archivos de configuración.
+- Los destinatarios utilizados durante las pruebas.
+- Los destinatarios reales de producción.
+- Las personas que recibirán copia.
+- Las copias ocultas.
+- La prioridad de los mensajes.
+- La compatibilidad con configuraciones anteriores.
 
-### ¿Por qué se utiliza HTML?
+Es importante diferenciar dos controles independientes:
 
-Porque permite construir correos con:
+> **`MODO_PRUEBA` controla quién recibe el correo.**
 
-- Indicadores.
-- Colores.
-- Tablas.
-- Encabezados.
-- Observaciones.
-- Diseño compatible con Microsoft Outlook.
-
-### ¿Por qué el tiempo de la consola puede ser menor a cinco minutos?
-
-Porque la consola mide principalmente la ejecución técnica. Los cinco minutos corresponden al ciclo operativo completo, incluida la revisión.
+> **DataSuite controla si Outlook abre el correo o lo envía automáticamente.**
 
 ---
 
-## 32. Resumen final
+### 31.1. Configuración general recomendada
 
-**Seguimiento ANS** convierte un procedimiento manual en un proceso automatizado, controlado y reutilizable.
+```python
+# ==========================================================
+# MODO DE DESTINATARIOS
+# ==========================================================
 
-La solución:
+# True:
+# Usa DESTINATARIOS_PRUEBA y COPIA_PRUEBA.
+#
+# False:
+# Usa DESTINATARIOS y COPIAS según cada grupo.
+#
+# IMPORTANTE:
+# Esta variable no determina si Outlook abre o envía.
+# Esa acción se controla desde la interfaz de DataSuite.
 
-- Procesa el archivo FENIX.
-- Aplica reglas operativas.
-- Clasifica estados ANS.
-- Genera indicadores.
-- Construye correos profesionales.
-- Permite revisar o enviar.
-- Presenta resultados.
-- Se ejecuta directamente desde DataSuite.
+MODO_PRUEBA = True
 
-El desarrollo no solo reduce tiempo: también crea una base técnica para incorporar históricos, comparación entre cortes, alertas y trazabilidad.
+
+# ==========================================================
+# DESTINATARIOS DE PRUEBA
+# ==========================================================
+
+DESTINATARIOS_PRUEBA = [
+    "d.leon@eliteingenieros.com.co",
+]
+
+
+COPIA_PRUEBA = [
+    "h.gaviria@eliteingenieros.com.co",
+]
+
+
+# ==========================================================
+# DESTINATARIOS DE PRODUCCIÓN
+# ==========================================================
+
+DESTINATARIOS = {
+
+    "PUNTOS DE CONEXIÓN": [
+        "l.perez@eliteingenieros.com.co",
+        "a.villegas@eliteingenieros.com.co",
+    ],
+
+    "PREPAGO_HV_ARTER": [
+        "l.perez@eliteingenieros.com.co",
+        "a.villegas@eliteingenieros.com.co",
+    ],
+
+    "MOVIMIENTO DE REDES": [
+        "l.perez@eliteingenieros.com.co",
+        "a.villegas@eliteingenieros.com.co",
+    ],
+
+    "PARTICULARES": [
+        "l.perez@eliteingenieros.com.co",
+        "a.villegas@eliteingenieros.com.co",
+    ],
+
+}
+
+
+# ==========================================================
+# COPIAS DE PRODUCCIÓN
+# ==========================================================
+
+COPIAS = {
+
+    "PUNTOS DE CONEXIÓN": [
+        "c.oliveros@eliteingenieros.com.co",
+        "j.barbosa@eliteingenieros.com.co",
+    ],
+
+    "PREPAGO_HV_ARTER": [
+        "c.oliveros@eliteingenieros.com.co",
+        "j.barbosa@eliteingenieros.com.co",
+    ],
+
+    "MOVIMIENTO DE REDES": [
+        "c.oliveros@eliteingenieros.com.co",
+        "j.barbosa@eliteingenieros.com.co",
+    ],
+
+    "PARTICULARES": [
+        "c.oliveros@eliteingenieros.com.co",
+        "j.barbosa@eliteingenieros.com.co",
+    ],
+
+}
+
+
+# ==========================================================
+# COPIA OCULTA
+# ==========================================================
+
+COPIA_OCULTA = [
+]
+
+
+# ==========================================================
+# PRIORIDAD DEL CORREO
+# ==========================================================
+
+# 0 = Baja
+# 1 = Normal
+# 2 = Alta
+
+IMPORTANCIA = 2
+
+
+# ==========================================================
+# CONFIGURACIÓN LEGADA
+# ==========================================================
+
+# Estas variables se conservan por compatibilidad con
+# versiones anteriores del módulo.
+#
+# Actualmente, DataSuite controla si el mensaje se abre
+# para revisión o se envía automáticamente.
+
+MOSTRAR_CORREO = True
+
+ENVIAR_AUTOMATICAMENTE = False
+```
+
+---
+
+### 31.2. Función de `MODO_PRUEBA`
+
+La variable:
+
+```python
+MODO_PRUEBA
+```
+
+determina cuáles destinatarios serán utilizados por el sistema.
+
+No controla la apertura ni el envío del mensaje.
+
+---
+
+#### `MODO_PRUEBA = True`
+
+Cuando se configura:
+
+```python
+MODO_PRUEBA = True
+```
+
+el sistema utiliza únicamente:
+
+```python
+DESTINATARIOS_PRUEBA
+COPIA_PRUEBA
+```
+
+Ejemplo:
+
+```python
+DESTINATARIOS_PRUEBA = [
+    "d.leon@eliteingenieros.com.co",
+]
+
+COPIA_PRUEBA = [
+    "h.gaviria@eliteingenieros.com.co",
+]
+```
+
+Con esta configuración, todos los informes se dirigirán a los destinatarios de prueba, sin importar el grupo procesado.
+
+Esto aplica para:
+
+- Puntos de Conexión.
+- Prepago HV Arter.
+- Movimiento de Redes.
+- Particulares.
+
+El contenido del correo continúa correspondiendo al grupo operativo, pero los destinatarios serán reemplazados por las direcciones de prueba.
+
+Este modo permite:
+
+- Validar el diseño HTML.
+- Revisar el asunto.
+- Confirmar los indicadores.
+- Verificar las tablas.
+- Revisar las observaciones.
+- Evitar envíos accidentales a producción.
+
+---
+
+#### `MODO_PRUEBA = False`
+
+Cuando se configura:
+
+```python
+MODO_PRUEBA = False
+```
+
+el sistema utiliza:
+
+```python
+DESTINATARIOS
+COPIAS
+```
+
+En este modo, cada informe utiliza los destinatarios configurados para su grupo operativo.
+
+Ejemplo:
+
+```python
+DESTINATARIOS = {
+
+    "PUNTOS DE CONEXIÓN": [
+        "responsable_puntos@empresa.com",
+    ],
+
+    "PARTICULARES": [
+        "responsable_particulares@empresa.com",
+    ],
+
+}
+```
+
+Esto significa que:
+
+- Puntos de Conexión utiliza sus destinatarios.
+- Prepago HV Arter utiliza sus destinatarios.
+- Movimiento de Redes utiliza sus destinatarios.
+- Particulares utiliza sus destinatarios.
+
+Este es el modo correspondiente a producción.
+
+---
+
+### 31.3. Modo de ejecución seleccionado en DataSuite
+
+La interfaz de DataSuite controla la acción que realizará Microsoft Outlook.
+
+Las opciones disponibles son:
+
+```text
+Modo revisión
+Envío automático
+```
+
+Esta selección funciona de manera independiente de `MODO_PRUEBA`.
+
+---
+
+### 31.4. Modo revisión
+
+Cuando se selecciona en DataSuite:
+
+```text
+Modo revisión
+```
+
+Outlook ejecuta conceptualmente:
+
+```python
+mail.Display()
+```
+
+El sistema realiza las siguientes acciones:
+
+1. Genera el correo.
+2. Asigna los destinatarios.
+3. Asigna las copias.
+4. Construye el asunto.
+5. Inserta el contenido HTML.
+6. Abre el mensaje en Microsoft Outlook.
+7. No realiza el envío.
+
+El usuario puede revisar:
+
+- Destinatarios.
+- Copias.
+- Asunto.
+- Indicadores.
+- Resumen por estados.
+- Detalle de pedidos.
+- Observaciones.
+- Firma.
+
+Después de validar la información, el usuario puede presionar manualmente el botón **Enviar** de Outlook.
+
+> Este es el modo recomendado para pruebas y primeras ejecuciones.
+
+---
+
+### 31.5. Envío automático
+
+Cuando se selecciona en DataSuite:
+
+```text
+Envío automático
+```
+
+Outlook ejecuta conceptualmente:
+
+```python
+mail.Send()
+```
+
+El sistema:
+
+1. Genera el correo.
+2. Asigna los destinatarios.
+3. Asigna las copias.
+4. Construye el asunto.
+5. Inserta el contenido HTML.
+6. Envía inmediatamente el mensaje.
+
+En este modo, el correo no se abre para revisión manual.
+
+> El envío automático debe utilizarse únicamente cuando los destinatarios, las reglas y las plantillas hayan sido completamente validados.
+
+---
+
+### 31.6. Combinaciones posibles
+
+| `MODO_PRUEBA` | Opción en DataSuite | Destinatarios utilizados | Acción de Outlook |
+|---|---|---|---|
+| `True` | Modo revisión | Destinatarios de prueba | Abre el correo y no lo envía. |
+| `True` | Envío automático | Destinatarios de prueba | Envía automáticamente. |
+| `False` | Modo revisión | Destinatarios reales | Abre los correos y no los envía. |
+| `False` | Envío automático | Destinatarios reales | Envía automáticamente. |
+
+---
+
+### 31.7. Prueba más segura
+
+Configuración en `correos.py`:
+
+```python
+MODO_PRUEBA = True
+```
+
+Selección en DataSuite:
+
+```text
+Modo revisión
+```
+
+Resultado:
+
+- Se utilizan los destinatarios de prueba.
+- Outlook abre el correo.
+- El mensaje no se envía.
+- Se puede revisar toda la información.
+- No existe riesgo de afectar a los destinatarios reales.
+
+> Esta es la configuración recomendada para la primera prueba.
+
+---
+
+### 31.8. Prueba real de envío
+
+Configuración en `correos.py`:
+
+```python
+MODO_PRUEBA = True
+```
+
+Selección en DataSuite:
+
+```text
+Envío automático
+```
+
+Resultado:
+
+- Se utilizan los destinatarios de prueba.
+- El correo se envía automáticamente.
+- Se valida el funcionamiento completo del proceso.
+- Los destinatarios reales no reciben ningún mensaje.
+
+Esta prueba debe realizarse después de validar previamente el diseño en modo revisión.
+
+---
+
+### 31.9. Producción con revisión
+
+Configuración en `correos.py`:
+
+```python
+MODO_PRUEBA = False
+```
+
+Selección en DataSuite:
+
+```text
+Modo revisión
+```
+
+Resultado:
+
+- Cada grupo utiliza sus destinatarios reales.
+- Outlook abre los correos generados.
+- Los mensajes no se envían automáticamente.
+- El usuario puede revisar cada correo antes de enviarlo.
+
+Esta modalidad ofrece un control adicional antes del envío definitivo.
+
+---
+
+### 31.10. Producción automática
+
+Configuración en `correos.py`:
+
+```python
+MODO_PRUEBA = False
+```
+
+Selección en DataSuite:
+
+```text
+Envío automático
+```
+
+Resultado:
+
+- Cada grupo utiliza sus destinatarios reales.
+- Se generan todos los correos configurados.
+- Outlook envía inmediatamente los mensajes.
+- No existe revisión manual previa.
+
+> Esta configuración solo debe habilitarse después de completar las pruebas funcionales y validar los destinatarios.
+
+---
+
+### 31.11. Destinatarios principales
+
+Los destinatarios principales corresponden al campo **Para** del correo.
+
+En Outlook se asignan conceptualmente mediante:
+
+```python
+mail.To
+```
+
+Ejemplo:
+
+```python
+DESTINATARIOS = {
+
+    "PUNTOS DE CONEXIÓN": [
+        "responsable1@empresa.com",
+        "responsable2@empresa.com",
+    ],
+
+}
+```
+
+Todas las direcciones incluidas en la lista recibirán directamente el mensaje.
+
+---
+
+### 31.12. Copias de correo
+
+Las copias corresponden al campo **CC**.
+
+En Outlook se asignan conceptualmente mediante:
+
+```python
+mail.CC
+```
+
+Ejemplo:
+
+```python
+COPIAS = {
+
+    "PUNTOS DE CONEXIÓN": [
+        "supervisor1@empresa.com",
+        "supervisor2@empresa.com",
+    ],
+
+}
+```
+
+Las personas incluidas en copia pueden visualizar:
+
+- El contenido del correo.
+- Los destinatarios principales.
+- Las demás personas copiadas.
+
+---
+
+### 31.13. Copia oculta
+
+La variable:
+
+```python
+COPIA_OCULTA
+```
+
+corresponde al campo **CCO** o **BCC** de Outlook.
+
+Ejemplo:
+
+```python
+COPIA_OCULTA = [
+    "auditoria@empresa.com",
+]
+```
+
+En Outlook se asigna conceptualmente mediante:
+
+```python
+mail.BCC
+```
+
+Las personas incluidas recibirán el mensaje, pero los demás destinatarios no podrán ver sus direcciones.
+
+Si no se requiere copia oculta, la lista debe permanecer vacía:
+
+```python
+COPIA_OCULTA = [
+]
+```
+
+---
+
+### 31.14. Prioridad del correo
+
+La variable:
+
+```python
+IMPORTANCIA = 2
+```
+
+define la prioridad asignada al mensaje.
+
+| Valor | Prioridad |
+|---:|---|
+| `0` | Baja |
+| `1` | Normal |
+| `2` | Alta |
+
+Para los correos de Seguimiento ANS se utiliza:
+
+```python
+IMPORTANCIA = 2
+```
+
+Esto permite que el mensaje aparezca marcado como de alta importancia en Outlook.
+
+---
+
+### 31.15. Variables de configuración legada
+
+Las variables:
+
+```python
+MOSTRAR_CORREO = True
+ENVIAR_AUTOMATICAMENTE = False
+```
+
+pertenecen a una versión anterior del funcionamiento del módulo.
+
+Antes de integrar la selección en DataSuite, estas variables controlaban si el correo debía abrirse o enviarse.
+
+Actualmente pueden conservarse por compatibilidad, pero la acción principal se controla desde la interfaz.
+
+La lógica actual es:
+
+```text
+correos.py
+      ↓
+Controla los destinatarios
+
+DataSuite
+      ↓
+Controla si Outlook abre o envía
+```
+
+---
+
+### 31.16. Regla crítica para los nombres de los grupos
+
+Las claves de los diccionarios deben coincidir exactamente con los nombres generados por el módulo.
+
+Por ejemplo, estas claves son diferentes:
+
+```python
+"MOVIMIENTO DE REDES"
+```
+
+```python
+"MOVIMIENTO_DE_REDES"
+```
+
+La primera utiliza espacios.
+
+La segunda utiliza guiones bajos.
+
+Si el motor genera:
+
+```python
+"MOVIMIENTO DE REDES"
+```
+
+pero `correos.py` contiene:
+
+```python
+"MOVIMIENTO_DE_REDES"
+```
+
+el sistema puede no encontrar los destinatarios correspondientes.
+
+Debe mantenerse el mismo nombre en:
+
+- `grupos.py`
+- `correos.py`
+- `agrupador.py`
+- `generador_correo.py`
+- `runner.py`
+
+El estándar documentado es:
+
+```python
+"PUNTOS DE CONEXIÓN"
+"PREPAGO_HV_ARTER"
+"MOVIMIENTO DE REDES"
+"PARTICULARES"
+```
+
+> Antes de modificar una clave, debe verificarse cómo la genera actualmente el motor.
+
+---
+
+### 31.17. Cómo agregar un destinatario
+
+Para agregar una nueva dirección principal:
+
+```python
+"PUNTOS DE CONEXIÓN": [
+    "responsable1@empresa.com",
+    "responsable2@empresa.com",
+    "nuevo_responsable@empresa.com",
+],
+```
+
+Cada dirección debe:
+
+- Estar escrita entre comillas.
+- Terminar con una coma.
+- Encontrarse dentro de la lista correspondiente.
+
+---
+
+### 31.18. Cómo agregar una copia
+
+Para agregar una nueva persona en copia:
+
+```python
+"PUNTOS DE CONEXIÓN": [
+    "supervisor1@empresa.com",
+    "supervisor2@empresa.com",
+    "nueva_copia@empresa.com",
+],
+```
+
+---
+
+### 31.19. Cómo retirar un destinatario
+
+Para retirar una dirección, se elimina la línea correspondiente.
+
+Antes:
+
+```python
+"PUNTOS DE CONEXIÓN": [
+    "responsable1@empresa.com",
+    "responsable2@empresa.com",
+],
+```
+
+Después:
+
+```python
+"PUNTOS DE CONEXIÓN": [
+    "responsable1@empresa.com",
+],
+```
+
+Debe conservarse correctamente la estructura de la lista.
+
+---
+
+### 31.20. Grupo sin destinatarios
+
+Una lista vacía se representa así:
+
+```python
+"PUNTOS DE CONEXIÓN": [
+],
+```
+
+Sin embargo, no es recomendable ejecutar producción con un grupo sin destinatarios.
+
+El sistema debería validar esta condición antes de abrir o enviar el correo.
+
+---
+
+### 31.21. Buenas prácticas
+
+- Realizar primero las pruebas con `MODO_PRUEBA = True`.
+- Seleccionar inicialmente **Modo revisión**.
+- Verificar que cada correo corresponda al grupo correcto.
+- Confirmar destinatarios y copias.
+- Revisar que no existan direcciones duplicadas.
+- Mantener los nombres de los grupos exactamente iguales.
+- No habilitar producción automática sin pruebas previas.
+- Mantener la copia oculta vacía cuando no sea necesaria.
+- No dejar destinatarios temporales en la configuración de producción.
+- Documentar cualquier cambio realizado en las listas.
+- Realizar una prueba de recepción antes de activar el envío automático.
+
+---
+
+### 31.22. Secuencia recomendada para pasar a producción
+
+```text
+1. Configurar MODO_PRUEBA = True
+        ↓
+2. Seleccionar Modo revisión en DataSuite
+        ↓
+3. Validar diseño, contenido y destinatarios
+        ↓
+4. Mantener MODO_PRUEBA = True
+        ↓
+5. Seleccionar Envío automático
+        ↓
+6. Confirmar la recepción del correo de prueba
+        ↓
+7. Configurar MODO_PRUEBA = False
+        ↓
+8. Seleccionar Modo revisión
+        ↓
+9. Validar los destinatarios reales
+        ↓
+10. Habilitar Envío automático cuando corresponda
+```
+
+Esta secuencia reduce el riesgo de errores y permite validar progresivamente el funcionamiento.
+
+---
+
+### 31.23. Resumen de la configuración
+
+| Elemento | Responsabilidad |
+|---|---|
+| `MODO_PRUEBA` | Determina si se utilizan destinatarios de prueba o de producción. |
+| `DESTINATARIOS_PRUEBA` | Contiene los destinatarios principales utilizados durante las pruebas. |
+| `COPIA_PRUEBA` | Contiene las copias utilizadas durante las pruebas. |
+| `DESTINATARIOS` | Contiene los destinatarios reales organizados por grupo. |
+| `COPIAS` | Contiene las copias reales organizadas por grupo. |
+| `COPIA_OCULTA` | Define destinatarios que reciben el correo sin ser visibles para los demás. |
+| `IMPORTANCIA` | Define la prioridad del mensaje en Outlook. |
+| Modo revisión | Abre el correo y permite verificarlo antes de enviarlo. |
+| Envío automático | Envía el correo inmediatamente desde Outlook. |
+
+---
+
+### 31.24. Idea clave
+
+> `MODO_PRUEBA` controla a quién se dirige el correo.
+
+> DataSuite controla si Outlook abre el mensaje o lo envía automáticamente.
+
+La configuración más segura es:
+
+```python
+MODO_PRUEBA = True
+```
+
+Y en DataSuite:
+
+```text
+Modo revisión
+```
+
+De esta forma, el correo se abre con los destinatarios de prueba y no se envía hasta que el usuario lo confirme.
