@@ -263,23 +263,46 @@ definidas y realizadas directamente por mí.
 
 ### 🏗️ Arquitectura general
 
-```text
-Archivo FENIX
-      ↓
-Validación de estructura
-      ↓
-Lectura y filtrado
-      ↓
-Agrupación por grupo, producto y actividad
-      ↓
-Clasificación por estado ANS
-      ↓
-Generación de KPIs y tablas
-      ↓
-Construcción del correo HTML
-      ↓
-Revisión o envío mediante Outlook
-        
+Archivo FENIX  
+⬇  
+Validación de estructura  
+⬇  
+Lectura y filtrado  
+⬇  
+Agrupación por grupo, producto y actividad  
+⬇  
+Clasificación por estado ANS  
+⬇  
+Generación de KPIs y tablas  
+⬇  
+Construcción del correo HTML  
+⬇  
+Revisión o envío mediante Outlook  
+
+---
+
+### ⚡ Tecnologías utilizadas
+
+- Python
+- Pandas
+- OpenPyXL
+- HTML
+- CSS compatible con Outlook
+- Microsoft Outlook
+- Tkinter
+- ttkbootstrap
+- DataSuite
+        """)
+
+    ruta = Path("docs/seguimientos_ans.md")
+
+    if ruta.exists():
+        mostrar_markdown(ruta)
+    else:
+        st.error(
+            "No se encontró el archivo docs/seguimientos_ans.md"
+        )
+
 elif opcion == "🎓 Portal Formación Elite":
 
     with st.expander(
