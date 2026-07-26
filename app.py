@@ -1032,6 +1032,7 @@ reutilizar componentes en futuros proyectos.
         "12 - AgGrid": "12_aggrid.md",
         "13 - Gráficos": "13_graficos.md",
         "14 - Dashboard Base": "14_dashboard_base.md",
+        "15 - Seguimientos ANS": "15_seguimientos_ans.md",
     }
 
     capitulo = st.selectbox(
