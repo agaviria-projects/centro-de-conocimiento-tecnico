@@ -14,7 +14,7 @@ El sistema permite procesar uno o múltiples archivos exportados desde Fenix en 
 
 Cada código de mano de obra tiene asociados uno o varios materiales definidos en una base maestra de negocio. A partir de esta relación, el sistema compara la información reportada en Fénix y determina si la actividad fue registrada correctamente o si existen inconsistencias.
 
-Una vez finaliza el proceso, el archivo generado se compartirá a través de OneDrive, en la carpeta Relación_MO_Vs_Materiales. El informe quedará almacenado con un nombre que incluye la fecha de generación para facilitar su identificación; por ejemplo: VALIDACION_MO_MATERIALES_ALMACEN_2026-07-27. Posteriormente, cada usuario encargado únicamente deberá filtrar la zona operativa que le corresponda para realizar la validación de su información."
+Una vez finaliza el proceso, el archivo generado se compartirá a través de OneDrive, en la carpeta Relación_MO_Vs_Materiales. El informe quedará almacenado con un nombre que incluye la fecha de generación para facilitar su identificación; por ejemplo: VALIDACION_MO_MATERIALES_ALMACEN_2026-07-27. Posteriormente, cada usuario responsable únicamente deberá filtrar la zona operativa que le corresponda para realizar la validación de su información. Como recomendación, debido a que varios usuarios accederán al mismo archivo, se sugiere descargar una copia en el equipo local antes de iniciar la validación. De esta manera se evitan conflictos por ediciones simultáneas y se garantiza una revisión más estable de la información."
 
 Durante el proceso se identifican automáticamente:
 
