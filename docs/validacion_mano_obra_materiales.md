@@ -1,7 +1,7 @@
 
 ## 🎯 Entrada a la reunión.
 
-"Buenos días a todos. En esta primera parte les voy a presentar el objetivo de la herramienta, el problema que busca resolver y cómo funciona de manera general. Posteriormente, mi compañera Astrid, quien es la persona que más utiliza este proceso en la operación, nos mostrará cómo realiza la validación del archivo generado, qué aspectos revisa antes de darlo por correcto y cómo este desarrollo ha facilitado su trabajo diario."
+"Buenos días a todos. En esta primera parte les voy a presentar el objetivo de la herramienta, el problema que busca resolver y cómo funciona de manera general. Posteriormente, mi compañera Astrid, quien es la persona que más utiliza este proceso en la operación, nos mostrará cómo realiza la validación del archivo generado, qué aspectos revisa antes de darlo por correcto.
 
 ----
 
