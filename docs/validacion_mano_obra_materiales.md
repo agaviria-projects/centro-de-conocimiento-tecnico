@@ -1,9 +1,15 @@
-## 🎯 Objetivo
 
+## 🎯 Entrada a la reunión.
+
+"Buenos días a todos. En esta primera parte les voy a presentar el objetivo de la herramienta, el problema que busca resolver y cómo funciona de manera general. Posteriormente, mi compañera Astrid, quien es la persona que más utiliza este proceso en la operación, nos mostrará cómo realiza la validación del archivo generado, qué aspectos revisa antes de darlo por correcto y cómo este desarrollo ha facilitado su trabajo diario."
+
+----
+
+## 🎯 Objetivo
 
 La herramienta de Validación Mano de Obra Vs Materiales fue desarrollada para verificar automáticamente que los materiales reportados en Fénix correspondan correctamente a la mano de obra ejecutada en cada pedido.
 
-El sistema permite procesar uno o múltiples archivos exportados desde diferentes zonas operativas, consolidando automáticamente toda la información en un único informe de auditoría.
+El sistema permite procesar uno o múltiples archivos exportados desde Fenix en las diferentes zonas operativas, consolidando automáticamente toda la información en un único informe de auditoría.
 
 Cada código de mano de obra tiene asociados uno o varios materiales definidos en una base maestra de negocio. A partir de esta relación, el sistema compara la información reportada en Fénix y determina si la actividad fue registrada correctamente o si existen inconsistencias.
 
@@ -19,6 +25,12 @@ Reglas especiales definidas por la operación.
 La base maestra también permite definir reglas de negocio, como actividades donde basta con reportar uno de varios materiales posibles o actividades que requieren materiales obligatorios específicos.
 
 El objetivo principal es detectar inconsistencias operativas antes del cierre del proceso, reducir errores manuales y mejorar la calidad de la información reportada.
+
+---
+
+## Final Objetivo
+
+Hasta aquí hemos visto el objetivo y el funcionamiento general de la herramienta. Ahora le daré la palabra a mi compañera Astrid, quien nos explicará la parte operativa del proceso
 
 ---
 
