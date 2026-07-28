@@ -9,9 +9,11 @@
 
 La herramienta de Validación Mano de Obra Vs Materiales fue desarrollada para verificar automáticamente que los materiales reportados en Fénix correspondan correctamente a la mano de obra ejecutada en cada pedido.
 
-El sistema permite procesar uno o múltiples archivos exportados desde Fenix en las diferentes zonas operativas, consolidando automáticamente toda la información en un único informe de auditoría.
+El sistema permite procesar uno o múltiples archivos exportados desde Fenix(explicar como los exporto) en las diferentes zonas operativas, consolidando automáticamente toda la información en un único informe de auditoría.
 
 Cada código de mano de obra tiene asociados uno o varios materiales definidos en una base maestra de negocio. A partir de esta relación, el sistema compara la información reportada en Fénix y determina si la actividad fue registrada correctamente o si existen inconsistencias.
+
+Una vez finaliza el proceso, el archivo generado se compartirá a través de OneDrive, en la carpeta Relación_MO_Vs_Materiales. El informe quedará almacenado con un nombre que incluye la fecha de generación para facilitar su identificación; por ejemplo: VALIDACION_MO_MATERIALES_ALMACEN_2026-07-27. Posteriormente, cada usuario encargado únicamente deberá filtrar la zona operativa que le corresponda para realizar la validación de su información."
 
 Durante el proceso se identifican automáticamente:
 
