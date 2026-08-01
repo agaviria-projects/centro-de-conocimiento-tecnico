@@ -215,11 +215,12 @@ Su principal ventaja es que muchos cambios pueden realizarse directamente en Exc
 
 El archivo contiene cuatro hojas principales:
 
-Hoja	Función
-REGLAS_DE_NEGOCIO	Define los días contractuales según las características del pedido.
-PARAMETROS	Contiene valores generales utilizados por la herramienta.
-FESTIVOS_ADICIONALES	Permite registrar fechas que no deben contarse como días hábiles.
-REGLAS_PRIORIDAD	Identifica pedidos que requieren atención especial.
+| Hoja | Función |
+|---|---|
+| `REGLAS_DE_NEGOCIO` | Define los días contractuales según las características del pedido. |
+| `PARAMETROS` | Contiene los valores generales utilizados por la herramienta. |
+| `FESTIVOS_ADICIONALES` | Permite registrar fechas que no deben contarse como días hábiles. |
+| `REGLAS_PRIORIDAD` | Identifica los pedidos que requieren atención especial. |
 
 ## Hoja REGLAS_DE_NEGOCIO
 
