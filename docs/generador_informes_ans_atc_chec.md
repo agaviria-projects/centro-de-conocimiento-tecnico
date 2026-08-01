@@ -217,7 +217,7 @@ El archivo contiene cuatro hojas principales:
 
 | Hoja | Función |
 |---|---|
-| `REGLAS_DE_NEGOCIO` | Define los días contractuales según las características del pedido. |
+| `REGLAS_DE_NEGOCIO` | Define los días contractuales según el Municipio y cantidad de Dias. |
 | `PARAMETROS` | Contiene los valores generales utilizados por la herramienta. |
 | `FESTIVOS_ADICIONALES` | Permite registrar fechas que no deben contarse como días hábiles. |
 | `REGLAS_PRIORIDAD` | Identifica los pedidos que requieren atención especial. |
