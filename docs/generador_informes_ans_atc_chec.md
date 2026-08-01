@@ -464,7 +464,7 @@ CL 23 # 6
 Dirección más completa:
 CL 23 # 6-15, Barrio Centro, Manizales, Caldas
 ```
-## CONCLUSIÓN 
+### CONCLUSIÓN 
 
 La herramienta facilita el procesamiento, la organización y la visualización de la información.
 
