@@ -35,22 +35,34 @@ La herramienta permite:
 
 ----
 
+## 3. Explicación de cada carpeta Principales
 
-## 7. Explicación de cada carpeta
-
-## 7.1 Carpeta entrada
+## 3.1 Carpeta entrada
 
 La carpeta **entrada** es el punto de inicio del proceso.
 
-En esta ubicación se debe guardar el archivo exportado desde el sistema GIT.
+En esta ubicación se deben guardar los archivos exportados desde el sistema GIT que correspondan al corte que se desea procesar.
 
-### Recomendaciones
+Ejemplo:
 
-- Utilizar únicamente el archivo correspondiente al corte que se desea analizar.
+```text
+entrada/
+├── R1.xlsx
+└── R2.xlsx
+
+
+```
+## Recomendaciones
+
+El sistema no requiere un nombre específico para los archivos, siempre que:
+
+- Tengan formato Excel compatible.
+- Conserven las columnas requeridas.
+- Evitar guardar archivos adicionales que puedan generar confusión.
+- No se encuentren abiertos durante la ejecución.
+- No estén dañados o protegidos con contraseña.
 - Verificar que el archivo no se encuentre abierto antes de iniciar el proceso.
 - Confirmar que el archivo contenga la información completa.
-- No cambiar los nombres de las columnas requeridas.
-- Evitar guardar archivos adicionales que puedan generar confusión.
 
 ### Responsabilidad del usuario
 
@@ -58,7 +70,7 @@ El usuario debe asegurarse de que el archivo depositado corresponda a la informa
 
 ----
 
-## 7.2 Carpeta salida
+## 3.2 Carpeta salida
 
 La carpeta **salida** almacena los archivos generados por la herramienta.
 
@@ -72,64 +84,108 @@ Este archivo contiene los registros procesados y los cálculos necesarios para e
 
 ### Información esperada
 
-El informe puede incluir, entre otros:
+El informe incluye desde la extracción osea Origen de los datos:
 
-- Identificación de la solicitud.
+- Id_Orden.
+- Fecha_Orden.
 - Dirección.
-- Municipio.
-- Actividad.
-- Producto.
-- Fecha de inicio del ANS.
-- Días contractuales.
-- Fecha límite del ANS.
+- Propietario.
+- Zona.
+- Código Municipio.
+- Desc. Municipio.
+- Observaciones.
+
+Columnas desde el desarrollo:
+- Región Origen.
+- Tipo.
+- Fecha limite ANS.
 - Días transcurridos.
 - Días restantes.
 - Estado del ANS.
-- Prioridad.
-- Observaciones funcionales.
 
 ### Recomendaciones
 
 - No editar el archivo mientras se esté generando.
 - Evitar reemplazarlo manualmente.
 - Conservar copias de los informes históricos cuando el proceso lo requiera.
-- Validar la fecha de generación antes de utilizarlo en reuniones o reportes.
-
 ----
 
-## 7.3 Carpeta dashboard
+## 3.3 Carpeta `dashboard`
 
-La carpeta **dashboard** contiene el archivo de análisis visual:
+La carpeta **dashboard** contiene el archivo utilizado para la consulta y el análisis visual de la información procesada por la herramienta.
+
+El archivo principal es:
 
 ```text
 INFORME_ANS.xlsb
 ```
+Este archivo permite visualizar de forma rápida el estado general de los pedidos y facilita la priorización de la gestión operativa.
 
-Este archivo permite consultar la información mediante:
+El dashboard presenta los siguientes indicadores:
 
-- Indicadores.
-- Tablas dinámicas.
-- Segmentadores.
-- Filtros.
-- Gráficos.
-- Resúmenes por estado.
-- Análisis por municipio, producto, actividad u otros criterios disponibles.
+## KPIS
 
-### Función principal
+Total de pedidos.
+Pedidos vencidos.
+Pedidos en alerta.
+Pedidos a tiempo.
+Pedidos con atención inmediata.
+Pedidos asociados a HV.
+Pedidos en factibilidad.
 
-El dashboard transforma el informe consolidado en una vista ejecutiva y operativa.
+Estos indicadores permiten conocer rápidamente cómo se encuentra distribuida la operación.
 
-### Recomendaciones
+## Filtros disponibles
 
-- Actualizar el dashboard después de generar el informe.
-- Esperar a que finalice la actualización antes de analizar los resultados.
-- No cambiar nombres de hojas, tablas o conexiones.
-- No eliminar campos utilizados por las visualizaciones.
-- Guardar el archivo después de actualizarlo.
+El usuario puede consultar la información mediante filtros como:
 
+- Región.
+- Zona.
+- Estado.
+- Municipio.
+
+Los filtros permiten analizar únicamente los pedidos que cumplen con los criterios seleccionados.
+
+## Gráficos de análisis
+
+El dashboard incluye gráficos que permiten identificar:
+
+- Cantidad de pedidos por estado.
+- Distribución porcentual de los pedidos.
+
+Esto facilita la interpretación de la información sin necesidad de revisar toda la base de datos.
+
+## Detalle de pedidos
+
+En la parte inferior se presenta el detalle de los pedidos incluidos en el análisis.
+
+La tabla permite consultar información como:
+
+- ID Orden.
+- Fecha Orden.
+- Dirección.
+- Desc. Municipio.
+- Zona.
+- Días pactados.
+- Fecha límite ANS.
+- Días restantes.
+- Estado.
+
+Los estados se identifican visualmente mediante colores para facilitar su lectura.
+
+## Uso operativo
+
+El dashboard permite:
+
+- Identificar pedidos vencidos.
+- Revisar pedidos próximos al vencimiento.
+- Filtrar información por región, zona o municipio.
+- Consultar el detalle de cada pedido.
+- Priorizar la gestión diaria.
+- Facilitar la toma de decisiones.
 ----
 
-## 7.4 Carpeta config
+## 3.4 Carpeta config
 
 La carpeta **config** contiene los archivos de parametrización funcional.
 
@@ -143,7 +199,7 @@ Este archivo administra las reglas que utiliza el sistema para realizar los cál
 
 ### Importancia
 
-La configuración permite realizar ajustes funcionales sin modificar el software.
+La configuración permite realizar ajustes funcionales sin modificar el software(los scripts).
 
 Desde este archivo se pueden administrar:
 
@@ -153,273 +209,287 @@ Desde este archivo se pueden administrar:
 - Festivos adicionales.
 - Reglas especiales de prioridad.
 
-### Recomendación crítica
+Importante: Antes de realizar cualquier cambio, se debe crear una copia de respaldo del archivo.
 
-Antes de modificar el archivo, se debe crear una copia de respaldo.
+El archivo DIAS_CONTRACTUALES.xlsx contiene las reglas que utiliza la herramienta para calcular y clasificar los pedidos.
 
-----
+Su principal ventaja es que muchos cambios pueden realizarse directamente en Excel, sin modificar los scripts del sistema.
 
-## 7.5 Carpeta logs
+El archivo contiene cuatro hojas principales:
 
-La carpeta **logs** conserva el registro de las ejecuciones realizadas por la herramienta.
+Hoja	Función
+REGLAS_DE_NEGOCIO	Define los días contractuales según las características del pedido.
+PARAMETROS	Contiene valores generales utilizados por la herramienta.
+FESTIVOS_ADICIONALES	Permite registrar fechas que no deben contarse como días hábiles.
+REGLAS_PRIORIDAD	Identifica pedidos que requieren atención especial.
 
-Los logs permiten identificar:
+## Hoja REGLAS_DE_NEGOCIO
 
-- Fecha y hora de ejecución.
-- Inicio y finalización del proceso.
-- Cantidad de registros procesados.
-- Validaciones realizadas.
-- Advertencias.
-- Errores encontrados.
-- Resultado general de la generación.
+Esta hoja define cuántos días hábiles tiene cada pedido para ser atendido.
 
-### Uso funcional
-
-Cuando el proceso no finalice correctamente, el archivo de log debe revisarse o compartirse con el responsable del soporte.
-
-### Recomendaciones
-
-- No eliminar los logs recientes antes de resolver una novedad.
-- Compartir el archivo completo cuando se solicite soporte.
-- No modificar manualmente su contenido.
-
-----
-
-## 7.6 Carpeta mapas
-
-La carpeta **mapas** almacena los recursos utilizados para la representación geográfica de la información.
-
-Dependiendo del alcance habilitado, puede contener:
-
-- Archivos de ubicación.
-- Recursos cartográficos.
-- Resultados de mapas generados.
-- Archivos auxiliares para identificar zonas o municipios.
-
-### Objetivo
-
-Facilitar la visualización territorial de las solicitudes y apoyar el análisis operativo.
-
-### Recomendaciones
-
-- No eliminar archivos de referencia.
-- No cambiar los nombres de los recursos cartográficos.
-- Validar que las direcciones del archivo fuente estén completas.
-- Revisar manualmente los registros que no puedan ser ubicados.
-
-----
-
-## 8. Archivo DIAS_CONTRACTUALES.xlsx
-
-El archivo **DIAS_CONTRACTUALES.xlsx** es el centro de parametrización funcional del sistema.
-
-Su objetivo es conservar las reglas del negocio en un formato administrable por los usuarios autorizados.
-
-### Hojas principales
-
-- REGLAS_DE_NEGOCIO
-- PARAMETROS
-- FESTIVOS_ADICIONALES
-- REGLAS_PRIORIDAD
-
-----
-
-## 8.1 Hoja REGLAS_DE_NEGOCIO
-
-Esta hoja contiene las reglas utilizadas para asignar los días contractuales a cada solicitud.
-
-Las reglas pueden estar relacionadas con:
+La asignación depende de datos como:
 
 - Municipio.
-- Producto.
-- Actividad.
-- Tipo de conexión.
-- Zona.
-- Clasificación operativa.
-- Combinaciones entre varios criterios.
-
-### Objetivo
-
-Determinar cuántos días hábiles tiene una solicitud para ser atendida.
-
-### Ejemplo funcional
-
-| Municipio | Producto | Actividad | Días contractuales |
-|---|---|---|---:|
-| Municipio A | Producto 1 | Actividad X | 5 |
-| Municipio B | Producto 1 | Actividad X | 7 |
-| Municipio C | Producto 2 | Actividad Y | 10 |
-
-Los valores anteriores son ilustrativos. Los días reales deben corresponder a las condiciones contractuales vigentes.
-
-### Modificaciones permitidas
+- Dias 
 
 El usuario autorizado puede:
 
-- Agregar nuevos municipios.
-- Actualizar días contractuales.
-- Crear nuevas combinaciones de criterios.
-- Ajustar reglas existentes.
-- Inactivar reglas que ya no se utilicen, según el método definido para ello.
+- Agregar municipios.
+- Cambiar días contractuales.
 
-### Buenas prácticas
+Cuando el sistema encuentra un pedido con esas características, asigna automáticamente los días contractuales correspondientes.
 
-- No duplicar reglas con los mismos criterios.
-- Mantener uniformidad en los nombres.
-- Evitar espacios adicionales.
-- No cambiar los encabezados de las columnas.
-- Validar que los días contractuales sean valores numéricos.
-- Registrar la fecha y el motivo del cambio cuando exista control documental.
+##  Hoja `PARAMETROS`
 
-### Riesgo de duplicidad
+La hoja **PARAMETROS** contiene las configuraciones generales que controlan cómo se realiza el cálculo del ANS.
 
-Si existen dos reglas aplicables al mismo registro, el resultado puede ser ambiguo.
+Esta hoja es especialmente importante porque define:
 
-Por esta razón, toda modificación debe revisarse antes de ejecutar el informe oficial.
+- Cuándo un pedido pasa a estado **ALERTA**.
+- Si se excluyen los sábados.
+- Si se excluyen los domingos.
+- Si se excluyen los festivos oficiales de Colombia.
+- Si se excluyen los festivos adicionales registrados por el usuario.
 
 ----
 
-## 8.2 Hoja PARAMETROS
+### Parámetros configurados
 
-La hoja **PARAMETROS** contiene valores generales utilizados por el sistema.
+| Parámetro | Valor | Función |
+|---|---:|---|
+| `DIAS_INICIO_ALERTA` | `2` | El pedido pasa a estado ALERTA cuando le quedan 2 días o menos para vencer. |
+| `EXCLUIR_SABADOS` | `SI` | Los sábados no se cuentan dentro del cálculo del ANS. |
+| `EXCLUIR_DOMINGOS` | `SI` | Los domingos no se cuentan dentro del cálculo del ANS. |
+| `EXCLUIR_FESTIVOS_COLOMBIA` | `SI` | Los festivos oficiales de Colombia no se cuentan como días hábiles. |
+| `EXCLUIR_FESTIVOS_ADICIONALES` | `SI` | Tampoco se cuentan las fechas registradas en la hoja `FESTIVOS_ADICIONALES`. |
 
-Puede incluir configuraciones como:
+----
 
-- Nombre esperado del archivo de entrada.
-- Nombre del archivo de salida.
-- Nombre de la hoja de resultados.
-- Rango de días para alertas.
-- Colores o etiquetas funcionales.
-- Criterios generales de operación.
-- Valores predeterminados.
-- Controles de activación o desactivación.
+### Cómo se interpreta `DIAS_INICIO_ALERTA`
 
-### Estructura recomendada
+El valor configurado actualmente es:
 
-| Parámetro | Valor | Descripción |
+```text
+2
+
+Esto significa:
+
+- Si al pedido le quedan más de 2 días, se clasifica como A TIEMPO.
+- Si le quedan 2 días o menos, se clasifica como ALERTA.
+- Si supera la fecha límite y los días restantes son negativos, se clasifica como VENCIDO.
+
+```
+
+## Importancia de esta hoja
+
+Esta configuración permite cambiar el comportamiento del cálculo sin modificar el software.
+
+Por ejemplo, si la operación decide que la alerta debe comenzar cuando falten 3 días, solo se cambia:
+
+DIAS_INICIO_ALERTA = 3
+
+## Recomendaciones
+- Modificar únicamente la columna VALOR.
+- No cambiar los nombres de la columna PARAMETRO.
+- Utilizar solamente los valores permitidos, como SI, NO o números.
+- Crear una copia de respaldo antes de realizar cambios.
+- Verificar el resultado con algunos pedidos de prueba después de modificar un parámetro.
+
+----
+
+## Hoja `FESTIVOS_ADICIONALES`
+
+La hoja **FESTIVOS_ADICIONALES** permite registrar fechas especiales que no deben contarse dentro del cálculo del ANS.
+
+Esta hoja es útil cuando existe un día no laborable que no está incluido en el calendario normal de festivos de Colombia.
+
+----
+
+### Columnas de la hoja
+
+| Columna | Función |
+|---|---|
+| `FECHA` | Día que no debe contarse como hábil. |
+| `DESCRIPCION` | Motivo por el cual la fecha se excluye del cálculo. |
+| `ACTIVO` | Indica si la fecha debe aplicarse: `SI` o `NO`. |
+
+----
+
+### Ejemplo
+
+| FECHA | DESCRIPCION | ACTIVO |
 |---|---|---|
-| NOMBRE_SALIDA | Informe_ANS_ELITE.xlsx | Nombre del informe generado. |
-| ALERTA_INICIAL | 2 | Número de días desde el cual se activa una alerta. |
-| CONSIDERAR_FESTIVOS | SI | Indica si los festivos deben excluirse del cálculo. |
-
-Los parámetros anteriores son ejemplos funcionales.
-
-### Modificaciones permitidas
-
-El usuario autorizado puede:
-
-- Cambiar valores operativos.
-- Actualizar nombres definidos para la operación.
-- Ajustar rangos de alerta.
-- Activar o desactivar opciones permitidas.
-
-### Recomendaciones
-
-- No eliminar parámetros existentes.
-- No cambiar el nombre técnico del parámetro.
-- Modificar únicamente la columna destinada al valor.
-- Revisar la descripción antes de realizar cambios.
-- Probar el resultado con una muestra controlada.
+| 24/12/2026 | Jornada institucional no laborable | SI |
+| 31/12/2026 | Cierre operativo autorizado | SI |
 
 ----
 
-## 8.3 Hoja FESTIVOS_ADICIONALES
+### Cómo funciona
 
-Esta hoja permite registrar días no laborables adicionales que deben excluirse del cálculo.
+Cuando una fecha está registrada con el valor:
 
-Puede utilizarse para:
+```text
+ACTIVO = SI
+```
 
-- Festivos no incluidos en el calendario general.
-- Días institucionales no laborables.
-- Cierres operativos autorizados.
-- Fechas especiales definidas contractualmente.
+## Hoja `REGLAS_PRIORIDAD`
 
-### Estructura recomendada
+La hoja **REGLAS_PRIORIDAD** permite identificar solicitudes que deben recibir un tratamiento especial dentro del cálculo ANS.
 
-| Fecha | Descripción | Activo |
-|---|---|---|
-| 2026-12-24 | Jornada institucional no laborable | SI |
-| 2026-12-31 | Cierre operativo autorizado | SI |
+Actualmente la hoja contiene reglas como:
 
-### Reglas de uso
-
-- La fecha debe ser válida.
-- Cada día debe registrarse una sola vez.
-- La descripción debe explicar el motivo.
-- Solo deben agregarse fechas oficialmente autorizadas.
-- Las fechas inactivas no deben afectar el cálculo.
-
-### Efecto en el ANS
-
-Los días registrados como festivos adicionales no se cuentan como días hábiles.
-
-Esto puede modificar:
-
-- La fecha límite.
-- Los días transcurridos.
-- Los días restantes.
-- El estado final de la solicitud.
+| PALABRA_CLAVE | TIPO | DIAS |
+|---|---|---:|
+| Servicio temporal urbano/Servicio temporal urbano | INMEDIATO | 0 |
+| Solicitud de conexión/Habilitación de Vivienda integral urbano | HV | 15 |
+| Factibilidad del servicio/Cuenta nueva | FACTIBILIDAD | 4 |
 
 ----
 
-## 8.4 Hoja REGLAS_PRIORIDAD
+### ¿Cómo funciona?
 
-La hoja **REGLAS_PRIORIDAD** permite definir condiciones especiales que requieren atención preferente.
+El sistema busca el texto definido en la columna `PALABRA_CLAVE`.
 
-Estas reglas no necesariamente modifican los días contractuales.
+Cuando encuentra una coincidencia, asigna:
 
-Su función principal es identificar solicitudes que deben destacarse dentro del análisis.
+- El tipo definido en la columna `TIPO`.
+- Los días establecidos en la columna `DIAS`.
 
-### Criterios posibles
+Por ejemplo:
 
-- Municipio específico.
-- Producto.
-- Actividad.
-- Cliente o tipo de cliente.
-- Zona operativa.
-- Tipo de solicitud.
-- Antigüedad.
-- Condición contractual.
-- Combinación de criterios.
-
-### Ejemplo funcional
-
-| Regla | Criterio | Valor | Prioridad | Observación |
-|---|---|---|---|---|
-| R001 | Municipio | Municipio A | ALTA | Seguimiento especial. |
-| R002 | Producto | Producto 2 | CRÍTICA | Atención prioritaria. |
-
-### Resultado esperado
-
-Cuando una solicitud cumple una regla especial, el informe puede asignarle:
-
-- Nivel de prioridad.
-- Etiqueta especial.
-- Observación.
-- Orden preferente en el análisis.
-- Marcación visual.
-
-### Modificaciones permitidas
-
-El usuario autorizado puede:
-
-- Crear nuevas reglas.
-- Cambiar el nivel de prioridad.
-- Modificar condiciones existentes.
-- Actualizar observaciones.
-- Activar o desactivar reglas.
-
-### Buenas prácticas
-
-- Utilizar nombres claros.
-- Evitar reglas demasiado generales.
-- No crear criterios contradictorios.
-- Revisar el impacto antes de aplicarlas en producción.
-- Documentar el motivo de cada nueva prioridad.
+- Si encuentra **Servicio temporal urbano**, lo clasifica como `INMEDIATO` y asigna `0` días.
+- Si encuentra **Solicitud de conexión** o **Habilitación de Vivienda integral urbano**, lo clasifica como `HV` y asigna `15` días.
+- Si encuentra **Factibilidad del servicio** o **Cuenta nueva**, lo clasifica como `FACTIBILIDAD` y asigna `4` días.
 
 ----
 
-## 9. Funcionamiento del cálculo ANS
+### Cómo agregar una nueva regla
+
+Para crear una nueva regla:
+
+1. Ir a la primera fila vacía de la tabla.
+2. Escribir la palabra o frase que debe identificar el sistema.
+3. Definir el tipo de prioridad.
+4. Registrar la cantidad de días.
+5. Guardar el archivo.
+
+### Ejemplo
+
+| PALABRA_CLAVE | TIPO | DIAS |
+|---|---|---:|
+| Conexión especial | PRIORITARIO | 2 |
+
+A partir de ese momento, los registros que contengan la expresión **Conexión especial** podrán clasificarse como `PRIORITARIO` con `2` días.
+
+----
+
+### Cómo agregar varias palabras para una misma regla
+
+Cuando varias expresiones deben producir el mismo resultado, pueden escribirse en la misma celda separadas por `/`.
+
+### Ejemplo
+
+```text
+Conexión especial/Servicio especial/Atención especial
+```
+
+## Cómo modificar una regla
+
+Para cambiar una regla existente:
+
+- Ubicar la fila correspondiente.
+- Modificar únicamente la palabra clave, el tipo o los días.
+- Guardar el archivo.
+- Ejecutar una prueba para validar el resultado.
+
+Por ejemplo, si HV cambia de 15 a 12 días, se modifica únicamente la columna DIAS.
+
+## Cómo eliminar una regla
+
+Existen dos formas:
+
+- Opción 1. Eliminar la fila completa
+
+Se puede eliminar toda la fila de la regla cuando ya no debe utilizarse.
+
+- Opción 2. Borrar el contenido
+
+También se puede limpiar el contenido de las tres columnas de esa fila.
+
+La opción más ordenada es eliminar la fila completa dentro de la tabla y verificar que no queden filas vacías intermedias.
+
+## Riesgo de reglas duplicadas
+
+Si dos reglas contienen palabras similares, un mismo pedido podría coincidir con más de una condición.
+
+Por esta razón, antes de agregar una nueva regla se debe revisar que no exista otra que produzca el mismo resultado.
+
+---
+
+## 4. El Módulo ` Generación mapas`
+
+El Módulo generación **mapas** contiene los archivos relacionados con la visualización geográfica de los pedidos.
+
+Actualmente, el módulo para generar el mapa ya funciona. Sin embargo, la ubicación de los puntos depende de la calidad de las direcciones que vienen en el archivo exportado desde GIT.
+
+Si una dirección está incompleta, abreviada o escrita de forma incorrecta, el sistema puede:
+
+- Ubicar el pedido en un punto equivocado.
+- No encontrar la dirección.
+- Mostrar una ubicación aproximada.
+- Dejar el pedido sin marcar en el mapa.
+
+----
+
+### Situación actual
+
+La funcionalidad del mapa está disponible, pero todavía se debe mejorar la calidad de las direcciones del archivo fuente.
+
+Por esta razón, el mapa debe considerarse actualmente como una herramienta de apoyo y no como la fuente definitiva para confirmar la ubicación exacta de un pedido.
+
+----
+
+### Para obtener mejores resultados
+
+Las direcciones deberían incluir, cuando sea posible:
+
+- Tipo de vía.
+- Número de la vía.
+- Número de la vivienda o predio.
+- Barrio, vereda o sector.
+- Municipio.
+- Departamento.
+
+### Ejemplo
+
+```text
+Dirección incompleta:
+CL 23 # 6
+
+Dirección más completa:
+CL 23 # 6-15, Barrio Centro, Manizales, Caldas
+```
+## CONCLUSIÓN 
+
+La herramienta facilita el procesamiento, la organización y la visualización de la información.
+
+Sin embargo, no reemplaza el análisis de la persona responsable del proceso.
+
+Los archivos generados, el dashboard y el mapa sirven como apoyo para:
+
+- Identificar pedidos vencidos o en alerta.
+- Filtrar la información.
+- Detectar casos prioritarios.
+- Revisar posibles inconsistencias.
+- Facilitar la toma de decisiones.
+
+La interpretación final de los resultados debe realizarla el usuario encargado, teniendo en cuenta el contexto operativo y la información disponible.
+
+> **Importante:** La herramienta automatiza tareas y reduce el tiempo de análisis, pero la validación, la revisión y la decisión final continúan dependiendo del criterio humano.
+
+---
+
+## 5. Funcionamiento del cálculo ANS
 
 El cálculo ANS determina la fecha máxima de atención y el estado actual de cada solicitud.
 
@@ -488,818 +558,3 @@ Cada solicitud queda clasificada con información suficiente para responder:
 
 ----
 
-## 10. Estados del ANS
-
-Los estados permiten identificar rápidamente el nivel de cumplimiento de cada solicitud.
-
-| Estado | Significado | Acción recomendada |
-|---|---|---|
-| VENCIDO | La fecha límite ya fue superada. | Gestionar inmediatamente y revisar la causa. |
-| ALERTA 0 DÍAS | La solicitud vence en la fecha de corte. | Prioridad inmediata. |
-| ALERTA 1–2 DÍAS | La solicitud se encuentra próxima a vencer. | Programar y asegurar su atención. |
-| A TIEMPO | La solicitud conserva margen dentro del ANS. | Mantener seguimiento preventivo. |
-
-### VENCIDO
-
-Una solicitud se clasifica como vencida cuando los días restantes son negativos o cuando la fecha límite es anterior a la fecha de corte.
-
-### ALERTA 0 DÍAS
-
-Indica que la solicitud vence el mismo día del análisis.
-
-Debe considerarse como una prioridad operativa inmediata.
-
-### ALERTA 1–2 DÍAS
-
-Corresponde a solicitudes con uno o dos días hábiles disponibles antes de vencer.
-
-El rango puede ajustarse mediante parametrización cuando la operación lo requiera.
-
-### A TIEMPO
-
-Corresponde a solicitudes que aún cuentan con margen suficiente dentro del plazo contractual.
-
-Aunque no sean urgentes, deben permanecer dentro del seguimiento.
-
-### Colores de referencia
-
-| Estado | Color recomendado |
-|---|---|
-| VENCIDO | Rojo |
-| ALERTA 0 DÍAS | Naranja |
-| ALERTA 1–2 DÍAS | Amarillo |
-| A TIEMPO | Verde |
-
-Los colores facilitan la lectura, pero la decisión operativa siempre debe basarse en el estado y la información del registro.
-
-----
-
-## 11. Reglas especiales
-
-Las reglas especiales complementan el cálculo contractual y permiten adaptar el informe a situaciones específicas del negocio.
-
-### Tipos de reglas especiales
-
-- Prioridad por municipio.
-- Prioridad por producto.
-- Prioridad por actividad.
-- Tratamiento especial por zona.
-- Condiciones específicas por tipo de conexión.
-- Alertas por antigüedad.
-- Casos definidos por el área operativa.
-
-### Aplicación
-
-Una regla especial puede:
-
-- Cambiar el nivel de prioridad.
-- Agregar una observación.
-- Destacar visualmente un registro.
-- Ordenar la solicitud en una posición preferente.
-- Identificar casos para revisión manual.
-
-### Precedencia de reglas
-
-Cuando una solicitud cumple varias reglas, debe aplicarse el criterio de mayor prioridad definido en la configuración.
-
-Ejemplo:
-
-```text
-CRÍTICA
-    ↓
-ALTA
-    ↓
-MEDIA
-    ↓
-NORMAL
-```
-
-### Recomendación
-
-Las nuevas reglas deben ser aprobadas funcionalmente antes de incorporarlas al archivo oficial de configuración.
-
-----
-
-## 12. Dashboard
-
-El dashboard permite analizar la información generada por la herramienta.
-
-El archivo principal es:
-
-```text
-INFORME_ANS.xlsb
-```
-
-### Objetivos del dashboard
-
-- Visualizar el estado general del ANS.
-- Identificar solicitudes vencidas.
-- Revisar solicitudes próximas a vencer.
-- Analizar la distribución por municipio.
-- Analizar productos y actividades.
-- Priorizar la gestión operativa.
-- Facilitar reuniones de seguimiento.
-
-### Indicadores recomendados
-
-- Total de solicitudes.
-- Total vencidas.
-- Total en alerta 0 días.
-- Total en alerta 1–2 días.
-- Total a tiempo.
-- Porcentaje de cumplimiento.
-- Solicitudes por municipio.
-- Solicitudes por producto.
-- Solicitudes por actividad.
-- Solicitudes por prioridad.
-
-### Filtros recomendados
-
-- Estado ANS.
-- Municipio.
-- Producto.
-- Actividad.
-- Prioridad.
-- Fecha de inicio.
-- Fecha límite.
-- Zona o clasificación operativa.
-
-### Actualización del dashboard
-
-Después de generar el archivo **Informe_ANS_ELITE.xlsx**, el usuario debe:
-
-1. Abrir el archivo **INFORME_ANS.xlsb**.
-2. Ejecutar la opción de actualización definida.
-3. Esperar a que finalicen las consultas y tablas dinámicas.
-4. Validar que la fecha de corte sea correcta.
-5. Revisar los indicadores principales.
-6. Guardar el dashboard actualizado.
-
-### Validaciones posteriores
-
-- El total del dashboard debe coincidir con el total del informe generado.
-- Los estados deben corresponder con el archivo consolidado.
-- Los filtros deben mostrar información.
-- Las tablas y gráficos deben estar actualizados.
-
-----
-
-## 13. Flujo completo de operación
-
-## 13.1 Exportar la información desde GIT
-
-El usuario ingresa al sistema GIT y genera el archivo de conexiones correspondiente al corte requerido.
-
-### Validar antes de continuar
-
-- Fecha del corte.
-- Cantidad de registros.
-- Columnas requeridas.
-- Información de municipios.
-- Fechas de inicio.
-- Productos y actividades.
-
-----
-
-## 13.2 Guardar el archivo en entrada
-
-El archivo exportado debe guardarse en la carpeta:
-
-```text
-entrada
-```
-
-Antes de iniciar, se debe confirmar que:
-
-- El archivo no esté abierto.
-- Corresponda al corte actual.
-- No existan archivos antiguos que puedan confundirse con el vigente.
-
-----
-
-## 13.3 Revisar la configuración
-
-Cuando existan cambios contractuales u operativos, el usuario autorizado debe revisar:
-
-```text
-config/DIAS_CONTRACTUALES.xlsx
-```
-
-Se deben validar especialmente:
-
-- Municipios nuevos.
-- Días contractuales modificados.
-- Festivos adicionales.
-- Parámetros generales.
-- Reglas especiales de prioridad.
-
-Si no existen cambios, no es necesario modificar el archivo.
-
-----
-
-## 13.4 Generar el informe ANS
-
-El usuario ejecuta la opción:
-
-```text
-Generar Informe ANS
-```
-
-Durante el proceso, la herramienta:
-
-- Lee el archivo de entrada.
-- Valida la estructura.
-- Consulta la parametrización.
-- Aplica reglas contractuales.
-- Calcula fechas y estados.
-- Aplica prioridades.
-- Genera el archivo de salida.
-- Registra el resultado en los logs.
-
-----
-
-## 13.5 Validar el archivo generado
-
-El resultado se encuentra en:
-
-```text
-salida/Informe_ANS_ELITE.xlsx
-```
-
-El usuario debe revisar:
-
-- Fecha de generación.
-- Cantidad de registros.
-- Registros sin municipio.
-- Registros sin regla contractual.
-- Fechas de inicio inválidas.
-- Estados generados.
-- Prioridades aplicadas.
-
-----
-
-## 13.6 Actualizar el dashboard
-
-El usuario abre:
-
-```text
-dashboard/INFORME_ANS.xlsb
-```
-
-Posteriormente actualiza la información y valida los indicadores.
-
-----
-
-## 13.7 Realizar el análisis operativo
-
-El análisis debe iniciar por el siguiente orden:
-
-1. Solicitudes vencidas.
-2. Solicitudes con alerta 0 días.
-3. Solicitudes con alerta 1–2 días.
-4. Solicitudes con prioridad crítica o alta.
-5. Solicitudes a tiempo.
-
-### Resultado esperado
-
-El equipo operativo obtiene una lista clara de los casos que requieren gestión prioritaria.
-
-----
-
-## 14. Adaptabilidad del sistema
-
-La herramienta fue diseñada para adaptarse a cambios funcionales sin requerir modificaciones frecuentes al software.
-
-### El usuario puede administrar
-
-- Nuevos municipios.
-- Cambios en días contractuales.
-- Nuevos productos o actividades, cuando la estructura configurada lo permita.
-- Festivos adicionales.
-- Parámetros operativos.
-- Rangos de alerta.
-- Reglas especiales de prioridad.
-- Observaciones funcionales.
-
-### Ventaja principal
-
-La parametrización en Excel permite que el conocimiento del negocio permanezca visible y administrable.
-
-### Ejemplo
-
-Cuando se incorpora un nuevo municipio, el usuario autorizado puede agregarlo en la hoja correspondiente, definir sus días contractuales y utilizarlo en la siguiente generación.
-
-No es necesario modificar el software, siempre que el cambio se encuentre dentro de las reglas previstas.
-
-### Cambios que requieren evaluación
-
-Algunas modificaciones sí pueden requerir revisión especializada, por ejemplo:
-
-- Cambio completo del archivo exportado desde GIT.
-- Eliminación o cambio de nombres de columnas.
-- Nuevas reglas que dependan de información no disponible.
-- Cambios en la lógica contractual.
-- Nuevos tipos de resultados.
-- Modificaciones estructurales del dashboard.
-
-----
-
-## 15. Buenas prácticas
-
-## 15.1 Antes de ejecutar
-
-- Confirmar que el archivo fuente sea el correcto.
-- Cerrar los archivos de entrada, salida y dashboard.
-- Verificar la fecha del corte.
-- Revisar cambios recientes de parametrización.
-- Crear una copia de respaldo antes de modificar la configuración.
-
-## 15.2 Durante la ejecución
-
-- No mover archivos.
-- No abrir el informe mientras se genera.
-- No cerrar la herramienta de forma forzada.
-- Esperar el mensaje de finalización.
-
-## 15.3 Después de ejecutar
-
-- Revisar el resultado.
-- Validar el total de registros.
-- Revisar advertencias.
-- Actualizar el dashboard.
-- Guardar los archivos.
-- Conservar el informe oficial del corte.
-
-## 15.4 Parametrización
-
-- Modificar únicamente los campos permitidos.
-- No cambiar encabezados.
-- No eliminar hojas.
-- No duplicar reglas.
-- No registrar fechas inválidas.
-- Documentar los cambios importantes.
-
-## 15.5 Control de versiones
-
-Se recomienda conservar:
-
-- Copia del archivo de entrada.
-- Copia del informe generado.
-- Copia del dashboard actualizado.
-- Copia del archivo de configuración utilizado.
-
-Esto permite reconstruir el resultado de un corte cuando sea necesario.
-
-----
-
-## 16. Recomendaciones
-
-### Para usuarios operativos
-
-- Revisar primero los estados vencidos y críticos.
-- Utilizar filtros para distribuir la gestión.
-- Validar los casos atípicos antes de escalar.
-- No modificar manualmente los cálculos del informe.
-
-### Para usuarios administradores
-
-- Mantener actualizado el archivo DIAS_CONTRACTUALES.xlsx.
-- Revisar periódicamente las reglas duplicadas.
-- Validar nuevos municipios antes de utilizarlos.
-- Mantener respaldo de la configuración anterior.
-- Controlar quién tiene permiso para parametrizar.
-
-### Para reuniones
-
-- Confirmar que el dashboard esté actualizado.
-- Presentar la fecha de corte.
-- Mostrar primero los indicadores generales.
-- Continuar con vencidos y alertas.
-- Finalizar con responsables y acciones.
-
-### Para soporte
-
-Cuando se reporte una novedad, se recomienda enviar:
-
-- Archivo de entrada utilizado.
-- Archivo de configuración.
-- Archivo generado.
-- Log de la ejecución.
-- Captura del mensaje mostrado.
-- Descripción clara del comportamiento esperado.
-
-----
-
-## 17. Beneficios obtenidos
-
-La implementación de la herramienta aporta los siguientes beneficios:
-
-### Estandarización
-
-Todas las solicitudes se calculan utilizando las mismas reglas.
-
-### Reducción de tiempo
-
-Disminuye las actividades manuales necesarias para preparar el informe.
-
-### Menor riesgo de error
-
-Reduce errores asociados con fórmulas manuales, festivos y fechas límite.
-
-### Trazabilidad
-
-Permite identificar el archivo fuente, la configuración y el resultado de cada ejecución.
-
-### Priorización
-
-Facilita la identificación de solicitudes vencidas o próximas a vencer.
-
-### Autonomía funcional
-
-Los usuarios autorizados pueden ajustar reglas del negocio desde Excel.
-
-### Adaptabilidad
-
-El sistema puede incorporar nuevos municipios, parámetros y prioridades.
-
-### Apoyo a la gestión
-
-El dashboard facilita el seguimiento en reuniones y la toma de decisiones.
-
-----
-
-## 18. Preguntas frecuentes
-
-### ¿De dónde proviene la información?
-
-La información proviene del archivo exportado desde el sistema GIT utilizado para gestionar las conexiones.
-
-### ¿Dónde debo guardar el archivo exportado?
-
-Debe guardarse en la carpeta **entrada**.
-
-### ¿Cuál es el archivo generado?
-
-El resultado principal es:
-
-```text
-Informe_ANS_ELITE.xlsx
-```
-
-### ¿Dónde se encuentra el dashboard?
-
-En la carpeta **dashboard**, dentro del archivo:
-
-```text
-INFORME_ANS.xlsb
-```
-
-### ¿El dashboard se actualiza automáticamente?
-
-La generación del informe y la actualización del dashboard son etapas diferentes. Después de generar el informe, el usuario debe actualizar el dashboard mediante la opción definida para ello.
-
-### ¿Qué sucede si aparece un municipio nuevo?
-
-El municipio debe agregarse en la hoja correspondiente del archivo **DIAS_CONTRACTUALES.xlsx**, junto con sus días contractuales y demás criterios aplicables.
-
-### ¿Se puede cambiar el número de días contractuales?
-
-Sí. El usuario autorizado puede modificarlo en la hoja **REGLAS_DE_NEGOCIO**.
-
-### ¿Se pueden agregar festivos?
-
-Sí. Deben registrarse en la hoja **FESTIVOS_ADICIONALES**.
-
-### ¿Se pueden crear nuevas prioridades?
-
-Sí. Deben configurarse en la hoja **REGLAS_PRIORIDAD**.
-
-### ¿Es necesario modificar el software para estos cambios?
-
-No. Los cambios previstos en la parametrización pueden realizarse desde Excel.
-
-### ¿Qué ocurre si una solicitud no encuentra regla contractual?
-
-Debe quedar identificada para revisión. El usuario debe validar los datos del registro y agregar o corregir la regla correspondiente.
-
-### ¿Qué ocurre si la fecha de inicio está vacía o es inválida?
-
-El registro no puede calcularse correctamente y debe ser revisado en el archivo fuente.
-
-### ¿Se cuentan sábados y domingos?
-
-No. El cálculo se realiza sobre días hábiles.
-
-### ¿Se cuentan los festivos?
-
-No. Los festivos aplicables se excluyen del cálculo.
-
-### ¿Qué significa ALERTA 0 DÍAS?
-
-Significa que la solicitud vence en la fecha de corte y debe atenderse de forma inmediata.
-
-### ¿Qué significa ALERTA 1–2 DÍAS?
-
-Significa que la solicitud está próxima a vencer y debe programarse prioritariamente.
-
-### ¿Qué debo revisar primero?
-
-El orden recomendado es:
-
-1. Vencidos.
-2. Alerta 0 días.
-3. Alerta 1–2 días.
-4. Prioridades críticas o altas.
-5. Solicitudes a tiempo.
-
-### ¿Qué debo hacer si el proceso presenta un error?
-
-Revisar el mensaje mostrado y consultar el archivo de log. Si la novedad continúa, compartir el archivo de entrada, la configuración y el log con el responsable del soporte.
-
-### ¿Puedo cambiar los encabezados del archivo de configuración?
-
-No. Los encabezados forman parte de la estructura esperada por la herramienta.
-
-### ¿Puedo eliminar hojas del archivo DIAS_CONTRACTUALES.xlsx?
-
-No. Las hojas requeridas deben conservarse.
-
-### ¿Puedo modificar manualmente el Informe_ANS_ELITE.xlsx?
-
-No se recomienda. El archivo debe conservar el resultado generado para asegurar trazabilidad y consistencia.
-
-### ¿Cómo se conserva un histórico?
-
-Se recomienda guardar una copia por cada fecha de corte, incluyendo:
-
-- Archivo exportado desde GIT.
-- Informe generado.
-- Dashboard actualizado.
-- Configuración utilizada.
-
-----
-
-## 19. Guion sugerido para explicar la herramienta
-
-### Inicio
-
-> La herramienta automatiza la preparación del informe ANS a partir del archivo exportado desde GIT.
-
-### Problema
-
-> Anteriormente era necesario realizar cálculos manuales de fechas, días hábiles, vencimientos y prioridades.
-
-### Solución
-
-> El sistema consulta las reglas contractuales, excluye fines de semana y festivos, determina la fecha límite y clasifica cada solicitud.
-
-### Parametrización
-
-> Las principales reglas del negocio están administradas en el archivo DIAS_CONTRACTUALES.xlsx. Esto permite agregar municipios, cambiar días, registrar festivos y crear prioridades sin modificar el software.
-
-### Resultado
-
-> El proceso genera el archivo Informe_ANS_ELITE.xlsx, que posteriormente actualiza el dashboard INFORME_ANS.xlsb.
-
-### Uso operativo
-
-> El análisis comienza por los vencidos, continúa con las alertas y finaliza con los casos a tiempo.
-
-### Cierre
-
-> La herramienta reduce tiempo, estandariza los cálculos y mejora la priorización de la gestión.
-
-----
-
-## 20. Lista de verificación operativa
-
-### Antes de generar
-
-- [ ] Exportar el archivo correcto desde GIT.
-- [ ] Validar la fecha de corte.
-- [ ] Guardar el archivo en entrada.
-- [ ] Cerrar los archivos abiertos.
-- [ ] Revisar cambios de configuración.
-
-### Después de generar
-
-- [ ] Confirmar que se creó Informe_ANS_ELITE.xlsx.
-- [ ] Validar el total de registros.
-- [ ] Revisar registros sin regla.
-- [ ] Revisar fechas inválidas.
-- [ ] Consultar advertencias del log.
-
-### Dashboard
-
-- [ ] Abrir INFORME_ANS.xlsb.
-- [ ] Actualizar la información.
-- [ ] Confirmar la fecha de corte.
-- [ ] Validar indicadores.
-- [ ] Guardar el dashboard.
-
-### Análisis
-
-- [ ] Revisar vencidos.
-- [ ] Revisar alerta 0 días.
-- [ ] Revisar alerta 1–2 días.
-- [ ] Revisar prioridades especiales.
-- [ ] Definir responsables y acciones.
-
-----
-
-## 21. Control funcional de cambios
-
-Toda modificación de las reglas del negocio debe quedar controlada.
-
-### Información recomendada
-
-| Campo | Descripción |
-|---|---|
-| Fecha del cambio | Día en que se realizó la modificación. |
-| Responsable | Usuario que realizó el cambio. |
-| Hoja modificada | Hoja del archivo DIAS_CONTRACTUALES.xlsx. |
-| Regla anterior | Valor que estaba vigente. |
-| Regla nueva | Valor actualizado. |
-| Motivo | Razón contractual u operativa. |
-| Aprobación | Responsable que autorizó el cambio. |
-
-### Recomendación
-
-Antes de utilizar una nueva parametrización en producción, se debe ejecutar una prueba controlada y comparar los resultados.
-
-----
-
-## 22. Mantenimiento funcional
-
-El mantenimiento funcional consiste en conservar actualizadas las reglas administradas por el negocio.
-
-### Actividades periódicas
-
-- Revisar municipios nuevos.
-- Validar cambios contractuales.
-- Actualizar festivos adicionales.
-- Revisar prioridades vigentes.
-- Eliminar duplicidades funcionales.
-- Confirmar que los parámetros continúan aplicando.
-- Revisar la calidad del archivo exportado desde GIT.
-
-### Frecuencia recomendada
-
-| Actividad | Frecuencia |
-|---|---|
-| Revisión de archivo de entrada | En cada ejecución |
-| Revisión de advertencias | En cada ejecución |
-| Revisión de municipios nuevos | Cuando aparezcan registros sin regla |
-| Revisión de festivos | Al inicio de cada año y cuando existan novedades |
-| Revisión de reglas contractuales | Cuando cambie el contrato o la operación |
-| Revisión de prioridades | Mensual o según necesidad operativa |
-| Copia de respaldo de configuración | Antes de cada modificación |
-
-----
-
-## 23. Criterios de aceptación del informe
-
-El informe puede considerarse listo para uso operativo cuando cumple los siguientes criterios:
-
-- El archivo de entrada corresponde al corte oficial.
-- No existen errores críticos de estructura.
-- La cantidad de registros procesados es coherente.
-- Las fechas de inicio son válidas.
-- Las reglas contractuales fueron encontradas.
-- Las fechas límite fueron calculadas.
-- Los estados ANS fueron asignados.
-- Las prioridades especiales fueron aplicadas.
-- El archivo Informe_ANS_ELITE.xlsx fue generado.
-- El dashboard fue actualizado correctamente.
-- Los indicadores coinciden con el archivo consolidado.
-
-----
-
-## 24. Responsabilidades funcionales
-
-| Rol | Responsabilidad |
-|---|---|
-| Usuario operativo | Exportar el archivo, ejecutar el proceso, actualizar el dashboard y analizar resultados. |
-| Administrador funcional | Mantener municipios, días contractuales, parámetros, festivos y prioridades. |
-| Responsable del proceso | Aprobar cambios de reglas y validar criterios contractuales. |
-| Soporte técnico | Atender errores de ejecución o cambios que superen la parametrización disponible. |
-| Líder operativo | Revisar indicadores y asignar acciones sobre vencidos y alertas. |
-
-----
-
-## 25. Conclusión
-
-El **Generador de Informes ANS - ATC CHEC** centraliza y estandariza el proceso de seguimiento de los acuerdos de nivel de servicio.
-
-Su funcionamiento se basa en un flujo claro:
-
-```text
-GIT
-    ↓
-Entrada
-    ↓
-Cálculo y reglas
-    ↓
-Informe consolidado
-    ↓
-Dashboard
-    ↓
-Gestión operativa
-```
-
-La parametrización mediante Excel permite que el sistema se mantenga actualizado frente a cambios de municipios, días contractuales, festivos, parámetros y prioridades.
-
-El valor principal de la herramienta se encuentra en:
-
-- La reducción del trabajo manual.
-- La uniformidad de los cálculos.
-- La visibilidad de los vencimientos.
-- La autonomía funcional.
-- La trazabilidad de los resultados.
-- El apoyo a la toma de decisiones.
-
-----
-
-## Documento oficial
-
-**Nombre del archivo:**
-
-```text
-generador_informes_ans_atc_chec.md
-```
-
-**Ubicación recomendada:**
-
-```text
-docs/generador_informes_ans_atc_chec.md
-```
-
-**Proyecto:** Generador de Informes ANS - ATC CHEC  
-**Tipo de documento:** Centro de Conocimiento Técnico y Manual Funcional  
-**Público objetivo:** Usuarios funcionales, usuarios operativos, administradores del proceso y personal encargado de la entrega y capacitación.
-
-
-## Arquitectura funcional
-
-La arquitectura funcional representa la forma en que interactúan los usuarios, los archivos y las reglas del negocio.
-
-No corresponde a la arquitectura técnica del software.
-
-### Componentes funcionales
-
-| Componente | Función |
-|---|---|
-| Fuente de información | Archivo exportado desde el sistema GIT. |
-| Módulo de entrada | Recibe el archivo que será procesado. |
-| Módulo de validación | Verifica que el archivo tenga la estructura requerida. |
-| Motor de reglas | Consulta los días contractuales, parámetros, festivos y prioridades. |
-| Motor de cálculo ANS | Calcula fechas límite, días transcurridos, días restantes y estado. |
-| Generador de informe | Construye el archivo Informe_ANS_ELITE.xlsx. |
-| Dashboard | Presenta indicadores, filtros y vistas para el análisis. |
-| Módulo de mapas | Permite representar geográficamente la información cuando aplique. |
-| Registro de ejecución | Conserva información sobre el resultado del procesamiento. |
-
-### Principio funcional
-
-La herramienta separa tres elementos principales:
-
-1. **Información de entrada.**
-2. **Reglas del negocio.**
-3. **Resultados para análisis.**
-
-Esta separación permite actualizar la operación sin alterar el funcionamiento general del sistema.
-
-----
-
-## 6. Estructura del proyecto
-
-La herramienta está organizada en carpetas que representan las diferentes etapas del proceso.
-
-```text
-Generador_Informes_ANS_ATC_CHEC/
-│
-├── entrada/
-├── salida/
-├── dashboard/
-├── config/
-├── logs/
-├── mapas/
-├── assets/
-├── docs/
-├── main.py
-├── iniciar.bat
-└── requirements.txt
-```
-
-Para el usuario funcional, las carpetas principales son:
-
-- entrada
-- salida
-- dashboard
-- config
-- logs
-- mapas
-
-Las demás carpetas y archivos hacen parte del funcionamiento interno de la herramienta y no deben modificarse durante la operación normal.
-
-----
