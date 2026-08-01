@@ -12,15 +12,11 @@ Su función principal es transformar el archivo exportado desde el sistema **GIT
 
 > El sistema toma la información exportada desde GIT, aplica automáticamente las reglas contractuales y operativas definidas por la organización, calcula el estado de cada solicitud y genera un informe consolidado para facilitar la priorización y el seguimiento de los casos.
 
-La herramienta fue diseñada para que la mayor parte de las reglas del negocio puedan administrarse desde archivos de configuración en Excel, evitando depender de modificaciones al software para ajustes funcionales frecuentes.
+La herramienta fue diseñada para que las reglas del negocio puedan administrarse desde archivos de configuración en Excel, evitando depender de modificaciones al software para ajustes funcionales frecuentes.
 
 ----
 
-## 2. Objetivo
-
-El objetivo del sistema es facilitar la generación, actualización y análisis del informe de cumplimiento ANS de las solicitudes de conexión.
-
-La herramienta permite:
+## La herramienta permite:
 
 - Procesar el archivo exportado desde el sistema GIT.
 - Calcular automáticamente las fechas límite de atención.
