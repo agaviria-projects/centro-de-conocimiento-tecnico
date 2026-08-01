@@ -150,6 +150,7 @@ st.caption("Base personal para explicar y defender los desarrollos implementados
 
 opciones = [
     "📊 Generador de Informes ANS",
+    "🏢 Generador ANS - ATC CHEC",
     "📧 Seguimiento ANS",
     "🎓 Portal Formación Elite",
     "📄 Compresor PDF",
@@ -218,6 +219,89 @@ La lógica del negocio, los requerimientos, la validación de resultados y la ad
         st.error(
             "No se encontró el archivo docs/generador_informes_ans.md"
         )
+
+elif opcion == "🏢 Generador ANS - ATC CHEC":
+
+    with st.expander(
+        "🎤 Guía Rápida para Reuniones",
+        expanded=False,
+    ):
+
+        st.warning("""
+### 🎤 Cómo explicar este desarrollo en una reunión
+
+El Generador de Informes ANS - ATC CHEC es una herramienta orientada al
+control operativo de los pedidos exportados desde el sistema GIT.
+
+El proceso toma el archivo exportado, valida la información, aplica las reglas
+contractuales parametrizadas y calcula automáticamente el estado ANS de cada
+pedido.
+
+Posteriormente genera el archivo `Informe_ANS_ELITE.xlsx`, el cual sirve como
+fuente para actualizar el dashboard operativo `INFORME_ANS.xlsb`.
+
+La herramienta permite administrar gran parte de las reglas del negocio desde
+archivos de configuración en Excel, evitando modificar el software cuando se
+requiera agregar municipios, cambiar días contractuales, registrar festivos o
+crear nuevas reglas especiales de prioridad.
+
+---
+
+### 🏗️ Flujo general
+
+Sistema GIT  
+↓  
+Archivo exportado  
+↓  
+Carpeta Entrada  
+↓  
+Generar Informe ANS  
+↓  
+Informe_ANS_ELITE.xlsx  
+↓  
+Actualizar Dashboard  
+↓  
+INFORME_ANS.xlsb  
+↓  
+Análisis operativo  
+
+---
+
+### 🎯 Beneficio principal
+
+La herramienta centraliza y automatiza el cálculo ANS, reduce los procesos
+manuales y facilita la priorización de los pedidos que requieren atención
+operativa.
+
+---
+
+### ❓ Si me preguntan si yo hice el desarrollo
+
+Sí.
+
+El desarrollo fue implementado por mí para resolver una necesidad real del
+proceso operativo de ATC CHEC.
+
+La necesidad, las reglas de negocio, la parametrización, las validaciones, las
+pruebas y la adaptación al proceso fueron definidas y verificadas directamente
+por mí.
+
+Para apoyar y acelerar la implementación técnica utilicé Inteligencia
+Artificial como herramienta de asistencia.
+        """)
+
+    ruta = Path(
+        "docs/generador_informes_ans_atc_chec.md"
+    )
+
+    if ruta.exists():
+        mostrar_markdown(ruta)
+    else:
+        st.error(
+            "No se encontró el archivo "
+            "docs/generador_informes_ans_atc_chec.md"
+        )
+                
 elif opcion == "📧 Seguimiento ANS":
 
     with st.expander(
