@@ -35,130 +35,6 @@ La herramienta permite:
 
 ----
 
-## 3. Problema que resuelve
-
-Antes de utilizar la herramienta, el control del ANS puede requerir actividades manuales como:
-
-- Revisar individualmente las fechas de inicio.
-- Consultar los días contractuales por municipio o condición.
-- Identificar sábados, domingos y días festivos.
-- Calcular fechas límite.
-- Clasificar solicitudes vencidas o próximas a vencer.
-- Aplicar reglas especiales de prioridad.
-- Preparar manualmente un informe para análisis.
-- Actualizar tablas, filtros y visualizaciones.
-
-Estas actividades consumen tiempo y pueden generar diferencias en los resultados cuando se realizan con criterios no estandarizados.
-
-El sistema resuelve este problema mediante un proceso único y controlado que aplica las mismas reglas a todos los registros.
-
-### Resultado esperado
-
-El usuario obtiene un informe estructurado, uniforme y listo para ser utilizado en el análisis operativo.
-
-----
-
-## 4. Flujo general del proceso
-
-El proceso funcional se ejecuta de la siguiente manera:
-
-```text
-Sistema GIT
-    ↓
-Archivo exportado
-    ↓
-Carpeta entrada
-    ↓
-Generar Informe ANS
-    ↓
-Informe_ANS_ELITE.xlsx
-    ↓
-Actualizar Dashboard
-    ↓
-INFORME_ANS.xlsb
-    ↓
-Análisis operativo
-```
-
-### Descripción del flujo
-
-| Etapa | Descripción |
-|---|---|
-| Sistema GIT | Sistema utilizado para consultar y exportar la información de conexiones. |
-| Archivo exportado | Archivo fuente que contiene las solicitudes que serán evaluadas. |
-| Carpeta entrada | Ubicación donde el usuario deposita el archivo que será procesado. |
-| Generar Informe ANS | Acción que inicia la validación, transformación y cálculo del informe. |
-| Informe_ANS_ELITE.xlsx | Archivo consolidado generado por la herramienta. |
-| Actualizar Dashboard | Proceso mediante el cual el archivo consolidado alimenta las visualizaciones. |
-| INFORME_ANS.xlsb | Dashboard final utilizado para el análisis y seguimiento. |
-| Análisis operativo | Revisión de vencimientos, alertas, prioridades y distribución de solicitudes. |
-
-----
-
-## 5. Arquitectura funcional
-
-La arquitectura funcional representa la forma en que interactúan los usuarios, los archivos y las reglas del negocio.
-
-No corresponde a la arquitectura técnica del software.
-
-### Componentes funcionales
-
-| Componente | Función |
-|---|---|
-| Fuente de información | Archivo exportado desde el sistema GIT. |
-| Módulo de entrada | Recibe el archivo que será procesado. |
-| Módulo de validación | Verifica que el archivo tenga la estructura requerida. |
-| Motor de reglas | Consulta los días contractuales, parámetros, festivos y prioridades. |
-| Motor de cálculo ANS | Calcula fechas límite, días transcurridos, días restantes y estado. |
-| Generador de informe | Construye el archivo Informe_ANS_ELITE.xlsx. |
-| Dashboard | Presenta indicadores, filtros y vistas para el análisis. |
-| Módulo de mapas | Permite representar geográficamente la información cuando aplique. |
-| Registro de ejecución | Conserva información sobre el resultado del procesamiento. |
-
-### Principio funcional
-
-La herramienta separa tres elementos principales:
-
-1. **Información de entrada.**
-2. **Reglas del negocio.**
-3. **Resultados para análisis.**
-
-Esta separación permite actualizar la operación sin alterar el funcionamiento general del sistema.
-
-----
-
-## 6. Estructura del proyecto
-
-La herramienta está organizada en carpetas que representan las diferentes etapas del proceso.
-
-```text
-Generador_Informes_ANS_ATC_CHEC/
-│
-├── entrada/
-├── salida/
-├── dashboard/
-├── config/
-├── logs/
-├── mapas/
-├── assets/
-├── docs/
-├── main.py
-├── iniciar.bat
-└── requirements.txt
-```
-
-Para el usuario funcional, las carpetas principales son:
-
-- entrada
-- salida
-- dashboard
-- config
-- logs
-- mapas
-
-Las demás carpetas y archivos hacen parte del funcionamiento interno de la herramienta y no deben modificarse durante la operación normal.
-
-----
 
 ## 7. Explicación de cada carpeta
 
@@ -1361,3 +1237,69 @@ docs/generador_informes_ans_atc_chec.md
 **Proyecto:** Generador de Informes ANS - ATC CHEC  
 **Tipo de documento:** Centro de Conocimiento Técnico y Manual Funcional  
 **Público objetivo:** Usuarios funcionales, usuarios operativos, administradores del proceso y personal encargado de la entrega y capacitación.
+
+
+## Arquitectura funcional
+
+La arquitectura funcional representa la forma en que interactúan los usuarios, los archivos y las reglas del negocio.
+
+No corresponde a la arquitectura técnica del software.
+
+### Componentes funcionales
+
+| Componente | Función |
+|---|---|
+| Fuente de información | Archivo exportado desde el sistema GIT. |
+| Módulo de entrada | Recibe el archivo que será procesado. |
+| Módulo de validación | Verifica que el archivo tenga la estructura requerida. |
+| Motor de reglas | Consulta los días contractuales, parámetros, festivos y prioridades. |
+| Motor de cálculo ANS | Calcula fechas límite, días transcurridos, días restantes y estado. |
+| Generador de informe | Construye el archivo Informe_ANS_ELITE.xlsx. |
+| Dashboard | Presenta indicadores, filtros y vistas para el análisis. |
+| Módulo de mapas | Permite representar geográficamente la información cuando aplique. |
+| Registro de ejecución | Conserva información sobre el resultado del procesamiento. |
+
+### Principio funcional
+
+La herramienta separa tres elementos principales:
+
+1. **Información de entrada.**
+2. **Reglas del negocio.**
+3. **Resultados para análisis.**
+
+Esta separación permite actualizar la operación sin alterar el funcionamiento general del sistema.
+
+----
+
+## 6. Estructura del proyecto
+
+La herramienta está organizada en carpetas que representan las diferentes etapas del proceso.
+
+```text
+Generador_Informes_ANS_ATC_CHEC/
+│
+├── entrada/
+├── salida/
+├── dashboard/
+├── config/
+├── logs/
+├── mapas/
+├── assets/
+├── docs/
+├── main.py
+├── iniciar.bat
+└── requirements.txt
+```
+
+Para el usuario funcional, las carpetas principales son:
+
+- entrada
+- salida
+- dashboard
+- config
+- logs
+- mapas
+
+Las demás carpetas y archivos hacen parte del funcionamiento interno de la herramienta y no deben modificarse durante la operación normal.
+
+----
