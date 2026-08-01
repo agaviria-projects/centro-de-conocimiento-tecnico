@@ -1,7 +1,5 @@
 # Generador de Informes ANS - ATC CHEC
 
-## Centro de Conocimiento Técnico
-
 ----
 
 ## 1. Entrada a la reunión
