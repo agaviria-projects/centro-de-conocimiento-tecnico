@@ -306,12 +306,15 @@ src/calculador_ans.py
 
 ---
 
-El usuario final no necesita modificar este archivo.
+### Configuración funcional desde Excel
 
-Los cambios funcionales deben realizarse desde el archivo:
+El usuario final no necesita modificar el código del sistema para cambiar la forma en que se calcula el ANS.
 
+Las configuraciones operativas se administran desde el archivo:
+
+```text
 config/DIAS_CONTRACTUALES.xlsx
-
+```
 ---
 
 ## Cómo identifica el sistema los días no hábiles
