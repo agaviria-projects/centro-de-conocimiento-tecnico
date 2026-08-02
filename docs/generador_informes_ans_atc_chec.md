@@ -274,7 +274,6 @@ Esto significa:
 - Si supera la fecha límite y los días restantes son negativos, se clasifica como VENCIDO.
 
 ```
-
 ## Importancia de esta hoja
 
 Esta configuración permite cambiar el comportamiento del cálculo sin modificar el software.
@@ -289,6 +288,158 @@ DIAS_INICIO_ALERTA = 3
 - Utilizar solamente los valores permitidos, como SI, NO o números.
 - Crear una copia de respaldo antes de realizar cambios.
 - Verificar el resultado con algunos pedidos de prueba después de modificar un parámetro.
+
+---
+
+## Explicación complementaria: cómo se excluyen sábados, domingos y festivos
+
+> Esta sección se utiliza únicamente si durante la reunión se requiere explicar con mayor detalle cómo identifica el sistema los días no hábiles.  
+> Si no es necesario profundizar, se puede continuar directamente con la hoja `FESTIVOS_ADICIONALES`.
+
+### Referencia funcional
+
+La lógica se encuentra contemplada en el componente:
+
+```text
+src/calculador_ans.py
+```
+
+---
+
+El usuario final no necesita modificar este archivo.
+
+Los cambios funcionales deben realizarse desde el archivo:
+
+config/DIAS_CONTRACTUALES.xlsx
+
+---
+
+## Cómo identifica el sistema los días no hábiles
+
+El sistema determina qué días cuentan como hábiles mediante tres validaciones diferentes.
+
+
+La lógica es la siguiente:
+
+```text
+Sábado
+→ se identifica directamente según el día de la semana
+→ se excluye si EXCLUIR_SABADOS = SI
+
+Domingo
+→ se identifica directamente según el día de la semana
+→ se excluye si EXCLUIR_DOMINGOS = SI
+
+Festivo oficial de Colombia
+→ se consulta mediante la librería holidays
+→ se utiliza el código de país CO
+→ se excluye si EXCLUIR_FESTIVOS_COLOMBIA = SI
+
+Festivo adicional
+→ se lee desde la hoja FESTIVOS_ADICIONALES
+→ se excluye si ACTIVO = SI
+→ también depende de que EXCLUIR_FESTIVOS_ADICIONALES = SI
+
+```
+## Identificación de sábados y domingos
+
+Los sábados y domingos no son obtenidos desde la librería holidays.
+
+Python identifica directamente el día de la semana de cada fecha.
+
+La validación utilizada es equivalente a:
+
+fecha.weekday() == 5  # sábado
+fecha.weekday() == 6  # domingo
+
+Esto significa que:
+
+Si la fecha corresponde a sábado y EXCLUIR_SABADOS = SI, ese día no se cuenta.
+Si la fecha corresponde a domingo y EXCLUIR_DOMINGOS = SI, ese día no se cuenta.
+Si alguno de esos parámetros cambia a NO, el día correspondiente vuelve a contarse dentro del ANS.
+Identificación de festivos oficiales de Colombia
+
+Los festivos oficiales sí se obtienen mediante la librería holidays.
+
+El sistema genera el calendario oficial de Colombia utilizando el código:
+
+CO
+
+La lógica utilizada es equivalente a:
+
+calendario = holidays.country_holidays(
+    "CO",
+    years=anos,
+)
+
+Esto permite obtener automáticamente los festivos oficiales para los años requeridos por el cálculo.
+
+El usuario no necesita registrar manualmente todos los festivos nacionales.
+
+Para que estos días sean excluidos, debe estar configurado:
+
+EXCLUIR_FESTIVOS_COLOMBIA = SI
+Identificación de festivos adicionales
+
+Los festivos adicionales no provienen de la librería holidays.
+
+Son fechas agregadas manualmente por el usuario en la hoja:
+
+FESTIVOS_ADICIONALES
+
+Para que una fecha adicional sea excluida, deben cumplirse dos condiciones:
+
+EXCLUIR_FESTIVOS_ADICIONALES = SI
+ACTIVO = SI
+
+Si el registro está en ACTIVO = NO, la fecha se ignora.
+
+Función que decide si una fecha es hábil
+
+Dentro del sistema existe una validación equivalente a la siguiente:
+
+def es_dia_habil(
+    fecha: date,
+    excluir_sabados: bool,
+    excluir_domingos: bool,
+    festivos: set[date],
+) -> bool:
+
+    if (
+        excluir_sabados
+        and fecha.weekday() == 5
+    ):
+        return False
+
+    if (
+        excluir_domingos
+        and fecha.weekday() == 6
+    ):
+        return False
+
+    if fecha in festivos:
+        return False
+
+    return True
+
+Esta función evalúa cada fecha antes de contarla dentro del ANS.
+
+Su interpretación es:
+
+Devuelve False cuando el día debe excluirse.
+Devuelve True cuando el día sí debe contarse.
+
+> Resumen para explicar en reunión
+
+La librería holidays aporta los festivos oficiales de Colombia mediante el código CO. Los sábados y domingos se identifican directamente con Python según el día de la semana. Los festivos adicionales se leen desde el archivo DIAS_CONTRACTUALES.xlsx. Finalmente, los parámetros de la hoja PARAMETROS indican si cada tipo de día debe excluirse o contarse dentro del cálculo del ANS.
+
+
+Ese bloque deja documentado claramente:
+
+- qué hace `holidays`;
+- qué hace Python;
+- qué controla Excel;
+- cómo se toma la decisión final.
 
 ----
 
