@@ -510,6 +510,95 @@ Por ejemplo:
 - Si encuentra **Solicitud de conexión** o **Habilitación de Vivienda integral urbano**, lo clasifica como `HV` y asigna `15` días.
 - Si encuentra **Factibilidad del servicio** o **Cuenta nueva**, lo clasifica como `FACTIBILIDAD` y asigna `4` días.
 
+## Script calculador_ans.py
+
+La lógica de lectura y búsqueda de las palabras clave.
+
+La primera función:
+
+```text
+def cargar_reglas_prioridad() -> list[dict]:
+```
+hace esto:
+
+- abre la hoja REGLAS_PRIORIDAD;
+- valida que existan las columnas:
+- PALABRA_CLAVE
+- TIPO
+- DIAS
+- normaliza los textos;
+- valida duplicados;
+- construye una lista de reglas.
+
+Por ejemplo, deja una regla internamente así:
+
+```text
+{
+    "PALABRA_CLAVE": "Factibilidad del servicio/Cuenta nueva",
+    "CLAVE_PRIORIDAD": "FACTIBILIDADDELSERVICIOCUENTANUEVA",
+    "TIPO": "FACTIBILIDAD",
+    "DIAS": 4,
+}
+```
+
+La segunda función:
+
+```text
+def buscar_regla_prioridad(
+    observacion: object,
+    reglas_prioridad: list[dict],
+) -> dict | None:
+```
+es la que realmente busca la coincidencia dentro de OBSERVACION.
+
+
+Este bloque es el punto clave:
+
+```text
+for regla in reglas_prioridad:
+
+    if (
+        regla["CLAVE_PRIORIDAD"]
+        in observacion_normalizada
+    ):
+        return regla
+```
+
+Eso significa:
+
+Toma la observación
+→ la normaliza
+→ revisa cada palabra clave configurada
+→ si encuentra una dentro del texto
+→ devuelve esa regla
+
+Por ejemplo, si la observación contiene:
+
+RL: 40990010796 - Mot.Rv:Factibilidad del servicio/Cuenta nueva - Estado...
+
+y en Excel está configurado:
+
+PALABRA_CLAVE:
+Factibilidad del servicio/Cuenta nueva
+
+TIPO:
+FACTIBILIDAD
+
+DIAS:
+4
+
+la función devuelve esa regla y el cálculo usa:
+
+TIPO = FACTIBILIDAD
+DIAS_PACTADOS = 4
+
+Si no encuentra ninguna coincidencia:
+
+```text
+return None
+```
+
+
 ----
 
 ### Cómo agregar una nueva regla
