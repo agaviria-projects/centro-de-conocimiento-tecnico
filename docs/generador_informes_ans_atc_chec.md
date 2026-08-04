@@ -177,6 +177,67 @@ El dashboard permite:
 - Consultar el detalle de cada pedido.
 - Priorizar la gestión diaria.
 - Facilitar la toma de decisiones.
+
+## INFORME_ANS.xlsb
+
+El archivo **INFORME_ANS.xlsb** es completamente editable y está diseñado para apoyar el análisis operativo de la información generada por el sistema.
+
+Una vez finaliza el proceso de generación del Informe ANS, toda la información es transferida automáticamente a la hoja **DATOS_ANS**, desde donde se alimenta el Dashboard.
+
+---
+
+## Formas de realizar el análisis
+
+El usuario puede trabajar de dos maneras según su necesidad.
+
+### Opción 1. Dashboard
+
+La hoja **DASHBOARD** está orientada a la toma de decisiones mediante indicadores gráficos.
+
+Desde esta hoja es posible:
+
+- Consultar indicadores generales.
+- Filtrar por Región.
+- Filtrar por Zona.
+- Filtrar por Municipio.
+- Filtrar por Estado.
+- Visualizar la distribución de pedidos.
+- Analizar el comportamiento del ANS mediante gráficos y tablas dinámicas.
+
+Esta vista está pensada para obtener una visión ejecutiva de la operación.
+
+---
+
+### Opción 2. Hoja DATOS_ANS
+
+La hoja **DATOS_ANS** contiene el detalle completo de todos los pedidos procesados.
+
+Desde esta hoja el usuario puede realizar análisis adicionales, por ejemplo:
+
+- Aplicar filtros personalizados.
+- Ordenar la información.
+- Buscar pedidos específicos.
+- Realizar consultas por PDA.
+- Revisar observaciones de cada pedido.
+- Crear tablas dinámicas adicionales.
+- Construir gráficos propios.
+- Exportar información para otros análisis.
+
+Esta hoja constituye la base de datos operativa del Dashboard.
+
+---
+
+## Flexibilidad para el analista
+
+El Dashboard no limita el análisis de la información.
+
+Cada analista puede utilizar la hoja **DATOS_ANS** para construir sus propios análisis, reportes o tablas dinámicas, sin afectar el funcionamiento general del Dashboard.
+
+Esto permite que la herramienta se adapte a nuevas necesidades operativas sin requerir modificaciones al proceso de generación del Informe ANS.
+
+---
+
+> **Recomendación:** No modificar la estructura de las columnas de la hoja **DATOS_ANS**, ya que estas son utilizadas durante cada actualización automática del Dashboard. Sin embargo, es posible aplicar filtros, ordenar registros, crear tablas dinámicas, generar gráficos y realizar análisis adicionales sin inconvenientes.
 ----
 
 ## 3.4 Carpeta config
