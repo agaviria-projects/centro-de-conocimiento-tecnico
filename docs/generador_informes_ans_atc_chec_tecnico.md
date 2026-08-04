@@ -1,6 +1,27 @@
 # Documentación Técnica  
 # Generador de Informes ANS - ATC CHEC
 
+### Inicio recomendado para explicar el desarrollo
+
+Antes de hablar de la parte técnica, lo primero fue entender el requerimiento y la necesidad operativa.
+
+En este caso, el problema era que la información debía revisarse, validarse y procesarse manualmente para calcular los estados ANS, actualizar el informe y facilitar el seguimiento de los pedidos.
+
+A partir de esa necesidad, primero analicé cómo funcionaba el proceso, cuáles eran las columnas necesarias, qué reglas de negocio debían aplicarse, cómo se calculaban los días laborales y qué resultados necesitaban los usuarios.
+
+Cuando la lógica funcional estuvo clara, diseñé una solución en Python separada por módulos. Cada archivo tiene una responsabilidad específica: leer los Excel, validar la información, transformar los datos, calcular los días ANS, generar el informe, actualizar el Dashboard y construir el mapa.
+
+Para la implementación técnica utilicé librerías y herramientas disponibles para cualquier desarrollador, como documentación, ejemplos, videos, comunidades técnicas e Inteligencia Artificial como apoyo. Sin embargo, el entendimiento del requerimiento, la definición de la lógica, las pruebas y la validación de los resultados fueron realizados directamente sobre la necesidad real del proceso.
+
+## Si te preguntan directamente: “¿Usted cómo creó esto?”
+
+Puedes responder:
+
+Primero entendí el proceso y documenté la lógica que debía cumplir la herramienta. Después dividí el desarrollo en componentes pequeños y fui construyendo cada parte: lectura, validación, transformación, cálculo, generación del Excel, Dashboard e interfaz.
+
+En la parte técnica me apoyé en documentación, librerías de Python, videos, ejemplos e Inteligencia Artificial, como lo haría cualquier desarrollador para investigar y acelerar una solución. Lo importante fue adaptar esas herramientas al proceso real, probar los resultados y asegurar que las reglas del negocio se cumplieran.
+
+
 ## Información del documento
 
 | Campo | Descripción |
