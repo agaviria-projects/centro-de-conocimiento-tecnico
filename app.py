@@ -290,17 +290,32 @@ Para apoyar y acelerar la implementación técnica utilicé Inteligencia
 Artificial como herramienta de asistencia.
         """)
 
-    ruta = Path(
-        "docs/generador_informes_ans_atc_chec.md"
-    )
+        st.divider()
 
-    if ruta.exists():
-        mostrar_markdown(ruta)
-    else:
-        st.error(
-            "No se encontró el archivo "
-            "docs/generador_informes_ans_atc_chec.md"
+        tipo_documento = st.radio(
+            "Selecciona el documento que deseas consultar",
+            [
+                "📘 Manual funcional y operativo",
+                "🛠️ Documentación técnica para TI",
+            ],
+            horizontal=True,
         )
+
+        if tipo_documento == "📘 Manual funcional y operativo":
+            ruta = Path(
+                "docs/generador_informes_ans_atc_chec.md"
+            )
+        else:
+            ruta = Path(
+                "docs/generador_informes_ans_atc_chec_tecnico.md"
+            )
+
+        if ruta.exists():
+            mostrar_markdown(ruta)
+        else:
+            st.error(
+                f"No se encontró el archivo:\n\n{ruta}"
+            )
                 
 elif opcion == "📧 Seguimiento ANS":
 
