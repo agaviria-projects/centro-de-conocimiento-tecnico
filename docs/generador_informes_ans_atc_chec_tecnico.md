@@ -991,3 +991,123 @@ pip install -r requirements.txt
 > **Advertencia:** el sistema debe ejecutarse desde la carpeta raíz del proyecto para garantizar que las rutas relativas funcionen correctamente.
 
 ---
+
+
+---
+
+## Desarrollo futuro del módulo ANS Redes
+
+El módulo **ANS Redes** puede desarrollarse dentro del mismo proyecto **Informe_ANS_ATC_CHEC**, debido a que hace parte de la misma solución general de seguimiento ANS.
+
+Sin embargo, debe mantenerse separado del módulo **ANS Conexiones** para evitar mezclar:
+
+- Filtros.
+- Reglas de negocio.
+- Validaciones.
+- Estados.
+- Usuarios.
+- Archivos de salida.
+
+### Estructura recomendada
+
+```text
+Informe_ANS_ATC_CHEC
+│
+├── dashboard
+├── entrada
+├── logs
+├── mapas
+├── salida
+├── src
+│   ├── comunes
+│   │   ├── lector_excel.py
+│   │   ├── logging_config.py
+│   │   ├── normalizador_direcciones.py
+│   │   └── utilidades_fechas.py
+│   │
+│   ├── ans_conexiones
+│   │   ├── procesador.py
+│   │   ├── validador.py
+│   │   ├── calculador_ans.py
+│   │   └── generador_excel.py
+│   │
+│   ├── ans_redes
+│   │   ├── procesador.py
+│   │   ├── validador.py
+│   │   ├── filtros.py
+│   │   ├── calculador_ans.py
+│   │   └── generador_excel.py
+│   │
+│   ├── config.py
+│   ├── interfaz.py
+│   └── actualizador_dashboard.py
+│
+├── main.py
+├── iniciar.bat
+└── requirements.txt
+```
+---
+
+## Responsabilidad de cada grupo
+
+| Componente | Responsabilidad |
+|---|---|
+| `comunes` | Contiene funciones reutilizables por ANS Conexiones y ANS Redes. |
+| `ans_conexiones` | Contiene las reglas y procesos específicos del módulo actual. |
+| `ans_redes` | Contendrá los filtros, validaciones y cálculos propios de Redes. |
+| `interfaz.py` | Permitirá seleccionar qué proceso ejecutar. |
+| `config.py` | Mantendrá las rutas y parámetros generales del proyecto. |
+| `actualizador_dashboard.py` | Actualizará el Dashboard común o podrá dividirse si cada módulo utiliza un Dashboard diferente. |
+
+---
+
+```text
+Analizar el requerimiento
+          │
+          ▼
+Revisar el archivo de entrada
+          │
+          ▼
+Identificar columnas, filtros y estados
+          │
+          ▼
+Confirmar reglas de negocio
+          │
+          ▼
+Crear la carpeta ans_redes
+          │
+          ▼
+Desarrollar lectura, validación y filtros
+          │
+          ▼
+Aplicar cálculo ANS
+          │
+          ▼
+Generar el informe
+          │
+          ▼
+Validar resultados con los usuarios
+```
+
+## Reglas que deben confirmarse
+
+Antes de iniciar el desarrollo se deben validar, como mínimo:
+
+- Procesos que deben incluirse.
+- Códigos de proceso válidos.
+- Estados permitidos.
+- Columnas obligatorias.
+- Días pactados.
+- Festivos y días no laborales.
+- Estructura del archivo de salida.
+- Reglas de actualización del Dashboard.
+
+---
+
+## Explicación para una reunión
+
+El módulo ANS Redes puede desarrollarse dentro del mismo proyecto porque hace parte de la misma solución. Sin embargo, lo separaría internamente de ANS Conexiones para no mezclar reglas, filtros, validaciones ni resultados. Ambos módulos podrían reutilizar componentes comunes, como la lectura de Excel, el manejo de fechas y los registros de errores.
+
+La idea es mantener un solo proyecto, pero con responsabilidades claramente separadas para facilitar su mantenimiento y evolución futura.
+
+Recomendación técnica: no duplicar el entorno virtual, la interfaz ni la configuración general. La separación debe realizarse dentro de src, creando módulos específicos para cada proceso.
