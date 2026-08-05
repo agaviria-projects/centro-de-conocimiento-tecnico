@@ -1,28 +1,7 @@
 # Documentación Técnica  
 # Generador de Informes ANS - ATC CHEC
 
-### Inicio recomendado para explicar el desarrollo
-
-Antes de hablar de la parte técnica, lo primero fue entender el requerimiento y la necesidad operativa.
-
-En este caso, el problema era que la información debía revisarse, validarse y procesarse manualmente para calcular los estados ANS, actualizar el informe y facilitar el seguimiento de los pedidos.
-
-A partir de esa necesidad, primero analicé cómo funcionaba el proceso, cuáles eran las columnas necesarias, qué reglas de negocio debían aplicarse, cómo se calculaban los días laborales y qué resultados necesitaban los usuarios.
-
-Cuando la lógica funcional estuvo clara, diseñé una solución en Python separada por módulos. Cada archivo tiene una responsabilidad específica: leer los Excel, validar la información, transformar los datos, calcular los días ANS, generar el informe, actualizar el Dashboard y construir el mapa.
-
-Para la implementación técnica utilicé librerías y herramientas disponibles para cualquier desarrollador, como documentación, ejemplos, videos, comunidades técnicas e Inteligencia Artificial como apoyo. Sin embargo, el entendimiento del requerimiento, la definición de la lógica, las pruebas y la validación de los resultados fueron realizados directamente sobre la necesidad real del proceso.
-
-## Si te preguntan directamente: “¿Usted cómo creó esto?”
-
-Puedes responder:
-
-Primero entendí el proceso y documenté la lógica que debía cumplir la herramienta. Después dividí el desarrollo en componentes pequeños y fui construyendo cada parte: lectura, validación, transformación, cálculo, generación del Excel, Dashboard e interfaz.
-
-En la parte técnica me apoyé en documentación, librerías de Python, videos, ejemplos e Inteligencia Artificial, como lo haría cualquier desarrollador para investigar y acelerar una solución. Lo importante fue adaptar esas herramientas al proceso real, probar los resultados y asegurar que las reglas del negocio se cumplieran.
-
-
-## Información del documento
+## Información general
 
 | Campo | Descripción |
 |---|---|
@@ -30,7 +9,7 @@ En la parte técnica me apoyé en documentación, librerías de Python, videos, 
 | Tipo de documento | Documentación técnica |
 | Dirigido a | Área de Tecnología de la Información |
 | Tecnología principal | Python |
-| Interfaz | Aplicación de escritorio |
+| Tipo de aplicación | Aplicación de escritorio |
 | Estado | En desarrollo |
 | Versión | 1.0 |
 
@@ -38,145 +17,84 @@ En la parte técnica me apoyé en documentación, librerías de Python, videos, 
 
 ## Contenido
 
-1. Introducción técnica  
-2. Objetivo del sistema  
-3. Alcance actual  
-4. Arquitectura general  
-5. Separación de responsabilidades  
-6. Flujo de ejecución  
-7. Estructura de carpetas  
-8. Módulos Python  
-9. Archivos de configuración  
-10. Archivos de entrada y salida  
-11. Reglas de negocio  
-12. Generación del informe Excel  
-13. Actualización del Dashboard  
-14. Geocodificación y mapas  
+1. Cómo explicar el desarrollo  
+2. Qué problema resuelve  
+3. Cómo está organizado  
+4. Flujo general  
+5. Estructura de carpetas  
+6. Función de cada archivo Python  
+7. Archivos de configuración  
+8. Archivos de entrada y salida  
+9. Reglas de negocio y cálculo ANS  
+10. Lectura de `DIAS_CONTRACTUALES.xlsx`  
+11. Generación del informe Excel  
+12. Actualización del Dashboard  
+13. Interfaz gráfica  
+14. Librerías utilizadas  
 15. Manejo de errores y registros  
-16. Dependencias  
-17. Ejecución del sistema  
-18. Puntos de extensión  
-19. Desarrollo futuro de ANS Redes  
-20. Recomendaciones de mantenimiento  
-21. Riesgos técnicos  
-22. Checklist de entrega  
+16. Ejecución del sistema  
+17. Desarrollo futuro de ANS Redes  
+18. Guía rápida para una reunión  
 
 ---
 
-## 1. Introducción técnica
+## 1. Cómo explicar el desarrollo
 
-El proyecto **Generador de Informes ANS - ATC CHEC** es una aplicación desarrollada en Python para automatizar el procesamiento, cálculo y presentación de información relacionada con los Acuerdos de Nivel de Servicio —ANS—.
+Antes de hablar del código, lo primero es explicar la necesidad que dio origen a la herramienta.
 
-El sistema procesa archivos operativos y genera:
+> Primero entendí el proceso operativo, revisé los archivos de entrada, identifiqué las columnas necesarias y confirmé las reglas para calcular los estados ANS.  
+> Después dividí el desarrollo en partes pequeñas: lectura, validación, limpieza, cálculo, generación del informe, actualización del Dashboard e interfaz.  
+> Para la implementación utilicé documentación, librerías de Python, ejemplos, videos e Inteligencia Artificial como apoyo. La lógica del proceso, las pruebas y la validación de los resultados se realizaron con base en la necesidad real de la operación.
 
-- Informe consolidado en Excel.
-- Actualización del Dashboard.
-- Información para análisis geográfico.
-- Mapa de pedidos según su ubicación.
+No es necesario explicar el código línea por línea. Lo importante es saber:
 
-El desarrollo utiliza una estructura modular. Cada archivo Python tiene una responsabilidad específica, facilitando su mantenimiento y evolución.
+- qué información entra;
+- qué proceso se realiza;
+- qué archivo se encarga;
+- qué resultado se genera.
 
 ---
 
-## 2. Objetivo del sistema
+## 2. Qué problema resuelve
 
-El objetivo del sistema es transformar archivos operativos en información ANS validada y lista para análisis.
+El sistema automatiza el procesamiento de la información ANS de ATC CHEC.
 
-La aplicación permite:
+Permite:
 
-- Leer archivos de entrada.
-- Validar columnas y datos requeridos.
-- Aplicar reglas de negocio.
-- Calcular fechas y estados ANS.
-- Generar el informe final.
+- Leer archivos Excel de entrada.
+- Validar que tengan la estructura requerida.
+- Limpiar y organizar la información.
+- Aplicar reglas contractuales.
+- Calcular fechas límite y estados ANS.
+- Generar el informe final en Excel.
 - Actualizar el Dashboard.
 - Preparar información para mapas.
 
-> **Resultado esperado:** reducir actividades manuales y entregar información confiable para el seguimiento de pedidos.
+> **Resultado esperado:** reducir tareas manuales y entregar información confiable para el seguimiento de los pedidos.
 
 ---
 
-## 3. Alcance actual
+## 3. Cómo está organizado
 
-Actualmente, el sistema cubre las siguientes funcionalidades:
+El desarrollo está dividido por responsabilidades para evitar que toda la lógica quede en un solo archivo.
 
-| Funcionalidad | Estado |
+| Parte | Responsabilidad |
 |---|---|
-| Lectura de archivos Excel | Implementada |
-| Lectura de archivos CSV | Disponible |
-| Validación de columnas | Implementada |
-| Limpieza y transformación | Implementada |
-| Cálculo de fechas ANS | Implementada |
-| Clasificación de estados | Implementada |
-| Generación del informe Excel | Implementada |
-| Actualización del Dashboard | Implementada |
-| Normalización de direcciones | Implementada |
-| Generación de mapas | En ajuste y validación |
-| Módulo ANS Redes | Desarrollo futuro |
+| Interfaz | Recibe las acciones del usuario. |
+| Procesador | Coordina el orden del proceso. |
+| Lectores | Cargan los archivos de entrada. |
+| Validador | Revisa la estructura de los Excel. |
+| Transformador | Limpia y organiza los datos. |
+| Calculador | Aplica las reglas ANS. |
+| Generadores | Crean el Excel, el Dashboard y el mapa. |
+| Configuración | Administra rutas y nombres de archivos. |
+| Registros | Guarda eventos y errores. |
 
-El alcance actual está orientado al procesamiento de información ANS de ATC CHEC. La incorporación de nuevas fuentes o reglas debe realizarse mediante módulos separados.
+> **Regla principal:** la interfaz no debe contener cálculos, filtros ni reglas de negocio.
 
 ---
 
-## 4. Arquitectura general
-
-La aplicación utiliza una arquitectura modular basada en capas funcionales.
-
-```text
-Usuario
-   │
-   ▼
-Interfaz gráfica
-   │
-   ▼
-Procesador principal
-   │
-   ├── Lectura
-   ├── Validación
-   ├── Transformación
-   ├── Cálculo ANS
-   └── Generación de resultados
-          │
-          ├── Informe Excel
-          ├── Dashboard
-          └── Mapa ANS
-```
-
-### Capas principales
-
-| Capa | Responsabilidad |
-|---|---|
-| Presentación | Interacción con el usuario mediante la interfaz. |
-| Coordinación | Control del flujo completo del proceso. |
-| Datos | Lectura y validación de archivos. |
-| Negocio | Transformación y cálculo de estados ANS. |
-| Salida | Generación de Excel, Dashboard y mapas. |
-| Soporte | Configuración, rutas y registros de ejecución. |
-
----
-
-## 5. Separación de responsabilidades
-
-Cada módulo realiza una tarea concreta:
-
-- La interfaz recibe las acciones del usuario.
-- El procesador coordina el flujo general.
-- Los lectores cargan los archivos.
-- El validador revisa la estructura.
-- El transformador limpia los datos.
-- El calculador aplica las reglas ANS.
-- Los generadores producen los resultados.
-- Los módulos geográficos procesan direcciones y mapas.
-
-Esta separación permite identificar rápidamente dónde debe realizarse un cambio.
-
-> **Recomendación:** no incorporar cálculos, lectura de archivos o reglas de negocio directamente dentro de `interfaz.py`.
-
----
-
-## 6. Flujo de ejecución
-
-El proceso general funciona de la siguiente manera:
+## 4. Flujo general
 
 ```text
 iniciar.bat
@@ -190,7 +108,7 @@ interfaz.py
      ▼
 procesador_informe.py
      │
-     ├── lector_excel.py / lector_csv.py
+     ├── lector_excel.py
      ├── validador.py
      ├── transformador.py
      ├── calculador_ans.py
@@ -199,34 +117,35 @@ procesador_informe.py
      └── módulos de mapas
 ```
 
-### Secuencia principal
+### Secuencia del proceso
 
 1. El usuario ejecuta `iniciar.bat` o `main.py`.
-2. Se abre la interfaz gráfica.
-3. El usuario inicia la generación del informe.
-4. El sistema identifica el archivo de entrada.
-5. Se validan las columnas requeridas.
-6. Los datos se limpian y transforman.
-7. Se calculan fechas y estados ANS.
-8. Se genera el informe Excel.
-9. Se actualiza el Dashboard.
-10. Cuando corresponde, se genera el mapa.
-11. El sistema informa el resultado al usuario.
-
-> `procesador_informe.py` coordina el proceso, pero delega cada actividad al módulo correspondiente.
+2. Se abre la interfaz.
+3. El usuario genera el informe.
+4. El sistema identifica los archivos Excel de entrada.
+5. Valida que tengan las columnas requeridas.
+6. Limpia y organiza la información.
+7. Aplica las reglas contractuales.
+8. Calcula fechas y estados ANS.
+9. Genera el informe Excel.
+10. Actualiza el Dashboard.
+11. Cuando aplica, genera el mapa.
+12. Muestra el resultado al usuario.
 
 ---
 
-## 7. Estructura de carpetas
+## 5. Estructura de carpetas
 
 ```text
 Informe_ANS_ATC_CHEC
 │
+├── config
 ├── dashboard
 ├── entrada
 ├── logs
 ├── mapas
 ├── salida
+│
 ├── src
 │   ├── __init__.py
 │   ├── actualizador_dashboard.py
@@ -254,72 +173,41 @@ Informe_ANS_ATC_CHEC
 
 | Carpeta | Función |
 |---|---|
-| `entrada` | Contiene los archivos que serán procesados. |
+| `config` | Contiene archivos de configuración funcional. |
+| `entrada` | Guarda los archivos Excel que serán procesados. |
 | `salida` | Guarda los informes generados. |
 | `dashboard` | Contiene el archivo de análisis visual. |
-| `mapas` | Guarda recursos y resultados geográficos. |
-| `logs` | Almacena registros de ejecución y errores. |
-| `src` | Contiene el código fuente del sistema. |
+| `mapas` | Guarda archivos relacionados con ubicación geográfica. |
+| `logs` | Contiene registros de ejecución y errores. |
+| `src` | Contiene el código fuente. |
 
-### Archivos de la raíz
-
-| Archivo | Función |
-|---|---|
-| `main.py` | Punto de entrada de la aplicación. |
-| `iniciar.bat` | Ejecuta la aplicación en Windows. |
-| `requirements.txt` | Lista las dependencias del proyecto. |
-| `README.md` | Presenta información general del desarrollo. |
-
-> Las carpetas `venv` y `__pycache__` son generadas por Python y no contienen reglas del negocio.
+> `venv` y `__pycache__` son carpetas generadas por Python. No contienen reglas de negocio.
 
 ---
 
-## 8. Módulos Python
+## 6. Función de cada archivo Python
 
-### Inicio y coordinación
-
-| Archivo | Responsabilidad |
+| Pregunta | Archivo principal |
 |---|---|
-| `main.py` | Inicia la aplicación y abre la interfaz. |
-| `src/interfaz.py` | Contiene la ventana, botones y mensajes al usuario. |
-| `src/procesador_informe.py` | Coordina el procesamiento completo. |
-| `src/__init__.py` | Identifica `src` como paquete Python. |
+| ¿Dónde inicia la aplicación? | `main.py` |
+| ¿Dónde está la interfaz? | `src/interfaz.py` |
+| ¿Quién coordina el proceso? | `src/procesador_informe.py` |
+| ¿Dónde se leen los Excel? | `src/lector_excel.py` |
+| ¿Dónde se leen CSV? | `src/lector_csv.py` |
+| ¿Dónde se validan los Excel? | `src/validador.py` |
+| ¿Dónde se limpian los datos? | `src/transformador.py` |
+| ¿Dónde se calculan los días ANS? | `src/calculador_ans.py` |
+| ¿Dónde se genera el Excel? | `src/generador_excel.py` |
+| ¿Dónde se actualiza el Dashboard? | `src/actualizador_dashboard.py` |
+| ¿Dónde se normalizan direcciones? | `src/normalizador_direcciones.py` |
+| ¿Dónde se convierten direcciones en coordenadas? | `src/geocodificador.py` |
+| ¿Dónde se genera el mapa? | `src/generador_mapa.py` |
+| ¿Dónde están las rutas? | `src/config.py` |
+| ¿Dónde se registran errores? | `src/logging_config.py` |
 
-### Lectura y validación
+### Archivos que requieren mayor cuidado
 
-| Archivo | Responsabilidad |
-|---|---|
-| `src/lector_excel.py` | Lee archivos en formato Excel. |
-| `src/lector_csv.py` | Lee archivos en formato CSV. |
-| `src/validador.py` | Verifica columnas, estructura y datos requeridos. |
-
-### Transformación y cálculo
-
-| Archivo | Responsabilidad |
-|---|---|
-| `src/transformador.py` | Limpia, organiza y estandariza la información. |
-| `src/calculador_ans.py` | Calcula fechas, días restantes y estados ANS. |
-| `src/normalizador_direcciones.py` | Estandariza direcciones para su ubicación geográfica. |
-
-### Generación de resultados
-
-| Archivo | Responsabilidad |
-|---|---|
-| `src/generador_excel.py` | Genera el informe final en Excel. |
-| `src/actualizador_dashboard.py` | Actualiza la información utilizada por el Dashboard. |
-| `src/geocodificador.py` | Convierte direcciones en coordenadas. |
-| `src/generador_mapa.py` | Genera el mapa de pedidos. |
-
-### Configuración y soporte
-
-| Archivo | Responsabilidad |
-|---|---|
-| `src/config.py` | Centraliza rutas, nombres y parámetros generales. |
-| `src/logging_config.py` | Configura los registros de ejecución y errores. |
-
-### Archivos críticos
-
-Los siguientes módulos requieren análisis previo antes de ser modificados:
+Los siguientes archivos pueden afectar directamente los resultados:
 
 - `calculador_ans.py`
 - `transformador.py`
@@ -327,238 +215,243 @@ Los siguientes módulos requieren análisis previo antes de ser modificados:
 - `procesador_informe.py`
 - `actualizador_dashboard.py`
 
-Un cambio en estos archivos puede afectar los cálculos o la estructura del resultado.
+Antes de modificarlos se debe revisar el impacto y realizar pruebas.
 
 ---
 
-## 9. Archivos de configuración
+## 7. Archivos de configuración
 
-La configuración técnica se centraliza principalmente en:
+### `src/config.py`
 
-```text
-src/config.py
-```
+Centraliza:
 
-Este archivo administra:
+- rutas del proyecto;
+- nombres de archivos;
+- ubicación de entrada y salida;
+- ubicación del Dashboard;
+- ubicación de mapas y registros.
 
-- Rutas de las carpetas.
-- Nombres de archivos.
-- Ubicación del Dashboard.
-- Ubicación de entradas y salidas.
-- Recursos utilizados por la aplicación.
+Las rutas deben construirse desde la carpeta raíz usando `pathlib`.
 
-Las rutas deben construirse de forma relativa desde la raíz del proyecto mediante `pathlib`.
+No se deben utilizar rutas fijas como:
 
 ```text
-Raíz del proyecto
-   ├── entrada
-   ├── salida
-   ├── dashboard
-   ├── mapas
-   └── logs
+C:\Users\NombreUsuario\Desktop\Proyecto
 ```
 
-> **Advertencia:** no se deben utilizar rutas absolutas asociadas al nombre de un usuario o equipo específico.
+### `config/DIAS_CONTRACTUALES.xlsx`
 
-Las reglas operativas parametrizables pueden almacenarse en archivos externos de configuración, evitando modificar el código cuando cambien días contractuales, prioridades o festivos.
+Contiene reglas que pueden ajustarse sin modificar el código, por ejemplo:
+
+- días pactados por municipio;
+- parámetros generales;
+- festivos adicionales;
+- reglas de prioridad.
+
+> Antes de modificar este archivo se recomienda crear una copia de respaldo.
 
 ---
 
-## 10. Archivos de entrada y salida
+## 8. Archivos de entrada y salida
 
 ### Entrada
 
-Los archivos operativos se ubican en:
+Los archivos se ubican en:
 
 ```text
 entrada/
 ```
 
-El sistema espera columnas relacionadas con:
+Antes de ejecutar el proceso:
 
-- Pedido.
-- Dirección.
-- Municipio.
-- Actividad.
-- Producto.
-- Fecha de inicio ANS.
-- Días pactados.
-- Observación.
-
-Antes de procesarlos se recomienda:
-
-- Mantener el archivo cerrado.
-- No cambiar los encabezados requeridos.
-- Evitar archivos adicionales en la carpeta.
-- Verificar que las fechas sean válidas.
+- el archivo debe estar cerrado;
+- no se deben cambiar los encabezados;
+- se debe verificar que tenga información;
+- se deben evitar archivos adicionales;
+- las fechas deben ser válidas.
 
 ### Salida
 
-Los resultados se almacenan en:
+Los resultados se guardan en:
 
 ```text
 salida/
 ```
 
-El archivo principal generado corresponde al informe consolidado ANS.
+El informe puede incluir:
 
-La información resultante puede incluir:
-
-- Fecha límite ANS.
-- Días transcurridos.
-- Días restantes.
-- Estado del pedido.
-- Información operativa original.
-
-### Otros resultados
-
-| Carpeta | Resultado |
-|---|---|
-| `dashboard` | Archivo utilizado para análisis visual. |
-| `mapas` | Archivos geográficos y mapa generado. |
-| `logs` | Registro técnico del proceso. |
+- información original del pedido;
+- fecha límite ANS;
+- días transcurridos;
+- días restantes;
+- estado ANS.
 
 ---
 
-## 11. Reglas de negocio
+## 9. Reglas de negocio y cálculo ANS
 
-Las reglas de negocio determinan cómo se calculan y clasifican los pedidos.
+La lógica principal se encuentra en:
 
-### Reglas principales
+```text
+src/calculador_ans.py
+```
 
-- La fecha de inicio ANS debe ser válida.
-- Los días pactados dependen de la actividad o condición contractual.
-- El cálculo excluye sábados, domingos y festivos.
-- La fecha límite se calcula utilizando días hábiles.
-- Los días restantes se obtienen comparando la fecha actual con la fecha límite.
-- El estado se asigna según el resultado del cálculo.
+El sistema toma:
 
-### Estados ANS
+- fecha de inicio;
+- días pactados;
+- sábados y domingos;
+- festivos nacionales;
+- festivos adicionales.
 
-| Estado | Descripción |
+Después calcula:
+
+| Campo | Descripción |
 |---|---|
-| `VENCIDOS` | La fecha límite ya fue superada. |
-| `ALERTA 0 DÍAS` | El pedido se encuentra en el límite de vencimiento. |
-| `A TIEMPO` | El pedido todavía se encuentra dentro del plazo. |
+| `FECHA_LIMITE_ANS` | Último día permitido para atender el pedido. |
+| `DIAS_TRANSCURRIDOS` | Días laborales consumidos. |
+| `DIAS_RESTANTES` | Días laborales disponibles. |
+| `ESTADO` | Situación actual del pedido. |
 
-### Ubicación técnica
+### Estados
 
-| Tipo de regla | Ubicación recomendada |
+| Condición | Estado |
 |---|---|
-| Cálculo de fechas | `calculador_ans.py` |
-| Limpieza de datos | `transformador.py` |
-| Columnas obligatorias | `validador.py` |
-| Parámetros modificables | Archivo externo de configuración |
-| Rutas y nombres | `config.py` |
+| Días restantes menores que cero | `VENCIDOS` |
+| Días restantes iguales a cero | `ALERTA 0 DÍAS` |
+| Días restantes mayores que cero | `A TIEMPO` |
 
-> **Advertencia:** una modificación en los estados, días pactados o calendario laboral debe validarse con el área funcional antes de llevarse a producción.
+### Validación de un día laboral
+
+De forma general, el sistema revisa:
+
+```text
+¿Es sábado?        → no se cuenta
+¿Es domingo?       → no se cuenta
+¿Es festivo?       → no se cuenta
+En otro caso       → sí se cuenta
+```
+
+> Un cambio en días pactados, estados o calendario laboral debe validarse con el área responsable antes de usarlo en producción.
 
 ---
 
-## 12. Generación del informe Excel
+## 10. Lectura de `DIAS_CONTRACTUALES.xlsx`
 
-La generación del archivo final se realiza desde:
+El archivo se lee principalmente desde:
+
+```text
+src/calculador_ans.py
+```
+
+No se lee desde `validador.py`.
+
+El proceso utiliza Pandas:
+
+```python
+pd.read_excel(
+    ruta_archivo,
+    sheet_name=nombre_hoja,
+    dtype=object,
+    engine="openpyxl",
+)
+```
+
+### Qué significa
+
+| Elemento | Función |
+|---|---|
+| `ruta_archivo` | Ubicación de `DIAS_CONTRACTUALES.xlsx`. |
+| `sheet_name` | Nombre de la hoja que se va a leer. |
+| `dtype=object` | Carga los datos sin forzar inicialmente su tipo. |
+| `engine="openpyxl"` | Utiliza OpenPyXL para abrir el archivo `.xlsx`. |
+
+### Flujo
+
+```text
+config/DIAS_CONTRACTUALES.xlsx
+               │
+               ▼
+      calculador_ans.py
+               │
+               ├── valida que exista
+               ├── lee REGLAS_DE_NEGOCIO
+               ├── lee PARAMETROS
+               └── lee FESTIVOS_ADICIONALES
+               │
+               ▼
+      aplica los cálculos ANS
+```
+
+Cuando el usuario modifica y guarda el archivo, los cambios se aplican en la siguiente generación del informe.
+
+> **Frase clave:** `calculador_ans.py` no solo calcula; también carga las reglas que necesita para realizar el cálculo.
+
+---
+
+## 11. Generación del informe Excel
+
+El archivo final se genera desde:
 
 ```text
 src/generador_excel.py
 ```
 
-Este módulo recibe la información ya validada y calculada. No debería contener reglas de cálculo ANS.
+Este módulo:
 
-### Responsabilidades
+- recibe los datos ya calculados;
+- organiza las columnas;
+- aplica encabezados y formatos;
+- ajusta anchos;
+- agrega filtros;
+- resalta estados;
+- guarda el resultado en `salida`.
 
-- Crear el archivo Excel.
-- Organizar las columnas.
-- Aplicar encabezados y formatos.
-- Ajustar anchos de columnas.
-- Aplicar filtros.
-- Resaltar estados mediante colores.
-- Guardar el resultado en la carpeta `salida`.
-
-### Flujo
-
-```text
-Datos calculados
-      │
-      ▼
-generador_excel.py
-      │
-      ├── Organiza columnas
-      ├── Aplica formato
-      ├── Agrega filtros
-      └── Guarda el archivo
-```
-
-> **Recomendación:** si se modifica el diseño visual del informe, el cambio debe realizarse en `generador_excel.py`. Si cambia un cálculo, debe revisarse `calculador_ans.py`.
+> Si cambia el diseño del Excel, se revisa `generador_excel.py`.  
+> Si cambia un cálculo, se revisa `calculador_ans.py`.
 
 ---
 
-## 13. Actualización del Dashboard
+## 12. Actualización del Dashboard
 
-La actualización del Dashboard se realiza mediante:
+La actualización se realiza desde:
 
 ```text
 src/actualizador_dashboard.py
 ```
 
-Su responsabilidad es trasladar la información generada al archivo utilizado para análisis visual.
+El módulo:
 
-### Proceso general
+1. localiza el informe generado;
+2. localiza el archivo del Dashboard;
+3. actualiza la hoja de datos;
+4. conserva gráficos, tablas y segmentadores;
+5. guarda el archivo actualizado.
 
-1. Verifica la existencia del informe generado.
-2. Localiza el archivo del Dashboard.
-3. Abre el archivo conservando su estructura.
-4. Actualiza la hoja de datos.
-5. Mantiene las hojas de visualización.
-6. Guarda el archivo actualizado.
+### Cuidados
 
-```text
-Informe generado
-       │
-       ▼
-actualizador_dashboard.py
-       │
-       ▼
-Hoja de datos del Dashboard
-       │
-       ▼
-Indicadores, tablas y gráficos
-```
-
-### Consideraciones técnicas
-
-- No cambiar el nombre de la hoja de datos sin actualizar el código.
-- No eliminar tablas dinámicas, gráficos o segmentadores.
-- Mantener una copia de respaldo antes de modificar el archivo.
-- Validar que la cantidad y el orden de las columnas sean compatibles.
-- El Dashboard debe estar cerrado durante la actualización.
-
-> **Advertencia:** este módulo modifica un archivo existente. Cualquier cambio debe probarse sobre una copia antes de utilizarse en producción.
+- El Dashboard debe estar cerrado.
+- No se debe cambiar el nombre de la hoja de datos sin revisar el código.
+- No se deben eliminar tablas dinámicas ni segmentadores.
+- Se recomienda trabajar primero sobre una copia.
 
 ---
 
----
+## 13. Interfaz gráfica
 
-## 14. Construcción de la interfaz gráfica
-
-La interfaz del sistema fue desarrollada con **Tkinter**, librería incluida con Python para crear aplicaciones de escritorio.
-
-El módulo responsable es:
+La interfaz fue creada con Tkinter y se encuentra en:
 
 ```text
 src/interfaz.py
 ```
 
-### Responsabilidades de la interfaz
+Su función es:
 
-- Crear la ventana principal.
-- Mostrar títulos, imágenes y botones.
-- Recibir las acciones del usuario.
-- Ejecutar la generación del informe.
-- Ejecutar la generación del mapa.
-- Mostrar mensajes de éxito, advertencia o error.
-
-La interfaz no debe contener cálculos ANS ni reglas de negocio. Su función principal es conectar al usuario con los procesos internos.
+- crear la ventana;
+- mostrar títulos, imágenes y botones;
+- recibir las acciones del usuario;
+- mostrar mensajes de éxito o error;
+- llamar los procesos internos.
 
 ### Flujo de un botón
 
@@ -569,418 +462,99 @@ Usuario presiona un botón
 interfaz.py recibe la acción
           │
           ▼
-Llama al procesador correspondiente
+llama al procesador
           │
           ▼
-El sistema ejecuta el proceso
+el sistema ejecuta el proceso
           │
           ▼
-La interfaz muestra el resultado
+la interfaz muestra el resultado
 ```
 
-### Componentes principales de Tkinter
+### Componentes habituales
 
-| Componente | Función |
+| Componente | Uso |
 |---|---|
 | `Tk` | Crea la ventana principal. |
-| `Frame` | Organiza los componentes visuales. |
-| `Label` | Muestra textos, títulos e imágenes. |
-| `Button` | Permite ejecutar acciones. |
-| `messagebox` | Muestra mensajes al usuario. |
-| `PhotoImage` o `ImageTk` | Permite cargar imágenes en la interfaz. |
-
-> **Nota técnica:** si la interfaz utiliza `ttk`, `ttkbootstrap` o `Pillow`, estas librerías también deben incluirse en la documentación y en `requirements.txt`.
+| `Frame` | Organiza los elementos. |
+| `Label` | Muestra textos e imágenes. |
+| `Button` | Ejecuta acciones. |
+| `messagebox` | Muestra mensajes. |
+| `ImageTk` o `PhotoImage` | Carga imágenes. |
 
 ---
 
-## 15. Librerías utilizadas
+## 14. Librerías utilizadas
 
-Las dependencias externas del proyecto se encuentran registradas en:
+| Librería | Uso |
+|---|---|
+| `pandas` | Lectura, limpieza y transformación de datos. |
+| `openpyxl` | Lectura, edición y formato de Excel. |
+| `tkinter` | Interfaz gráfica. |
+| `pathlib` | Manejo de rutas portables. |
+| `logging` | Registro de eventos y errores. |
+| `datetime` | Manejo de fechas. |
+| `Pillow` | Carga de imágenes, si aplica. |
+| `folium` | Generación de mapas, si aplica. |
+| `geopy` | Conversión de direcciones en coordenadas, si aplica. |
+
+Las dependencias externas deben estar registradas en:
 
 ```text
 requirements.txt
 ```
 
-Las librerías estándar de Python no siempre se incluyen en este archivo, pero también hacen parte del funcionamiento del sistema.
-
-### Librerías principales
-
-| Librería | Uso dentro del proyecto |
-|---|---|
-| `pandas` | Lectura, limpieza, transformación y análisis de datos. |
-| `openpyxl` | Creación, edición y formato de archivos Excel. |
-| `tkinter` | Construcción de la interfaz gráfica. |
-| `pathlib` | Manejo de rutas relativas y portables. |
-| `logging` | Registro de eventos, advertencias y errores. |
-| `datetime` | Manejo de fechas y tiempos. |
-
-### Librerías que pueden intervenir
-
-| Librería | Uso posible |
-|---|---|
-| `Pillow` | Carga y redimensionamiento de imágenes. |
-| `numpy` | Cálculos relacionados con días hábiles. |
-| `folium` | Generación de mapas HTML. |
-| `geopy` | Conversión de direcciones en coordenadas. |
-| `holidays` | Manejo de festivos oficiales. |
-| `xlwings` | Automatización de archivos Excel con macros. |
-
-> **Advertencia:** esta lista debe compararse con los `import` reales del proyecto y con `requirements.txt`. No deben documentarse librerías que no estén siendo utilizadas.
-
 ---
 
-## 16. Cálculo de días laborales
+## 15. Manejo de errores y registros
 
-La lógica principal del cálculo ANS se encuentra en:
-
-```text
-src/calculador_ans.py
-```
-
-Este módulo determina fechas límite, días transcurridos, días restantes y estados ANS.
-
-### Días excluidos
-
-El cálculo debe excluir:
-
-- Sábados.
-- Domingos.
-- Festivos nacionales.
-- Festivos adicionales configurados para la operación.
-
-### Flujo del cálculo
-
-```text
-Fecha de inicio ANS
-        │
-        ▼
-Cantidad de días pactados
-        │
-        ▼
-Validación de días laborales
-        │
-        ▼
-Cálculo de fecha límite
-        │
-        ▼
-Comparación con la fecha actual
-        │
-        ▼
-Asignación del estado ANS
-```
-
-### Ejemplo conceptual
-
-```text
-Lunes       → se cuenta
-Martes      → se cuenta
-Miércoles   → festivo, no se cuenta
-Jueves      → se cuenta
-Viernes     → se cuenta
-Sábado      → no se cuenta
-Domingo     → no se cuenta
-```
-
-```text
-def es_dia_habil(
-    fecha: date,
-    excluir_sabados: bool,
-    excluir_domingos: bool,
-    festivos: set[date],
-) -> bool:
-    """
-    Determina si una fecha cuenta como día contractual.
-    """
-
-    if (
-        excluir_sabados
-        and fecha.weekday() == 5
-    ):
-        return False
-
-    if (
-        excluir_domingos
-        and fecha.weekday() == 6
-    ):
-        return False
-
-    if fecha in festivos:
-        return False
-
-    return True
-```
-
-### Campos calculados
-
-| Campo | Descripción |
-|---|---|
-| `FECHA_LIMITE_ANS` | Última fecha permitida para atender el pedido. |
-| `DIAS_TRANSCURRIDOS` | Días laborales consumidos desde el inicio. |
-| `DIAS_RESTANTES` | Días laborales disponibles antes del vencimiento. |
-| `ESTADO` | Clasificación actual del pedido. |
-
-### Clasificación general
-
-| Condición | Estado |
-|---|---|
-| Días restantes menores que cero | `VENCIDOS` |
-| Días restantes iguales a cero | `ALERTA 0 DÍAS` |
-| Días restantes mayores que cero | `A TIEMPO` |
-
-> **Validación importante:** debe confirmarse en el código si el día inicial se cuenta dentro del plazo o si el cálculo empieza desde el siguiente día laboral.
-
----
-
-## 17. Validación de los archivos Excel de entrada
-
-```text
-src/validador.py
-```
-
-Este módulo Verifica que existan archivos Excel en la carpeta entrada,  revisa que el archivo pueda procesarse antes de aplicar transformaciones y cálculos.
-
-
-### Validaciones principales
-
-- Existencia del archivo.
-- Formato permitido.
-- Presencia de columnas obligatorias.
-- Archivo con registros.
-- Fechas válidas.
-- Campos requeridos no vacíos.
-- Ausencia de columnas duplicadas.
-- Existencia de valores necesarios para el cálculo.
-
-### Flujo de validación
-
-```text
-Carpeta entrada
-      │
-      ▼
-Búsqueda de archivos Excel
-      │
-      ▼
-Lectura de cada archivo
-      │
-      ▼
-Validación de columnas
-      │
-      ├── Archivo válido → continúa
-      │
-      └── Archivo inválido → se detiene y muestra el error
-```
-
-### Columnas esperadas
-
-Las columnas pueden variar según la fuente, pero el sistema trabaja principalmente con:
-
-```text
-PEDIDO
-DIRECCION
-MUNICIPIO
-ACTIVIDAD
-PRODUCTO
-FECHA_INICIO_ANS
-DIAS_PACTADOS
-OBSERVACION
-```
-
-> **Recomendación:** las columnas obligatorias deben definirse en un único lugar para evitar diferencias entre el lector, el validador y el transformador.
-
----
-
-## 18. Coordinación del procesamiento
-
-El módulo:
-
-```text
-src/procesador_informe.py
-```
-
-actúa como coordinador general del sistema.
-
-Su función no es realizar todas las tareas directamente, sino llamar cada módulo en el orden correcto.
-
-```text
-procesador_informe.py
-        │
-        ├── Localiza el archivo
-        ├── Llama al lector
-        ├── Llama al validador
-        ├── Llama al transformador
-        ├── Llama al calculador ANS
-        ├── Llama al generador Excel
-        ├── Llama al actualizador del Dashboard
-        └── Devuelve el resultado a la interfaz
-```
-
-### Responsabilidad técnica
-
-`procesador_informe.py` debe concentrarse en:
-
-- Coordinar el flujo.
-- Controlar el orden de ejecución.
-- Gestionar resultados.
-- Propagar mensajes o errores.
-- Evitar duplicar lógica de otros módulos.
-
-> **Regla técnica:** el procesador coordina; los demás módulos ejecutan tareas especializadas.
-
----
-
-## 19. Transformación de la información
-
-La limpieza y preparación de los datos se realiza en:
-
-```text
-src/transformador.py
-```
-
-Este módulo recibe la información leída desde Excel o CSV y la prepara antes de los cálculos ANS.
-
-### Responsabilidades principales
-
-- Limpiar nombres de columnas.
-- Eliminar espacios innecesarios.
-- Normalizar textos.
-- Convertir fechas.
-- Convertir valores numéricos.
-- Estandarizar campos operativos.
-- Preparar la estructura final de datos.
-
-### Flujo
-
-```text
-Datos originales
-      │
-      ▼
-transformador.py
-      │
-      ├── Limpieza
-      ├── Conversión de tipos
-      ├── Normalización
-      └── Preparación para cálculo
-```
-
-> **Advertencia:** cualquier cambio en la transformación puede afectar la validación, los cálculos y la estructura del informe final.
-
----
-
-## 20. Manejo de rutas portables
-
-La administración de rutas se centraliza en:
-
-```text
-src/config.py
-```
-
-El proyecto debe utilizar rutas relativas construidas desde la carpeta raíz.
-
-### Estructura esperada
-
-```text
-Raíz del proyecto
-   ├── entrada
-   ├── salida
-   ├── dashboard
-   ├── mapas
-   ├── logs
-   └── src
-```
-
-### Principio técnico
-
-Las rutas deben construirse con `pathlib`, evitando referencias fijas como:
-
-```text
-C:\Users\NombreUsuario\Desktop\Proyecto
-```
-
-Esto permite instalar el proyecto en diferentes equipos sin modificar el código.
-
-> **Recomendación:** cualquier nueva carpeta o archivo permanente debe registrarse en `config.py`.
-
----
-
-## 21. Manejo de errores y registros
-
-La configuración de registros se encuentra en:
+Los registros se configuran desde:
 
 ```text
 src/logging_config.py
 ```
 
-Este módulo permite guardar información técnica sobre la ejecución.
+Pueden guardar:
 
-### Información que debe registrarse
+- inicio y final del proceso;
+- archivo procesado;
+- cantidad de registros;
+- validaciones realizadas;
+- errores encontrados;
+- archivo generado;
+- actualización del Dashboard;
+- generación del mapa.
 
-- Inicio del proceso.
-- Archivo procesado.
-- Cantidad de registros.
-- Validaciones realizadas.
-- Errores encontrados.
-- Archivo generado.
-- Actualización del Dashboard.
-- Inicio y finalización del mapa.
-
-### Flujo de registro
+Los registros se almacenan en:
 
 ```text
-Proceso ejecutado
-       │
-       ▼
-Evento o error
-       │
-       ▼
-logging_config.py
-       │
-       ▼
-Archivo dentro de logs
+logs/
 ```
-
-Los registros facilitan la identificación de errores sin depender únicamente de los mensajes mostrados en pantalla.
-
-> **Recomendación:** no almacenar información sensible o innecesaria dentro de los archivos de log.
 
 ---
 
-## 22. Ejecución del sistema
+## 16. Ejecución del sistema
 
-El sistema puede ejecutarse mediante:
+El sistema se puede iniciar mediante:
 
 ```text
 iniciar.bat
 ```
 
-o directamente con:
+o directamente:
 
-```text
+```bash
 python main.py
 ```
 
-### Flujo de inicio
-
-```text
-iniciar.bat
-    │
-    ▼
-Activa el entorno virtual
-    │
-    ▼
-Ejecuta main.py
-    │
-    ▼
-Se abre la interfaz
-```
-
-### Requisitos previos
+### Requisitos
 
 - Python instalado.
 - Entorno virtual creado.
 - Dependencias instaladas.
 - Estructura de carpetas completa.
-- Archivo de entrada disponible.
-- Dashboard cerrado antes de actualizarlo.
+- Archivos Excel disponibles.
+- Dashboard cerrado.
 
 ### Instalación de dependencias
 
@@ -988,126 +562,143 @@ Se abre la interfaz
 pip install -r requirements.txt
 ```
 
-> **Advertencia:** el sistema debe ejecutarse desde la carpeta raíz del proyecto para garantizar que las rutas relativas funcionen correctamente.
-
 ---
 
+## 17. Desarrollo futuro de ANS Redes
 
----
+ANS Redes se desarrollará dentro del mismo proyecto, pero como un submódulo independiente.
 
-## Desarrollo futuro del módulo ANS Redes
+### Decisión
 
-El módulo **ANS Redes** puede desarrollarse dentro del mismo proyecto **Informe_ANS_ATC_CHEC**, debido a que hace parte de la misma solución general de seguimiento ANS.
+- ANS Conexiones permanece como está.
+- No se mueven sus archivos actuales.
+- No se modifican sus importaciones.
+- Se crea únicamente una nueva carpeta dentro de `src`.
 
-Sin embargo, debe mantenerse separado del módulo **ANS Conexiones** para evitar mezclar:
-
-- Filtros.
-- Reglas de negocio.
-- Validaciones.
-- Estados.
-- Usuarios.
-- Archivos de salida.
-
-### Estructura recomendada
+### Estructura propuesta
 
 ```text
-Informe_ANS_ATC_CHEC
+src
+├── archivos actuales de ANS Conexiones
 │
-├── dashboard
-├── entrada
-├── logs
-├── mapas
-├── salida
-├── src
-│   ├── comunes
-│   │   ├── lector_excel.py
-│   │   ├── logging_config.py
-│   │   ├── normalizador_direcciones.py
-│   │   └── utilidades_fechas.py
-│   │
-│   ├── ans_conexiones
-│   │   ├── procesador.py
-│   │   ├── validador.py
-│   │   ├── calculador_ans.py
-│   │   └── generador_excel.py
-│   │
-│   ├── ans_redes
-│   │   ├── procesador.py
-│   │   ├── validador.py
-│   │   ├── filtros.py
-│   │   ├── calculador_ans.py
-│   │   └── generador_excel.py
-│   │
-│   ├── config.py
-│   ├── interfaz.py
-│   └── actualizador_dashboard.py
-│
-├── main.py
-├── iniciar.bat
-└── requirements.txt
+└── ans_redes
+    ├── __init__.py
+    ├── procesador.py
+    ├── validador.py
+    ├── filtros.py
+    ├── calculador_ans.py
+    └── generador_excel.py
 ```
----
 
-## Responsabilidad de cada grupo
+### Qué es un submódulo
 
-| Componente | Responsabilidad |
+Es una carpeta dentro de `src` que reúne los archivos de una funcionalidad específica.
+
+En este caso:
+
+```text
+src/ans_redes/
+```
+
+contendrá únicamente la lógica de Redes.
+
+### Responsabilidad de sus archivos
+
+| Archivo | Responsabilidad |
 |---|---|
-| `comunes` | Contiene funciones reutilizables por ANS Conexiones y ANS Redes. |
-| `ans_conexiones` | Contiene las reglas y procesos específicos del módulo actual. |
-| `ans_redes` | Contendrá los filtros, validaciones y cálculos propios de Redes. |
-| `interfaz.py` | Permitirá seleccionar qué proceso ejecutar. |
-| `config.py` | Mantendrá las rutas y parámetros generales del proyecto. |
-| `actualizador_dashboard.py` | Actualizará el Dashboard común o podrá dividirse si cada módulo utiliza un Dashboard diferente. |
+| `__init__.py` | Identifica la carpeta como paquete Python. |
+| `procesador.py` | Coordina todo el flujo de Redes. |
+| `validador.py` | Revisa los Excel de Redes. |
+| `filtros.py` | Aplica procesos, códigos, estados y usuarios. |
+| `calculador_ans.py` | Calcula los estados ANS de Redes. |
+| `generador_excel.py` | Genera el informe final de Redes. |
 
----
+### Orden para iniciar el desarrollo
 
 ```text
 Analizar el requerimiento
           │
           ▼
-Revisar el archivo de entrada
+Revisar el archivo fuente
           │
           ▼
-Identificar columnas, filtros y estados
+Identificar columnas y filtros
           │
           ▼
 Confirmar reglas de negocio
           │
           ▼
-Crear la carpeta ans_redes
+Crear src/ans_redes
           │
           ▼
-Desarrollar lectura, validación y filtros
-          │
-          ▼
-Aplicar cálculo ANS
-          │
-          ▼
-Generar el informe
+Desarrollar y probar cada parte
           │
           ▼
 Validar resultados con los usuarios
 ```
 
-## Reglas que deben confirmarse
+### Integración con la interfaz
 
-Antes de iniciar el desarrollo se deben validar, como mínimo:
+El botón se crea en:
 
-- Procesos que deben incluirse.
-- Códigos de proceso válidos.
-- Estados permitidos.
-- Columnas obligatorias.
-- Días pactados.
-- Festivos y días no laborales.
-- Estructura del archivo de salida.
-- Reglas de actualización del Dashboard.
+```text
+src/interfaz.py
+```
+
+El botón solo inicia el proceso. La lógica debe permanecer en:
+
+```text
+src/ans_redes/procesador.py
+```
+
+### Flujo del botón
+
+```text
+Usuario presiona “Generar ANS Redes”
+                 │
+                 ▼
+interfaz.py
+                 │
+                 ▼
+procesar_ans_redes()
+                 │
+                 ▼
+src/ans_redes/procesador.py
+                 │
+                 ├── valida
+                 ├── filtra
+                 ├── calcula
+                 └── genera el informe
+```
+
+### Importación esperada
+
+```python
+from src.ans_redes.procesador import procesar_ans_redes
+```
+
+> **Decisión técnica:** primero se agrega ANS Redes sin reorganizar ANS Conexiones. Una posible estructura común se evaluará después, cuando ambos procesos estén estables.
 
 ---
 
-## Explicación para una reunión
+## 18. Guía rápida para una reunión
 
-El módulo ANS Redes puede desarrollarse dentro del mismo proyecto porque hace parte de la misma solución. Sin embargo, lo separaría internamente de ANS Conexiones para no mezclar reglas, filtros, validaciones ni resultados. Ambos módulos podrían reutilizar componentes comunes, como la lectura de Excel, el manejo de fechas y los registros de errores.
+### Si preguntan: “¿Cómo creó el desarrollo?”
 
-La idea es mantener un solo proyecto, pero con responsabilidades claramente separadas para facilitar su mantenimiento y evolución futura.
+> Primero entendí el proceso y las reglas del negocio. Después dividí la solución en partes: lectura, validación, transformación, cálculo, generación del Excel, Dashboard e interfaz. Para la implementación utilicé documentación, librerías, ejemplos e Inteligencia Artificial como apoyo. Finalmente realicé pruebas y validé que el resultado respondiera a la necesidad real.
 
-Recomendación técnica: no duplicar el entorno virtual, la interfaz ni la configuración general. La separación debe realizarse dentro de src, creando módulos específicos para cada proceso.
+### Si preguntan: “¿Cómo está dividido?”
+
+> La interfaz recibe la acción del usuario, el procesador coordina el flujo, el validador revisa los Excel, el transformador organiza los datos, el calculador aplica las reglas ANS y los generadores producen los resultados.
+
+### Si preguntan: “¿Cómo empezaría ANS Redes?”
+
+> Primero analizaría el archivo y confirmaría el requerimiento. Después identificaría columnas, filtros, códigos, estados y reglas. Luego crearía `src/ans_redes` como un submódulo independiente, sin mover ANS Conexiones, y desarrollaría allí la validación, los filtros, el cálculo y la generación del informe.
+
+### Si preguntan algo muy específico
+
+> Entiendo el flujo completo y la responsabilidad de cada módulo. Para un detalle de implementación puntual, revisaría el código correspondiente para dar una respuesta exacta.
+
+### Frase final
+
+> No es necesario memorizar todo el código. Lo importante es entender el problema, saber cómo está organizada la solución y poder ubicar rápidamente dónde se realiza cada proceso.
