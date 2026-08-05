@@ -435,6 +435,173 @@ El módulo:
 - No se deben eliminar tablas dinámicas ni segmentadores.
 - Se recomienda trabajar primero sobre una copia.
 
+### Macro para abrir el mapa ANS
+
+El archivo del Dashboard contiene una macro llamada:
+
+```text
+AbrirMapaANS_ATC_CHEC
+```
+
+Su función es localizar y abrir el archivo:
+
+```text
+mapas/Mapa_ANS_ELITE.html
+```
+
+en el navegador predeterminado del equipo.
+
+La macro no genera el mapa. El mapa debe haber sido creado previamente desde la aplicación.
+
+### Ubicación esperada
+
+Para que la macro funcione, se debe conservar esta estructura:
+
+```text
+Informe_ANS_ATC_CHEC
+│
+├── dashboard
+│   └── INFORME_ANS.xlsb
+│
+└── mapas
+    └── Mapa_ANS_ELITE.html
+```
+
+El Dashboard se encuentra dentro de la carpeta `dashboard`, mientras que el mapa se encuentra dentro de la carpeta `mapas`.
+
+---
+
+### Cómo encuentra el mapa
+
+La macro no utiliza una ruta fija asociada al nombre del usuario o al equipo.
+
+Primero obtiene la ubicación del Dashboard mediante:
+
+```vb
+rutaDashboard = ThisWorkbook.Path
+```
+
+Por ejemplo:
+
+```text
+C:\...\Informe_ANS_ATC_CHEC\dashboard
+```
+
+Después sube un nivel para obtener la carpeta principal del proyecto:
+
+```vb
+rutaProyecto = CreateObject( _
+    "Scripting.FileSystemObject" _
+).GetParentFolderName(rutaDashboard)
+```
+
+El resultado sería:
+
+```text
+C:\...\Informe_ANS_ATC_CHEC
+```
+
+Luego construye la ruta completa del mapa:
+
+```vb
+rutaMapa = _
+    rutaProyecto & _
+    "\mapas\Mapa_ANS_ELITE.html"
+```
+
+La ruta final queda así:
+
+```text
+C:\...\Informe_ANS_ATC_CHEC\mapas\Mapa_ANS_ELITE.html
+```
+
+---
+
+### Flujo de la macro
+
+```text
+INFORME_ANS.xlsb
+       │
+       ▼
+Obtiene la carpeta dashboard
+       │
+       ▼
+Sube a la carpeta principal del proyecto
+       │
+       ▼
+Busca mapas\Mapa_ANS_ELITE.html
+       │
+       ▼
+Valida que el archivo exista
+       │
+       ▼
+Abre el mapa en el navegador
+```
+
+---
+
+### Validaciones realizadas
+
+La macro valida dos situaciones antes de abrir el archivo.
+
+#### Dashboard sin guardar
+
+Si el archivo `INFORME_ANS.xlsb` todavía no tiene una ubicación guardada, la macro detiene el proceso y solicita guardar el Dashboard.
+
+```vb
+If rutaDashboard = "" Then
+```
+
+#### Mapa no encontrado
+
+Antes de abrir el mapa, verifica que el archivo exista:
+
+```vb
+If Dir(rutaMapa) = "" Then
+```
+
+Si el mapa no se encuentra, informa al usuario la ruta esperada y solicita generar primero el mapa desde la aplicación.
+
+---
+
+### Apertura del mapa
+
+Cuando el archivo existe, se abre mediante:
+
+```vb
+ThisWorkbook.FollowHyperlink _
+    Address:=rutaMapa, _
+    NewWindow:=True
+```
+
+Esta instrucción abre `Mapa_ANS_ELITE.html` en el navegador predeterminado de Windows.
+
+---
+
+### Por qué siempre abre el mapa actualizado
+
+La macro busca siempre el mismo nombre:
+
+```text
+Mapa_ANS_ELITE.html
+```
+
+Cuando Python vuelve a generar el mapa, actualiza o reemplaza el archivo anterior manteniendo el mismo nombre.
+
+Por esta razón, la macro siempre abre la versión que actualmente se encuentra dentro de la carpeta `mapas`.
+
+> **Importante:** si se cambia el nombre del archivo o de la carpeta `mapas`, también se debe actualizar la ruta construida dentro de la macro.
+
+---
+
+### Explicación para una reunión
+
+> La macro toma como punto de referencia la ubicación del Dashboard. Como el Dashboard está dentro de la carpeta `dashboard`, sube un nivel hasta la carpeta principal del proyecto y luego entra a `mapas` para buscar `Mapa_ANS_ELITE.html`. Antes de abrirlo valida que el archivo exista y, si lo encuentra, lo muestra en el navegador predeterminado.
+
+### Frase clave
+
+> La macro no tiene una ruta fija del computador; construye la ubicación del mapa a partir de la carpeta donde está guardado el Dashboard.
+
 ---
 
 ## 13. Interfaz gráfica
