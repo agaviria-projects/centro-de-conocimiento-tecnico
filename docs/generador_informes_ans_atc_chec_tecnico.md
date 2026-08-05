@@ -233,6 +233,10 @@ Centraliza:
 
 Las rutas deben construirse desde la carpeta raíz usando `pathlib`.
 
+- pathlib es un módulo incluido con Python;
+- no necesitas instalarla con pip;
+- normalmente no aparece en requirements.txt.
+
 No se deben utilizar rutas fijas como:
 
 ```text
