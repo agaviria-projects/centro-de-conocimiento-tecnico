@@ -435,7 +435,7 @@ El módulo:
 - No se deben eliminar tablas dinámicas ni segmentadores.
 - Se recomienda trabajar primero sobre una copia.
 
-### Macro para abrir el mapa ANS
+### 12.1 Macro para abrir el mapa ANS
 
 El archivo del Dashboard contiene una macro llamada:
 
