@@ -338,6 +338,330 @@ En otro caso       → sí se cuenta
 
 > Un cambio en días pactados, estados o calendario laboral debe validarse con el área responsable antes de usarlo en producción.
 
+## Validación de días hábiles
+
+La función `es_dia_habil()` determina si una fecha debe contarse o no dentro del cálculo contractual del ANS.
+
+```python
+def es_dia_habil(
+    fecha: date,
+    excluir_sabados: bool,
+    excluir_domingos: bool,
+    festivos: set[date],
+) -> bool:
+    """
+    Determina si una fecha cuenta como día contractual.
+    """
+
+    if (
+        excluir_sabados
+        and fecha.weekday() == 5
+    ):
+        return False
+
+    if (
+        excluir_domingos
+        and fecha.weekday() == 6
+    ):
+        return False
+
+    if fecha in festivos:
+        return False
+
+    return True
+```
+
+---
+
+## Cómo interpreta los valores del Excel
+
+Valida que la fecha sea sábado (True) y que la regla para excluir sábados esté activa (True).
+Como ambas condiciones son verdaderas, el if se cumple. Entonces ejecuta return False para indicar que ese día no es hábil y no debe contarse.
+
+¿Excluir sábados está activo? → True
+¿La fecha es sábado?          → True
+True AND True                 → True
+La condición se cumple
+Se ejecuta return False
+La fecha no cuenta como hábil
+
+En el archivo `DIAS_CONTRACTUALES.xlsx` aparecen parámetros como:
+
+```text
+EXCLUIR_SABADOS = SI
+EXCLUIR_DOMINGOS = SI
+```
+
+El sistema convierte esos valores de texto en valores booleanos de Python:
+
+```text
+SI → True
+NO → False
+```
+
+Por lo tanto, si en Excel aparece:
+
+```text
+EXCLUIR_SABADOS = SI
+```
+
+Python lo interpreta como:
+
+```python
+excluir_sabados = True
+```
+
+Y si aparece:
+
+```text
+EXCLUIR_DOMINGOS = SI
+```
+
+Python lo interpreta como:
+
+```python
+excluir_domingos = True
+```
+
+Esto significa que las reglas para excluir sábados y domingos están activadas.
+
+No significa todavía que la fecha sea hábil o no hábil.
+
+---
+
+## Cómo se evalúa un sábado
+
+La condición utilizada es:
+
+```python
+if excluir_sabados and fecha.weekday() == 5:
+    return False
+```
+
+Python revisa dos condiciones:
+
+```text
+¿La exclusión de sábados está activa? → True
+¿La fecha evaluada es sábado?         → True
+```
+
+Cuando ambas condiciones son verdaderas, la función devuelve:
+
+```python
+return False
+```
+
+En este caso, `False` significa:
+
+> La fecha no es un día hábil y no debe contarse dentro del cálculo ANS.
+
+### Flujo del sábado
+
+```text
+Excel: EXCLUIR_SABADOS = SI
+              │
+              ▼
+Python convierte SI en True
+              │
+              ▼
+La exclusión de sábados queda activa
+              │
+              ▼
+La fecha evaluada es sábado
+              │
+              ▼
+return False
+              │
+              ▼
+El sábado no se cuenta como día hábil
+```
+
+---
+
+## Cómo se evalúa un domingo
+
+La condición utilizada es:
+
+```python
+if excluir_domingos and fecha.weekday() == 6:
+    return False
+```
+
+Python revisa:
+
+```text
+¿La exclusión de domingos está activa? → True
+¿La fecha evaluada es domingo?         → True
+```
+
+Cuando ambas condiciones son verdaderas, la función devuelve:
+
+```python
+return False
+```
+
+Esto significa que el domingo no debe contarse como día hábil.
+
+### Flujo del domingo
+
+```text
+Excel: EXCLUIR_DOMINGOS = SI
+               │
+               ▼
+Python convierte SI en True
+               │
+               ▼
+La exclusión de domingos queda activa
+               │
+               ▼
+La fecha evaluada es domingo
+               │
+               ▼
+return False
+               │
+               ▼
+El domingo no se cuenta como día hábil
+```
+
+---
+
+## Cómo se evalúa un festivo
+
+La función también revisa si la fecha está dentro del conjunto de festivos:
+
+```python
+if fecha in festivos:
+    return False
+```
+
+Si la fecha aparece en la lista de festivos, la función devuelve:
+
+```python
+return False
+```
+
+Esto significa que el festivo tampoco debe contarse dentro del cálculo contractual.
+
+---
+
+## Cuándo devuelve `True`
+
+Si la fecha:
+
+- no es un sábado excluido;
+- no es un domingo excluido;
+- no está en la lista de festivos;
+
+la función llega al final y devuelve:
+
+```python
+return True
+```
+
+En este caso, `True` significa:
+
+> La fecha sí es un día hábil y debe contarse dentro del cálculo ANS.
+
+---
+
+## Diferencia entre los valores
+
+| Valor | Significado |
+|---|---|
+| `EXCLUIR_SABADOS = SI` | En Excel se activa la regla para excluir sábados. |
+| `excluir_sabados = True` | En Python la exclusión de sábados está activa. |
+| `EXCLUIR_DOMINGOS = SI` | En Excel se activa la regla para excluir domingos. |
+| `excluir_domingos = True` | En Python la exclusión de domingos está activa. |
+| `return False` | La fecha evaluada no es un día hábil. |
+| `return True` | La fecha evaluada sí es un día hábil. |
+
+---
+
+## Numeración de los días en Python
+
+Python identifica los días de la semana de la siguiente manera:
+
+| Día | Valor |
+|---|---:|
+| Lunes | `0` |
+| Martes | `1` |
+| Miércoles | `2` |
+| Jueves | `3` |
+| Viernes | `4` |
+| Sábado | `5` |
+| Domingo | `6` |
+
+Por esta razón:
+
+```python
+fecha.weekday() == 5
+```
+
+significa que la fecha es sábado.
+
+Y:
+
+```python
+fecha.weekday() == 6
+```
+
+significa que la fecha es domingo.
+
+---
+
+## Ejemplo de resultados
+
+Con estos parámetros en Excel:
+
+```text
+EXCLUIR_SABADOS = SI
+EXCLUIR_DOMINGOS = SI
+```
+
+Python trabaja internamente así:
+
+```python
+excluir_sabados = True
+excluir_domingos = True
+```
+
+El resultado sería:
+
+| Fecha evaluada | Resultado de la función | Interpretación |
+|---|---:|---|
+| Viernes normal | `True` | Sí cuenta como día hábil. |
+| Sábado | `False` | No cuenta como día hábil. |
+| Domingo | `False` | No cuenta como día hábil. |
+| Lunes festivo | `False` | No cuenta como día hábil. |
+| Martes normal | `True` | Sí cuenta como día hábil. |
+
+---
+
+## Resumen del proceso
+
+```text
+Valor en Excel
+      │
+      ▼
+SI se convierte en True
+      │
+      ▼
+La regla de exclusión queda activa
+      │
+      ▼
+Se revisa la fecha
+      │
+      ├── Sábado excluido  → return False
+      ├── Domingo excluido → return False
+      ├── Festivo          → return False
+      └── Día normal       → return True
+```
+
+---
+
+## Frase clave
+
+> El valor `SI` del Excel se convierte en `True` para activar la regla de exclusión. Después, si la fecha corresponde a un sábado, domingo o festivo excluido, la función devuelve `False`, indicando que ese día no es hábil y no debe contarse.
 ---
 
 ## 10. Lectura de `DIAS_CONTRACTUALES.xlsx`
