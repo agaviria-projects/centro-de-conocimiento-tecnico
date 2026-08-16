@@ -384,3 +384,51 @@ No se recomienda eliminar reglas anteriores; cuando sea posible, es preferible u
 > Si cambia un responsable, se agrega o se desactiva desde Excel. Si un sábado empieza a considerarse hábil, se cambia `EXCLUIR_SABADOS` de `SI` a `NO`. Si cambia el porcentaje de alerta, se modifica el porcentaje en la tabla contractual.
 >
 > Al volver a generar el informe, el sistema toma automáticamente la nueva configuración, recalcula fechas límite, días transcurridos, días restantes y estado, y posteriormente el dashboard se actualiza con los nuevos resultados.
+
+---
+
+# 12. Aclaración sobre sábados, domingos y festivos en ANS REDES
+
+En **ANS REDES**, la librería `holidays` sí participa, pero **no a través del script contractual de ANS Conexiones**.
+
+La lógica de calendario de ANS REDES se encuentra en:
+
+`src/calculador_ans_redes.py`
+
+Dentro de este módulo se utiliza la librería:
+
+`holidays`
+
+Su función es identificar los **festivos oficiales de Colombia** cuando la regla:
+
+`EXCLUIR_FESTIVOS_COLOMBIA = SI`
+
+está activa en la hoja `CONFIGURACION_REDES`.
+
+Es importante diferenciar cada regla:
+
+- **Sábados:** se controlan mediante `EXCLUIR_SABADOS`.
+- **Domingos:** se controlan mediante `EXCLUIR_DOMINGOS`.
+- **Festivos oficiales de Colombia:** se controlan mediante `EXCLUIR_FESTIVOS_COLOMBIA` y para identificarlos participa la librería `holidays`.
+
+Por lo tanto, los domingos **no dependen de la librería `holidays`**. Se identifican directamente por el día de la semana.
+
+El comportamiento funcional es:
+
+```text
+EXCLUIR_SABADOS = SI
+→ los sábados no cuentan.
+
+EXCLUIR_DOMINGOS = SI
+→ los domingos no cuentan.
+
+EXCLUIR_FESTIVOS_COLOMBIA = SI
+→ los festivos oficiales de Colombia no cuentan.
+```
+
+Si alguna de estas reglas cambia a `NO`, ese tipo de día pasa a participar nuevamente en el cálculo contractual.
+
+## Respuesta corta si lo preguntan en reunión
+
+> En ANS REDES la librería `holidays` sí se utiliza, pero únicamente para reconocer los festivos oficiales de Colombia. Los sábados y domingos se controlan directamente mediante los parámetros configurados en Excel. Toda esta lógica está implementada en `calculador_ans_redes.py`, de forma independiente a la lógica contractual de ANS Conexiones.
+
