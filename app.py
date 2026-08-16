@@ -151,6 +151,7 @@ st.caption("Base personal para explicar y defender los desarrollos implementados
 opciones = [
     "📊 Generador de Informes ANS",
     "🏢 Generador ANS - ATC CHEC",
+    "🌐 ANS REDES - ATC CHEC",
     "📧 Seguimiento ANS",
     "🎓 Portal Formación Elite",
     "📄 Compresor PDF",
@@ -317,6 +318,96 @@ Artificial como herramienta de asistencia.
                 f"No se encontró el archivo:\n\n{ruta}"
             )
                 
+elif opcion == "🌐 ANS REDES - ATC CHEC":
+
+    with st.expander(
+        "🎤 Guía Rápida para Reuniones",
+        expanded=False,
+    ):
+
+        st.warning("""
+### 🎤 Cómo explicar ANS REDES en una reunión
+
+ANS REDES es un módulo creado para controlar los tiempos de atención de los
+procesos de redes y facilitar la priorización operativa.
+
+El usuario genera el informe desde el formulario y el sistema toma las reglas
+de negocio configuradas en `FILTROS_ANS_REDES.xlsx`.
+
+Desde ese archivo se pueden administrar responsables, procesos, días
+contractuales, porcentaje de alerta y reglas de calendario sin modificar el
+código Python.
+
+Posteriormente el informe generado alimenta el Dashboard ANS REDES, donde se
+pueden consultar los pedidos vencidos, en alerta, alerta 0 días y a tiempo,
+además de filtrar por proceso, clasificación, estado, responsable y municipio.
+
+---
+
+### 🏗️ Flujo general
+
+Archivo exportado  
+↓  
+Carpeta `entrada_redes`  
+↓  
+GENERAR INFORME ANS REDES  
+↓  
+`INFORME_ANS_REDES.xlsx`  
+↓  
+ACTUALIZAR DASHBOARD  
+↓  
+`INFORME ANS-REDES.xlsb`  
+↓  
+Análisis operativo  
+
+---
+
+### 🎯 Punto clave para la presentación
+
+La principal ventaja es que las reglas funcionales no quedan fijas en el
+código.
+
+Ejemplos:
+
+- Un responsable nuevo se agrega en Excel.
+- Un responsable se puede desactivar usando `ACTIVO = NO`.
+- Los días contractuales se pueden modificar desde Excel.
+- El porcentaje de alerta se puede cambiar sin tocar Python.
+- Si un sábado debe empezar a contar como día hábil, se cambia la regla en
+  `CONFIGURACION_REDES`.
+- El mismo principio aplica para domingos y festivos.
+
+Al volver a generar el informe, el sistema toma automáticamente la nueva
+configuración.
+
+---
+
+### ❓ Si me preguntan si yo hice el desarrollo
+
+Sí.
+
+El desarrollo fue implementado por mí para resolver una necesidad real de
+seguimiento operativo de ANS Redes.
+
+La necesidad, las reglas de negocio, la parametrización, las pruebas, la
+validación de resultados y el diseño funcional fueron definidos y verificados
+directamente por mí.
+
+Para apoyar y acelerar la implementación técnica utilicé Inteligencia
+Artificial como herramienta de asistencia.
+        """)
+
+    ruta = Path(
+        "docs/ans_redes_funcional.md"
+    )
+
+    if ruta.exists():
+        mostrar_markdown(ruta)
+    else:
+        st.error(
+            "No se encontró el archivo docs/ans_redes_funcional.md"
+        )
+
 elif opcion == "📧 Seguimiento ANS":
 
     with st.expander(
