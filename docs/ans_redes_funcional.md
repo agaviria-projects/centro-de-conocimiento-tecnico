@@ -428,6 +428,8 @@ EXCLUIR_FESTIVOS_COLOMBIA = SI
 
 Si alguna de estas reglas cambia a `NO`, ese tipo de día pasa a participar nuevamente en el cálculo contractual.
 
+> Excel define la regla y Python solamente la interpreta y la ejecuta.
+
 ## Respuesta corta si lo preguntan en reunión
 
 > En ANS REDES la librería `holidays` sí se utiliza, pero únicamente para reconocer los festivos oficiales de Colombia. Los sábados y domingos se controlan directamente mediante los parámetros configurados en Excel. Toda esta lógica está implementada en `calculador_ans_redes.py`, de forma independiente a la lógica contractual de ANS Conexiones.
