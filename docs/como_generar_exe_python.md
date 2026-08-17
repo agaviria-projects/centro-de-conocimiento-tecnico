@@ -671,3 +671,87 @@ Si durante las pruebas aparece una dependencia no detectada, se agrega el `--hid
 # Regla final
 
 > PyInstaller no reemplaza las pruebas. El `.exe` se considera listo únicamente cuando funciona correctamente desde la carpeta `dist` y después en un computador diferente al equipo donde fue desarrollado.
+
+---
+
+# ⚠️ ACTUALIZACIÓN DE UNA APLICACIÓN YA ENTREGADA
+
+<div style="background-color:#fff3cd; border-left:6px solid #f0ad4e; padding:14px; border-radius:6px;">
+
+## 🚨 IMPORTANTE: NO REEMPLAZAR A CIEGAS LAS CARPETAS OPERATIVAS
+
+Cuando una aplicación ya fue entregada al usuario y posteriormente se modifica algún archivo `.py`, se debe generar una nueva versión del `.exe`.
+
+Sin embargo, **no se debe reemplazar toda la carpeta de la aplicación sin revisar primero qué información ya existe en el computador del usuario**.
+
+### ✅ Normalmente se pueden reemplazar
+
+```text
+_internal/
+Informe_ANS_ATC_CHEC.exe
+assets/        → si cambió
+dashboard/     → si cambió
+config/        → si cambió
+mapas/         → si cambió
+```
+
+### ❌ Se deben conservar especialmente
+
+```text
+entrada/
+entrada_redes/
+salida/
+salida_redes/
+logs/
+```
+
+Estas carpetas pueden contener archivos operativos, informes generados o información propia del usuario.
+
+</div>
+
+## Regla práctica
+
+```text
+¿Cambió código Python?
+→ Probar con py main.py
+→ Volver a compilar con PyInstaller
+→ Generar nuevo .exe y nuevo _internal
+
+¿Cambió solamente un archivo externo?
+→ No es necesario recompilar
+→ Reemplazar únicamente ese archivo
+```
+
+## Antes de actualizar en otro computador
+
+1. Hacer una copia de seguridad de la carpeta actualmente instalada.
+2. Cerrar la aplicación.
+3. Reemplazar `Informe_ANS_ATC_CHEC.exe`.
+4. Reemplazar `_internal/`.
+5. Reemplazar `assets/`, `config/`, `dashboard/` o `mapas/` únicamente si realmente cambiaron.
+6. Conservar `entrada/`, `entrada_redes/`, `salida/`, `salida_redes/` y `logs/`.
+7. Ejecutar nuevamente la aplicación.
+8. Validar las funciones principales.
+
+> **Regla de seguridad:** antes de reemplazar `config/` o `dashboard/`, verificar si el usuario realizó cambios propios. Si existen cambios locales, respaldarlos primero.
+
+## Flujo resumido de actualización
+
+```text
+Modificar .py
+↓
+Probar con py main.py
+↓
+Compilar nueva versión
+↓
+Respaldar versión instalada
+↓
+Reemplazar .exe + _internal
+↓
+Actualizar solo carpetas técnicas que cambiaron
+↓
+Conservar entrada / salida / logs
+↓
+Probar nuevamente
+```
+
