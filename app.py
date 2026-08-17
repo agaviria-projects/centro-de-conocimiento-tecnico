@@ -152,6 +152,7 @@ opciones = [
     "📊 Generador de Informes ANS",
     "🏢 Generador ANS - ATC CHEC",
     "🌐 ANS REDES - ATC CHEC",
+    "🖥️ Generar ejecutable Python",
     "📧 Seguimiento ANS",
     "🎓 Portal Formación Elite",
     "📄 Compresor PDF",
@@ -406,6 +407,30 @@ Artificial como herramienta de asistencia.
     else:
         st.error(
             "No se encontró el archivo docs/ans_redes_funcional.md"
+        )
+
+elif opcion == "🖥️ Generar ejecutable Python":
+
+    st.header("🖥️ Generar ejecutable Python")
+
+    st.info("""
+Esta sección documenta el procedimiento utilizado para convertir un
+desarrollo Python en una versión distribuible para Windows mediante
+**PyInstaller**, sin entregar directamente los archivos `.py`.
+
+Incluye preparación de rutas, imports, compilación, estructura de entrega,
+pruebas en otro computador y creación del acceso directo.
+    """)
+
+    ruta = Path(
+        "docs/como_generar_exe_python.md"
+    )
+
+    if ruta.exists():
+        mostrar_markdown(ruta)
+    else:
+        st.error(
+            "No se encontró el archivo docs/como_generar_exe_python.md"
         )
 
 elif opcion == "📧 Seguimiento ANS":
