@@ -98,11 +98,11 @@ from pathlib import Path
 import sys
 
 if getattr(sys, "frozen", False):
-    # Ejecutando como .exe
-    BASE_DIR = Path(sys.executable).resolve().parent
+    # Ejecutando como .exe
+    BASE_DIR = Path(sys.executable).resolve().parent
 else:
-    # Ejecutando desde Python
-    BASE_DIR = Path(__file__).resolve().parent.parent
+    # Ejecutando desde Python
+    BASE_DIR = Path(__file__).resolve().parent.parent
 ```
 
 Después todas las carpetas deben construirse desde `BASE_DIR`.
@@ -313,8 +313,8 @@ La versión distribuible queda dentro de:
 ```text
 dist/
 └── MiAplicacion/
-    ├── _internal/
-    └── MiAplicacion.exe
+    ├── _internal/
+    └── MiAplicacion.exe
 ```
 
 ## Regla importante
@@ -381,7 +381,7 @@ Antes de llevarlo a otro computador:
 ```text
 dist/
 └── MiAplicacion/
-    └── MiAplicacion.exe
+    └── MiAplicacion.exe
 ```
 
 Ejecutarlo desde esa carpeta.
@@ -637,7 +637,7 @@ logs/
 mapas/
 salida/
 salida_redes/
-Informe_ANS_ATC_CHEC.exe
+MiAplicacion.exe
 ```
 
 ---
@@ -676,19 +676,17 @@ Si durante las pruebas aparece una dependencia no detectada, se agrega el `--hid
 
 # ⚠️ ACTUALIZACIÓN DE UNA APLICACIÓN YA ENTREGADA
 
-<div style="background-color:#fff3cd; border-left:6px solid #f0ad4e; padding:14px; border-radius:6px;">
-
-## 🚨 IMPORTANTE: NO REEMPLAZAR A CIEGAS LAS CARPETAS OPERATIVAS
-
-Cuando una aplicación ya fue entregada al usuario y posteriormente se modifica algún archivo `.py`, se debe generar una nueva versión del `.exe`.
-
-Sin embargo, **no se debe reemplazar toda la carpeta de la aplicación sin revisar primero qué información ya existe en el computador del usuario**.
+> ⚠️ **IMPORTANTE: NO REEMPLAZAR A CIEGAS LAS CARPETAS OPERATIVAS**
+>
+> Cuando una aplicación ya fue entregada al usuario y posteriormente se modifica algún archivo `.py`, se debe generar una nueva versión del `.exe`.
+>
+> **No se debe reemplazar toda la carpeta de la aplicación sin revisar primero qué información ya existe en el computador del usuario.**
 
 ### ✅ Normalmente se pueden reemplazar
 
 ```text
 _internal/
-Informe_ANS_ATC_CHEC.exe
+MiAplicacion.exe
 assets/        → si cambió
 dashboard/     → si cambió
 config/        → si cambió
@@ -705,9 +703,8 @@ salida_redes/
 logs/
 ```
 
-Estas carpetas pueden contener archivos operativos, informes generados o información propia del usuario.
+> Estas carpetas pueden contener archivos operativos, informes generados o información propia del usuario.
 
-</div>
 
 ## Regla práctica
 
@@ -726,7 +723,7 @@ Estas carpetas pueden contener archivos operativos, informes generados o informa
 
 1. Hacer una copia de seguridad de la carpeta actualmente instalada.
 2. Cerrar la aplicación.
-3. Reemplazar `Informe_ANS_ATC_CHEC.exe`.
+3. Reemplazar el nuevo archivo `.exe` de la aplicación.
 4. Reemplazar `_internal/`.
 5. Reemplazar `assets/`, `config/`, `dashboard/` o `mapas/` únicamente si realmente cambiaron.
 6. Conservar `entrada/`, `entrada_redes/`, `salida/`, `salida_redes/` y `logs/`.
@@ -754,4 +751,3 @@ Conservar entrada / salida / logs
 ↓
 Probar nuevamente
 ```
-
