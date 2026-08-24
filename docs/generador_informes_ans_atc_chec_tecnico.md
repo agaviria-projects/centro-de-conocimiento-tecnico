@@ -401,7 +401,8 @@ El informe puede incluir:
 
 ### 8.1 Nota técnica: secuencias XML codificadas en exportes Excel
 
-En algunos exportes de **ANS Redes**, la información puede visualizarse normalmente al abrir el archivo en Excel, pero internamente ciertos caracteres pueden venir codificados mediante secuencias XML con el formato:
+Las secuencias XML son una forma de representar ciertos caracteres mediante códigos especiales dentro de un archivo.
+En algunos exportes la información puede visualizarse normalmente al abrir el archivo en Excel, pero internamente ciertos caracteres pueden venir codificados mediante secuencias XML con el formato:
 
 ```text
 _xHHHH_
