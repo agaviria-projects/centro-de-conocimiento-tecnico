@@ -1,66 +1,57 @@
-# Documentación Técnica  
-
+# Documentación Técnica
 # Generador de Informes ANS - ATC CHEC
-
 ## Información general
 
 | Campo | Descripción |
-
 |---|---|
-
 | Proyecto | Generador de Informes ANS - ATC CHEC |
-
 | Tipo de documento | Documentación técnica |
-
 | Dirigido a | Área de Tecnología de la Información |
-
 | Tecnología principal | Python |
-
 | Tipo de aplicación | Aplicación de escritorio |
-
 | Estado | En desarrollo |
-
 | Versión | 1.0 |
 
 ---
 
 ## Contenido
 
-1. Cómo explicar el desarrollo  
+1. Cómo explicar el desarrollo
 
-2. Qué problema resuelve  
+2. Qué problema resuelve
 
-3. Cómo está organizado  
+3. Cómo está organizado
 
-4. Flujo general  
+4. Flujo general
 
-5. Estructura de carpetas  
+5. Estructura de carpetas
 
-6. Función de cada archivo Python  
+6. Función de cada archivo Python
 
-7. Archivos de configuración  
+7. Archivos de configuración
 
-8. Archivos de entrada y salida  
+8. Archivos de entrada y salida
+8.1 Nota técnica: secuencias XML codificadas en exportes Excel
 
-9. Reglas de negocio y cálculo ANS  
+9. Reglas de negocio y cálculo ANS
 
-10. Lectura de `DIAS_CONTRACTUALES.xlsx`  
+10. Lectura de `DIAS_CONTRACTUALES.xlsx`
 
-11. Generación del informe Excel  
+11. Generación del informe Excel
 
-12. Actualización del Dashboard  
+12. Actualización del Dashboard
 
-13. Interfaz gráfica  
+13. Interfaz gráfica
 
-14. Librerías utilizadas  
+14. Librerías utilizadas
 
-15. Manejo de errores y registros  
+15. Manejo de errores y registros
 
-16. Ejecución del sistema  
+16. Ejecución del sistema
 
-17. Desarrollo futuro de ANS Redes  
+17. Desarrollo futuro de ANS Redes
 
-18. Guía rápida para una reunión  
+18. Guía rápida para una reunión
 
 ---
 
@@ -68,9 +59,9 @@
 
 Antes de hablar del código, lo primero es explicar la necesidad que dio origen a la herramienta.
 
-> Primero entendí el proceso operativo, revisé los archivos de entrada, identifiqué las columnas necesarias y confirmé las reglas para calcular los estados ANS.  
+> Primero entendí el proceso operativo, revisé los archivos de entrada, identifiqué las columnas necesarias y confirmé las reglas para calcular los estados ANS.
 
-> Después dividí el desarrollo en partes pequeñas: lectura, validación, limpieza, cálculo, generación del informe, actualización del Dashboard e interfaz.  
+> Después dividí el desarrollo en partes pequeñas: lectura, validación, limpieza, cálculo, generación del informe, actualización del Dashboard e interfaz.
 
 > Para la implementación utilicé documentación, librerías de Python, ejemplos, videos e Inteligencia Artificial como apoyo. La lógica del proceso, las pruebas y la validación de los resultados se realizaron con base en la necesidad real de la operación.
 
@@ -108,7 +99,7 @@ Permite:
 
 - Preparar información para mapas.
 
-> ****Resultado esperado:**** reducir tareas manuales y entregar información confiable para el seguimiento de los pedidos.
+> **Resultado esperado:** reducir tareas manuales y entregar información confiable para el seguimiento de los pedidos.
 
 ---
 
@@ -117,35 +108,24 @@ Permite:
 El desarrollo está dividido por responsabilidades para evitar que toda la lógica quede en un solo archivo.
 
 | Parte | Responsabilidad |
-
 |---|---|
-
 | Interfaz | Recibe las acciones del usuario. |
-
 | Procesador | Coordina el orden del proceso. |
-
 | Lectores | Cargan los archivos de entrada. |
-
 | Validador | Revisa la estructura de los Excel. |
-
 | Transformador | Limpia y organiza los datos. |
-
 | Calculador | Aplica las reglas ANS. |
-
 | Generadores | Crean el Excel, el Dashboard y el mapa. |
-
 | Configuración | Administra rutas y nombres de archivos. |
-
 | Registros | Guarda eventos y errores. |
 
-> ****Regla principal:**** la interfaz no debe contener cálculos, filtros ni reglas de negocio.
+> **Regla principal:** la interfaz no debe contener cálculos, filtros ni reglas de negocio.
 
 ---
 
 ## 4. Flujo general
 
 ```text
-
 iniciar.bat
 
      │
@@ -181,7 +161,6 @@ procesador_informe.py
      ├── actualizador_dashboard.py
 
      └── módulos de mapas
-
 ```
 
 ### Secuencia del proceso
@@ -215,7 +194,6 @@ procesador_informe.py
 ## 5. Estructura de carpetas
 
 ```text
-
 Informe_ANS_ATC_CHEC
 
 │
@@ -275,27 +253,18 @@ Informe_ANS_ATC_CHEC
 ├── requirements.txt
 
 └── README.md
-
 ```
 
 ### Función de las carpetas
 
 | Carpeta | Función |
-
 |---|---|
-
 | `config` | Contiene archivos de configuración funcional. |
-
 | `entrada` | Guarda los archivos Excel que serán procesados. |
-
 | `salida` | Guarda los informes generados. |
-
 | `dashboard` | Contiene el archivo de análisis visual. |
-
 | `mapas` | Guarda archivos relacionados con ubicación geográfica. |
-
 | `logs` | Contiene registros de ejecución y errores. |
-
 | `src` | Contiene el código fuente. |
 
 > `venv` y `__pycache__` son carpetas generadas por Python. No contienen reglas de negocio.
@@ -305,37 +274,21 @@ Informe_ANS_ATC_CHEC
 ## 6. Función de cada archivo Python
 
 | Pregunta | Archivo principal |
-
 |---|---|
-
 | ¿Dónde inicia la aplicación? | `main.py` |
-
 | ¿Dónde está la interfaz? | `src/interfaz.py` |
-
 | ¿Quién coordina el proceso? | `src/procesador_informe.py` |
-
 | ¿Dónde se leen los Excel? | `src/lector_excel.py` |
-
 | ¿Dónde se leen CSV? | `src/lector_csv.py` |
-
 | ¿Dónde se validan los Excel? | `src/validador.py` |
-
 | ¿Dónde se limpian los datos? | `src/transformador.py` |
-
 | ¿Dónde se calculan los días ANS? | `src/calculador_ans.py` |
-
 | ¿Dónde se genera el Excel? | `src/generador_excel.py` |
-
 | ¿Dónde se actualiza el Dashboard? | `src/actualizador_dashboard.py` |
-
 | ¿Dónde se normalizan direcciones? | `src/normalizador_direcciones.py` |
-
 | ¿Dónde se convierten direcciones en coordenadas? | `src/geocodificador.py` |
-
 | ¿Dónde se genera el mapa? | `src/generador_mapa.py` |
-
 | ¿Dónde están las rutas? | `src/config.py` |
-
 | ¿Dónde se registran errores? | `src/logging_config.py` |
 
 ### Archivos que requieren mayor cuidado
@@ -383,9 +336,7 @@ Las rutas deben construirse desde la carpeta raíz usando `pathlib`.
 No se deben utilizar rutas fijas como:
 
 ```text
-
 C:\Users\NombreUsuario\Desktop\Proyecto
-
 ```
 
 ### `config/DIAS_CONTRACTUALES.xlsx`
@@ -411,9 +362,7 @@ Contiene reglas que pueden ajustarse sin modificar el código, por ejemplo:
 Los archivos se ubican en:
 
 ```text
-
 entrada/
-
 ```
 
 Antes de ejecutar el proceso:
@@ -433,9 +382,7 @@ Antes de ejecutar el proceso:
 Los resultados se guardan en:
 
 ```text
-
 salida/
-
 ```
 
 El informe puede incluir:
@@ -452,14 +399,93 @@ El informe puede incluir:
 
 ---
 
+### 8.1 Nota técnica: secuencias XML codificadas en exportes Excel
+
+En algunos exportes de **ANS Redes**, la información puede visualizarse normalmente al abrir el archivo en Excel, pero internamente ciertos caracteres pueden venir codificados mediante secuencias XML con el formato:
+
+```text
+_xHHHH_
+```
+
+Los cuatro dígitos `HHHH` corresponden al código Unicode del carácter en formato hexadecimal.
+
+| Secuencia XML | Carácter real | Significado |
+|---|---|---|
+| `_x0020_` | ` ` | Espacio en blanco. |
+| `_x005C_` | `\` | Barra diagonal invertida o backslash. |
+| `_x0034_` | `4` | Dígito cuatro. |
+| `_x002F_` | `/` | Barra diagonal. |
+| `_x0030_` | `0` | Dígito cero. |
+
+#### Ejemplos detectados
+
+Un proceso puede llegar internamente como:
+
+```text
+_x0034_109
+```
+
+y debe interpretarse como:
+
+```text
+4109
+```
+
+Un responsable puede llegar como:
+
+```text
+CHEC_x005C_MCARVAAB
+```
+
+y debe interpretarse como:
+
+```text
+CHEC\MCARVAAB
+```
+
+Una fecha puede llegar internamente como:
+
+```text
+_x0030_9_x002F_02_x002F_2024_x0020_10:01:38
+```
+
+y debe interpretarse como:
+
+```text
+09/02/2024 10:01:38
+```
+
+#### Impacto en el desarrollo
+
+Si estas secuencias no se normalizan antes de aplicar los filtros y cálculos, el sistema puede:
+
+- no reconocer procesos configurados;
+- no reconocer responsables;
+- interpretar fechas como inválidas;
+- generar registros con estado `SIN FECHA`;
+- dejar el resultado de los filtros en cero registros.
+
+#### Ajuste implementado
+
+El módulo **ANS Redes** incorpora una normalización previa que decodifica estas secuencias XML antes de aplicar filtros, reglas contractuales y cálculos ANS.
+
+La corrección se validó con:
+
+- exportes anteriores que no presentaban esta codificación;
+- exportes nuevos que sí contenían secuencias `_xHHHH_`.
+
+De esta forma, el desarrollo mantiene compatibilidad con ambos formatos de exporte.
+
+> **Importante:** si en un futuro un exporte mantiene la misma estructura de columnas pero deja de ser reconocido correctamente, se debe revisar primero el contenido real leído por Python y no únicamente lo que Excel muestra visualmente.
+
+---
+
 ## 9. Reglas de negocio y cálculo ANS
 
 La lógica principal se encuentra en:
 
 ```text
-
 src/calculador_ans.py
-
 ```
 
 El sistema toma:
@@ -477,27 +503,18 @@ El sistema toma:
 Después calcula:
 
 | Campo | Descripción |
-
 |---|---|
-
 | `FECHA_LIMITE_ANS` | Último día permitido para atender el pedido. |
-
 | `DIAS_TRANSCURRIDOS` | Días laborales consumidos. |
-
 | `DIAS_RESTANTES` | Días laborales disponibles. |
-
 | `ESTADO` | Situación actual del pedido. |
 
 ### Estados
 
 | Condición | Estado |
-
 |---|---|
-
 | Días restantes menores que cero | `VENCIDOS` |
-
 | Días restantes iguales a cero | `ALERTA 0 DÍAS` |
-
 | Días restantes mayores que cero | `A TIEMPO` |
 
 ### Validación de un día laboral
@@ -505,7 +522,6 @@ Después calcula:
 De forma general, el sistema revisa:
 
 ```text
-
 ¿Es sábado?        → no se cuenta
 
 ¿Es domingo?       → no se cuenta
@@ -513,7 +529,6 @@ De forma general, el sistema revisa:
 ¿Es festivo?       → no se cuenta
 
 En otro caso       → sí se cuenta
-
 ```
 
 > Un cambio en días pactados, estados o calendario laboral debe validarse con el área responsable antes de usarlo en producción.
@@ -523,7 +538,6 @@ En otro caso       → sí se cuenta
 La función `es_dia_habil()` determina si una fecha debe contarse o no dentro del cálculo contractual del ANS.
 
 ```python
-
 def es_dia_habil(
 
     fecha: date,
@@ -567,7 +581,6 @@ def es_dia_habil(
         return False
 
     return True
-
 ```
 
 ---
@@ -593,53 +606,41 @@ La fecha no cuenta como hábil
 En el archivo `DIAS_CONTRACTUALES.xlsx` aparecen parámetros como:
 
 ```text
-
 EXCLUIR_SABADOS = SI
 
 EXCLUIR_DOMINGOS = SI
-
 ```
 
 El sistema convierte esos valores de texto en valores booleanos de Python:
 
 ```text
-
 SI → True
 
 NO → False
-
 ```
 
 Por lo tanto, si en Excel aparece:
 
 ```text
-
 EXCLUIR_SABADOS = SI
-
 ```
 
 Python lo interpreta como:
 
 ```python
-
 excluir_sabados = True
-
 ```
 
 Y si aparece:
 
 ```text
-
 EXCLUIR_DOMINGOS = SI
-
 ```
 
 Python lo interpreta como:
 
 ```python
-
 excluir_domingos = True
-
 ```
 
 Esto significa que las reglas para excluir sábados y domingos están activadas.
@@ -653,29 +654,23 @@ No significa todavía que la fecha sea hábil o no hábil.
 La condición utilizada es:
 
 ```python
-
 if excluir_sabados and fecha.weekday() == 5:
 
     return False
-
 ```
 
 Python revisa dos condiciones:
 
 ```text
-
 ¿La exclusión de sábados está activa? → True
 
 ¿La fecha evaluada es sábado?         → True
-
 ```
 
 Cuando ambas condiciones son verdaderas, la función devuelve:
 
 ```python
-
 return False
-
 ```
 
 En este caso, `False` significa:
@@ -685,7 +680,6 @@ En este caso, `False` significa:
 ### Flujo del sábado
 
 ```text
-
 Excel: EXCLUIR_SABADOS = SI
 
               │
@@ -717,7 +711,6 @@ return False
               ▼
 
 El sábado no se cuenta como día hábil
-
 ```
 
 ---
@@ -727,29 +720,23 @@ El sábado no se cuenta como día hábil
 La condición utilizada es:
 
 ```python
-
 if excluir_domingos and fecha.weekday() == 6:
 
     return False
-
 ```
 
 Python revisa:
 
 ```text
-
 ¿La exclusión de domingos está activa? → True
 
 ¿La fecha evaluada es domingo?         → True
-
 ```
 
 Cuando ambas condiciones son verdaderas, la función devuelve:
 
 ```python
-
 return False
-
 ```
 
 Esto significa que el domingo no debe contarse como día hábil.
@@ -757,7 +744,6 @@ Esto significa que el domingo no debe contarse como día hábil.
 ### Flujo del domingo
 
 ```text
-
 Excel: EXCLUIR_DOMINGOS = SI
 
                │
@@ -789,7 +775,6 @@ return False
                ▼
 
 El domingo no se cuenta como día hábil
-
 ```
 
 ---
@@ -799,19 +784,15 @@ El domingo no se cuenta como día hábil
 La función también revisa si la fecha está dentro del conjunto de festivos:
 
 ```python
-
 if fecha in festivos:
 
     return False
-
 ```
 
 Si la fecha aparece en la lista de festivos, la función devuelve:
 
 ```python
-
 return False
-
 ```
 
 Esto significa que el festivo tampoco debe contarse dentro del cálculo contractual.
@@ -831,9 +812,7 @@ Si la fecha:
 la función llega al final y devuelve:
 
 ```python
-
 return True
-
 ```
 
 En este caso, `True` significa:
@@ -845,19 +824,12 @@ En este caso, `True` significa:
 ## Diferencia entre los valores
 
 | Valor | Significado |
-
 |---|---|
-
 | `EXCLUIR_SABADOS = SI` | En Excel se activa la regla para excluir sábados. |
-
 | `excluir_sabados = True` | En Python la exclusión de sábados está activa. |
-
 | `EXCLUIR_DOMINGOS = SI` | En Excel se activa la regla para excluir domingos. |
-
 | `excluir_domingos = True` | En Python la exclusión de domingos está activa. |
-
 | `return False` | La fecha evaluada no es un día hábil. |
-
 | `return True` | La fecha evaluada sí es un día hábil. |
 
 ---
@@ -867,29 +839,19 @@ En este caso, `True` significa:
 Python identifica los días de la semana de la siguiente manera:
 
 | Día | Valor |
-
 |---|---:|
-
 | Lunes | `0` |
-
 | Martes | `1` |
-
 | Miércoles | `2` |
-
 | Jueves | `3` |
-
 | Viernes | `4` |
-
 | Sábado | `5` |
-
 | Domingo | `6` |
 
 Por esta razón:
 
 ```python
-
 fecha.weekday() == 5
-
 ```
 
 significa que la fecha es sábado.
@@ -897,9 +859,7 @@ significa que la fecha es sábado.
 Y:
 
 ```python
-
 fecha.weekday() == 6
-
 ```
 
 significa que la fecha es domingo.
@@ -911,37 +871,27 @@ significa que la fecha es domingo.
 Con estos parámetros en Excel:
 
 ```text
-
 EXCLUIR_SABADOS = SI
 
 EXCLUIR_DOMINGOS = SI
-
 ```
 
 Python trabaja internamente así:
 
 ```python
-
 excluir_sabados = True
 
 excluir_domingos = True
-
 ```
 
 El resultado sería:
 
 | Fecha evaluada | Resultado de la función | Interpretación |
-
 |---|---:|---|
-
 | Viernes normal | `True` | Sí cuenta como día hábil. |
-
 | Sábado | `False` | No cuenta como día hábil. |
-
 | Domingo | `False` | No cuenta como día hábil. |
-
 | Lunes festivo | `False` | No cuenta como día hábil. |
-
 | Martes normal | `True` | Sí cuenta como día hábil. |
 
 ---
@@ -949,7 +899,6 @@ El resultado sería:
 ## Resumen del proceso
 
 ```text
-
 Valor en Excel
 
       │
@@ -979,7 +928,6 @@ Se revisa la fecha
       ├── Festivo          → return False
 
       └── Día normal       → return True
-
 ```
 
 ---
@@ -995,9 +943,7 @@ Se revisa la fecha
 El archivo se lee principalmente desde:
 
 ```text
-
 src/calculador_ans.py
-
 ```
 
 No se lee desde `validador.py`.
@@ -1005,7 +951,6 @@ No se lee desde `validador.py`.
 El proceso utiliza Pandas:
 
 ```python
-
 pd.read_excel(
 
     ruta_archivo,
@@ -1017,27 +962,20 @@ pd.read_excel(
     engine="openpyxl",
 
 )
-
 ```
 
 ### Qué significa
 
 | Elemento | Función |
-
 |---|---|
-
 | `ruta_archivo` | Ubicación de `DIAS_CONTRACTUALES.xlsx`. |
-
 | `sheet_name` | Nombre de la hoja que se va a leer. |
-
 | `dtype=object` | Carga los datos sin forzar inicialmente su tipo. |
-
 | `engine="openpyxl"` | Utiliza OpenPyXL para abrir el archivo `.xlsx`. |
 
 ### Flujo
 
 ```text
-
 config/DIAS_CONTRACTUALES.xlsx
 
                │
@@ -1061,12 +999,11 @@ config/DIAS_CONTRACTUALES.xlsx
                ▼
 
       aplica los cálculos ANS
-
 ```
 
 Cuando el usuario modifica y guarda el archivo, los cambios se aplican en la siguiente generación del informe.
 
-> ****Frase clave:**** `calculador_ans.py` no solo calcula; también carga las reglas que necesita para realizar el cálculo.
+> **Frase clave:** `calculador_ans.py` no solo calcula; también carga las reglas que necesita para realizar el cálculo.
 
 ---
 
@@ -1075,9 +1012,7 @@ Cuando el usuario modifica y guarda el archivo, los cambios se aplican en la sig
 El archivo final se genera desde:
 
 ```text
-
 src/generador_excel.py
-
 ```
 
 Este módulo:
@@ -1096,7 +1031,7 @@ Este módulo:
 
 - guarda el resultado en `salida`.
 
-> Si cambia el diseño del Excel, se revisa `generador_excel.py`.  
+> Si cambia el diseño del Excel, se revisa `generador_excel.py`.
 
 > Si cambia un cálculo, se revisa `calculador_ans.py`.
 
@@ -1107,9 +1042,7 @@ Este módulo:
 La actualización se realiza desde:
 
 ```text
-
 src/actualizador_dashboard.py
-
 ```
 
 El módulo:
@@ -1139,17 +1072,13 @@ El módulo:
 El archivo del Dashboard contiene una macro llamada:
 
 ```text
-
 AbrirMapaANS_ATC_CHEC
-
 ```
 
 Su función es localizar y abrir el archivo:
 
 ```text
-
 mapas/Mapa_ANS_ELITE.html
-
 ```
 
 en el navegador predeterminado del equipo.
@@ -1161,7 +1090,6 @@ La macro no genera el mapa. El mapa debe haber sido creado previamente desde la 
 Para que la macro funcione, se debe conservar esta estructura:
 
 ```text
-
 Informe_ANS_ATC_CHEC
 
 │
@@ -1175,7 +1103,6 @@ Informe_ANS_ATC_CHEC
 └── mapas
 
     └── Mapa_ANS_ELITE.html
-
 ```
 
 El Dashboard se encuentra dentro de la carpeta `dashboard`, mientras que el mapa se encuentra dentro de la carpeta `mapas`.
@@ -1189,57 +1116,45 @@ La macro no utiliza una ruta fija asociada al nombre del usuario o al equipo.
 Primero obtiene la ubicación del Dashboard mediante:
 
 ```vb
-
 rutaDashboard = ThisWorkbook.Path
-
 ```
 
 Por ejemplo:
 
 ```text
-
 C:...\Informe_ANS_ATC_CHEC\dashboard
-
 ```
 
 Después sube un nivel para obtener la carpeta principal del proyecto:
 
 ```vb
-
 rutaProyecto = CreateObject( _
 
     "Scripting.FileSystemObject" _
 
 ).GetParentFolderName(rutaDashboard)
-
 ```
 
 El resultado sería:
 
 ```text
-
 C:...\Informe_ANS_ATC_CHEC
-
 ```
 
 Luego construye la ruta completa del mapa:
 
 ```vb
-
 rutaMapa = _
 
     rutaProyecto & _
 
     "\mapas\Mapa_ANS_ELITE.html"
-
 ```
 
 La ruta final queda así:
 
 ```text
-
 C:...\Informe_ANS_ATC_CHEC\mapas\Mapa_ANS_ELITE.html
-
 ```
 
 ---
@@ -1247,7 +1162,6 @@ C:...\Informe_ANS_ATC_CHEC\mapas\Mapa_ANS_ELITE.html
 ### Flujo de la macro
 
 ```text
-
 INFORME_ANS.xlsb
 
        │
@@ -1279,7 +1193,6 @@ Valida que el archivo exista
        ▼
 
 Abre el mapa en el navegador
-
 ```
 
 ---
@@ -1293,9 +1206,7 @@ La macro valida dos situaciones antes de abrir el archivo.
 Si el archivo `INFORME_ANS.xlsb` todavía no tiene una ubicación guardada, la macro detiene el proceso y solicita guardar el Dashboard.
 
 ```vb
-
 If rutaDashboard = "" Then
-
 ```
 
 #### Mapa no encontrado
@@ -1303,9 +1214,7 @@ If rutaDashboard = "" Then
 Antes de abrir el mapa, verifica que el archivo exista:
 
 ```vb
-
 If Dir(rutaMapa) = "" Then
-
 ```
 
 Si el mapa no se encuentra, informa al usuario la ruta esperada y solicita generar primero el mapa desde la aplicación.
@@ -1317,13 +1226,11 @@ Si el mapa no se encuentra, informa al usuario la ruta esperada y solicita gener
 Cuando el archivo existe, se abre mediante:
 
 ```vb
-
 ThisWorkbook.FollowHyperlink _
 
     Address:=rutaMapa, _
 
     NewWindow:=True
-
 ```
 
 Esta instrucción abre `Mapa_ANS_ELITE.html` en el navegador predeterminado de Windows.
@@ -1335,16 +1242,14 @@ Esta instrucción abre `Mapa_ANS_ELITE.html` en el navegador predeterminado de W
 La macro busca siempre el mismo nombre:
 
 ```text
-
 Mapa_ANS_ELITE.html
-
 ```
 
 Cuando Python vuelve a generar el mapa, actualiza o reemplaza el archivo anterior manteniendo el mismo nombre.
 
 Por esta razón, la macro siempre abre la versión que actualmente se encuentra dentro de la carpeta `mapas`.
 
-> ****Importante:**** si se cambia el nombre del archivo o de la carpeta `mapas`, también se debe actualizar la ruta construida dentro de la macro.
+> **Importante:** si se cambia el nombre del archivo o de la carpeta `mapas`, también se debe actualizar la ruta construida dentro de la macro.
 
 ---
 
@@ -1363,9 +1268,7 @@ Por esta razón, la macro siempre abre la versión que actualmente se encuentra 
 La interfaz fue creada con Tkinter y se encuentra en:
 
 ```text
-
 src/interfaz.py
-
 ```
 
 Su función es:
@@ -1383,7 +1286,6 @@ Su función es:
 ### Flujo de un botón
 
 ```text
-
 Usuario presiona un botón
 
           │
@@ -1409,25 +1311,17 @@ el sistema ejecuta el proceso
           ▼
 
 la interfaz muestra el resultado
-
 ```
 
 ### Componentes habituales
 
 | Componente | Uso |
-
 |---|---|
-
 | `Tk` | Crea la ventana principal. |
-
 | `Frame` | Organiza los elementos. |
-
 | `Label` | Muestra textos e imágenes. |
-
 | `Button` | Ejecuta acciones. |
-
 | `messagebox` | Muestra mensajes. |
-
 | `ImageTk` o `PhotoImage` | Carga imágenes. |
 
 ---
@@ -1435,33 +1329,21 @@ la interfaz muestra el resultado
 ## 14. Librerías utilizadas
 
 | Librería | Uso |
-
 |---|---|
-
 | `pandas` | Lectura, limpieza y transformación de datos. |
-
 | `openpyxl` | Lectura, edición y formato de Excel. |
-
 | `tkinter` | Interfaz gráfica. |
-
 | `pathlib` | Manejo de rutas portables. |
-
 | `logging` | Registro de eventos y errores. |
-
 | `datetime` | Manejo de fechas. |
-
 | `Pillow` | Carga de imágenes, si aplica. |
-
 | `folium` | Generación de mapas, si aplica. |
-
 | `geopy` | Conversión de direcciones en coordenadas, si aplica. |
 
 Las dependencias externas deben estar registradas en:
 
 ```text
-
 requirements.txt
-
 ```
 
 ---
@@ -1471,9 +1353,7 @@ requirements.txt
 Los registros se configuran desde:
 
 ```text
-
 src/logging_config.py
-
 ```
 
 Pueden guardar:
@@ -1497,9 +1377,7 @@ Pueden guardar:
 Los registros se almacenan en:
 
 ```text
-
 logs/
-
 ```
 
 ---
@@ -1509,17 +1387,13 @@ logs/
 El sistema se puede iniciar mediante:
 
 ```text
-
 iniciar.bat
-
 ```
 
 o directamente:
 
 ```bash
-
 python main.py
-
 ```
 
 ### Requisitos
@@ -1539,9 +1413,7 @@ python main.py
 ### Instalación de dependencias
 
 ```bash
-
 pip install -r requirements.txt
-
 ```
 
 ---
@@ -1563,7 +1435,6 @@ ANS Redes se desarrollará dentro del mismo proyecto, pero como un submódulo in
 ### Estructura propuesta
 
 ```text
-
 src
 
 ├── archivos actuales de ANS Conexiones
@@ -1583,7 +1454,6 @@ src
     ├── calculador_ans.py
 
     └── generador_excel.py
-
 ```
 
 ### Qué es un submódulo
@@ -1593,9 +1463,7 @@ Es una carpeta dentro de `src` que reúne los archivos de una funcionalidad espe
 En este caso:
 
 ```text
-
 src/ans_redes/
-
 ```
 
 contendrá únicamente la lógica de Redes.
@@ -1603,25 +1471,17 @@ contendrá únicamente la lógica de Redes.
 ### Responsabilidad de sus archivos
 
 | Archivo | Responsabilidad |
-
 |---|---|
-
 | `__init__.py` | Identifica la carpeta como paquete Python. |
-
 | `procesador.py` | Coordina todo el flujo de Redes. |
-
 | `validador.py` | Revisa los Excel de Redes. |
-
 | `filtros.py` | Aplica procesos, códigos, estados y usuarios. |
-
 | `calculador_ans.py` | Calcula los estados ANS de Redes. |
-
 | `generador_excel.py` | Genera el informe final de Redes. |
 
 ### Orden para iniciar el desarrollo
 
 ```text
-
 Analizar el requerimiento
 
           │
@@ -1659,7 +1519,6 @@ Desarrollar y probar cada parte
           ▼
 
 Validar resultados con los usuarios
-
 ```
 
 ### Integración con la interfaz
@@ -1667,23 +1526,18 @@ Validar resultados con los usuarios
 El botón se crea en:
 
 ```text
-
 src/interfaz.py
-
 ```
 
 El botón solo inicia el proceso. La lógica debe permanecer en:
 
 ```text
-
 src/ans_redes/procesador.py
-
 ```
 
 ### Flujo del botón
 
 ```text
-
 Usuario presiona “Generar ANS Redes”
 
                  │
@@ -1713,18 +1567,15 @@ src/ans_redes/procesador.py
                  ├── calcula
 
                  └── genera el informe
-
 ```
 
 ### Importación esperada
 
 ```python
-
 from src.ans_redes.procesador import procesar_ans_redes
-
 ```
 
-> ****Decisión técnica:**** primero se agrega ANS Redes sin reorganizar ANS Conexiones. Una posible estructura común se evaluará después, cuando ambos procesos estén estables.
+> **Decisión técnica:** primero se agrega ANS Redes sin reorganizar ANS Conexiones. Una posible estructura común se evaluará después, cuando ambos procesos estén estables.
 
 ---
 
@@ -1749,111 +1600,3 @@ from src.ans_redes.procesador import procesar_ans_redes
 ### Frase final
 
 > No es necesario memorizar todo el código. Lo importante es entender el problema, saber cómo está organizada la solución y poder ubicar rápidamente dónde se realiza cada proceso.
-
----
-
-## Nota técnica: secuencias XML codificadas en exportes Excel
-
-En algunos exportes de ****ANS Redes****, la información puede visualizarse normalmente al abrir el archivo en Excel, pero internamente ciertos caracteres pueden venir codificados mediante secuencias XML con el formato:
-
-```text
-
-_xHHHH_
-
-```
-
-Los cuatro dígitos `HHHH` corresponden al código Unicode del carácter en formato hexadecimal.
-
-Ejemplos:
-
-| Secuencia XML | Carácter real | Significado |
-
-|---|---|---|
-
-| `_x0020_` | ` ` | Espacio en blanco. |
-
-| `_x005C_` | `\` | Barra diagonal invertida o backslash. |
-
-| `_x0034_` | `4` | Dígito cuatro. |
-
-| `_x002F_` | `/` | Barra diagonal. |
-
-| `_x0030_` | `0` | Dígito cero. |
-
-### Ejemplos detectados
-
-Un proceso puede llegar internamente como:
-
-```text
-
-_x0034_109
-
-```
-
-aunque visualmente corresponda a:
-
-```text
-
-4109
-
-```
-
-Un responsable puede llegar como:
-
-```text
-
-CHEC_x005C_MCARVAAB
-
-```
-
-y debe interpretarse como:
-
-```text
-
-CHEC\\\MCARVAAB
-
-```
-
-Una fecha puede llegar internamente como:
-
-```text
-
-_x0030_9_x002F_02_x002F_2024_x0020_10:01:38
-
-```
-
-y debe interpretarse como:
-
-```text
-
-09/02/2024 10:01:38
-
-```
-
-### Impacto en el desarrollo
-
-Si estas secuencias no se normalizan antes de aplicar los filtros y cálculos, el sistema puede:
-
-- no reconocer procesos configurados;
-
-- no reconocer responsables;
-
-- interpretar fechas como inválidas;
-
-- generar registros con estado `SIN FECHA`;
-
-- dejar el resultado de los filtros en cero registros.
-
-### Ajuste implementado
-
-El módulo ****ANS Redes**** incorpora una normalización previa que decodifica estas secuencias XML antes de aplicar filtros, reglas contractuales y cálculos ANS.
-
-La corrección se validó con:
-
-- exportes anteriores que no presentaban esta codificación;
-
-- exportes nuevos que sí contenían secuencias `_xHHHH_`.
-
-De esta forma, el desarrollo mantiene compatibilidad con ambos formatos de exporte.
-
-> **Importante:** si en un futuro un exporte mantiene la misma estructura de columnas pero deja de ser reconocido correctamente, se debe revisar primero el contenido real leído por Python y no únicamente lo que Excel muestra visualmente.
