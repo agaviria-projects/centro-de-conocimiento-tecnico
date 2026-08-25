@@ -103,6 +103,59 @@ config/
 
 El archivo `configuracion.py` ya queda empaquetado por PyInstaller.
 
+Una carpeta del proyecto puede contener simultáneamente código Python y archivos funcionales externos. Al construir la versión distribuible, los .py importados quedan empaquetados por PyInstaller, mientras que solo deben copiarse externamente los archivos que el usuario o la aplicación necesiten consultar o modificar después de la compilación.
+
+Por ejemplo:
+
+```text
+PROYECTO FUENTE
+
+config/
+├── configuracion.py
+└── BASE_DIRECCIONES_MUNICIPIOS.xlsx
+```
+
+se transforma conceptualmente en:
+
+```text
+DISTRIBUCIÓN
+
+Ordenes_Internas_AIE.exe
+    └── contiene configuracion.py empaquetado
+
+config/
+└── BASE_DIRECCIONES_MUNICIPIOS.xlsx
+```
+Así que sí: puedes entregar la carpeta config solamente con el Excel. Esa es la estructura correcta para este proyecto, osea:
+
+Tu proyecto de desarrollo debe conservar:
+
+```text
+Ordenes_internas_AIE/
+└── config/
+    ├── configuracion.py
+    └── BASE_DIRECCIONES_MUNICIPIOS.xlsx
+```
+
+Después de generar el .exe, en:
+
+```text
+dist/Ordenes_Internas_AIE/
+```
+creas o dejas la carpeta:
+
+```text
+config/
+└── BASE_DIRECCIONES_MUNICIPIOS.xlsx
+```
+y no copias configuracion.py ahí.
+PROYECTO FUENTE
+→ conserva configuracion.py
+
+DISTRIBUCIÓN PARA EL USUARIO
+→ solo conserva el Excel externo
+
+
 ---
 
 # 5. Preparar una ruta raíz compatible con Python y `.exe`
