@@ -63,7 +63,127 @@ Ordenes_internas_AIE
 Copia para distribución:
 Ordenes_internas_AIE_EXE
 ```
+### NOTA:
+# Entorno virtual cuando se trabaja sobre una copia del proyecto
 
+Cuando se crea una copia del proyecto para preparar o generar el `.exe`, es recomendable que esa copia tenga su propio entorno virtual `venv`.
+
+Ejemplo:
+
+```text
+Proyecto original:
+
+Ordenes_internas_AIE/
+└── venv/
+
+Copia para empaquetado:
+
+Ordenes_internas_AIE_C/
+└── venv/
+```
+
+## ¿Por qué?
+Aunque la consola esté ubicada dentro de la carpeta de la copia:
+
+```text
+C:\Users\...\Ordenes_internas_AIE_C>
+```
+
+puede ocurrir que el venv activo siga perteneciendo al proyecto original.
+
+Ejemplo incorrecto:
+
+Proyecto actual:
+
+```text
+C:\Users\...\Ordenes_internas_AIE_C
+
+Python utilizado:
+
+C:\Users\...\Ordenes_internas_AIE\venv\Scripts\python.exe
+```
+
+Esto significa que la copia está utilizando las librerías instaladas en el entorno virtual del proyecto original.
+
+Para evitar dependencias accidentales, conviene crear y utilizar un venv propio dentro de la copia.
+
+## Procedimiento recomendado
+
+Ubicarse primero en la copia:
+
+```text
+cd C:\Users\...\Ordenes_internas_AIE_C
+```
+
+Si existe otro entorno virtual activo:
+
+```text
+deactivate
+```
+
+Crear el entorno virtual de la copia:
+
+```text
+python -m venv venv
+```
+
+Activarlo
+
+```text
+venv\Scripts\activate
+```
+
+Instalar las dependencias:
+
+```text
+python -m pip install -r requirements.txt
+```
+
+Verificar qué Python está utilizando la consola:
+
+```text
+python -c "import sys; print(sys.executable)"
+```
+
+El resultado debe apuntar al venv de la copia:
+
+```text
+C:\Users\...\Ordenes_internas_AIE_C\venv\Scripts\python.exe
+```
+
+Después probar normalmente:
+
+```text
+python main.py
+```
+
+y posteriormente instalar o utilizar PyInstaller dentro de ese mismo entorno.
+
+## Regla práctica
+
+Proyecto original
+→ utiliza su propio venv
+
+Copia para pruebas o empaquetado
+→ utiliza su propio venv
+
+El nombre de la copia, por ejemplo _C, solamente sirve para identificarla visualmente. Python y PyInstaller no le dan ningún significado especial.
+
+Tener un venv independiente en la copia evita que la compilación dependa accidentalmente de librerías instaladas únicamente en el proyecto original.
+
+```text
+Crear copia
+↓
+Crear/activar venv propio de la copia
+↓
+Instalar requirements
+↓
+Verificar sys.executable
+↓
+Probar python main.py
+↓
+PyInstaller
+```
 ---
 
 # 4. Identificar código y recursos externos
