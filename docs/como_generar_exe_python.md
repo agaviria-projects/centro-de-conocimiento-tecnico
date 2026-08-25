@@ -855,3 +855,11 @@ La compilación se considera correcta cuando:
 - No depende del Python instalado en el equipo de desarrollo.
 
 Si todo lo anterior se cumple, la versión ubicada en `dist/NOMBRE_APLICACION/` puede considerarse lista para prueba en otro computador.
+
+
+## Si aparece “Windows protegió su PC / SmartScreen”:
+
+→ El ejecutable fue detectado como aplicación desconocida.
+→ No significa automáticamente que el desarrollo tenga un error.
+→ En equipos empresariales, solicitar autorización a TI.
+→ TI puede permitir el ejecutable, agregar una excepción o exigir firma digital.
