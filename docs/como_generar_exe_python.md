@@ -1,10 +1,10 @@
-# Guía general para generar un `.exe` de cualquier proyecto Python
+# Guía estándar para generar un `.exe` de proyectos Python con PyInstaller
 
 ## 1. Objetivo
 
-Convertir un proyecto Python en una versión distribuible para Windows, de forma que el usuario final pueda ejecutar la aplicación **sin recibir directamente los archivos `.py`**.
+Convertir un proyecto Python de escritorio en una versión distribuible para Windows, de forma que el usuario final pueda ejecutar la aplicación **sin instalar Python, sin crear un `venv` y sin recibir directamente los archivos `.py`**.
 
-Esta guía aplica como base para proyectos como:
+Esta guía sirve como procedimiento base reutilizable para proyectos como:
 
 - Informe ANS ATC CHEC
 - Órdenes Internas AIE
@@ -13,17 +13,46 @@ Esta guía aplica como base para proyectos como:
 - Validación Mano de Obra vs Materiales
 - Aplicaciones Tkinter similares
 
-La estructura, nombres de archivos, carpetas externas y dependencias pueden cambiar en cada proyecto, pero el procedimiento general es el mismo.
+> **Importante:** el procedimiento general es el mismo, pero cada proyecto puede tener carpetas externas, archivos de configuración, dependencias o `hidden-import` particulares.
+
+> **Nota de seguridad:** PyInstaller empaqueta el código Python, pero no debe considerarse un mecanismo de protección u ofuscación fuerte del código fuente. El usuario no recibe los `.py` directamente, pero un ejecutable puede ser analizado por terceros con conocimientos técnicos.
 
 ---
 
-# 2. Trabajar primero sobre una copia
+# 2. Estándar adoptado: usar `--onedir`
 
-Antes de convertir un proyecto a `.exe`:
+Para estos proyectos se recomienda usar PyInstaller en modo **`--onedir`**.
+
+Esto genera una carpeta distribuible similar a:
+
+```text
+dist/
+└── MiAplicacion/
+    ├── _internal/
+    └── MiAplicacion.exe
+```
+
+La aplicación se entrega como **una carpeta completa**, no como un `.exe` aislado.
+
+## ¿Por qué usar `--onedir`?
+
+- Es más fácil de diagnosticar.
+- Facilita actualizaciones.
+- Suele iniciar más rápido que `--onefile`.
+- Permite mantener archivos operativos externos.
+- Reduce problemas al trabajar con plantillas, Excel, imágenes y configuraciones externas.
+
+> Esta guía queda estandarizada sobre `--onedir`. Si algún día se desea usar `--onefile`, el procedimiento cambia en algunos puntos y no debe asumirse que existirá `_internal/`.
+
+---
+
+# 3. Trabajar primero sobre una copia
+
+Antes de generar el `.exe`:
 
 1. Hacer una copia completa del proyecto.
 2. Trabajar y probar sobre esa copia.
-3. Mantener intacto el proyecto original hasta que el `.exe` quede validado.
+3. Mantener intacta la versión fuente estable.
 
 Ejemplo:
 
@@ -31,486 +60,413 @@ Ejemplo:
 Proyecto original:
 Ordenes_internas_AIE
 
-Copia para pruebas:
+Copia para distribución:
 Ordenes_internas_AIE_EXE
 ```
 
-Esto permite corregir rutas, imports o dependencias sin poner en riesgo la versión original.
-
 ---
 
-# 3. Identificar qué debe quedar dentro y fuera del `.exe`
+# 4. Identificar código y recursos externos
 
-Antes de compilar, separar conceptualmente dos tipos de elementos.
-
-## Código que no se desea entregar directamente
+## Código Python que será empaquetado
 
 Ejemplo:
 
 ```text
 main.py
 src/
-*.py
+config/configuracion.py
+otros módulos .py
 ```
 
-Estos archivos serán empaquetados por PyInstaller.
-
-## Archivos que deben permanecer externos
+## Recursos que pueden permanecer externos
 
 Ejemplos:
 
 ```text
-config/
 entrada/
 salida/
-assets/
-dashboard/
-plantillas/
 logs/
+assets/
+plantillas/
+dashboard/
+mapas/
+archivos .xlsx de configuración
 ```
 
-Estos archivos normalmente deben permanecer fuera del `.exe` porque el usuario puede necesitarlos, modificarlos o porque la aplicación debe escribir en ellos.
+> **Muy importante:** si una carpeta como `config/` contiene tanto `.py` como archivos externos, **no es necesario copiar los `.py` al usuario**. Por ejemplo:
 
-Cada proyecto tendrá su propia estructura.
+```text
+config/
+└── BASE_DIRECCIONES_MUNICIPIOS.xlsx
+```
+
+El archivo `configuracion.py` ya queda empaquetado por PyInstaller.
 
 ---
 
-# 4. Preparar una ruta raíz compatible con Python y `.exe`
+# 5. Preparar una ruta raíz compatible con Python y `.exe`
 
-Una aplicación funciona diferente cuando se ejecuta desde:
-
-```bash
-py main.py
-```
-
-que cuando se ejecuta como:
+Si el archivo central de configuración está en:
 
 ```text
-MiAplicacion.exe
+config/configuracion.py
 ```
 
-Por eso conviene centralizar la ruta raíz.
-
-Ejemplo recomendado en `config.py`:
+usar:
 
 ```python
 from pathlib import Path
 import sys
 
 if getattr(sys, "frozen", False):
-    # Ejecutando como .exe
-    BASE_DIR = Path(sys.executable).resolve().parent
+    BASE_DIR = Path(sys.executable).resolve().parent
 else:
-    # Ejecutando desde Python
-    BASE_DIR = Path(__file__).resolve().parent.parent
+    BASE_DIR = Path(__file__).resolve().parent.parent
 ```
 
-Después todas las carpetas deben construirse desde `BASE_DIR`.
-
-Ejemplo:
+Después construir las rutas externas desde `BASE_DIR`:
 
 ```python
 ENTRADA_DIR = BASE_DIR / "entrada"
 SALIDA_DIR = BASE_DIR / "salida"
-CONFIG_DIR = BASE_DIR / "config"
+LOGS_DIR = BASE_DIR / "logs"
 ASSETS_DIR = BASE_DIR / "assets"
+CONFIG_DIR = BASE_DIR / "config"
 ```
 
 ## Regla importante
 
-Evitar que diferentes módulos calculen la raíz por su cuenta.
+No permitir que diferentes módulos calculen independientemente la raíz del proyecto.
 
-Preferir:
-
-```python
-from src.config import BASE_DIR
-```
-
-en lugar de repetir:
+Preferir importar las rutas centralizadas:
 
 ```python
-Path(__file__).resolve().parents[1]
+from config.configuracion import (
+    BASE_DIR,
+    ENTRADA_DIR,
+    SALIDA_DIR,
+    ASSETS_DIR,
+)
 ```
+
+> Si en otro proyecto el archivo de configuración está ubicado directamente en la raíz y no dentro de `config/`, la línea de desarrollo cambia. La regla universal es **calcular correctamente la raíz una sola vez y centralizarla**.
 
 ---
 
-# 5. Usar imports claros entre módulos
+# 6. Usar imports claros
 
-Para PyInstaller es recomendable utilizar imports absolutos dentro del proyecto.
-
-Ejemplo:
+Preferir imports absolutos:
 
 ```python
 from src.procesador import procesar_datos
 from src.lector import leer_archivo
-from src.config import BASE_DIR
+from config.configuracion import BASE_DIR
 ```
 
-Evitar cuando sea posible:
+Evitar, cuando sea posible:
 
 ```python
 from procesador import procesar_datos
 ```
 
-y evitar modificar manualmente `sys.path` dentro de los módulos.
-
-Esto reduce errores como:
-
-```text
-ModuleNotFoundError
-```
-
-cuando la aplicación se ejecuta fuera del equipo de desarrollo.
+También conviene evitar modificaciones manuales de `sys.path` salvo que exista una necesidad real.
 
 ---
 
-# 6. Probar el proyecto normalmente antes de compilar
+# 7. Activar el entorno virtual
 
-Antes de crear el `.exe`:
+Desde la raíz del proyecto:
 
-```bash
-py main.py
+```bat
+venv\Scripts\activate
 ```
 
-Probar todas las funciones importantes.
+La consola debe mostrar algo parecido a:
 
-Ejemplo general:
+```text
+(venv) C:\...\MiProyecto>
+```
+
+---
+
+# 8. Probar Python antes de compilar
+
+Con el `venv` activo usar preferiblemente:
+
+```bat
+python main.py
+```
+
+Validar todas las funciones principales:
 
 ```text
 Abrir aplicación
 ↓
-Procesar archivo
+Detectar archivos
+↓
+Procesar información
 ↓
 Generar salida
 ↓
 Abrir resultados
 ↓
-Actualizar Excel o dashboard si aplica
-↓
 Cerrar correctamente
 ```
 
-No se debe generar el `.exe` hasta que la versión Python funcione correctamente.
+No continuar con PyInstaller hasta que esta prueba sea satisfactoria.
 
 ---
 
-# 7. Instalar PyInstaller
+# 9. Instalar PyInstaller
 
-Dentro del entorno virtual del proyecto:
+Con el `venv` activo:
 
-```bash
-pip install pyinstaller
+```bat
+python -m pip install pyinstaller
 ```
 
 Verificar:
 
-```bash
-pyinstaller --version
+```bat
+python -m PyInstaller --version
 ```
+
+> PyInstaller es una herramienta de construcción. No es obligatorio incluirlo en el `requirements.txt` destinado al usuario final.
 
 ---
 
-# 8. Limpiar compilaciones anteriores
+# 10. Limpiar compilaciones anteriores
 
-Si ya se había generado un `.exe`, antes de recompilar eliminar:
+Si ya existe una compilación anterior, eliminar de la copia de distribución:
 
 ```text
 build/
-dist/
-MiAplicacion.spec
+dist/NOMBRE_APLICACION/
+NOMBRE_APLICACION.spec
 ```
 
-Esto evita mezclar archivos de distintas compilaciones.
+También puede eliminarse toda `dist/` si en esa copia no contiene información que deba conservarse.
 
 ---
 
-# 9. Generar una primera versión del `.exe`
+# 11. Comando estándar para generar el `.exe`
 
-Desde la carpeta raíz donde está `main.py`:
+## Sin icono
 
-```bash
-pyinstaller --clean --noconfirm --windowed --name MiAplicacion main.py
+```bat
+python -m PyInstaller --clean --noconfirm --onedir --windowed --name NOMBRE_APLICACION main.py
 ```
 
-Cambiar:
+## Con icono
+
+```bat
+python -m PyInstaller --clean --noconfirm --onedir --windowed --icon=assets\LOGO_PRO.ico --name NOMBRE_APLICACION main.py
+```
+
+## Significado
 
 ```text
-MiAplicacion
+--clean      Limpia caché y archivos temporales.
+--noconfirm  Permite reemplazar resultados anteriores.
+--onedir     Genera una carpeta con el .exe y _internal.
+--windowed   No muestra consola negra en aplicaciones gráficas.
+--icon       Asigna el icono de Windows al ejecutable.
+--name       Define el nombre del ejecutable.
 ```
 
-por el nombre real del proyecto.
+---
+
+# 12. Dependencias ocultas
+
+No existe un `hidden-import` universal.
+
+Solo se agrega cuando el proyecto realmente lo necesita.
 
 Ejemplo:
 
-```bash
-pyinstaller --clean --noconfirm --windowed --name Ordenes_Internas_AIE main.py
+```bat
+python -m PyInstaller --clean --noconfirm --onedir --windowed --hidden-import=win32timezone --name MiAplicacion main.py
 ```
 
-## Qué significa
+Caso conocido:
 
 ```text
---clean
-Limpia archivos temporales de compilaciones anteriores.
-
---noconfirm
-No solicita confirmación al sobrescribir.
-
---windowed
-Evita mostrar consola negra en aplicaciones gráficas.
-
---name
-Define el nombre del ejecutable.
+Informe ANS ATC CHEC
+→ puede requerir win32timezone
 ```
+
+Esto no significa que otros proyectos también lo necesiten.
 
 ---
 
-# 10. Dependencias ocultas
+# 13. Resultado esperado
 
-Algunos proyectos utilizan librerías que PyInstaller no detecta automáticamente.
-
-En ese caso aparece un error parecido a:
-
-```text
-ModuleNotFoundError
-```
-
-después de compilar.
-
-La solución puede requerir:
-
-```bash
---hidden-import=NOMBRE_MODULO
-```
-
-Ejemplo real con automatización de Excel mediante `pywin32`:
-
-```bash
-pyinstaller --clean --noconfirm --windowed --hidden-import=win32timezone --name MiAplicacion main.py
-```
-
-## Importante
-
-No todos los proyectos necesitan `win32timezone`.
-
-Solo se agrega cuando la dependencia realmente existe.
-
-Cada proyecto puede requerir sus propios `hidden-import`.
-
----
-
-# 11. Resultado de PyInstaller
-
-Normalmente se crean:
+Después de compilar aparecerán:
 
 ```text
 build/
 dist/
-MiAplicacion.spec
+NOMBRE_APLICACION.spec
 ```
 
-La versión distribuible queda dentro de:
+En modo `--onedir`:
 
 ```text
 dist/
-└── MiAplicacion/
-    ├── _internal/
-    └── MiAplicacion.exe
+└── NOMBRE_APLICACION/
+    ├── _internal/
+    └── NOMBRE_APLICACION.exe
 ```
 
-## Regla importante
+## Regla
 
-No copiar solamente:
+No copiar únicamente el `.exe`.
 
-```text
-MiAplicacion.exe
-```
-
-También se necesita:
-
-```text
-_internal/
-```
-
-porque contiene dependencias necesarias para ejecutar la aplicación.
+El `.exe` y `_internal/` deben considerarse **un mismo conjunto de compilación**.
 
 ---
 
-# 12. Copiar las carpetas externas necesarias
+# 14. Copiar archivos externos necesarios
 
-Después de compilar, dentro de:
-
-```text
-dist/MiAplicacion/
-```
-
-se deben copiar las carpetas externas que realmente utiliza ese proyecto.
-
-Ejemplo genérico:
+Dentro de:
 
 ```text
-MiAplicacion/
-├── _internal/
-├── assets/
-├── config/
-├── entrada/
-├── salida/
-├── logs/
-└── MiAplicacion.exe
+dist/NOMBRE_APLICACION/
 ```
 
-En otro proyecto podría ser:
+copiar únicamente los elementos externos que el programa necesita durante su ejecución.
+
+Ejemplo:
 
 ```text
 Ordenes_Internas_AIE/
 ├── _internal/
-├── CONFIG/
+├── assets/
+├── config/
+│   └── BASE_DIRECCIONES_MUNICIPIOS.xlsx
 ├── entrada/
 ├── salida/
-├── plantillas/
+├── logs/
 └── Ordenes_Internas_AIE.exe
 ```
 
-La estructura depende del desarrollo.
-
 ---
 
-# 13. Probar primero el `.exe` en el equipo de desarrollo
+# 15. Prueba obligatoria desde `dist`
 
-Antes de llevarlo a otro computador:
+Ejecutar:
 
 ```text
-dist/
-└── MiAplicacion/
-    └── MiAplicacion.exe
+dist/NOMBRE_APLICACION/NOMBRE_APLICACION.exe
 ```
-
-Ejecutarlo desde esa carpeta.
 
 Validar:
 
 ```text
 La interfaz abre
-Los archivos de entrada se encuentran
+El icono aparece
+Los archivos de entrada se detectan
 Los archivos de configuración se leen
-Las salidas se generan
+La información se procesa
+Los archivos de salida se generan
 Los botones funcionan
-Los archivos externos se abren correctamente
+La aplicación cierra sin error
 ```
+
+Si la ventana abre pero no puede procesar o generar la salida, **todavía no está listo**.
 
 ---
 
-# 14. Probar en otro computador
+# 16. Prueba en otro computador
 
-Esta prueba es obligatoria para considerar la distribución terminada.
-
-Procedimiento:
-
-1. Copiar toda la carpeta `MiAplicacion`.
+1. Copiar toda la carpeta de distribución.
 2. Llevarla mediante USB, red o carpeta compartida.
-3. Copiarla al disco del otro computador.
-4. Ejecutar el `.exe`.
-5. Probar todas las funciones principales.
+3. Copiarla al disco del computador destino.
+4. No ejecutarla directamente desde la USB si se puede evitar.
+5. Abrir el `.exe`.
+6. Ejecutar el flujo completo.
 
-No ejecutar directamente desde la USB si se puede evitar.
-
-## Objetivo de esta prueba
-
-Detectar:
-
-- rutas absolutas;
-- módulos faltantes;
-- dependencias no empaquetadas;
-- permisos;
-- archivos externos faltantes;
-- diferencias entre computadores.
+> El usuario final no necesita instalar Python ni crear un `venv`.
 
 ---
 
-# 15. Errores frecuentes
+# 17. Posibles avisos de Windows
 
-## Error: `ModuleNotFoundError`
+Un `.exe` generado internamente y no firmado digitalmente puede producir advertencias de Windows Defender o SmartScreen.
 
-Revisar:
-
-- imports absolutos;
-- módulos que no fueron incluidos;
-- necesidad de `--hidden-import`.
+En entornos empresariales pueden existir además políticas de seguridad que bloqueen ejecutables desconocidos. Si ocurre, debe revisarse con TI.
 
 ---
 
-## Error: busca archivos dentro de `_internal`
+# 18. Errores frecuentes
 
-Normalmente significa que algún módulo todavía utiliza una ruta como:
-
-```python
-Path(__file__).resolve().parents[1]
-```
-
-en lugar de utilizar el `BASE_DIR` central preparado para PyInstaller.
-
----
-
-## Error: no encuentra archivo de configuración
-
-Confirmar que la carpeta externa fue copiada junto al `.exe`.
-
-Ejemplo:
-
-```text
-config/
-└── configuracion.xlsx
-```
-
----
-
-## Error: aplicación funciona con Python pero no como `.exe`
+## `ModuleNotFoundError`
 
 Revisar:
 
 ```text
 imports
-rutas
+módulo faltante
+hidden-import
+dependencias instaladas en el venv usado para compilar
+```
+
+## Busca archivos dentro de `_internal`
+
+Revisar `BASE_DIR` y cualquier uso directo de `__file__` para rutas externas.
+
+## No encuentra configuración o plantilla
+
+Verificar que el archivo externo exista junto al ejecutable en la ubicación esperada.
+
+## Funciona con Python pero no como `.exe`
+
+Revisar:
+
+```text
+BASE_DIR
+imports
 hidden-import
 archivos externos
 dependencias
+permisos
 ```
 
 ---
 
-# 16. Crear un acceso directo para el usuario
+# 19. Crear acceso directo
 
-El `.exe` debe permanecer dentro de su carpeta.
-
-No moverlo solo al Escritorio.
+El `.exe` debe permanecer dentro de su carpeta de instalación.
 
 Crear un acceso directo:
 
 ```text
-Clic derecho sobre MiAplicacion.exe
+Clic derecho sobre NOMBRE_APLICACION.exe
 → Mostrar más opciones
 → Enviar a
 → Escritorio (crear acceso directo)
 ```
 
-El usuario ejecutará la aplicación desde ese acceso directo.
-
 ---
 
-# 17. Qué se entrega al usuario
+# 20. Qué se entrega al usuario
 
 Ejemplo:
 
 ```text
-MiAplicacion/
+Ordenes_Internas_AIE/
 ├── _internal/
 ├── assets/
 ├── config/
+│   └── BASE_DIRECCIONES_MUNICIPIOS.xlsx
 ├── entrada/
 ├── salida/
-└── MiAplicacion.exe
+├── logs/
+└── Ordenes_Internas_AIE.exe
 ```
 
-No es necesario entregar:
+Normalmente **no es necesario entregar**:
 
 ```text
 src/
@@ -519,235 +475,167 @@ main.py
 *.py
 build/
 *.spec
+requirements.txt
 ```
-
-Esto permite que el usuario utilice la aplicación sin recibir directamente el código fuente Python.
 
 ---
 
-# 18. Si posteriormente cambia el código
+# 21. Actualización cuando cambia el código Python
 
-Si se modifica:
-
-```text
-main.py
-config.py
-interfaz.py
-procesadores
-lectores
-reglas Python
-```
-
-se debe generar nuevamente el `.exe`.
+Si cambia código Python, se debe volver a compilar.
 
 Flujo:
 
 ```text
 Modificar código
 ↓
-Probar con py main.py
-↓
-Eliminar build / dist / .spec
-↓
-Compilar nuevamente
-↓
-Copiar carpetas externas
-↓
-Probar el .exe
-↓
-Probar en otro PC si el cambio es importante
-```
-
----
-
-# 19. Si solamente cambia un archivo externo
-
-Si cambia únicamente:
-
-```text
-configuracion.xlsx
-plantilla.xlsx
-archivo maestro
-parámetro externo
-```
-
-y ese archivo está fuera del `.exe`, normalmente **no es necesario recompilar**.
-
-Solo se reemplaza el archivo externo correspondiente.
-
----
-
-# 20. Plantilla general reutilizable
-
-Para un nuevo proyecto, revisar esta lista:
-
-```text
-1. Crear copia del proyecto.
-2. Identificar main.py.
-3. Identificar carpetas externas.
-4. Preparar BASE_DIR.
-5. Revisar imports.
-6. Probar con py main.py.
-7. Instalar/verificar PyInstaller.
-8. Eliminar build, dist y .spec anteriores.
-9. Compilar.
-10. Corregir hidden-import si aparece alguno.
-11. Copiar carpetas externas dentro de dist.
-12. Probar el .exe localmente.
-13. Copiar la carpeta completa a otro PC.
-14. Probar todas las funciones.
-15. Crear acceso directo.
-16. Entregar sin src, venv ni archivos .py.
-```
-
----
-
-# 21. Comando base reutilizable
-
-Para la mayoría de aplicaciones gráficas:
-
-```bash
-pyinstaller --clean --noconfirm --windowed --name NOMBRE_APLICACION main.py
-```
-
-Si requiere módulos ocultos:
-
-```bash
-pyinstaller --clean --noconfirm --windowed --hidden-import=NOMBRE_MODULO --name NOMBRE_APLICACION main.py
-```
-
----
-
-# Ejemplo 1 - Informe ANS ATC CHEC
-
-```bash
-pyinstaller --clean --noconfirm --windowed --hidden-import=win32timezone --name Informe_ANS_ATC_CHEC main.py
-```
-
-Estructura externa utilizada:
-
-```text
-_internal/
-assets/
-config/
-dashboard/
-entrada/
-entrada_redes/
-logs/
-mapas/
-salida/
-salida_redes/
-MiAplicacion.exe
-```
-
----
-
-# Ejemplo 2 - Órdenes Internas AIE
-
-El mismo procedimiento aplica.
-
-Solo se deben revisar:
-
-```text
-Nombre del archivo principal
-Nombre del ejecutable
-Carpetas de entrada y salida
-Archivos de configuración
-Plantillas
-Imports
-Dependencias particulares del proyecto
-```
-
-Ejemplo conceptual:
-
-```bash
-pyinstaller --clean --noconfirm --windowed --name Ordenes_Internas_AIE main.py
-```
-
-Si durante las pruebas aparece una dependencia no detectada, se agrega el `--hidden-import` correspondiente.
-
----
-
-# Regla final
-
-> PyInstaller no reemplaza las pruebas. El `.exe` se considera listo únicamente cuando funciona correctamente desde la carpeta `dist` y después en un computador diferente al equipo donde fue desarrollado.
-
----
-
-# ⚠️ ACTUALIZACIÓN DE UNA APLICACIÓN YA ENTREGADA
-
-> ⚠️ **IMPORTANTE: NO REEMPLAZAR A CIEGAS LAS CARPETAS OPERATIVAS**
->
-> Cuando una aplicación ya fue entregada al usuario y posteriormente se modifica algún archivo `.py`, se debe generar una nueva versión del `.exe`.
->
-> **No se debe reemplazar toda la carpeta de la aplicación sin revisar primero qué información ya existe en el computador del usuario.**
-
-### ✅ Normalmente se pueden reemplazar
-
-```text
-_internal/
-MiAplicacion.exe
-assets/        → si cambió
-dashboard/     → si cambió
-config/        → si cambió
-mapas/         → si cambió
-```
-
-### ❌ Se deben conservar especialmente
-
-```text
-entrada/
-entrada_redes/
-salida/
-salida_redes/
-logs/
-```
-
-> Estas carpetas pueden contener archivos operativos, informes generados o información propia del usuario.
-
-
-## Regla práctica
-
-```text
-¿Cambió código Python?
-→ Probar con py main.py
-→ Volver a compilar con PyInstaller
-→ Generar nuevo .exe y nuevo _internal
-
-¿Cambió solamente un archivo externo?
-→ No es necesario recompilar
-→ Reemplazar únicamente ese archivo
-```
-
-## Antes de actualizar en otro computador
-
-1. Hacer una copia de seguridad de la carpeta actualmente instalada.
-2. Cerrar la aplicación.
-3. Reemplazar el nuevo archivo `.exe` de la aplicación.
-4. Reemplazar `_internal/`.
-5. Reemplazar `assets/`, `config/`, `dashboard/` o `mapas/` únicamente si realmente cambiaron.
-6. Conservar `entrada/`, `entrada_redes/`, `salida/`, `salida_redes/` y `logs/`.
-7. Ejecutar nuevamente la aplicación.
-8. Validar las funciones principales.
-
-> **Regla de seguridad:** antes de reemplazar `config/` o `dashboard/`, verificar si el usuario realizó cambios propios. Si existen cambios locales, respaldarlos primero.
-
-## Flujo resumido de actualización
-
-```text
-Modificar .py
-↓
-Probar con py main.py
+Probar con python main.py
 ↓
 Compilar nueva versión
 ↓
-Respaldar versión instalada
+Probar nueva versión en dist
 ↓
-Reemplazar .exe + _internal
+Respaldar instalación actual
 ↓
-Actualizar solo carpetas técnicas que cambiaron
-↓
-Conservar entrada / salida / logs
+Actualizar runtime
 ↓
 Probar nuevamente
 ```
+
+## Regla importante para `--onedir`
+
+El nuevo `.exe` y la nueva carpeta `_internal/` deben provenir de **la misma compilación**.
+
+No mezclar un `.exe` nuevo con un `_internal` antiguo.
+
+Es preferible reemplazar completamente `_internal/`.
+
+---
+
+# 22. Qué carpetas conservar durante una actualización
+
+Normalmente conservar:
+
+```text
+entrada/
+entrada_redes/
+salida/
+salida_redes/
+logs/
+```
+
+Actualizar solamente si corresponde:
+
+```text
+assets/
+config/
+dashboard/
+mapas/
+plantillas/
+```
+
+Antes de reemplazar `config/`, verificar si el usuario realizó cambios propios.
+
+---
+
+# 23. Si cambia solamente un archivo externo
+
+Si cambia únicamente un archivo externo como:
+
+```text
+BASE_DIRECCIONES_MUNICIPIOS.xlsx
+configuracion.xlsx
+plantilla.xlsx
+archivo maestro
+logo externo
+```
+
+normalmente **no es necesario recompilar**.
+
+Solo se reemplaza el archivo externo correspondiente y se vuelve a probar.
+
+---
+
+# 24. Plantilla universal de trabajo
+
+```text
+1. Crear copia de distribución.
+2. Identificar main.py.
+3. Identificar código Python.
+4. Identificar recursos externos.
+5. Centralizar BASE_DIR.
+6. Revisar imports.
+7. Activar venv.
+8. Probar con python main.py.
+9. Instalar/verificar PyInstaller.
+10. Limpiar compilación anterior.
+11. Compilar con --onedir --windowed.
+12. Agregar --icon si corresponde.
+13. Agregar hidden-import solo si es necesario.
+14. Copiar recursos externos requeridos.
+15. Probar flujo completo desde dist.
+16. Copiar carpeta completa a otro PC.
+17. Probar flujo completo en otro PC.
+18. Crear acceso directo.
+19. Entregar sin src, venv ni archivos .py.
+```
+
+---
+
+# 25. Ejemplo — Informe ANS ATC CHEC
+
+```bat
+python -m PyInstaller --clean --noconfirm --onedir --windowed --hidden-import=win32timezone --name Informe_ANS_ATC_CHEC main.py
+```
+
+---
+
+# 26. Ejemplo — Órdenes Internas AIE
+
+Comando inicial recomendado:
+
+```bat
+python -m PyInstaller --clean --noconfirm --onedir --windowed --icon=assets\LOGO_PRO.ico --name Ordenes_Internas_AIE main.py
+```
+
+Distribución esperada:
+
+```text
+Ordenes_Internas_AIE/
+├── _internal/
+├── assets/
+├── config/
+│   └── BASE_DIRECCIONES_MUNICIPIOS.xlsx
+├── entrada/
+├── salida/
+├── logs/
+└── Ordenes_Internas_AIE.exe
+```
+
+Antes de considerarlo terminado:
+
+```text
+1. Probar Ordenes_Internas_AIE.exe desde dist.
+2. Generar un consolidado completo.
+3. Abrir el consolidado desde la interfaz.
+4. Verificar BASE_DIRECCIONES_MUNICIPIOS.xlsx.
+5. Verificar logo/icono.
+6. Probar la carpeta completa en otro computador.
+7. Crear acceso directo.
+```
+
+---
+
+# 27. Regla final
+
+> El procedimiento base de PyInstaller puede reutilizarse en todos los proyectos, pero cada nuevo desarrollo debe pasar por una revisión corta de:
+>
+> - ruta raíz;
+> - recursos externos;
+> - dependencias;
+> - icono;
+> - `hidden-import`;
+> - prueba desde `dist`;
+> - prueba en otro computador.
+
+El `.exe` se considera terminado únicamente cuando **el flujo funcional completo** opera correctamente desde `dist` y posteriormente en un computador diferente al equipo de desarrollo.
