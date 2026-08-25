@@ -68,6 +68,9 @@ Ordenes_internas_AIE_EXE
 
 Cuando se crea una copia del proyecto para preparar o generar el `.exe`, es recomendable que esa copia tenga su propio entorno virtual `venv`.
 
+## REGLA
+si haces una copia completa del proyecto, no confíes en el venv copiado; mejor elimínalo y créalo nuevamente dentro de la copia
+
 Ejemplo:
 
 ```text
@@ -170,6 +173,7 @@ Copia para pruebas o empaquetado
 El nombre de la copia, por ejemplo _C, solamente sirve para identificarla visualmente. Python y PyInstaller no le dan ningún significado especial.
 
 Tener un venv independiente en la copia evita que la compilación dependa accidentalmente de librerías instaladas únicamente en el proyecto original.
+
 
 ```text
 Crear copia
