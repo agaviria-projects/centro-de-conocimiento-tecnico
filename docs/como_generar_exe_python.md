@@ -179,7 +179,7 @@ import sys
 
 
 # ============================================================
-# RUTAS DEL PROYECTO
+# RUTA RAIZ DEL PROYECTO
 # ============================================================
 
 if getattr(sys, "frozen", False):
@@ -203,6 +203,10 @@ else:
 Después construir las rutas externas desde `BASE_DIR`:
 
 ```python
+# ============================================================
+# CARPETAS DEL PROYECTO
+# ============================================================
+
 ENTRADA_DIR = BASE_DIR / "entrada"
 SALIDA_DIR = BASE_DIR / "salida"
 LOGS_DIR = BASE_DIR / "logs"
