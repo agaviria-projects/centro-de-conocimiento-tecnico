@@ -842,3 +842,16 @@ Antes de considerarlo terminado:
 > - prueba en otro computador.
 
 El `.exe` se considera terminado únicamente cuando **el flujo funcional completo** opera correctamente desde `dist` y posteriormente en un computador diferente al equipo de desarrollo.
+
+## Validación final del ejecutable
+
+La compilación se considera correcta cuando:
+
+- El `.exe` abre sin errores.
+- La aplicación encuentra sus archivos externos.
+- Procesa correctamente la información.
+- Genera los archivos de salida esperados.
+- Los botones y funciones de la interfaz operan normalmente.
+- No depende del Python instalado en el equipo de desarrollo.
+
+Si todo lo anterior se cumple, la versión ubicada en `dist/NOMBRE_APLICACION/` puede considerarse lista para prueba en otro computador.
