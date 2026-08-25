@@ -88,6 +88,7 @@ entrada/
 salida/
 logs/
 assets/
+config/
 plantillas/
 dashboard/
 mapas/
