@@ -166,17 +166,38 @@ Si el archivo central de configuración está en:
 ```text
 config/configuracion.py
 ```
+Todo proyecto debe tener un módulo central de configuración, preferiblemente config/configuracion.py, encargado de definir BASE_DIR y todas las rutas del proyecto
 
-usar:
+Para tus proyectos, esa convención me parece muy buena porque te simplifica mucho la vida.
+
+La base sería esta:
+
 
 ```python
 from pathlib import Path
 import sys
 
+
+# ============================================================
+# RUTAS DEL PROYECTO
+# ============================================================
+
 if getattr(sys, "frozen", False):
-    BASE_DIR = Path(sys.executable).resolve().parent
+
+    # Ejecutando como .exe generado con PyInstaller
+    BASE_DIR = Path(
+        sys.executable
+    ).resolve().parent
+
 else:
-    BASE_DIR = Path(__file__).resolve().parent.parent
+
+    # Ejecutando normalmente con Python
+    BASE_DIR = (
+        Path(__file__)
+        .resolve()
+        .parent
+        .parent
+    )
 ```
 
 Después construir las rutas externas desde `BASE_DIR`:
