@@ -161,7 +161,8 @@ opciones = [
     "📘 Academia Excel BI",
     "📄 Consolidador de Actas",
     "🚗 Servitravel ETL",
-    "🏗️ Framework Dashboards Streamlit" 
+    "🏗️ Framework Dashboards Streamlit",
+    "💰 Dashboard Facturación SERVITRAVEL", 
 ]
 
 # ===============================
@@ -1348,5 +1349,49 @@ reutilizar componentes en futuros proyectos.
     if ruta.exists():
         mostrar_markdown(ruta)
     else:
-        st.warning(f"No existe el archivo:\n{ruta}")        
+        st.warning(f"No existe el archivo:\n{ruta}")  
+
+elif opcion == "💰 Dashboard Facturación SERVITRAVEL":
+
+    with st.expander(
+        "🎤 Guía Rápida para Reuniones",
+        expanded=False
+    ):
+
+        st.warning("""
+### 🎤 Cómo explicar este desarrollo en una reunión
+
+El Dashboard de Facturación SERVITRAVEL permite analizar la facturación
+por período, categoría y proveedor mediante segmentadores, KPIs,
+comparativas mensuales e histórico.
+
+La información parte del archivo operativo Seguimiento facturas.xlsx,
+es consolidada mediante Python en INFORME_LIQUIDACION.xlsb y posteriormente
+es preparada mediante Power Query.
+
+Power Pivot se utiliza como Modelo de Datos para los cálculos dinámicos,
+comparaciones mensuales, recuentos distintos y medidas DAX.
+
+Servicios Temporales se presenta mediante un KPI independiente porque
+corresponde a TIPO_SERVICIO y no a CATEGORIA_ANALISIS.
+
+Una misma factura puede pertenecer, por ejemplo, a METROPOLITANA y
+simultáneamente ser un Servicio Temporal.
+
+Por esta razón no se reclasifica la factura ni se duplica el registro.
+El valor permanece dentro de su categoría original y el KPI permite
+identificar cuánto del total facturado corresponde a Servicios Temporales.
+        """)
+
+    ruta = Path(
+        "docs/dashboard_facturacion_servitravel.md"
+    )
+
+    if ruta.exists():
+        mostrar_markdown(ruta)
+    else:
+        st.error(
+            "No se encontró el archivo "
+            "docs/dashboard_facturacion_servitravel.md"
+        )
 
