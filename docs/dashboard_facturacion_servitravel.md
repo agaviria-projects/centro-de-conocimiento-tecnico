@@ -348,6 +348,124 @@ La tabla `tbl_control_serv_temp` se agregó al Modelo de Datos.
 
 No se utiliza Merge para este control.
 
+
+### Cómo funciona la medida Servicios Temporales Incluidos
+
+Medida DAX utilizada:
+
+```DAX
+Servicios Temporales Incluidos:=
+SUMX(
+    FILTER(
+        BASE_LIMPIA;
+        BASE_LIMPIA[TIPO_SERVICIO] = "SERVICIOS TEMPORALES"
+            &&
+        BASE_LIMPIA[PROVEEDOR] = "SERVITRAVEL"
+            &&
+        LOOKUPVALUE(
+            tbl_control_serv_temp[ACCION];
+            tbl_control_serv_temp[FACTURA];
+            BASE_LIMPIA[FACTURA]
+        ) = "INCLUIR"
+    );
+    BASE_LIMPIA[TOTAL]
+)
+```
+
+#### Explicación sencilla
+
+La medida hace lo siguiente:
+
+> Revisa fila por fila `BASE_LIMPIA`, conserva únicamente las facturas que son
+> Servicios Temporales, cuyo proveedor es SERVITRAVEL y cuya factura está marcada
+> como `INCLUIR` en `CONTROL_SERV_TEMP`. Finalmente suma el campo `TOTAL` de esas
+> facturas.
+
+La lógica puede entenderse así:
+
+```text
+¿TIPO_SERVICIO = SERVICIOS TEMPORALES?
+        ↓ Sí
+¿PROVEEDOR = SERVITRAVEL?
+        ↓ Sí
+¿La factura está marcada INCLUIR?
+        ↓ Sí
+SUMAR TOTAL
+```
+
+Si alguna condición no se cumple:
+
+```text
+NO SUMAR EN EL KPI
+```
+
+#### Qué hace cada parte
+
+`FILTER(BASE_LIMPIA; ...)`
+
+Revisa las filas de `BASE_LIMPIA` y deja pasar únicamente las que cumplen las
+condiciones definidas.
+
+`BASE_LIMPIA[TIPO_SERVICIO] = "SERVICIOS TEMPORALES"`
+
+Valida que el registro corresponda al tipo de servicio requerido.
+
+`BASE_LIMPIA[PROVEEDOR] = "SERVITRAVEL"`
+
+Valida que el proveedor sea SERVITRAVEL.
+
+`LOOKUPVALUE(...) = "INCLUIR"`
+
+Toma el número de factura de la fila actual de `BASE_LIMPIA`, lo busca en
+`tbl_control_serv_temp` y consulta el valor de la columna `ACCION`.
+
+Ejemplo:
+
+```text
+BASE_LIMPIA
+FACTURA = 10200
+
+        ↓ buscar
+
+tbl_control_serv_temp
+FACTURA = 10200
+ACCION = INCLUIR
+```
+
+Si la acción es `INCLUIR`, la factura puede participar en el KPI.
+
+Si la acción es `EXCLUIR` o no existe una inclusión válida, la medida no suma
+ese valor.
+
+`SUMX(...; BASE_LIMPIA[TOTAL])`
+
+Después de aplicar todas las condiciones, suma el campo `TOTAL` de las filas
+que fueron aprobadas.
+
+#### Ejemplo práctico
+
+| FACTURA | TIPO_SERVICIO | PROVEEDOR | ACCION | TOTAL | ¿SUMA EN KPI? |
+|---|---|---|---|---:|---|
+| 10200 | SERVICIOS TEMPORALES | SERVITRAVEL | INCLUIR | $23.002.705 | Sí |
+| 593 | SERVICIOS TEMPORALES | SERVITRAVEL | EXCLUIR | -$23.002.705 | No |
+| 6001 | SERVICIOS TEMPORALES | MONTOYA | INCLUIR | $5.000.000 | No |
+| 10115 | VIATICOS | SERVITRAVEL | INCLUIR | $2.000.000 | No |
+
+#### Por qué esta medida es segura
+
+La medida:
+
+- no modifica `BASE_LIMPIA`;
+- no elimina registros;
+- no cambia `CATEGORIA_ANALISIS`;
+- no duplica facturas;
+- no modifica el `TOTAL FACTURADO`;
+- solamente determina qué valores deben mostrarse en el KPI de Servicios Temporales.
+
+Por esta razón, `INCLUIR` y `EXCLUIR` afectan únicamente el KPI de Servicios
+Temporales y no las tablas dinámicas principales del Dashboard.
+
+
 ## 13. Tabla dinámica auxiliar del KPI
 
 La medida `Servicios Temporales Incluidos` se coloca en una tabla dinámica pequeña en:
