@@ -162,7 +162,8 @@ opciones = [
     "📄 Consolidador de Actas",
     "🚗 Servitravel ETL",
     "🏗️ Framework Dashboards Streamlit",
-    "💰 Dashboard Facturación SERVITRAVEL", 
+    "💰 Dashboard Facturación SERVITRAVEL",
+    "📦 NEXUS - Kardex Inventario", 
 ]
 
 # ===============================
@@ -1394,4 +1395,45 @@ identificar cuánto del total facturado corresponde a Servicios Temporales.
             "No se encontró el archivo "
             "docs/dashboard_facturacion_servitravel.md"
         )
+
+
+elif opcion == "📦 NEXUS - Kardex Inventario":
+
+    with st.expander("🎤 Guía Rápida para Reuniones", expanded=False):
+        st.warning("""
+### 🎤 Cómo explicar NEXUS en una reunión
+
+NEXUS es una herramienta de control de inventario y trazabilidad operativa.
+
+Permite registrar entradas, salidas, reintegros, ajustes, materiales serializados,
+inventario por técnico, auditoría de seriales y conciliación operativa contra DRACO.
+
+El desarrollo se está revalidando completamente en ambiente DEV antes de una
+entrega definitiva al usuario.
+
+La metodología es conservar lo que funciona, corregir errores reales, atender
+riesgos importantes y documentar cada decisión técnica y funcional.
+        """)
+
+    tipo_documento_nexus = st.radio(
+        "Selecciona el documento que deseas consultar",
+        [
+            "📘 Manual funcional y operativo",
+            "🛠️ Documentación técnica para desarrollo",
+            "✅ Plan de revalidación antes de entrega",
+        ],
+        key="doc_nexus"
+    )
+
+    if tipo_documento_nexus == "📘 Manual funcional y operativo":
+        ruta = Path("docs/nexus_kardex_funcional.md")
+    elif tipo_documento_nexus == "🛠️ Documentación técnica para desarrollo":
+        ruta = Path("docs/nexus_kardex_tecnico.md")
+    else:
+        ruta = Path("docs/nexus_kardex_pruebas.md")
+
+    if ruta.exists():
+        mostrar_markdown(ruta)
+    else:
+        st.error(f"No se encontró el archivo:\n\n{ruta}")
 
