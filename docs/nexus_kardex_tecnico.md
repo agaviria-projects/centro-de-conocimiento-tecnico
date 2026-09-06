@@ -1,10 +1,17 @@
-# 🛠️ NEXUS / Kardex — Documentación Técnica
+# 🛠️ NEXUS / Kardex — Documentación Técnica para Desarrollo y Soporte
 
-## 1. Arquitectura
+> **Propósito:** conservar arquitectura, reglas, SQL, hallazgos, decisiones y puntos de soporte para poder recuperar o modificar NEXUS sin reconstruir todo desde cero.
+
+---
+
+# 1. Arquitectura general
+
 ```text
 sigem/
+│
 ├── main.py
-├── config/db.py
+├── config/
+│   └── db.py
 ├── modules/
 │   ├── auditoria.py
 │   ├── catalogos.py
@@ -23,119 +30,516 @@ sigem/
 │   └── seriales_ui.py
 └── data/
     ├── sigem.db
-    └── sigem_dev.db
+    ├── sigem_dev.db
+    └── sigem_lista.db
 ```
 
-## 2. Entornos
+---
+
+# 2. Entornos DEV / PROD
+
+`config/db.py`:
+
 ```python
+BASE_DIR = Path(__file__).resolve().parent.parent
 ENV = os.getenv("APP_ENV", "prod")
+
 if ENV == "dev":
     DB_PATH = BASE_DIR / "data" / "sigem_dev.db"
 else:
     DB_PATH = BASE_DIR / "data" / "sigem.db"
 ```
 
-DEV:
+## Ejecutar DEV
+
 ```bat
 set APP_ENV=dev
 streamlit run main.py
 ```
 
-PROD:
+## Ejecutar PROD
+
 ```bat
 set APP_ENV=prod
 streamlit run main.py
 ```
 
-## 3. SQLite
+La interfaz debe mostrar claramente el entorno actual.
+
+---
+
+# 3. SQLite
+
+## Acceso
+
 ```bat
 py -m sqlite3 data\sigem_dev.db
+```
+
+```bat
 py -m sqlite3 data\sigem.db
 ```
 
-Tablas principales:
-`almacenes`, `auditoria_seriales`, `equivalencias_tecnicos_draco`, `materiales`, `movimientos`, `personal`, `responsables`, `seriales`, `tecnicos`, `tipos_movimiento`.
+## Tablas principales
 
-## 4. Kardex
-Último stock de METROPOLITANA SUR:
-```sql
-ORDER BY m.fecha DESC, m.id_movimiento DESC
-```
-
-Recálculo:
 ```text
-fecha ASC + id_movimiento ASC
+almacenes
+auditoria_seriales
+equivalencias_tecnicos_draco
+materiales
+movimientos
+personal
+responsables
+seriales
+tecnicos
+tipos_movimiento
 ```
 
-Hallazgo pendiente: `eliminar_movimiento_seguro` debe revisarse si alguna vez se modifica, porque el orden por id puede no respetar completamente la cronología.
+---
 
-## 5. Responsables
-Funciones conocidas:
-- obtener_responsables
-- obtener_todos_responsables
-- crear_responsable
-- actualizar_responsable
-- cambiar_estado_responsable
+# 4. Tabla movimientos
 
-Los inactivos deben conservarse para histórico.
+Campos observados:
 
-## 6. Seriales
-Estados operativos:
+```text
+id_movimiento
+id_material
+id_tipo
+cantidad
+stock_antes
+stock_despues
+id_responsable
+id_tecnico
+id_almacen
+fecha
+observacion
+acta
+remision
+proveedor
+```
+
+---
+
+# 5. Tipos de movimiento
+
+Principales tipos recuperados:
+
+```text
+ENTRADA ELITE
+ENTRADA PROVEEDOR
+ENTREGA AH
+REINTEGRO
+DEVOLUCION
+DEVOLUCION AHTA
+SALIDA ELITE
+SALIDA TECNICO
+SALIDA EPM
+AJUSTE ENTRADA
+AJUSTE SALIDA
+REINTEGRO SERIAL
+```
+
+`REINTEGRO SERIAL` tiene factor 0 y se utiliza para trazabilidad, no para afectar stock.
+
+---
+
+# 6. Stock Kardex
+
+La consulta de stock utiliza el último `stock_despues` de METROPOLITANA SUR:
+
+```sql
+SELECT m.stock_despues
+FROM movimientos m
+JOIN almacenes a ON m.id_almacen = a.id_almacen
+WHERE m.id_material = ?
+AND UPPER(a.nombre) = 'METROPOLITANA SUR'
+ORDER BY m.fecha DESC, m.id_movimiento DESC
+LIMIT 1;
+```
+
+Recálculo cronológico:
+
+```text
+fecha ASC
+id_movimiento ASC
+```
+
+### Hallazgo pendiente
+
+`eliminar_movimiento_seguro` utiliza orden por `id_movimiento`. Revisar únicamente si existe una necesidad real de modificar esa función.
+
+---
+
+# 7. Materiales
+
+Campos relevantes:
+
+```text
+id_material
+codigo
+nombre
+descripcion
+tipo_material
+serializado
+```
+
+Existe una columna histórica llamada:
+
+```text
+COLUMNS
+```
+
+No modificar sin análisis específico.
+
+---
+
+# 8. Personal / técnicos
+
+`personal` y `tecnicos` deben permanecer sincronizados por cédula.
+
+SQL de control:
+
+```sql
+SELECT cedula,nombre,zona
+FROM personal
+WHERE cedula = ?;
+```
+
+```sql
+SELECT cedula,nombre
+FROM tecnicos
+WHERE cedula = ?;
+```
+
+---
+
+# 9. Responsables
+
+Se agregó control activo/inactivo.
+
+Funciones relevantes en `modules/catalogos.py`:
+
+```text
+obtener_responsables
+obtener_todos_responsables
+crear_responsable
+actualizar_responsable
+cambiar_estado_responsable
+```
+
+Un responsable inactivo debe permanecer disponible para histórico.
+
+---
+
+# 10. Seriales
+
+Campos:
+
+```text
+id_serial
+codigo_material
+serial
+estado
+id_movimiento
+fecha
+```
+
+Estados:
+
 ```text
 DISPONIBLE
 ASIGNADO
 ```
 
-La edición manual de estado fue deshabilitada en `ui/seriales_ui.py`.
+La edición manual de estado fue deshabilitada en:
 
-## 7. Ajustes Kardex
+```text
+ui/seriales_ui.py
+```
+
+porque permitía producir:
+
+```text
+ASIGNADO + técnico vacío
+```
+
+---
+
+# 11. Reintegros
+
+Flujo esperado:
+
+```text
+1. localizar serial
+2. identificar técnico anterior
+3. cambiar a DISPONIBLE
+4. registrar auditoría
+5. registrar movimiento REINTEGRO SERIAL cuando aplique
+6. recalcular Kardex
+```
+
+El reintegro por Excel usa solo:
+
+```text
+serial
+```
+
+---
+
+# 12. Auditoría Seriales
+
+Tabla:
+
+```text
+auditoria_seriales
+```
+
+Campos:
+
+```text
+serial
+codigo_material
+id_tecnico
+estado_anterior
+estado_nuevo
+evento
+fecha
+responsable
+observacion
+id_movimiento
+```
+
+Eventos:
+
+```text
+SALIDA
+REINTEGRO
+AJUSTE
+```
+
+`AJUSTE` se mantiene por histórico aunque la función manual esté deshabilitada.
+
+---
+
+# 13. Ajustes Kardex
+
+Lógica:
+
 ```python
 diferencia = nueva_cantidad - stock_actual
 ```
 
 ```text
-> 0 → AJUSTE ENTRADA
-< 0 → AJUSTE SALIDA
-= 0 → sin movimiento
+diferencia > 0 → AJUSTE ENTRADA
+diferencia < 0 → AJUSTE SALIDA
+diferencia = 0 → sin movimiento
 ```
 
-## 8. Conciliación Operativa
+El valor de UI representa:
+
+```text
+Stock físico correcto
+```
+
+no la cantidad de diferencia.
+
+---
+
+# 14. Conciliación Operativa
+
 Archivo:
+
 ```text
 ui/conciliacion_operativa.py
 ```
 
-NEXUS filtra:
+## NEXUS
+
+Consulta por acta:
+
 ```sql
 WHERE m.acta = ?
 ```
 
-DRACO utiliza:
+Calcula:
+
+```text
+SALIDAS
+REINTEGROS
+```
+
+y consolida técnico/material.
+
+---
+
+## DRACO
+
+Columnas utilizadas:
+
 ```text
 Técnico
 Código
 Cantidad
 ```
 
-Luego:
-1. normaliza nombres
-2. normaliza códigos
-3. excluye códigos no conciliables
-4. cruza equivalencias activas
-5. identifica sin equivalencia
-6. agrupa por cédula + técnico_nexus + código
-7. suma instalados
+Transformaciones:
 
-Equivalencias:
+1. limpieza de nombre
+2. limpieza de código
+3. normalización de códigos
+4. exclusión de códigos no conciliables
+5. cruce con equivalencias
+6. diagnóstico de sin equivalencia
+7. consolidación
+8. suma de instalados
+
+---
+
+# 15. Equivalencias DRACO ↔ NEXUS
+
+Tabla:
+
+```text
+equivalencias_tecnicos_draco
+```
+
+Campos recuperados:
+
+```text
+id_equivalencia
+tecnico_draco
+cedula
+tecnico_nexus
+zona
+activo
+fecha_creacion
+```
+
+Consulta:
+
 ```sql
-SELECT tecnico_draco, cedula, tecnico_nexus
+SELECT
+    tecnico_draco,
+    cedula,
+    tecnico_nexus
 FROM equivalencias_tecnicos_draco
 WHERE activo = 1;
 ```
 
-Cruce final:
+---
+
+# 16. Regla técnica de equivalencias
+
+DRACO no trae cédula.
+
+La tabla de equivalencias convierte:
+
+```text
+Nombre DRACO
+→ Cédula
+→ Nombre NEXUS
+```
+
+Después se cruza:
+
+```text
+Cédula + Código
+```
+
+### Hallazgo importante
+
+DRACO y NEXUS pueden manejar el mismo técnico con distinto orden del nombre.
+
+Por eso:
+
+```text
+tecnico_draco
+```
+
+debe reflejar exactamente el nombre que llega desde DRACO.
+
+La cédula es el identificador confiable.
+
+---
+
+# 17. Diagnóstico de Sin equivalencia
+
+Si aparece:
+
+```text
+Sin equivalencia > 0
+```
+
+procedimiento:
+
+```text
+1. listar técnicos DRACO sin equivalencia
+2. buscar en tecnicos
+3. buscar en personal
+4. obtener cédula
+5. consultar equivalencia por cédula
+6. UPDATE si ya existe
+7. INSERT solo si no existe
+8. repetir conciliación
+```
+
+Nunca crear equivalencias por parecido visual sin validar la identidad.
+
+---
+
+# 18. SQL de diagnóstico de equivalencias
+
+## Por nombre DRACO
+
+```sql
+SELECT
+    tecnico_draco,
+    cedula,
+    tecnico_nexus,
+    activo
+FROM equivalencias_tecnicos_draco
+WHERE UPPER(tecnico_draco) LIKE '%TEXTO%';
+```
+
+## Por cédula
+
+```sql
+SELECT
+    tecnico_draco,
+    cedula,
+    tecnico_nexus,
+    activo
+FROM equivalencias_tecnicos_draco
+WHERE cedula = ?;
+```
+
+## Buscar técnico
+
+```sql
+SELECT
+    cedula,
+    nombre
+FROM tecnicos
+WHERE UPPER(nombre) LIKE '%TEXTO%';
+```
+
+## Buscar personal
+
+```sql
+SELECT
+    cedula,
+    nombre,
+    zona
+FROM personal
+WHERE UPPER(nombre) LIKE '%TEXTO%';
+```
+
+---
+
+# 19. Cruce final
+
 ```python
-pd.merge(
+df_final = pd.merge(
     df_nexus,
     df_draco,
     on=["cedula", "codigo"],
@@ -143,48 +547,80 @@ pd.merge(
 )
 ```
 
-Fórmula:
+El `outer` conserva:
+
+- coincidencias
+- solo NEXUS
+- solo DRACO
+
+---
+
+# 20. Fórmula de conciliación
+
 ```python
 diferencia = salidas - reintegros - instalados
 ```
 
 Estados:
+
 ```text
-diferencia == 0 → OK
-salidas == 0 and reintegros == 0 and instalados > 0 → INSTALACIÓN SIN ENTREGA
-salidas == 0 and reintegros > 0 → REINTEGRO SIN ENTREGA A TÉCNICO
-diferencia > 0 → PENDIENTE DEVOLUCIÓN
-otros → REVISAR OPERACIÓN
+diferencia == 0
+→ OK
+
+salidas == 0 and reintegros == 0 and instalados > 0
+→ INSTALACIÓN SIN ENTREGA
+
+salidas == 0 and reintegros > 0
+→ REINTEGRO SIN ENTREGA A TÉCNICO
+
+diferencia > 0
+→ PENDIENTE DEVOLUCIÓN
+
+otro
+→ REVISAR OPERACIÓN
 ```
 
-## 9. Trazabilidad mejorada
-Mostrar:
-- DRACO original
-- DRACO tras exclusiones
-- Sin equivalencia
-- DRACO consolidado
-- NEXUS consolidado
-- Conciliación final
-- Técnicos NEXUS
-- Técnicos DRACO
-- Técnicos Cruzados
-- NEXUS sin DRACO
-- Cobertura %
+---
+
+# 21. Trazabilidad mejorada
+
+La pantalla muestra:
+
+```text
+DRACO original
+DRACO tras exclusiones
+Sin equivalencia
+DRACO consolidado
+NEXUS consolidado
+Conciliación final
+```
+
+Indicadores:
+
+```text
+Técnicos NEXUS
+Técnicos DRACO
+Técnicos Cruzados
+NEXUS sin DRACO
+Cobertura %
+```
 
 Técnicos cruzados:
+
 ```python
 cedulas_cruzadas = cedulas_nexus & cedulas_draco
 ```
 
-## 10. Hallazgo Acta 8
-Equivalencia corregida:
-```text
-DRACO: NELSON DARIO LONDOÑO HERRERA
-Cédula: 3552306
-NEXUS: LONDOÑO HERRERA NELSON DARIO
-```
+---
 
-Resultado:
+# 22. Hallazgo Acta 8
+
+Se detectó un técnico existente en NEXUS cuyo nombre DRACO estaba registrado con orden distinto.
+
+La equivalencia fue corregida.
+
+Efecto observado:
+
 ```text
 Sin equivalencia: 188 → 0
 DRACO consolidado: 457 → 498
@@ -194,41 +630,99 @@ Técnicos Cruzados: 9 → 10
 Cobertura: 25,71 % → 28,57 %
 ```
 
-## 11. Acta 7 — pendiente
-Se detectaron 85 registros sin equivalencia correspondientes a 6 técnicos. Los 6 sí existen en NEXUS con nombres invertidos respecto a DRACO. Antes de insertar/actualizar se debe consultar por cédula en `equivalencias_tecnicos_draco`.
+Este caso debe conservarse como ejemplo técnico de diagnóstico.
 
-## 12. SQL útiles
-```sql
-SELECT tecnico_draco, cedula, tecnico_nexus, activo
-FROM equivalencias_tecnicos_draco
-WHERE cedula = ?;
+---
+
+# 23. Hallazgo Acta 7
+
+Se detectaron:
+
+```text
+85 registros sin equivalencia
+6 técnicos únicos
 ```
 
-```sql
-SELECT cedula, nombre
-FROM tecnicos
-WHERE UPPER(nombre) LIKE '%TEXTO%';
+Los técnicos sí existen en NEXUS, pero con nombre invertido respecto a DRACO.
+
+Antes de realizar cambios:
+
+```text
+consultar por cédula
 ```
 
-```sql
-SELECT cedula, nombre, zona
-FROM personal
-WHERE UPPER(nombre) LIKE '%TEXTO%';
+para evitar duplicar equivalencias.
+
+---
+
+# 24. Dashboard
+
+Estado técnico:
+
+```text
+PENDIENTE DE REVALIDACIÓN
 ```
 
-## 13. Despliegue
-Antes de DEV → PROD:
-1. backup sigem.db
-2. validar sigem_dev.db
-3. listar archivos .py modificados
-4. listar migraciones SQL
-5. ejecutar pruebas funcionales
-6. ejecutar SQL de control
-7. commit dev
-8. merge a main solo al cierre
-9. conservar rollback
+Hallazgo a revisar:
 
-Archivos modificados durante la recuperación incluyen al menos:
+```text
+posible SUM(stock_despues)
+```
+
+No modificar hasta confirmar que exista un error real.
+
+---
+
+# 25. Git
+
+Ramas:
+
+```text
+main
+dev
+feature/mysql-network
+```
+
+Regla:
+
+```text
+main = estable
+dev = pruebas y recuperación
+```
+
+No hacer merge de cada cambio pequeño.
+
+Al cierre:
+
+```bat
+git checkout main
+git pull origin main
+git merge dev
+git push origin main
+git checkout dev
+```
+
+---
+
+# 26. Despliegue
+
+Antes de PROD:
+
+1. Backup `sigem.db`
+2. Confirmar DEV
+3. Listar archivos `.py` modificados
+4. Listar migraciones SQL
+5. Ejecutar pruebas
+6. Ejecutar SQL de control
+7. Commit final DEV
+8. Merge a main
+9. Copiar archivos necesarios
+10. Aplicar migraciones
+11. Ejecutar pruebas post-despliegue
+12. Mantener rollback
+
+Archivos modificados conocidos:
+
 ```text
 modules/catalogos.py
 modules/inventario.py
@@ -236,3 +730,5 @@ ui/app.py
 ui/seriales_ui.py
 ui/conciliacion_operativa.py
 ```
+
+Verificar siempre con Git antes de entregar.
