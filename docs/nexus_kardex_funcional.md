@@ -97,6 +97,7 @@ El usuario debe seleccionar el tipo de almacén correspondiente antes de continu
 En el campo de código se escribe el código exacto del material.
 
 Material de 10 digitos corresponde al consumo de Elite Ingenieros.
+
 Material de 6 digitos coresponde al consumo de EPM.
 
 Ejemplo:
