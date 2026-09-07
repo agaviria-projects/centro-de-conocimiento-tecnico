@@ -306,7 +306,7 @@ Desde este módulo el usuario puede:
 
 ## 6.2 Pestañas del módulo
 
-El módulo Materiales contiene las siguientes pestañas:
+El módulo **Materiales** contiene las siguientes pestañas:
 
 ```text
 Lista
@@ -342,10 +342,23 @@ Para crear un material:
 
 Corresponde al código con el que se identifica el material dentro de NEXUS.
 
-Ejemplo:
+La longitud del código permite diferenciar el origen del material:
+
+```text
+10 dígitos → Material ELITE
+6 dígitos  → Material EPM
+```
+
+Ejemplo ELITE:
 
 ```text
 2100000098
+```
+
+Ejemplo EPM:
+
+```text
+219404
 ```
 
 El usuario debe ingresar el código correcto del material.
@@ -366,7 +379,7 @@ ALAMBRE DE COBRE RIGIDO # 10 ROJO
 
 ### Descripción
 
-Permite registrar información adicional del material.
+Permite registrar información adicional relacionada con el material.
 
 Ejemplo:
 
@@ -378,123 +391,242 @@ Material utilizado para instalaciones eléctricas.
 
 ### ¿Este material requiere seriales?
 
-Esta opción determina si el material debe ser controlado mediante números de serial individuales.
+Esta opción determina si NEXUS debe controlar el material mediante números de serial individuales.
+
+La selección debe realizarse de acuerdo con el tipo real de material.
 
 ---
 
-## 6.5 Regla de serialización
+## 6.5 Regla de identificación de materiales
 
-Si el material requiere control individual por número de serie:
+### Materiales ELITE
 
-```text
-¿Este material requiere seriales? = Marcado
-```
-
-En este caso NEXUS deberá solicitar seriales cuando el material participe en movimientos que requieran trazabilidad individual.
-
-Ejemplos típicos:
+Los materiales ELITE utilizan códigos de:
 
 ```text
-MODEM
-MEDIDOR
-EQUIPO ELECTRÓNICO
+10 dígitos
 ```
 
-Si el material no requiere control individual por serial:
+Ejemplo:
+
+```text
+2100000098
+```
+
+En la operación actual de NEXUS, los materiales ELITE se manejan como materiales no serializados.
+
+Por lo tanto, al crear un material ELITE debe quedar:
 
 ```text
 ¿Este material requiere seriales? = Sin marcar
 ```
 
-En este caso NEXUS trabajará con cantidades y no deberá solicitar seriales.
+El control de estos materiales se realiza principalmente mediante cantidades.
 
-Ejemplos típicos:
+Flujo esperado:
 
 ```text
-CABLE
-TORNILLOS
-CONECTORES
-CINTA
-GRAPAS
+Material ELITE
+↓
+Código de 10 dígitos
+↓
+No serializado
+↓
+Control por cantidad
 ```
 
 ---
 
-## 6.6 Resultado esperado después de crear un material
+### Materiales EPM
+
+Los materiales EPM utilizan códigos de:
+
+```text
+6 dígitos
+```
+
+Ejemplo:
+
+```text
+219404
+```
+
+Los materiales que actualmente requieren control individual por serial corresponden a materiales EPM.
+
+Ejemplos de códigos serializados identificados en NEXUS:
+
+```text
+219404
+200093
+200098
+325642
+200101
+244201
+249857
+229551
+229550
+200092
+```
+
+Cuando un material EPM requiere serialización debe quedar:
+
+```text
+¿Este material requiere seriales? = Marcado
+```
+
+Flujo esperado:
+
+```text
+Material EPM
+↓
+Código de 6 dígitos
+↓
+Material configurado como serializado
+↓
+Control individual por serial
+```
+
+---
+
+## 6.6 Regla práctica para el usuario
+
+Antes de crear un material se debe identificar primero su origen.
+
+### Si el código tiene 10 dígitos
+
+```text
+Material ELITE
+↓
+No serializado
+↓
+¿Este material requiere seriales? = Sin marcar
+```
+
+### Si el código tiene 6 dígitos
+
+```text
+Material EPM
+↓
+Validar si el material requiere control por serial
+```
+
+Si el material EPM requiere serialización:
+
+```text
+¿Este material requiere seriales? = Marcado
+```
+
+La longitud del código permite identificar si corresponde a ELITE o EPM.
+
+La condición de serialización de un material EPM debe corresponder a la configuración real definida para ese material.
+
+---
+
+## 6.7 Resultado esperado después de crear un material
 
 Después de presionar **Crear**:
 
 - El material debe quedar registrado en NEXUS.
 - Debe conservar correctamente el código.
 - Debe conservar correctamente el nombre.
-- Debe conservar la descripción.
-- Debe guardar correctamente si requiere seriales o no.
+- Debe conservar correctamente la descripción.
+- Debe guardar correctamente la condición de serialización.
 - Debe aparecer en la pestaña **Lista**.
-- Debe poder utilizarse posteriormente desde **Kardex Inventario**.
+- Debe quedar disponible posteriormente para utilizarse desde **Kardex Inventario**.
 
 ---
 
-## 6.7 Validación después de crear un material
+## 6.8 Validación después de crear un material
 
 Después de crear el material:
 
 1. Ir a la pestaña **Lista**.
 2. Buscar el código creado.
 3. Confirmar que el material aparezca.
-4. Verificar que el nombre sea correcto.
-5. Verificar la descripción.
-6. Confirmar si quedó correctamente definido como serializado o no.
-7. Utilizar posteriormente el material en **Kardex Inventario** para comprobar su comportamiento.
+4. Verificar que el código sea correcto.
+5. Verificar que el nombre sea correcto.
+6. Verificar la descripción.
+7. Confirmar si quedó correctamente definido como serializado o no.
+8. Utilizar posteriormente el material en **Kardex Inventario** para comprobar su comportamiento.
 
 ---
 
-## 6.8 Validación de material serializado
+## 6.9 Validación de material ELITE no serializado
 
-Cuando un material serializado se utiliza en Kardex Inventario, NEXUS debe indicar que requiere registro de seriales.
-
-El comportamiento esperado es:
+Cuando se utiliza un material ELITE:
 
 ```text
-Material serializado
+Material ELITE
 ↓
-Movimiento que requiere serial
+Código de 10 dígitos
 ↓
-NEXUS solicita serial(es)
-```
-
----
-
-## 6.9 Validación de material no serializado
-
-Cuando un material no serializado se utiliza en Kardex Inventario:
-
-```text
-Material no serializado
+NEXUS reconoce el material
 ↓
 Movimiento de inventario
 ↓
-NEXUS solicita cantidad
+NEXUS trabaja con cantidad
 ↓
 No solicita seriales
 ```
 
+Este comportamiento debe comprobarse posteriormente desde **Kardex Inventario**.
+
 ---
 
-## 6.10 Pestaña Lista
+## 6.10 Validación de material EPM serializado
+
+Cuando un material EPM configurado como serializado se utiliza en Kardex Inventario:
+
+```text
+Material EPM serializado
+↓
+Código de 6 dígitos
+↓
+NEXUS reconoce el material
+↓
+Informa que el material requiere seriales
+↓
+Movimiento que requiere control individual
+↓
+NEXUS solicita los seriales
+```
+
+Este comportamiento debe comprobarse posteriormente desde **Kardex Inventario**.
+
+---
+
+## 6.11 Pestaña Lista
 
 La pestaña **Lista** permite consultar los materiales registrados en NEXUS.
 
 Se utiliza para:
 
 - Confirmar que un material fue creado correctamente.
-- Buscar un código.
-- Revisar nombre y descripción.
+- Buscar un material por código.
+- Revisar nombre.
+- Revisar descripción.
 - Confirmar si requiere seriales.
 - Verificar el material antes de utilizarlo en Kardex Inventario.
 
+### Validación después de crear
+
+Después de crear cualquier material se recomienda:
+
+```text
+Crear
+↓
+Ir a Lista
+↓
+Buscar código
+↓
+Confirmar información
+```
+
+Esto permite detectar inmediatamente cualquier error de creación.
+
 ---
 
-## 6.11 Editar material
+## 6.12 Pestaña Editar
 
 La pestaña **Editar** permite corregir información de un material existente.
 
@@ -506,15 +638,24 @@ Descripción incorrecta
 Configuración de serialización incorrecta
 ```
 
-### Recomendación
+### Precaución
 
 Antes de modificar un material que ya tenga movimientos históricos, se debe revisar el impacto del cambio.
 
-No se recomienda modificar códigos de materiales con histórico sin una validación previa.
+Especialmente se debe tener precaución con:
+
+```text
+Código del material
+Serialización
+Materiales con movimientos
+Materiales con seriales asociados
+```
+
+No se recomienda modificar un código que ya tenga histórico sin realizar previamente una validación técnica.
 
 ---
 
-## 6.12 Eliminar material
+## 6.13 Pestaña Eliminar
 
 La pestaña **Eliminar** permite eliminar un material cuando corresponda.
 
@@ -525,13 +666,15 @@ Antes de eliminar un material se debe validar:
 - Si tiene movimientos registrados.
 - Si tiene seriales asociados.
 - Si forma parte del histórico.
-- Si su eliminación puede afectar reportes o inventarios.
+- Si su eliminación puede afectar inventarios.
+- Si su eliminación puede afectar reportes.
+- Si existen relaciones con otras tablas de NEXUS.
 
-Si el material ya tiene trazabilidad histórica, no se recomienda eliminarlo sin revisión técnica previa.
+Si el material ya tiene trazabilidad histórica, no se recomienda eliminarlo sin una revisión técnica previa.
 
 ---
 
-## 6.13 Regla para evitar materiales duplicados
+## 6.14 Regla para evitar materiales duplicados
 
 Antes de crear un material, el usuario debe confirmar:
 
@@ -539,21 +682,30 @@ Antes de crear un material, el usuario debe confirmar:
 ¿El material ya existe en NEXUS?
 ```
 
-Si el material ya existe:
+Si el código ya existe:
 
 ```text
-NO crear otro registro
+NO crear nuevamente el material
 ```
 
-Se debe utilizar el material existente o corregirlo mediante la pestaña **Editar** si corresponde.
+Se debe utilizar el registro existente o corregirlo mediante la pestaña **Editar** cuando corresponda.
 
-Esto evita duplicidad de códigos o materiales.
+Esto evita:
+
+```text
+Códigos duplicados
+Materiales duplicados
+Errores de inventario
+Errores de trazabilidad
+```
 
 ---
 
-## 6.14 Ejemplo de creación — Material no serializado
+## 6.15 Prueba controlada — Material ELITE no serializado
 
-Ejemplo de prueba:
+Para validar el funcionamiento del manual se puede crear temporalmente un material de prueba ELITE.
+
+Ejemplo:
 
 ```text
 Código:
@@ -563,89 +715,178 @@ Nombre:
 MATERIAL PRUEBA ELITE
 
 Descripción:
-PRUEBA MANUAL NEXUS
+PRUEBA MANUAL FUNCIONAL NEXUS
 
 ¿Este material requiere seriales?:
 Sin marcar
 ```
 
-Resultado esperado:
+El código contiene:
+
+```text
+10 dígitos
+```
+
+por lo tanto corresponde al esquema de material ELITE.
+
+### Resultado esperado
 
 ```text
 Material creado
 ↓
 Aparece en Lista
 ↓
-Puede utilizarse en Kardex Inventario
+Se utiliza en Kardex Inventario
+↓
+NEXUS trabaja con cantidad
 ↓
 No solicita seriales
 ```
 
 ---
 
-## 6.15 Ejemplo de creación — Material serializado
+## 6.16 Prueba controlada — Material EPM serializado
 
-Ejemplo de prueba:
+Para comprobar el flujo de serialización se debe utilizar un código EPM de 6 dígitos.
+
+Se recomienda utilizar para la prueba uno de los materiales EPM serializados que ya existen en NEXUS, evitando crear innecesariamente un segundo registro con el mismo código.
+
+Ejemplo de código serializado identificado:
 
 ```text
-Código:
-9999999902
-
-Nombre:
-MATERIAL PRUEBA SERIALIZADO
-
-Descripción:
-PRUEBA CONTROL DE SERIALES NEXUS
-
-¿Este material requiere seriales?:
-Marcado
+219404
 ```
 
-Resultado esperado:
+Antes de utilizarlo:
+
+1. Ir a **Materiales → Lista**.
+2. Buscar el código **219404**.
+3. Confirmar que el material existe.
+4. Confirmar que está configurado como serializado.
+5. Utilizarlo posteriormente desde **Kardex Inventario**.
+
+### Resultado esperado
 
 ```text
-Material creado
+Código EPM de 6 dígitos
 ↓
-Aparece en Lista
+Material configurado como serializado
 ↓
-Kardex identifica que requiere seriales
+NEXUS reconoce el material
 ↓
-NEXUS solicita serial(es) cuando corresponda
+Indica que requiere seriales
+↓
+Solicita los seriales durante el movimiento correspondiente
 ```
 
 ---
 
-## 6.16 Validación completa del módulo Materiales
+## 6.17 Prueba adicional — Material EPM no serializado
 
-Antes de considerar el módulo Materiales aprobado para entrega:
+También se debe comprobar si existen materiales EPM de 6 dígitos que no requieran serialización.
 
-- Crear un material no serializado.
+La prueba permitirá confirmar que:
+
+```text
+EPM
+```
+
+no significa automáticamente:
+
+```text
+SERIALIZADO
+```
+
+La regla correcta debe quedar determinada por la configuración individual del material.
+
+Si se identifica un material EPM no serializado:
+
+```text
+Código de 6 dígitos
+↓
+Material EPM
+↓
+¿Este material requiere seriales? = Sin marcar
+↓
+NEXUS trabaja con cantidad
+```
+
+Esta prueba debe realizarse antes de cerrar definitivamente el módulo.
+
+---
+
+## 6.18 Validación completa del módulo Materiales
+
+Antes de considerar el módulo Materiales aprobado para entrega se debe comprobar:
+
+### Creación
+
+- Crear un material ELITE de prueba.
+- Confirmar que utilice código de 10 dígitos.
+- Confirmar que quede no serializado.
 - Confirmar que aparezca en Lista.
-- Utilizarlo en Kardex Inventario.
+
+### Material EPM serializado
+
+- Localizar un material EPM serializado existente.
+- Confirmar código de 6 dígitos.
+- Confirmar que esté marcado como serializado.
+- Utilizarlo posteriormente en Kardex Inventario.
+- Confirmar que NEXUS solicite seriales.
+
+### Material EPM no serializado
+
+- Identificar un material EPM no serializado, si existe.
+- Confirmar su comportamiento en Kardex Inventario.
 - Confirmar que no solicite seriales.
-- Crear un material serializado.
-- Confirmar que aparezca en Lista.
-- Utilizarlo en Kardex Inventario.
-- Confirmar que solicite seriales.
-- Probar una edición controlada.
-- Revisar el comportamiento de la pestaña Eliminar.
-- Confirmar que el comportamiento real coincida con este manual.
+
+### Lista
+
+- Buscar los materiales utilizados en las pruebas.
+- Confirmar código.
+- Confirmar nombre.
+- Confirmar descripción.
+- Confirmar serialización.
+
+### Editar
+
+- Realizar una edición controlada.
+- Confirmar que el cambio quede guardado.
+- Confirmar que no se alteren datos no modificados.
+
+### Eliminar
+
+- Revisar el comportamiento con un material exclusivamente de prueba.
+- Confirmar las validaciones existentes antes de eliminar.
+- No realizar pruebas de eliminación sobre materiales históricos reales.
+
+### Integración con Kardex
+
+- Confirmar comportamiento del material ELITE.
+- Confirmar comportamiento del material EPM serializado.
+- Confirmar comportamiento del material EPM no serializado cuando exista.
 
 ---
 
-## 6.17 Estado de validación
+## 6.19 Estado de validación
 
-El módulo Materiales se considera aprobado cuando:
+El módulo Materiales solamente debe marcarse como aprobado cuando se hayan ejecutado las pruebas reales.
+
+Estado actual de revalidación:
 
 ```text
-CREAR = OK
-LISTA = OK
-EDITAR = OK
-ELIMINAR = VALIDADO
-SERIALIZADO = OK
-NO SERIALIZADO = OK
-KARDEX = COMPORTAMIENTO CORRECTO
+CREAR                     = EN PRUEBA
+LISTA                     = PENDIENTE DE REVALIDACIÓN
+EDITAR                    = PENDIENTE DE REVALIDACIÓN
+ELIMINAR                  = PENDIENTE DE REVALIDACIÓN
+ELITE 10 DÍGITOS          = REGLA IDENTIFICADA
+EPM 6 DÍGITOS             = REGLA IDENTIFICADA
+EPM SERIALIZADO           = REGLA IDENTIFICADA
+EPM NO SERIALIZADO        = PENDIENTE DE COMPROBACIÓN
+INTEGRACIÓN CON KARDEX    = PENDIENTE DE REVALIDACIÓN
+MÓDULO                    = PENDIENTE
 ```
+
 
 # 7. 👥 Módulo Personal
 
