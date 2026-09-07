@@ -713,7 +713,7 @@ SELECT
     nombre,
     zona
 FROM personal
-WHERE cedula = 'CEDULA';
+WHERE cedula = 'Digitar el número de la cedula';
 ```
 
 y:
@@ -724,7 +724,7 @@ SELECT
     cedula,
     nombre
 FROM tecnicos
-WHERE cedula = 'CEDULA';
+WHERE cedula = 'Digitar el número de la cedula';
 ```
 
 Los dos registros deben corresponder a la misma persona.
