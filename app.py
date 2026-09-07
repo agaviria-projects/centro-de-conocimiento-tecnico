@@ -163,6 +163,7 @@ opciones = [
     "🚗 Servitravel ETL",
     "🏗️ Framework Dashboards Streamlit",
     "💰 Dashboard Facturación SERVITRAVEL",
+    "🧠 Skill Analista de Datos",
     "📦 NEXUS - Kardex Inventario", 
 ]
 
@@ -1394,6 +1395,89 @@ identificar cuánto del total facturado corresponde a Servicios Temporales.
         st.error(
             "No se encontró el archivo "
             "docs/dashboard_facturacion_servitravel.md"
+        )
+
+
+
+elif opcion == "🧠 Skill Analista de Datos":
+
+    st.header("🧠 Skill Analista de Datos")
+
+    st.info("""
+Esta sección explica en términos sencillos qué es un Skill, para qué sirve,
+cómo está construido el Skill de análisis de datos y cómo profundizar
+gradualmente en su funcionamiento.
+
+La idea no es memorizar código, sino entender la arquitectura:
+**reglas y metodología + motor de análisis + interfaz + validación**.
+    """)
+
+    with st.expander(
+        "🎤 Guía rápida: cómo explicar qué es un Skill",
+        expanded=False
+    ):
+        st.warning("""
+### ¿Qué es un Skill?
+
+Un Skill es una solución especializada que reúne conocimiento, reglas,
+metodología y lógica de análisis para resolver un tipo de problema de forma
+repetible.
+
+En este caso, el Skill está orientado al trabajo de un analista de datos.
+
+Puede ayudar a:
+
+- inspeccionar archivos Excel o CSV;
+- detectar problemas de calidad;
+- revisar duplicados, vacíos y fechas;
+- identificar posibles claves;
+- aplicar reglas de negocio;
+- recomendar tecnologías;
+- enseñar cómo abordar una solución.
+
+### ¿Cómo se divide?
+
+**Archivos Markdown (.md)**  
+Contienen metodología, criterios, reglas y conocimiento de referencia.
+
+**HTML + CSS**  
+Construyen la interfaz visual.
+
+**JavaScript**  
+Es el motor actual que lee el archivo y ejecuta muchas validaciones.
+
+**Python**  
+Puede utilizarse como motor adicional cuando el procesamiento sea más
+avanzado, pesado o requiera automatización externa.
+
+### Idea sencilla
+
+```text
+.md
+↓
+Qué debe revisar y cómo interpretarlo
+
+JavaScript / Python
+↓
+Lee y analiza los datos reales
+
+HTML / CSS
+↓
+Muestra el resultado al usuario
+
+IA
+↓
+Ayuda a interpretar, mejorar y evolucionar la solución
+```
+        """)
+
+    ruta = Path("docs/skill_analista_datos.md")
+
+    if ruta.exists():
+        mostrar_markdown(ruta)
+    else:
+        st.error(
+            "No se encontró el archivo docs/skill_analista_datos.md"
         )
 
 
