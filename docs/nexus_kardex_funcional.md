@@ -628,35 +628,124 @@ El módulo solamente se marcará como **APROBADO** cuando se terminen las prueba
 
 ## 7.1 Objetivo
 
-Administrar el personal que puede participar en los movimientos y procesos operativos.
+Administrar las personas que participan en la operación de NEXUS.
+
+Desde este módulo se puede:
+
+- Consultar personal existente.
+- Crear personal.
+- Editar personal.
+- Eliminar personal cuando corresponda.
+- Administrar responsables activos e inactivos.
+
+El personal registrado puede participar posteriormente en procesos como:
+
+```text
+Salidas de material
+Asignación a técnicos
+Inventario Técnico
+Conciliación Operativa
+```
 
 ---
 
-## 7.2 Crear personal
+## 7.2 Pestañas del módulo
+
+El módulo **Personal** contiene las siguientes opciones:
+
+```text
+Lista
+Crear
+Editar
+Eliminar
+Responsables
+```
+
+---
+
+## 7.3 Crear personal
+
+Para crear una persona:
 
 1. Ingresar al módulo **Personal**.
-2. Seleccionar la pestaña de creación.
-3. Ingresar cédula.
-4. Ingresar nombre.
-5. Seleccionar zona.
-6. Guardar.
+2. Seleccionar la pestaña **Crear**.
+3. Ingresar la **Cédula**.
+4. Ingresar el **Nombre**.
+5. Seleccionar la **Zona**.
+6. Presionar el botón de creación o guardado mostrado por NEXUS.
 
-### Regla
+### Resultado esperado
 
-El registro debe quedar disponible también para las operaciones que utilizan la tabla de técnicos.
+Después de crear el registro:
+
+- La persona debe quedar almacenada en `personal`.
+- Debe quedar disponible también en `tecnicos`.
+- La cédula debe ser la misma en ambas tablas.
+- El nombre debe coincidir en ambas tablas.
+
+La relación esperada es:
+
+```text
+PERSONAL
+Cédula + Nombre + Zona
+        ↓
+TÉCNICOS
+Cédula + Nombre
+```
 
 ---
 
-## 7.3 Editar personal
+## 7.4 Validación después de crear personal
 
-1. Buscar la persona.
-2. Editar nombre o zona.
-3. Guardar.
-4. Confirmar que el cambio se refleje correctamente.
+Después de crear una persona:
 
-### Validación importante
+1. Ir a **Lista**.
+2. Buscar la cédula.
+3. Confirmar nombre y zona.
+4. Verificar que el técnico pueda ser utilizado posteriormente en los módulos que requieren técnico.
 
-Se comprobó que la edición debe mantener sincronía entre:
+Para una validación técnica se puede comprobar además:
+
+```sql
+SELECT
+    id_personal,
+    cedula,
+    nombre,
+    zona
+FROM personal
+WHERE cedula = 'CEDULA';
+```
+
+y:
+
+```sql
+SELECT
+    id_tecnico,
+    cedula,
+    nombre
+FROM tecnicos
+WHERE cedula = 'CEDULA';
+```
+
+Los dos registros deben corresponder a la misma persona.
+
+---
+
+## 7.5 Editar personal
+
+La pestaña **Editar** permite modificar información de una persona existente.
+
+Procedimiento general:
+
+1. Buscar la persona por cédula.
+2. Confirmar que NEXUS identifique el registro correcto.
+3. Modificar la información permitida por la pantalla.
+4. Confirmar la actualización.
+5. Guardar los cambios.
+
+### Regla importante
+
+Cuando se modifica el nombre de una persona, NEXUS debe mantener sincronizado el registro correspondiente en:
 
 ```text
 personal
@@ -664,27 +753,169 @@ personal
 tecnicos
 ```
 
+Esto evita que una misma cédula aparezca con nombres diferentes dentro del sistema.
+
 ---
 
-## 7.4 Responsables
+## 7.6 Validación de edición
 
-Dentro del módulo Personal existe administración de responsables.
+Después de editar una persona:
 
-Operaciones:
+1. Consultarla nuevamente en **Personal**.
+2. Confirmar el cambio realizado.
+3. Consultar posteriormente el técnico en los módulos operativos.
+4. Si se requiere validación técnica, comparar `personal` y `tecnicos` por cédula.
 
-- Crear
-- Editar
-- Activar
-- Inactivar
+Resultado esperado:
 
-### Regla
+```text
+Misma cédula
+↓
+Nombre actualizado en Personal
+↓
+Nombre actualizado en Técnicos
+```
+
+---
+
+## 7.7 Pestaña Eliminar
+
+La pestaña **Eliminar** permite eliminar una persona cuando corresponda.
+
+Esta opción debe utilizarse con precaución.
+
+Antes de eliminar una persona se debe revisar si tiene relación con:
+
+```text
+Movimientos
+Seriales
+Inventario Técnico
+Histórico
+Conciliaciones
+```
+
+No se recomienda eliminar personal real con trazabilidad histórica sin una revisión técnica previa.
+
+Para pruebas funcionales se debe utilizar únicamente personal creado para prueba.
+
+---
+
+## 7.8 Responsables
+
+Dentro del módulo **Personal** existe la pestaña **Responsables**.
+
+Los responsables se utilizan en los movimientos de NEXUS para identificar quién registra o responde por una operación.
+
+Desde esta sección se puede:
+
+```text
+Crear
+Editar
+Activar
+Inactivar
+```
+
+---
+
+## 7.9 Regla de responsables activos e inactivos
+
+Un responsable activo:
+
+```text
+Debe aparecer en los movimientos nuevos
+```
 
 Un responsable inactivo:
 
-- no debe aparecer en movimientos nuevos;
-- sí debe conservarse en registros históricos.
+```text
+No debe aparecer en los movimientos nuevos
+```
+
+pero debe conservarse en los registros históricos donde ya fue utilizado.
+
+Esto permite mantener la trazabilidad sin permitir que una persona inactiva siga siendo seleccionada para nuevas operaciones.
 
 ---
+
+## 7.10 Validación de responsables
+
+Después de crear o modificar un responsable se debe comprobar:
+
+### Responsable activo
+
+```text
+Responsable activo
+↓
+Aparece en selector de Kardex
+```
+
+### Responsable inactivo
+
+```text
+Responsable inactivo
+↓
+No aparece en movimientos nuevos
+↓
+Permanece visible en el histórico
+```
+
+---
+
+## 7.11 Técnico utilizado para pruebas
+
+Durante la revalidación se utilizará el siguiente técnico de prueba ya existente en DEV:
+
+```text
+Cédula:
+12345678
+
+Nombre:
+PRUEBA TECNICO EDITADO
+
+Zona:
+METROPOLITANO
+```
+
+Se comprobó que el registro existe en:
+
+```text
+personal
+tecnicos
+```
+
+por lo tanto no es necesario crear otro técnico de prueba.
+
+Este técnico se utilizará posteriormente para validar:
+
+```text
+Salida de material
+Asignación de seriales
+Inventario Técnico
+Reintegros
+Auditoría de Seriales
+```
+
+---
+
+## 7.12 Estado de validación
+
+Estado actual:
+
+```text
+EXISTENCIA TÉCNICO DE PRUEBA        = OK
+SINCRONÍA PERSONAL / TÉCNICOS       = OK
+
+LISTA                               = PENDIENTE DE REVALIDACIÓN
+CREAR                               = PENDIENTE DE REVALIDACIÓN
+EDITAR                              = PENDIENTE DE REVALIDACIÓN
+ELIMINAR                            = PENDIENTE DE REVALIDACIÓN
+RESPONSABLES                        = PENDIENTE DE REVALIDACIÓN
+
+MÓDULO PERSONAL                     = PENDIENTE
+```
+
+El módulo solamente debe marcarse como **APROBADO** después de revisar nuevamente las pantallas reales de Lista, Crear, Editar, Eliminar y Responsables.
+
 
 # 8. 👷 Inventario Técnico
 
