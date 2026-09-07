@@ -288,50 +288,364 @@ Asociado a técnico
 ```
 
 ---
-
 # 6. 🧱 Módulo Materiales
 
 ## 6.1 Objetivo
 
 Administrar el catálogo de materiales utilizados por NEXUS.
 
+Desde este módulo el usuario puede:
+
+- Consultar materiales existentes.
+- Crear nuevos materiales.
+- Editar materiales.
+- Eliminar materiales cuando corresponda.
+- Definir si un material requiere control por serial.
+
 ---
 
-## 6.2 Crear material
+## 6.2 Pestañas del módulo
 
-El usuario debe completar los campos disponibles en la pantalla de creación.
+El módulo Materiales contiene las siguientes pestañas:
 
-Campos relevantes del catálogo:
+```text
+Lista
+Crear
+Editar
+Eliminar
+```
 
-- Código
-- Nombre
-- Descripción
-- Tipo de material
-- Serializado
+Cada pestaña cumple una función diferente dentro de la administración del catálogo de materiales.
 
-### Regla
+---
+
+## 6.3 Crear material
+
+Para crear un material:
+
+1. Ingresar al módulo **Materiales**.
+2. Seleccionar la pestaña **Crear**.
+3. Ingresar el **Código** del material.
+4. Ingresar el **Nombre**.
+5. Ingresar una **Descripción**.
+6. Indicar si el material requiere seriales mediante la opción:
+
+   **¿Este material requiere seriales?**
+
+7. Presionar **Crear**.
+
+---
+
+## 6.4 Campos disponibles al crear un material
+
+### Código
+
+Corresponde al código con el que se identifica el material dentro de NEXUS.
+
+Ejemplo:
+
+```text
+2100000098
+```
+
+El usuario debe ingresar el código correcto del material.
+
+---
+
+### Nombre
+
+Corresponde al nombre descriptivo del material.
+
+Ejemplo:
+
+```text
+ALAMBRE DE COBRE RIGIDO # 10 ROJO
+```
+
+---
+
+### Descripción
+
+Permite registrar información adicional del material.
+
+Ejemplo:
+
+```text
+Material utilizado para instalaciones eléctricas.
+```
+
+---
+
+### ¿Este material requiere seriales?
+
+Esta opción determina si el material debe ser controlado mediante números de serial individuales.
+
+---
+
+## 6.5 Regla de serialización
 
 Si el material requiere control individual por número de serie:
 
 ```text
-Serializado = Sí
+¿Este material requiere seriales? = Marcado
 ```
 
-Si no:
+En este caso NEXUS deberá solicitar seriales cuando el material participe en movimientos que requieran trazabilidad individual.
+
+Ejemplos típicos:
 
 ```text
-Serializado = No
+MODEM
+MEDIDOR
+EQUIPO ELECTRÓNICO
+```
+
+Si el material no requiere control individual por serial:
+
+```text
+¿Este material requiere seriales? = Sin marcar
+```
+
+En este caso NEXUS trabajará con cantidades y no deberá solicitar seriales.
+
+Ejemplos típicos:
+
+```text
+CABLE
+TORNILLOS
+CONECTORES
+CINTA
+GRAPAS
 ```
 
 ---
 
-## 6.3 Validación del material serializado
+## 6.6 Resultado esperado después de crear un material
 
-Cuando un material serializado se usa en Kardex, NEXUS debe solicitar seriales.
+Después de presionar **Crear**:
 
-Cuando no es serializado, no debe solicitarlos.
+- El material debe quedar registrado en NEXUS.
+- Debe conservar correctamente el código.
+- Debe conservar correctamente el nombre.
+- Debe conservar la descripción.
+- Debe guardar correctamente si requiere seriales o no.
+- Debe aparecer en la pestaña **Lista**.
+- Debe poder utilizarse posteriormente desde **Kardex Inventario**.
 
 ---
+
+## 6.7 Validación después de crear un material
+
+Después de crear el material:
+
+1. Ir a la pestaña **Lista**.
+2. Buscar el código creado.
+3. Confirmar que el material aparezca.
+4. Verificar que el nombre sea correcto.
+5. Verificar la descripción.
+6. Confirmar si quedó correctamente definido como serializado o no.
+7. Utilizar posteriormente el material en **Kardex Inventario** para comprobar su comportamiento.
+
+---
+
+## 6.8 Validación de material serializado
+
+Cuando un material serializado se utiliza en Kardex Inventario, NEXUS debe indicar que requiere registro de seriales.
+
+El comportamiento esperado es:
+
+```text
+Material serializado
+↓
+Movimiento que requiere serial
+↓
+NEXUS solicita serial(es)
+```
+
+---
+
+## 6.9 Validación de material no serializado
+
+Cuando un material no serializado se utiliza en Kardex Inventario:
+
+```text
+Material no serializado
+↓
+Movimiento de inventario
+↓
+NEXUS solicita cantidad
+↓
+No solicita seriales
+```
+
+---
+
+## 6.10 Pestaña Lista
+
+La pestaña **Lista** permite consultar los materiales registrados en NEXUS.
+
+Se utiliza para:
+
+- Confirmar que un material fue creado correctamente.
+- Buscar un código.
+- Revisar nombre y descripción.
+- Confirmar si requiere seriales.
+- Verificar el material antes de utilizarlo en Kardex Inventario.
+
+---
+
+## 6.11 Editar material
+
+La pestaña **Editar** permite corregir información de un material existente.
+
+Puede utilizarse cuando se detecta, por ejemplo:
+
+```text
+Nombre incorrecto
+Descripción incorrecta
+Configuración de serialización incorrecta
+```
+
+### Recomendación
+
+Antes de modificar un material que ya tenga movimientos históricos, se debe revisar el impacto del cambio.
+
+No se recomienda modificar códigos de materiales con histórico sin una validación previa.
+
+---
+
+## 6.12 Eliminar material
+
+La pestaña **Eliminar** permite eliminar un material cuando corresponda.
+
+Esta opción debe utilizarse con precaución.
+
+Antes de eliminar un material se debe validar:
+
+- Si tiene movimientos registrados.
+- Si tiene seriales asociados.
+- Si forma parte del histórico.
+- Si su eliminación puede afectar reportes o inventarios.
+
+Si el material ya tiene trazabilidad histórica, no se recomienda eliminarlo sin revisión técnica previa.
+
+---
+
+## 6.13 Regla para evitar materiales duplicados
+
+Antes de crear un material, el usuario debe confirmar:
+
+```text
+¿El material ya existe en NEXUS?
+```
+
+Si el material ya existe:
+
+```text
+NO crear otro registro
+```
+
+Se debe utilizar el material existente o corregirlo mediante la pestaña **Editar** si corresponde.
+
+Esto evita duplicidad de códigos o materiales.
+
+---
+
+## 6.14 Ejemplo de creación — Material no serializado
+
+Ejemplo de prueba:
+
+```text
+Código:
+9999999901
+
+Nombre:
+MATERIAL PRUEBA ELITE
+
+Descripción:
+PRUEBA MANUAL NEXUS
+
+¿Este material requiere seriales?:
+Sin marcar
+```
+
+Resultado esperado:
+
+```text
+Material creado
+↓
+Aparece en Lista
+↓
+Puede utilizarse en Kardex Inventario
+↓
+No solicita seriales
+```
+
+---
+
+## 6.15 Ejemplo de creación — Material serializado
+
+Ejemplo de prueba:
+
+```text
+Código:
+9999999902
+
+Nombre:
+MATERIAL PRUEBA SERIALIZADO
+
+Descripción:
+PRUEBA CONTROL DE SERIALES NEXUS
+
+¿Este material requiere seriales?:
+Marcado
+```
+
+Resultado esperado:
+
+```text
+Material creado
+↓
+Aparece en Lista
+↓
+Kardex identifica que requiere seriales
+↓
+NEXUS solicita serial(es) cuando corresponda
+```
+
+---
+
+## 6.16 Validación completa del módulo Materiales
+
+Antes de considerar el módulo Materiales aprobado para entrega:
+
+- Crear un material no serializado.
+- Confirmar que aparezca en Lista.
+- Utilizarlo en Kardex Inventario.
+- Confirmar que no solicite seriales.
+- Crear un material serializado.
+- Confirmar que aparezca en Lista.
+- Utilizarlo en Kardex Inventario.
+- Confirmar que solicite seriales.
+- Probar una edición controlada.
+- Revisar el comportamiento de la pestaña Eliminar.
+- Confirmar que el comportamiento real coincida con este manual.
+
+---
+
+## 6.17 Estado de validación
+
+El módulo Materiales se considera aprobado cuando:
+
+```text
+CREAR = OK
+LISTA = OK
+EDITAR = OK
+ELIMINAR = VALIDADO
+SERIALIZADO = OK
+NO SERIALIZADO = OK
+KARDEX = COMPORTAMIENTO CORRECTO
+```
 
 # 7. 👥 Módulo Personal
 
