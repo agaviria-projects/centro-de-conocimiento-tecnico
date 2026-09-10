@@ -46,248 +46,861 @@ Cuando se haga una entrega o capacitación, se recomienda explicar los módulos 
 
 ## 3.1 Objetivo
 
-Registrar los movimientos que afectan o documentan el inventario.
+El módulo **Kardex Inventario** es la pantalla principal para registrar los movimientos de materiales en NEXUS.
 
-Desde esta pantalla se realizan entradas, salidas, reintegros y otros movimientos definidos por la operación.
+Desde aquí el usuario puede registrar:
 
----
+- Entradas de materiales.
+- Salidas.
+- Entregas a técnicos.
+- Reintegros.
+- Traslados ELITE.
+- Transferencias EPM.
 
-## 3.2 Campos principales de la pantalla
+La información registrada en este módulo alimenta posteriormente:
 
-Los campos pueden cambiar según el tipo de movimiento seleccionado.
-
-Campos habituales:
-
-- **Tipo de almacén**
-- **Código material**
-- **Tipo de movimiento**
-- **Cantidad**
-- **Seriales**, cuando el material es serializado
-- **Responsable**
-- **Número de ACTA**, cuando aplica
-- **Confirmación del ACTA**, cuando aplica
-- **Bodega origen / destino**, según movimiento
-- **Cédula técnico**, cuando aplica
-- **Observación**
-- **Registrar Movimiento**
+- Stock actual.
+- Inventario Técnico.
+- Inventario General.
+- Seriales.
+- Auditoría.
+- Conciliación Operativa.
 
 ---
 
-## 3.3 Seleccionar tipo de almacén
+## 3.2 Regla principal del inventario
 
-En la pantalla aparece:
-
-```text
-Seleccione tipo de almacén
-```
-
-Opciones observadas:
+NEXUS trabaja con dos tipos de material:
 
 ```text
 ELITE INGENIEROS
+Código de 10 dígitos
+Ejemplo: 9999999904
+No utiliza seriales
+```
+
+```text
 EPM
+Código de 6 dígitos
+Ejemplo: 999991
+Puede utilizar seriales
 ```
 
-El usuario debe seleccionar el tipo de almacén correspondiente antes de continuar.
+La bodega que controla el **stock real** es:
+
+```text
+METROPOLITANA SUR
+```
+
+Las demás zonas, por ejemplo:
+
+```text
+ORIENTE
+OCCIDENTE
+NORDESTE
+SUROESTE
+```
+
+se utilizan principalmente para conservar trazabilidad de traslados y transferencias.
+
+Por tanto:
+
+```text
+METROPOLITANA SUR
+→ controla existencias reales
+
+OTRAS ZONAS
+→ conservan trazabilidad
+→ no generan un segundo stock real
+```
 
 ---
 
-## 3.4 Ingresar código de material
+# 4. Cómo registrar un material ELITE
 
-En el campo de código se escribe el código exacto del material.
+## 4.1 Identificación
 
-Material de 10 digitos corresponde al consumo de Elite Ingenieros.
-
-Material de 6 digitos coresponde al consumo de EPM.
-
-Ejemplo:
+Seleccionar:
 
 ```text
-2100000098
+Tipo de almacén:
+ELITE INGENIEROS
 ```
 
-NEXUS debe reconocer el material.
+Ingresar un código ELITE de 10 dígitos.
 
-Si el material no existe, no se debe continuar con el movimiento.
+Ejemplo utilizado durante las pruebas:
+
+```text
+9999999904
+MATERIAL DE PRUEBA ELITE
+```
+
+Los materiales ELITE trabajan por **cantidad** y no por serial.
 
 ---
 
-## 3.5 Seleccionar tipo de movimiento
+## 4.2 Movimientos disponibles para ELITE
 
-Después de identificar el material, se selecciona el movimiento requerido.
-
-Ejemplos de movimientos existentes en NEXUS:
+En Kardex se muestran:
 
 ```text
-ENTRADA ELITE
+ENTRADA ELITE INGENIEROS
 ENTRADA PROVEEDOR
+SALIDA ELITE INGENIEROS
+TRASLADO
 ENTREGA AH
 REINTEGRO
-DEVOLUCION
-DEVOLUCION AHTA
-SALIDA ELITE
-SALIDA TECNICO
-SALIDA EPM
-AJUSTE ENTRADA
-AJUSTE SALIDA
-REINTEGRO SERIAL
 ```
 
-> El usuario no debe escoger manualmente `AJUSTE ENTRADA` o `AJUSTE SALIDA` desde el módulo de Ajustes Kardex. Ese módulo determina el sentido automáticamente.
+El usuario debe seleccionar el movimiento de acuerdo con lo que ocurrió físicamente.
 
 ---
 
-## 3.6 Cantidad
+## 4.3 ENTRADA ELITE INGENIEROS
 
-El usuario ingresa la cantidad correspondiente al movimiento.
-
-Para materiales serializados:
-
-```text
-Cantidad = número de seriales que se están procesando
-```
-
----
-
-# 4. Cómo registrar una ENTRADA
-
-## 4.1 Entrada de material no serializado
+Se utiliza cuando el material ingresa al inventario ELITE.
 
 ### Paso a paso
 
 1. Ingresar a **Kardex Inventario**.
-2. Seleccionar tipo de almacén.
-3. Ingresar código material.
-4. Confirmar que NEXUS reconozca el material.
-5. Seleccionar un movimiento de entrada.
-6. Ingresar cantidad.
-7. Seleccionar responsable.
-8. Completar los campos adicionales que solicite la pantalla.
-9. Ingresar observación.
-10. Presionar **Registrar Movimiento**.
-11. Confirmar que el movimiento aparezca en el historial.
+2. Seleccionar **ELITE INGENIEROS**.
+3. Seleccionar la fecha real del movimiento.
+4. Digitar el código del material.
+5. Confirmar que NEXUS reconozca el material.
+6. Seleccionar **ENTRADA ELITE INGENIEROS**.
+7. Ingresar la cantidad.
+8. Seleccionar el responsable.
+9. Completar la información adicional mostrada por la pantalla.
+10. Escribir una observación cuando corresponda.
+11. Presionar **Registrar Movimiento**.
 
 ### Resultado esperado
 
 ```text
-Stock final > Stock anterior
+Stock Metropolitana Sur
+ANTES < DESPUÉS
+```
+
+Ejemplo:
+
+```text
+Stock antes: 5
+Entrada: 3
+Stock después: 8
 ```
 
 ---
 
-## 4.2 Entrada de material serializado
+## 4.4 ENTRADA PROVEEDOR
 
-Cuando el material está marcado como serializado, NEXUS muestra:
+Se utiliza cuando el material ingresa directamente desde un proveedor.
+
+Además de la cantidad, NEXUS puede solicitar:
 
 ```text
-Este material requiere registro de seriales
+Remisión / Orden
+Proveedor
+Responsable
+Observación
 ```
 
-### Modo manual
+El resultado también debe incrementar el stock de Metropolitana Sur.
 
-1. Seleccionar movimiento de entrada.
-2. Ingresar cantidad.
-3. Seleccionar **Manual**.
-4. Digitar cada serial.
-5. Confirmar que el total de seriales coincida con la cantidad.
-6. Completar responsable y demás campos.
-7. Registrar movimiento.
+---
+
+## 4.5 SALIDA ELITE INGENIEROS
+
+Se utiliza cuando material ELITE sale de Metropolitana Sur.
+
+### Paso a paso
+
+1. Seleccionar **ELITE INGENIEROS**.
+2. Digitar código del material.
+3. Seleccionar **SALIDA ELITE INGENIEROS**.
+4. Ingresar cantidad.
+5. Seleccionar técnico cuando la pantalla lo solicite.
+6. Seleccionar responsable.
+7. Ingresar ACTA cuando aplique.
+8. Confirmar el ACTA cuando NEXUS lo solicite.
+9. Escribir observación.
+10. Registrar.
 
 ### Resultado esperado
 
-Los seriales ingresados quedan:
+```text
+Stock Metropolitana Sur disminuye
+```
+
+Ejemplo:
+
+```text
+Stock antes: 8
+Salida: 1
+Stock después: 7
+```
+
+NEXUS no debe permitir una salida superior al stock disponible.
+
+---
+
+## 4.6 TRASLADO ELITE
+
+El **TRASLADO** se utiliza para mover material ELITE desde:
+
+```text
+METROPOLITANA SUR
+↓
+otra zona
+```
+
+Ejemplo:
+
+```text
+METROPOLITANA SUR → ORIENTE
+```
+
+NEXUS genera internamente dos registros relacionados.
+
+### Movimiento de origen
+
+```text
+SALIDA ELITE INGENIEROS
+METROPOLITANA SUR
+```
+
+Este movimiento disminuye el stock real.
+
+### Movimiento destino
+
+```text
+ENTRADA ELITE INGENIEROS
+Zona destino
+```
+
+Este movimiento conserva trazabilidad y no genera stock adicional.
+
+Ambos registros utilizan una referencia común:
+
+```text
+TRAS-xxxxxxxxxx
+```
+
+### Ejemplo validado
+
+```text
+METROPOLITANA SUR
+Stock 8 → 7
+
+ORIENTE
+Stock 0 → 0
+```
+
+Esto es correcto.
+
+El material físicamente fue trasladado, pero NEXUS mantiene un único stock real controlado desde Metropolitana Sur.
+
+---
+
+## 4.7 ENTREGA AH
+
+Este movimiento quedó funcionalmente validado como una entrega desde:
+
+```text
+METROPOLITANA SUR
+↓
+TÉCNICO
+```
+
+NEXUS solicita un técnico válido.
+
+### Ejemplo validado
+
+```text
+Material: 9999999904
+Cantidad: 1
+Técnico: 12345678
+Stock antes: 7
+Stock después: 6
+```
+
+Resultado:
+
+```text
+ENTREGA AH
+→ disminuye stock
+→ registra el técnico receptor
+→ conserva trazabilidad
+```
+
+### Nota
+
+El significado operativo exacto de la sigla **AH** debe ser confirmado con la operación antes de documentarlo con otro nombre.
+
+---
+
+# 5. Cómo registrar un material EPM
+
+## 5.1 Identificación
+
+Seleccionar:
+
+```text
+Tipo de almacén:
+EPM
+```
+
+Ingresar un código EPM de 6 dígitos.
+
+Ejemplo utilizado durante las pruebas:
+
+```text
+999991
+MATERIAL PRUEBA EPM SERIALIZADO
+```
+
+Los materiales EPM pueden ser:
+
+```text
+No serializados
+o
+Serializados
+```
+
+NEXUS identifica esta condición desde el catálogo de Materiales.
+
+---
+
+## 5.2 Material EPM serializado
+
+Cuando un material requiere seriales, NEXUS muestra los controles correspondientes.
+
+Regla:
+
+```text
+1 unidad
+=
+1 serial
+```
+
+Ejemplo:
+
+```text
+Cantidad: 3
+
+Seriales:
+EPM-PRUEBA-001
+EPM-PRUEBA-002
+EPM-PRUEBA-003
+```
+
+El número de seriales debe coincidir con la cantidad.
+
+---
+
+## 5.3 ENTRADA PROVEEDOR EPM serializada
+
+### Paso a paso
+
+1. Seleccionar **EPM**.
+2. Seleccionar la fecha.
+3. Digitar código del material.
+4. Confirmar que NEXUS indique que requiere seriales.
+5. Seleccionar **ENTRADA PROVEEDOR**.
+6. Ingresar cantidad.
+7. Digitar o cargar los seriales.
+8. Seleccionar responsable.
+9. Completar Remisión / Orden.
+10. Completar Proveedor.
+11. Escribir observación.
+12. Registrar.
+
+### Resultado esperado
+
+Los seriales nuevos quedan:
 
 ```text
 DISPONIBLE
 ```
 
----
-
-## 4.3 Entrada serializada por archivo
-
-El usuario puede cargar un Excel con los seriales.
-
-Regla recomendada:
+y ubicados inicialmente en:
 
 ```text
-Primera fila = encabezado
-Datos desde la fila 2
+METROPOLITANA SUR
 ```
 
-El total de seriales cargados debe coincidir con la cantidad del movimiento.
-
----
-
-# 5. Cómo registrar una SALIDA
-
-## 5.1 Salida de material no serializado
-
-1. Seleccionar tipo de almacén.
-2. Ingresar código.
-3. Seleccionar tipo de salida.
-4. Ingresar cantidad.
-5. Seleccionar responsable.
-6. Completar ACTA si aplica.
-7. Completar técnico si aplica.
-8. Ingresar observación.
-9. Registrar movimiento.
-
-Resultado esperado:
+Ejemplo:
 
 ```text
-Stock final < Stock anterior
+EPM-PRUEBA-004
+Estado: DISPONIBLE
+Ubicación: METROPOLITANA SUR
 ```
 
 ---
 
-## 5.2 Salida de material serializado
+## 5.4 SALIDA EPM serializada
 
-### Regla crítica
-
-Todo serial que pase a:
-
-```text
-ASIGNADO
-```
-
-debe quedar asociado a un técnico válido.
+Se utiliza cuando un serial EPM se entrega a un técnico.
 
 ### Paso a paso
 
-1. Seleccionar movimiento de salida.
-2. Ingresar cantidad.
-3. Seleccionar o cargar los seriales.
-4. Seleccionar responsable.
-5. Ingresar número de ACTA cuando corresponda.
-6. Confirmar que el movimiento corresponde al ACTA.
-7. Ingresar la cédula del técnico.
-8. Confirmar que NEXUS reconozca al técnico.
-9. Ingresar observación.
-10. Registrar movimiento.
+1. Seleccionar **EPM**.
+2. Digitar código.
+3. Seleccionar **SALIDA EPM**.
+4. Indicar cantidad.
+5. Digitar o seleccionar los seriales.
+6. Ingresar ACTA.
+7. Confirmar ACTA.
+8. Seleccionar o buscar el técnico.
+9. Seleccionar responsable.
+10. Escribir observación.
+11. Registrar.
 
-### Validación confirmada
+### Validaciones
 
-Si la cédula queda vacía o no es válida, NEXUS bloquea la salida.
-
-Mensaje observado:
+Antes de permitir la salida, el serial debe estar disponible.
 
 ```text
-Debe ingresar una cédula válida
+DISPONIBLE
+↓
+SALIDA EPM
+↓
+ASIGNADO
 ```
 
-### Resultado esperado
+Después de registrar:
 
 ```text
-Serial DISPONIBLE
+Estado = ASIGNADO
+Técnico = técnico que recibió el serial
+```
+
+El movimiento también disminuye el stock de Metropolitana Sur.
+
+---
+
+# 6. TRANSFERENCIA EPM
+
+## 6.1 Objetivo
+
+La **TRANSFERENCIA** permite mover un material EPM desde Metropolitana Sur hacia otra zona.
+
+Ejemplo:
+
+```text
+METROPOLITANA SUR
 ↓
-SALIDA
+ORIENTE
+```
+
+NEXUS genera dos movimientos relacionados.
+
+---
+
+## 6.2 Movimiento de origen
+
+Internamente se registra:
+
+```text
+SALIDA EPM
+METROPOLITANA SUR
+```
+
+Este movimiento disminuye el stock real.
+
+---
+
+## 6.3 Movimiento destino
+
+Internamente se registra:
+
+```text
+ENTRADA TRANSFERENCIA EPM
+Zona destino
+```
+
+Este movimiento es de trazabilidad.
+
+Su configuración es:
+
+```text
+afecta = 0
+```
+
+Por tanto, no genera un segundo stock.
+
+---
+
+## 6.4 Referencia de transferencia
+
+Los dos movimientos quedan relacionados mediante:
+
+```text
+TR-xxxxxxxxxx
+```
+
+Ejemplo validado:
+
+```text
+SALIDA EPM
+METROPOLITANA SUR
+Stock 1 → 0
+
+ENTRADA TRANSFERENCIA EPM
+ORIENTE
+Stock 0 → 0
+```
+
+En **Consultar Movimientos**, ambas filas pueden mostrarse funcionalmente como:
+
+```text
+TRANSFERENCIA
+```
+
+Esto facilita la lectura para el usuario.
+
+---
+
+## 6.5 Trazabilidad del serial transferido
+
+Esta regla es importante.
+
+Un serial transferido a una zona puede continuar:
+
+```text
+Estado = DISPONIBLE
+```
+
+porque no está asignado a ningún técnico.
+
+Pero también debe conservar su ubicación física actual.
+
+Ejemplo validado:
+
+```text
+Serial:
+EPM-PRUEBA-004
+
+Estado:
+DISPONIBLE
+
+Último movimiento:
+ENTRADA TRANSFERENCIA EPM
+
+Ubicación:
+ORIENTE
+```
+
+Por tanto:
+
+```text
+DISPONIBLE
+```
+
+significa:
+
+```text
+No está asignado a un técnico
+```
+
+y no significa necesariamente:
+
+```text
+Está en Metropolitana Sur
+```
+
+La ubicación debe consultarse junto con el último movimiento del serial.
+
+---
+
+# 7. REINTEGROS
+
+## 7.1 Objetivo
+
+El reintegro registra material que había salido previamente y posteriormente fue devuelto.
+
+La fecha del reintegro corresponde al día real en que el material regresó.
+
+La **ACTA**, en cambio, debe conservar la ACTA de la salida original.
+
+Esta regla es fundamental para la Conciliación Operativa.
+
+---
+
+## 7.2 Reintegro serializado
+
+En un material serializado, el propio serial permite identificar la salida original.
+
+NEXUS recupera automáticamente:
+
+```text
+ACTA original
+Técnico original
+Fecha de salida
+Movimiento original
+```
+
+Antes de registrar, muestra la validación al usuario.
+
+### Resultado
+
+```text
+ASIGNADO
 ↓
-Serial ASIGNADO
+REINTEGRO
 ↓
-Asociado a técnico
+DISPONIBLE
+```
+
+El serial deja de estar asignado al técnico.
+
+---
+
+## 7.3 Reintegro no serializado
+
+En materiales sin serial no existe una unidad individual que permita conocer de qué salida provino físicamente la devolución.
+
+Por esto NEXUS consulta el histórico de:
+
+```text
+Técnico + Material
+```
+
+y calcula cuánto tiene pendiente por devolver.
+
+Posteriormente propone una distribución utilizando las salidas más antiguas primero.
+
+```text
+FIFO
+```
+
+La distribución se realiza por fecha real de salida.
+
+### Ejemplo
+
+Un técnico tiene:
+
+```text
+Salida A
+ACTA 11
+5 unidades pendientes
+
+Salida B
+ACTA 10
+6 unidades pendientes
+```
+
+Si devuelve:
+
+```text
+7 unidades
+```
+
+NEXUS puede distribuir:
+
+```text
+5 → salida A
+2 → salida B
+```
+
+generando dos reintegros.
+
+Cada reintegro conserva:
+
+```text
+ACTA original
+Movimiento original
+```
+
+mediante la referencia:
+
+```text
+ORIGEN_MOV
+```
+
+Esto permite conservar la trazabilidad histórica correctamente.
+
+---
+
+# 8. Cómo verificar un movimiento después de registrarlo
+
+Después de realizar cualquier operación se recomienda utilizar:
+
+```text
+Consultar Movimientos
+```
+
+y comprobar:
+
+- Fecha.
+- Tipo.
+- Cantidad.
+- Stock antes.
+- Stock después.
+- Técnico.
+- Bodega.
+- Observación.
+- ACTA cuando corresponda.
+
+Para traslados o transferencias deben aparecer dos filas relacionadas por la misma referencia.
+
+Ejemplo:
+
+```text
+TRAS-xxxxxxxx
+```
+
+o:
+
+```text
+TR-xxxxxxxx
 ```
 
 ---
+
+# 9. Guía rápida para capacitación del usuario
+
+Para una prueba de aceptación con el usuario final se recomienda realizar estos casos.
+
+## Caso A — Material ELITE
+
+```text
+Tipo almacén:
+ELITE INGENIEROS
+
+Código:
+material ELITE de 10 dígitos
+
+Movimiento:
+ENTRADA ELITE INGENIEROS
+
+Registrar:
+1 unidad
+```
+
+Confirmar que aumenta el stock.
+
+Después realizar:
+
+```text
+SALIDA ELITE INGENIEROS
+```
+
+y confirmar que disminuye.
+
+---
+
+## Caso B — Material EPM serializado
+
+```text
+Tipo almacén:
+EPM
+
+Código:
+material EPM serializado de 6 dígitos
+
+Movimiento:
+ENTRADA PROVEEDOR
+
+Cantidad:
+1
+
+Serial:
+serial nuevo de prueba
+```
+
+Confirmar:
+
+```text
+Estado = DISPONIBLE
+Ubicación = METROPOLITANA SUR
+```
+
+Después realizar una:
+
+```text
+SALIDA EPM
+```
+
+y confirmar:
+
+```text
+Estado = ASIGNADO
+Técnico = técnico seleccionado
+```
+
+---
+
+## Caso C — Transferencia EPM
+
+Con un serial disponible en Metropolitana:
+
+```text
+TRANSFERENCIA
+METROPOLITANA SUR → ORIENTE
+```
+
+Confirmar:
+
+```text
+Stock Metropolitana disminuye
+
+Zona destino:
+0 → 0
+
+Serial:
+DISPONIBLE
+
+Ubicación:
+ORIENTE
+```
+
+---
+
+## Caso D — Reintegro
+
+Realizar un reintegro de una salida existente.
+
+Confirmar que NEXUS conserve:
+
+```text
+ACTA de la salida original
+Técnico original
+Trazabilidad histórica
+```
+
+En serializados:
+
+```text
+ASIGNADO → DISPONIBLE
+```
+
+---
+
+# 10. Estado de validación del módulo Kardex Inventario
+
+```text
+ENTRADA ELITE INGENIEROS       = OK
+ENTRADA PROVEEDOR              = OK
+SALIDA ELITE INGENIEROS        = OK
+SALIDA EPM                     = OK
+TRASLADO ELITE                 = OK
+TRANSFERENCIA EPM              = OK
+UBICACIÓN SERIAL TRANSFERIDO   = OK
+ENTREGA AH                     = OK FUNCIONAL
+REINTEGRO SERIALIZADO          = OK
+REINTEGRO NO SERIALIZADO       = OK
+
+KARDEX INVENTARIO              = APROBADO
+```
+
+Nota pendiente exclusivamente documental:
+
+```text
+Confirmar con operación el significado exacto de la sigla AH.
+```
+
 # 6. 🧱 Módulo Materiales
 
 ## 6.1 Objetivo
