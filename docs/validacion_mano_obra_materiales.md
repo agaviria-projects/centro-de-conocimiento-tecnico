@@ -1,148 +1,174 @@
 
-## 🎯 Entrada a la reunión.
+
+**## 🎯 Entrada a la reunión.**
 
 "Buenos días a todos. En esta primera parte les voy a presentar el objetivo de la herramienta, el problema que busca resolver y cómo funciona de manera general. Posteriormente, mi compañera Astrid, quien es la persona que más utiliza este proceso en la operación, nos mostrará cómo realiza la validación del archivo generado, qué aspectos revisa antes de darlo por correcto.
 
-----
+\----
 
-## 🎯 Objetivo
+**## 🎯 Objetivo**
 
 La herramienta de Validación Mano de Obra Vs Materiales fue desarrollada para verificar automáticamente que los materiales reportados en Fénix correspondan correctamente a la mano de obra ejecutada en cada pedido.
 
 El sistema permite procesar uno o múltiples archivos exportados desde Fenix en las diferentes zonas operativas, consolidando automáticamente toda la información en un único informe de auditoría.
+
 (explicar como los exporto).
 
-Una vez finaliza el proceso, el archivo generado se compartirá a través de OneDrive, en la carpeta Relación_MO_Vs_Materiales. El informe quedará almacenado con un nombre que incluye la fecha de generación para facilitar su identificación; por ejemplo: VALIDACION_MO_MATERIALES_ALMACEN_2026-07-27. Posteriormente, cada usuario responsable únicamente deberá filtrar la zona operativa que le corresponda para realizar la validación de su información. Como recomendación, debido a que varios usuarios accederán al mismo archivo, se sugiere descargar una copia en el equipo local antes de iniciar la validación. De esta manera se evitan conflictos por ediciones simultáneas y se garantiza una revisión más estable de la información."
+Una vez finaliza el proceso, el archivo generado se compartirá a través de OneDrive, en la carpeta Relación\_MO\_Vs\_Materiales. El informe quedará almacenado con un nombre que incluye la fecha de generación para facilitar su identificación; por ejemplo: VALIDACION\_MO\_MATERIALES\_ALMACEN\_2026-07-27. Posteriormente, cada usuario responsable únicamente deberá filtrar la zona operativa que le corresponda para realizar la validación de su información. Como recomendación, debido a que varios usuarios accederán al mismo archivo, se sugiere descargar una copia en el equipo local antes de iniciar la validación. De esta manera se evitan conflictos por ediciones simultáneas y se garantiza una revisión más estable de la información."
 
 Cada código de mano de obra tiene asociados uno o varios materiales definidos en una base maestra de negocio. A partir de esta relación, el sistema compara la información reportada en Fénix y determina si la actividad fue registrada correctamente o si existen inconsistencias.
 
 Durante el proceso se identifican automáticamente:
 
 Materiales faltantes.
+
 Materiales sobrantes.
+
 Manos de obra duplicadas.
+
 Cantidades que requieren validación.
+
 Códigos no existentes en la base maestra.
+
 Reglas especiales definidas por la operación.
 
 La base maestra también permite definir reglas de negocio, como actividades donde basta con reportar uno de varios materiales posibles o actividades que requieren materiales obligatorios específicos.
 
 El objetivo principal es detectar inconsistencias operativas antes del cierre del proceso, reducir errores manuales y mejorar la calidad de la información reportada.
 
----
+\---
 
-## Final Objetivo
+**## Final Objetivo**
 
 Hasta aquí hemos visto el objetivo y el funcionamiento general de la herramienta. Ahora le daré la palabra a mi compañera Astrid, quien nos explicará la parte operativa del proceso
 
----
+\---
 
-## 🧩 Problema que resuelve
+**## 🧩 Problema que resuelve**
 
 Antes del desarrollo, la validación entre manos de obra y materiales se realizaba manualmente, revisando grandes volúmenes de información en Excel.
 
 Este proceso podía generar:
 
-- Errores humanos.
-- Omisión de materiales obligatorios.
-- Registro de materiales no permitidos.
-- Duplicidad de actividades.
-- Inconsistencias en cantidades.
-- Demoras en la auditoría operativa.
+\- Errores humanos.
+
+\- Omisión de materiales obligatorios.
+
+\- Registro de materiales no permitidos.
+
+\- Duplicidad de actividades.
+
+\- Inconsistencias en cantidades.
+
+\- Demoras en la auditoría operativa.
 
 La herramienta automatiza completamente estas validaciones.
 
----
+\---
 
-## 📂 Archivos requeridos
+**## 📂 Archivos requeridos**
 
 El proceso requiere dos fuentes principales de información.
 
-### 📄 Exportación Fénix
+**### 📄 Exportación Fénix**
 
-- Se exportan los archivos desde Fenix.
-- Se realiza por rangos de fechas.
-- Se exporta por Zonas.
+\- Se exportan los archivos desde Fenix.
+
+\- Se realiza por rangos de fechas.
+
+\- Se exporta por Zonas.
 
 La herramienta permite procesar uno o varios archivos exportados desde Fénix al mismo tiempo.
 
 Cuando se exporta un archivo por cada zona operativa, el sistema consolida automáticamente toda la información en un único informe, facilitando el análisis global de la operación y permitiendo posteriormente filtrar por zona cuando sea necesario.
 
-### 📘 Base Maestra
+**### 📘 Base Maestra**
 
 La base maestra es el archivo donde se define qué materiales debe llevar cada código de mano de obra.
 
-`RELACION_MO_MATERIALES.xlsx`
+\`RELACION\_MO\_MATERIALES.xlsx\`
 
 Cada fila representa una mano de obra y sus materiales asociados.
 
 La base permite identificar:
 
-- Materiales obligatorios.
-- Materiales permitidos.
-- Reglas especiales como “uno de los dos” o “uno de los cinco”.
-- Excepciones operativas.
+\- Materiales obligatorios.
 
----
+\- Materiales permitidos.
 
-## ⚙️ Funcionamiento general
+\- Reglas especiales como “uno de los dos” o “uno de los cinco”.
+
+\- Excepciones operativas.
+
+\---
+
+**## ⚙️ Funcionamiento general**
 
 El sistema realiza automáticamente las siguientes tareas:
 
-1. Lee todos los archivos TXT ubicados en la carpeta de entrada.
-2. Identifica las manos de obra registradas.
-3. Identifica los materiales asociados a cada pedido.
-4. Normaliza los códigos.
-5. Consolida la información.
-6. Cruza la información contra la base maestra.
-7. Aplica reglas especiales de negocio.
-8. Genera alertas automáticas.
-9. Exporta un informe final en Excel.
+1\. Lee todos los archivos TXT ubicados en la carpeta de entrada.
 
----
+2\. Identifica las manos de obra registradas.
 
-## 🔍 Validaciones realizadas
+3\. Identifica los materiales asociados a cada pedido.
 
-### ✅ Materiales correctos
+4\. Normaliza los códigos.
+
+5\. Consolida la información.
+
+6\. Cruza la información contra la base maestra.
+
+7\. Aplica reglas especiales de negocio.
+
+8\. Genera alertas automáticas.
+
+9\. Exporta un informe final en Excel.
+
+\---
+
+**## 🔍 Validaciones realizadas**
+
+**### ✅ Materiales correctos**
 
 Todos los materiales requeridos fueron encontrados.
 
-**Estado:** `OK`
+**\*\*Estado:\*\*** \`OK\`
 
----
+\---
 
-### ❌ Faltan materiales
+**### ❌ Faltan materiales**
 
 La actividad requiere materiales que no fueron reportados.
 
-**Estado:** `FALTAN`
+**\*\*Estado:\*\*** \`FALTAN\`
 
----
+\---
 
-### ⚠️ Materiales sobrantes
+**### ⚠️ Materiales sobrantes**
 
 Se reportaron materiales que no corresponden a la actividad ejecutada.
 
-**Estado:** `SOBRAN`
+**\*\*Estado:\*\*** \`SOBRAN\`
 
----
+\---
 
-### 🚨 Faltan y sobran materiales
+**### 🚨 Faltan y sobran materiales**
 
 Existen simultáneamente materiales faltantes y materiales sobrantes.
 
-**Estado:** `AMBOS`
+**\*\*Estado:\*\*** \`AMBOS\`
 
----
+\---
 
-### ❌ Mano de obra no existente
+**### ❌ Mano de obra no existente**
 
 Cuando el código de mano de obra no existe en la base maestra.
 
-**Estado:** `NO EXISTEN EN BD`
+**\*\*Estado:\*\*** \`NO EXISTEN EN BD\`
 
----
-## 📋 Base Maestra de Reglas de Negocio
+\---
+
+**## 📋 Base Maestra de Reglas de Negocio**
 
 El sistema utiliza una base maestra donde se definen las reglas que relacionan cada código de mano de obra con los materiales permitidos u obligatorios.
 
@@ -150,208 +176,335 @@ Esta tabla constituye la principal regla de negocio del desarrollo.
 
 Cada fila representa una actividad y los materiales válidos asociados.
 
----
+\---
 
-## 🔄 Tipos de validaciones definidas
+**## 🔄 Tipos de validaciones definidas**
 
 La base maestra permite definir diferentes comportamientos de validación.
 
-### ✅ UNO DE LOS MATERIALES
+**### ✅ UNO DE LOS MATERIALES**
 
 Para algunas actividades basta con que exista al menos uno de los materiales definidos.
 
 Ejemplo:
 
-| Código MO | Materiales permitidos | Regla |
-|------------|----------------------|--------|
-| A05 | 200492, 200410, 200411, 200493, 323739 | UNO DE LOS CINCO = OK |
+\| Código MO | Materiales permitidos | Regla |
+
+\|------------|----------------------|--------|
+
+\| A05 | 200492, 200410, 200411, 200493, 323739 | UNO DE LOS CINCO = OK |
 
 En este caso, si el pedido contiene cualquiera de estos materiales, la actividad se considera correctamente reportada.
 
----
+\---
 
-### ✅ UNO DE LOS DOS
+**### ✅ UNO DE LOS DOS**
 
 Ejemplo:
 
-| Código MO | Materiales permitidos | Regla |
-|------------|----------------------|--------|
-| A12 | 200092, 200093 | UNO DE LOS DOS = OK |
+\| Código MO | Materiales permitidos | Regla |
+
+\|------------|----------------------|--------|
+
+\| A12 | 200092, 200093 | UNO DE LOS DOS = OK |
 
 Si existe cualquiera de los dos materiales, la validación es correcta.
 
----
+\---
 
-### ✅ OBLIGATORIO LOS DOS
+**### ✅ OBLIGATORIO LOS DOS**
 
 Existen actividades donde todos los materiales definidos deben encontrarse obligatoriamente.
 
 Ejemplo:
 
-| Código MO | Materiales obligatorios | Regla |
-|------------|------------------------|--------|
-| A18 | 211357 y 213333 | OBLIGATORIO LOS DOS |
+\| Código MO | Materiales obligatorios | Regla |
+
+\|------------|------------------------|--------|
+
+\| A18 | 211357 y 213333 | OBLIGATORIO LOS DOS |
 
 Si alguno de los materiales no aparece, el sistema genera una alerta de faltantes.
 
----
+\---
 
-### 🚨 Validaciones especiales
+**### 🚨 Validaciones especiales**
 
 Existen actividades con reglas especiales de auditoría.
 
 Por ejemplo:
 
-| Código MO | Materiales | Regla |
-|------------|------------|--------|
-| A31 | 211618, 336759 | UNO DE LOS DOS = OK |
+\| Código MO | Materiales | Regla |
+
+\|------------|------------|--------|
+
+\| A31 | 211618, 336759 | UNO DE LOS DOS = OK |
 
 El sistema también puede validar excepciones operativas y generar alertas específicas cuando se incumplen las reglas establecidas.
 
 El núcleo del desarrollo es una base maestra donde se encuentran definidas todas las reglas de negocio entre actividades y materiales. Python cruza automáticamente la información reportada en Fénix contra esta base y determina si la actividad cumple o no las condiciones establecidas.
 
----
+\---
 
-## 🎯 Beneficio de la Base Maestra
+**## 🎯 Beneficio de la Base Maestra**
 
 La utilización de una base maestra permite:
 
-- Modificar reglas sin cambiar el código Python.
-- Agregar nuevas actividades fácilmente.
-- Adaptar el desarrollo a cambios operativos.
-- Estandarizar el proceso de auditoría.
-- Mantener la lógica del negocio centralizada.
+\- Modificar reglas sin cambiar el código Python.
 
-## 🔄 Reglas especiales implementadas
+\- Agregar nuevas actividades fácilmente.
+
+\- Adaptar el desarrollo a cambios operativos.
+
+\- Estandarizar el proceso de auditoría.
+
+\- Mantener la lógica del negocio centralizada.
+
+**## 🔄 Reglas especiales implementadas**
 
 Existen actividades donde basta con reportar uno de varios materiales posibles.
 
 Por ejemplo, para la actividad:
 
-`A05`
+\`A05\`
 
 El sistema valida que exista al menos uno de los siguientes materiales:
 
-- 200492
-- 200410
-- 200411
-- 200493
-- 323739
+\- 200492
+
+\- 200410
+
+\- 200411
+
+\- 200493
+
+\- 323739
 
 Si encuentra cualquiera de ellos, la actividad se considera correctamente reportada.
 
----
+\---
 
-## 🚨 Alertas automáticas
+**## 🚨 Alertas automáticas**
 
-### 📌 Mano de obra duplicada
+**### 📌 Mano de obra duplicada**
 
 Detecta cuando un mismo pedido posee la misma mano de obra registrada más de una vez.
 
 Ejemplo:
 
-`Pedido 23144539 - C01 x2`
+\`Pedido 23144539 - C01 x2\`
 
 Estas novedades se exportan en la hoja:
 
-`MO_DUPLICADAS`
+\`MO\_DUPLICADAS\`
 
----
+\---
 
-### 📌 Cantidades mayores a uno
+**### 📌 Cantidades mayores a uno**
 
 El sistema identifica:
 
-- Manos de obra con cantidad superior a uno.
-- Materiales con cantidad superior a uno.
+\- Manos de obra con cantidad superior a uno.
+
+\- Materiales con cantidad superior a uno.
 
 Estas novedades requieren validación operativa.
 
 Las alertas son exportadas en la hoja:
 
-`ALERTA_CANTIDADES`
+\`ALERTA\_CANTIDADES\`
 
----
+\---
 
-### 📌 Validación especial A31
+**### 📌 Validación especial A31**
 
 Para la actividad:
 
-`A31`
+\`A31\`
 
 El sistema verifica que no se reporten simultáneamente los materiales:
 
-- 211618
-- 336759
+\- 211618
+
+\- 336759
 
 Si ambos materiales aparecen registrados, el sistema genera una alerta especial para revisión.
 
----
+\---
 
-## 📊 Hojas generadas
+**## 📊 Hojas generadas**
 
-### 📄 ¿Qué contiene la hoja VALIDACION?
+**### 📄 ¿Qué contiene la hoja VALIDACION?**
 
 Contiene el resultado completo de la auditoría.
 
 Incluye:
 
-- Pedido.
-- Subzona.
-- Mano de obra.
-- Estado.
-- Materiales faltantes.
-- Materiales sobrantes.
-- Alertas especiales.
+\- Pedido.
 
----
+\- Subzona.
 
-### 🚨 ¿Qué contiene la hoja MO_DUPLICADAS?
+\- Mano de obra.
+
+\- Estado.
+
+\- Materiales faltantes.
+
+\- Materiales sobrantes.
+
+\- Alertas especiales.
+
+\---
+
+**### 🚨 ¿Qué contiene la hoja MO\_DUPLICADAS?**
 
 Contiene todas las actividades registradas más de una vez dentro del mismo pedido.
 
----
+\---
 
-### ⚠️ ¿Qué contiene la hoja ALERTA_CANTIDADES?
+**### ⚠️ ¿Qué contiene la hoja ALERTA\_CANTIDADES?**
 
 Contiene materiales cuya cantidad reportada es superior a uno y requiere validación operativa.
 
----
+\---
 
-## 🎨 Formato profesional del informe
+**## 🎨 Formato profesional del informe**
 
 El archivo generado incluye:
 
-- Encabezados coloreados.
-- Filtros automáticos.
-- Congelación de paneles.
-- Ajuste automático de columnas.
-- Resaltado de alertas críticas.
-- Barras visuales para cantidades.
-- Colores por tipo de novedad.
+\- Encabezados coloreados.
 
----
+\- Filtros automáticos.
 
-## ⚡ Tecnologías utilizadas
+\- Congelación de paneles.
 
-- Python.
-- Pandas.
-- OpenPyXL.
-- Expresiones Regulares.
-- Excel.
+\- Ajuste automático de columnas.
 
----
+\- Resaltado de alertas críticas.
 
-## 🚀 Beneficios del desarrollo
+\- Barras visuales para cantidades.
+
+\- Colores por tipo de novedad.
+
+\---
+
+**## ⚡ Tecnologías utilizadas**
+
+\- Python.
+
+\- Pandas.
+
+\- OpenPyXL.
+
+\- Expresiones Regulares.
+
+\- Excel.
+
+\---
+
+**## 🚀 Beneficios del desarrollo**
 
 La herramienta aporta:
 
-- Reducción del trabajo manual.
-- Estandarización de auditorías.
-- Detección temprana de errores.
-- Mayor calidad de la información.
-- Disminución de tiempos de revisión.
-- Mejor control operativo.
+\- Reducción del trabajo manual.
+
+\- Estandarización de auditorías.
+
+\- Detección temprana de errores.
+
+\- Mayor calidad de la información.
+
+\- Disminución de tiempos de revisión.
+
+\- Mejor control operativo.
+
+\---
 
 ---
+
+## 🆕 Actualizaciones de reglas de negocio — Septiembre 2026
+
+### 📌 Alerta de cantidades en legalizaciones
+
+Se incorporó una validación específica para los códigos `C01U/C01R`, `C02U/C02R`, `C03U/C03R`, `C04U/C04R`, `C05U/C05R` y `C07U/C07R`.
+
+La regla revisa la columna `cantidad` de cada registro:
+
+- `cantidad <= 1` → no genera alerta.
+- `cantidad > 1` → genera alerta de revisión.
+
+Las novedades se exportan en la hoja `ALERTA_LEGALIZACIONES`, con pedido, subzona, `item_cont`, cantidad, tipo de alerta y detalle.
+
+> Nota técnica: la regla evalúa la cantidad informada en cada registro; no suma cantidades entre filas duplicadas.
+
+### 📌 Validación de MASIVAS por página
+
+Se incorporó una regla para detectar inconsistencias en legalizaciones masivas utilizando la columna `pagina`.
+
+Para la validación se toman los **primeros 14 dígitos** como `pagina_base`. Los últimos cuatro dígitos permiten diferenciar el interior o apartamento.
+
+```text
+pagina      = 190607100316666202
+pagina_base = 19060710031666
+```
+
+La regla se activa cuando dentro de una `pagina_base` existe al menos uno de estos códigos:
+
+- `C02U / C02R`
+- `C03U / C03R`
+- `C04U / C04R`
+
+Una vez identificada una página base aplicable, el sistema revisa los `item_cont` asociados. Si aparecen códigos diferentes para los mismos primeros 14 dígitos, genera la alerta `ITEM_CONT_INCONSISTENTE`.
+
+Ejemplo:
+
+```text
+19060710031666 → C02U
+19060710031666 → C02U
+19060710031666 → C01U
+```
+
+La novedad se exporta en la hoja `MASIVAS` con:
+
+```text
+pedido
+subzona
+pagina
+pagina_base
+item_cont
+items_encontrados
+tipo_alerta
+detalle
+```
+
+Esto permite localizar la página base afectada y los pedidos y páginas exactas involucradas.
+
+#### Diferencia entre validar y extraer los 14 dígitos
+
+Esta instrucción:
+
+```python
+mask_pagina_valida = df["pagina"].str.match(r"^\d{14,}$", na=False)
+```
+
+**no extrae los 14 dígitos.** Valida que `pagina` contenga únicamente números y tenga como mínimo 14 dígitos.
+
+La extracción real se realiza con:
+
+```python
+df["pagina_base"] = df["pagina"].str[:14]
+```
+
+`str[:14]` conserva los primeros 14 caracteres de `pagina`.
+
+### 📊 Hojas de alerta incorporadas
+
+Además de las hojas previamente documentadas, el informe contempla:
+
+- `ALERTA_RURAL_URBANO`: inconsistencias entre `urbrur` y la terminación U/R de `item_cont`.
+- `ALERTA_ACTIVIDADES`: reglas específicas por actividad.
+- `ALERTA_LEGALIZACIONES`: legalizaciones controladas cuya cantidad es mayor a 1.
+- `MASIVAS`: inconsistencias de `item_cont` para una misma `pagina_base`.
+
+Estas hojas son independientes para facilitar la revisión operativa.
 
