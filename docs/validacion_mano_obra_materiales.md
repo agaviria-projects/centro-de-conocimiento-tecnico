@@ -100,21 +100,22 @@ Ejemplo: `urbrur = R` y `item_cont = D01U` genera inconsistencia.
 
 Valida reglas específicas según `actividad`.
 
-### AMRTR
+### AMRTR - MOVIMENTO DE REDES
 
 Válidos: `D02U`, `D02R`, `D03U`, `D03R`, `D04U`, `D04R`.
 
 Debe existir al menos uno. Otro `Dxx` genera `ERROR EN DIGITACIÓN`.
 
-### ACREV
+### ACREV - PUNTOS DE CONEXIÓN
 
 Válidos: `D01U` o `D01R`.
 
 Debe existir al menos uno. Otro `Dxx` genera `ERROR EN DIGITACIÓN`.
 
-### AEJDO
+### AEJDO - HV(HABILITACIÓN VIVIENDA)
 
 La regla técnica actual revisa `CALE1F`, `A12U`, `A18U` y `A19U`.
+proceso de validación de la regla de negocio con el analista.
 
 **Pregunta que responde:**  
 > ¿Los códigos registrados corresponden con la actividad ejecutada?
