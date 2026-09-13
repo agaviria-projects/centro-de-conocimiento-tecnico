@@ -22,7 +22,7 @@ Cada código de mano de obra tiene asociados materiales definidos en una **Base 
 
 `RELACION_MO_MATERIALES.xlsx`
 
-Esta base se fue construyendo de acuerdo con las reglas definidas y validadas con la operación. Por eso, los cruces que realiza Python no son arbitrarios.
+Esta base se fue construyendo de acuerdo con las reglas definidas y validadas con la operación. Por eso, Los cruces que realiza el desarrollo se basan en reglas de negocio previamente definidas en la Base Maestra.
 
 ```text
 Exportación Fénix
