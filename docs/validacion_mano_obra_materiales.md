@@ -36,7 +36,7 @@ Después de mostrar el objetivo, la Base Maestra, puedes cerrar así:
 
 > “Hasta aquí quería mostrarles de dónde salen las reglas. La herramienta automatiza los cruces y clasifica las posibles novedades, pero la revisión final también tiene un componente operativo. Por eso ahora le voy a dar la palabra a mi compañera Astrid, quien trabaja directamente con este informe y nos va a mostrar cómo realiza la revisión de los resultados y qué criterios utiliza para validar cada novedad.”
 
-## EN CASO DE REFORZAR LA EXPLCIACIÓN
+## EN CASO DE REFORZAR LA EXPLICACIÓN
 
 # 📊 ¿Qué hace cada hoja del archivo final?
 
