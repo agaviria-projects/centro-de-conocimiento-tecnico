@@ -6,17 +6,27 @@
 
 **\*\*## 🎯 Objetivo\*\***
 
-La herramienta de Validación Mano de Obra Vs Materiales fue desarrollada para verificar automáticamente que los materiales reportados en Fénix correspondan correctamente a la mano de obra ejecutada en cada pedido.
+La herramienta de Validación Mano de Obra Vs Materiales fue desarrollada para verificar automáticamente que los materiales reportados en Fénix correspondan correctamente con la mano de obra ejecutada en cada pedido.
 
-El sistema permite procesar uno o múltiples archivos exportados desde Fenix en las diferentes zonas operativas, consolidando automáticamente toda la información en un único informe de auditoría.
+El sistema permite procesar uno o múltiples archivos exportados desde Fénix para las diferentes zonas operativas y consolidar automáticamente toda la información en un único informe de auditoría.
 
-(explicar como los exporto).
+[Aquí explico brevemente cómo realizo los exportes desde Fénix y cuáles archivos utilizo como entrada para el proceso.]
 
-Una vez finaliza el proceso, el archivo generado se compartirá a través de OneDrive, en la carpeta Relación_MO_Vs_Materiales. El informe quedará almacenado con un nombre que incluye la fecha de generación para facilitar su identificación; por ejemplo: VALIDACION_MO_MATERIALES_ALMACEN_2026-07-27.
+Una vez obtenidos los archivos, se ejecuta el desarrollo, el cual realiza la consolidación y aplica automáticamente las diferentes reglas de validación definidas para Mano de Obra Vs Materiales.
 
-Posteriormente, cada usuario responsable deberá filtrar la zona operativa que le corresponda para realizar la validación de su información. Como recomendación, debido a que varios usuarios accederán al mismo archivo, se sugiere descargar una copia en el equipo local antes de iniciar la validación. De esta manera se evitan conflictos por ediciones simultáneas y se garantiza una revisión más estable de la información.
+Al finalizar el proceso, el archivo generado se comparte a través de OneDrive, en la carpeta Relación_MO_Vs_Materiales.
 
-Sobre las 2:30 p. m. se realizará una nueva exportación y se generará un informe actualizado con la información digitada durante el mismo día hasta ese momento. Este segundo informe permitirá a los usuarios realizar una nueva validación sobre los registros más recientes.
+El informe correspondiente a la información del día anterior se almacena utilizando la siguiente nomenclatura:
+
+VALIDACION_MO_MATERIALES_ALMACEN_2026-09-10.xlsx
+
+Posteriormente, cada usuario responsable deberá filtrar la zona operativa que le corresponda para realizar la validación de su información.
+
+Como recomendación, debido a que varios usuarios pueden acceder al mismo archivo, se sugiere descargar una copia en el equipo local antes de iniciar la validación. De esta manera se evitan conflictos por ediciones simultáneas y se garantiza una revisión más estable de la información.
+
+Adicionalmente, sobre las 2:30 p. m. se realiza un segundo corte, correspondiente a la información digitada durante el día hasta ese momento. Este segundo archivo se genera con la siguiente nomenclatura 
+
+INFORME_VALIDACION_MO_MATERIALES_ALMACEN_2026-09-11.xlsx
 
 ---
 
