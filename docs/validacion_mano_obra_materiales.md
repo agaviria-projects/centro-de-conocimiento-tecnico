@@ -151,7 +151,9 @@ La regla se evalúa por registro; no suma filas distintas.
 
 Valida la consistencia de item_cont entre registros que comparten los primeros 14 dígitos del código de instalación.
 
-El campo pagina contiene 18 dígitos. Para esta validación, el desarrollo toma los primeros 14 dígitos y los utiliza como pagina_base.
+## ¿Qué representa el campo pagina?
+
+En el exporte de Fénix,lo qué entiendo el campo pagina contiene un código de instalación de 18 dígitos que permite identificar el punto asociado al servicio. Este código está relacionado con la dirección.
 
 pagina       = 190607100316666202
 pagina_base  = 19060710031666
