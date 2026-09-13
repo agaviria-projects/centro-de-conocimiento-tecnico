@@ -149,33 +149,36 @@ La regla se evalúa por registro; no suma filas distintas.
 
 ## 🔷 `MASIVAS`
 
-Valida consistencia de `item_cont` para una misma `pagina_base`.
+Valida la consistencia de item_cont entre registros que comparten los primeros 14 dígitos del código de instalación.
 
-```text
-pagina      = 190607100316666202
-pagina_base = 19060710031666
-```
+El campo pagina contiene 18 dígitos. Para esta validación, el desarrollo toma los primeros 14 dígitos y los utiliza como pagina_base.
 
-La `pagina_base` corresponde a los primeros 14 dígitos.
+pagina       = 190607100316666202
+pagina_base  = 19060710031666
+interior     = 6202
 
-La regla se activa cuando existe al menos uno de:
+Los últimos 4 dígitos permiten diferenciar el interior asociado al código de instalación. Para efectos de esta regla, los registros que comparten los primeros 14 dígitos se analizan como un mismo grupo.
 
-`C02U`, `C02R`, `C03U`, `C03R`, `C04U`, `C04R`.
+La validación se activa cuando dentro del grupo existe al menos uno de estos códigos:
 
-Si para la misma página base aparecen `item_cont` diferentes, genera:
+C02U, C02R, C03U, C03R, C04U, C04R.
 
-`ITEM_CONT_INCONSISTENTE`
+Si dentro de la misma pagina_base aparecen diferentes valores de item_cont, el desarrollo genera la alerta:
+
+ITEM_CONT_INCONSISTENTE
 
 Ejemplo:
 
-```text
-19060710031666 → C02U
-19060710031666 → C02U
-19060710031666 → C01U
-```
+pagina_base     interior     item_cont
+19060710031666    6201         C02U
+19060710031666    6202         C02U
+19060710031666    6203         C01U
 
-**Pregunta que responde:**  
-> ¿Dentro de una misma página base se utilizaron códigos diferentes?
+En este caso se genera una alerta porque, dentro del mismo grupo, aparece C01U mientras los demás registros presentan C02U.
+
+Pregunta que responde:
+
+¿Los registros que comparten los primeros 14 dígitos del código de instalación presentan diferentes códigos item_cont?
 
 ### Nota técnica
 
