@@ -30,6 +30,13 @@ Esta base se fue construyendo de acuerdo con las reglas definidas y validadas co
 - `A12`: basta con `200092` o `200093`.
 - `A18`: los materiales definidos son obligatorios.
 ---
+# 🎤 Entrega de la palabra a Astrid
+
+Después de mostrar el objetivo, la Base Maestra, puedes cerrar así:
+
+> “Hasta aquí quería mostrarles de dónde salen las reglas. La herramienta automatiza los cruces y clasifica las posibles novedades, pero la revisión final también tiene un componente operativo. Por eso ahora le voy a dar la palabra a mi compañera Astrid, quien trabaja directamente con este informe y nos va a mostrar cómo realiza la revisión de los resultados y qué criterios utiliza para validar cada novedad.”
+
+## EN CASO DE REFORZAR LA EXPLCIACIÓN
 
 # 📊 ¿Qué hace cada hoja del archivo final?
 
@@ -200,11 +207,7 @@ df["pagina_base"] = df["pagina"].str[:14]
 
 ---
 
-# 🎤 Entrega de la palabra a Astrid
 
-Después de mostrar el objetivo, la Base Maestra y la función de cada hoja, puedes cerrar así:
-
-> “Hasta aquí quería mostrarles de dónde salen las reglas y qué tipo de validación realiza cada hoja. La herramienta automatiza los cruces y clasifica las posibles novedades, pero la revisión final también tiene un componente operativo. Por eso ahora le voy a dar la palabra a mi compañera Astrid, quien trabaja directamente con este informe y nos va a mostrar cómo realiza la revisión de los resultados y qué criterios utiliza para validar cada novedad.”
 
 La división queda clara:
 
