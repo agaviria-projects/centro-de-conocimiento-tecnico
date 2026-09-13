@@ -182,6 +182,8 @@ Pregunta que responde:
 
 ¿Los registros que comparten los primeros 14 dígitos del código de instalación presentan diferentes códigos item_cont?
 
+### NO SE EXPLICA:
+
 ### Nota técnica
 
 Esto **valida** que `pagina` tenga al menos 14 dígitos numéricos:
