@@ -24,45 +24,11 @@ Cada código de mano de obra tiene asociados materiales definidos en una **Base 
 
 Esta base se fue construyendo de acuerdo con las reglas definidas y validadas con la operación. Por eso, Los cruces que realiza el desarrollo se basan en reglas de negocio previamente definidas en la Base Maestra.
 
-```text
-Exportación Fénix
-        ↓
-Mano de obra + materiales reportados
-        ↓
-Base Maestra
-        ↓
-Python realiza los cruces y reglas
-        ↓
-Informe Excel de auditoría
-```
-
-En la reunión conviene mostrar brevemente esta base para que el usuario visualice de dónde salen las reglas, sin explicar cada fila.
-
-Una explicación sencilla puede ser:
-
-> “Esta es la base de reglas de negocio que utiliza el desarrollo. Python toma la mano de obra reportada en Fénix, identifica los materiales asociados y los compara con lo definido aquí. A partir de ese cruce determina si el registro está correcto o si requiere revisión.”
-
 ### Ejemplos sencillos
 
 - `A05`: basta con uno de `200492`, `200410`, `200411`, `200493` o `323739`.
 - `A12`: basta con `200092` o `200093`.
 - `A18`: los materiales definidos son obligatorios.
-
-No todas las manos de obra se validan de la misma manera; algunas reglas están en la Base Maestra y otras excepciones especializadas están implementadas en Python.
-
----
-
-## ⚙️ Funcionamiento general
-
-1. Lee los TXT exportados desde Fénix.
-2. Consolida los archivos de las zonas.
-3. Identifica pedidos, manos de obra y materiales.
-4. Normaliza los códigos.
-5. Cruza la información contra la Base Maestra.
-6. Aplica reglas especiales.
-7. Detecta inconsistencias.
-8. Genera un único Excel de auditoría.
-
 ---
 
 # 📊 ¿Qué hace cada hoja del archivo final?
