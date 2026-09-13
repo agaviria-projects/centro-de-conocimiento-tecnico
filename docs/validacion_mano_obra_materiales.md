@@ -226,6 +226,7 @@ Astrid
 ```
 
 ---
+## NO TENER EN CUENTA PARA LA EXPLICACIÓN.
 
 # 🧑‍💻 Referencia técnica para el desarrollador
 
