@@ -12,7 +12,11 @@ El sistema permite procesar uno o múltiples archivos exportados desde Fenix en 
 
 (explicar como los exporto).
 
-Una vez finaliza el proceso, el archivo generado se compartirá a través de OneDrive, en la carpeta Relación\\\_MO\\\_Vs\\\_Materiales. El informe quedará almacenado con un nombre que incluye la fecha de generación para facilitar su identificación; por ejemplo: VALIDACION\\\_MO\\\_MATERIALES\\\_ALMACEN\\\_2026-07-27. Posteriormente, cada usuario responsable únicamente deberá filtrar la zona operativa que le corresponda para realizar la validación de su información. Como recomendación, debido a que varios usuarios accederán al mismo archivo, se sugiere descargar una copia en el equipo local antes de iniciar la validación. De esta manera se evitan conflictos por ediciones simultáneas y se garantiza una revisión más estable de la información."
+Una vez finaliza el proceso, el archivo generado se compartirá a través de OneDrive, en la carpeta Relación_MO_Vs_Materiales. El informe quedará almacenado con un nombre que incluye la fecha de generación para facilitar su identificación; por ejemplo: VALIDACION_MO_MATERIALES_ALMACEN_2026-07-27.
+
+Posteriormente, cada usuario responsable deberá filtrar la zona operativa que le corresponda para realizar la validación de su información. Como recomendación, debido a que varios usuarios accederán al mismo archivo, se sugiere descargar una copia en el equipo local antes de iniciar la validación. De esta manera se evitan conflictos por ediciones simultáneas y se garantiza una revisión más estable de la información.
+
+Sobre las 2:30 p. m. se realizará una nueva exportación y se generará un informe actualizado con la información digitada durante el mismo día hasta ese momento. Este segundo informe permitirá a los usuarios realizar una nueva validación sobre los registros más recientes.
 
 ---
 
