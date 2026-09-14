@@ -1,32 +1,46 @@
-**\*\*## 🎯 Entrada a la reunión.\*\***
+## 🎯 Entrada a la reunión
 
-"Buenos días a todos. En esta primera parte les voy a presentar el objetivo de la herramienta, el problema que busca resolver y cómo funciona de manera general. Posteriormente, mi compañera Astrid, quien es la persona que más utiliza este proceso en la operación, nos mostrará cómo realiza la validación del archivo generado, qué aspectos revisa antes de darlo por correcto.
+Buenos días a todos.
 
-\\----
+En esta primera parte les voy a presentar el objetivo del proceso de validación, el problema que busca resolver y cómo funciona de manera general.
 
-**\*\*## 🎯 Objetivo\*\***
+También voy a explicar de dónde salen las reglas de negocio que se aplican al informe y qué tipo de novedades se identifican en cada una de las hojas del archivo final.
 
-La herramienta de Validación Mano de Obra Vs Materiales fue desarrollada para verificar automáticamente que los materiales reportados en Fénix correspondan correctamente con la mano de obra ejecutada en cada pedido.
+Estas reglas se han venido definiendo a partir de los requerimientos y criterios entregados por los analistas que realizan la revisión de la información. Por esta razón, pueden ajustarse posteriormente si durante la operación se identifica una nueva condición, excepción o necesidad de validación.
 
-El sistema permite procesar uno o múltiples archivos exportados desde Fénix para las diferentes zonas operativas y consolidar automáticamente toda la información en un único informe de auditoría.
+Para facilitar la explicación, voy a utilizar un archivo de simulación que contiene ejemplos de las diferentes alertas. Al finalizar, les mostraré el archivo final que encontrarán en la carpeta compartida y que será el utilizado para la revisión diaria.
+
+---
+
+## 🎯 Objetivo
+
+El proceso de **Validación Mano de Obra Vs Materiales** fue desarrollado para verificar automáticamente que los materiales reportados en Fénix correspondan con la mano de obra ejecutada en cada pedido, de acuerdo con las reglas de negocio definidas para la operación.
+
+El proceso permite trabajar con uno o múltiples archivos exportados desde Fénix para las diferentes zonas operativas y consolidar toda la información en un único informe de validación.
 
 [Aquí explico brevemente cómo realizo los exportes desde Fénix y cuáles archivos utilizo como entrada para el proceso.]
 
-Una vez obtenidos los archivos, se ejecuta el desarrollo, el cual realiza la consolidación y aplica automáticamente las diferentes reglas de validación definidas para Mano de Obra Vs Materiales.
+Una vez obtenidos los archivos, se ejecuta el proceso de consolidación y se aplican automáticamente las diferentes reglas de validación definidas para Mano de Obra Vs Materiales.
 
-Al finalizar el proceso, el archivo generado se comparte a través de OneDrive, en la carpeta Relación_MO_Vs_Materiales.
+Las reglas actualmente implementadas corresponden a los requerimientos definidos por los analistas y pueden ser ajustadas cuando se identifique alguna novedad operativa, una excepción o un cambio en la regla de negocio.
+
+Al finalizar el proceso, el archivo generado se comparte a través de OneDrive, en la carpeta:
+
+`Relación_MO_Vs_Materiales`
 
 El informe correspondiente a la información del día anterior se almacena utilizando la siguiente nomenclatura:
 
-VALIDACION_MO_MATERIALES_ALMACEN_2026-09-10.xlsx
+`VALIDACION_MO_MATERIALES_ALMACEN_2026-09-10.xlsx`
 
 Posteriormente, cada usuario responsable deberá filtrar la zona operativa que le corresponda para realizar la validación de su información.
 
 Como recomendación, debido a que varios usuarios pueden acceder al mismo archivo, se sugiere descargar una copia en el equipo local antes de iniciar la validación. De esta manera se evitan conflictos por ediciones simultáneas y se garantiza una revisión más estable de la información.
 
-Adicionalmente, sobre las 2:30 p. m. se realiza un segundo corte, correspondiente a la información digitada durante el día hasta ese momento. Este segundo archivo se genera con la siguiente nomenclatura 
+Adicionalmente, sobre las **2:30 p. m.** se realiza un segundo corte correspondiente a la información digitada durante el día hasta ese momento.
 
-INFORME_VALIDACION_MO_MATERIALES_ALMACEN_2026-09-11.xlsx
+Este segundo archivo se genera con la siguiente nomenclatura:
+
+`INFORME_VALIDACION_MO_MATERIALES_ALMACEN_2026-09-11.xlsx`
 
 ---
 
@@ -36,21 +50,29 @@ Cada código de mano de obra tiene asociados materiales definidos en una **Base 
 
 `RELACION_MO_MATERIALES.xlsx`
 
-Esta base se fue construyendo de acuerdo con las reglas definidas y validadas con la operación. Por eso, Los cruces que realiza el desarrollo se basan en reglas de negocio previamente definidas en la Base Maestra.
+Esta base se ha venido construyendo de acuerdo con las reglas y requerimientos definidos por los analistas para la operación.
+
+Por esta razón, los cruces que realiza el proceso se basan en reglas de negocio previamente establecidas. Estas reglas no se consideran estáticas: pueden ajustarse cuando en la revisión diaria se detecte una nueva condición, excepción o necesidad operativa.
 
 ### Ejemplos sencillos
 
 - `A05`: basta con uno de `200492`, `200410`, `200411`, `200493` o `323739`.
 - `A12`: basta con `200092` o `200093`.
 - `A18`: los materiales definidos son obligatorios.
+
 ---
-# 🎤 Entrega de la palabra a Astrid
 
-Después de mostrar el objetivo, la Base Maestra, puedes cerrar así:
+## 📄 Archivo de simulación y archivo final
 
-> “Hasta aquí quería mostrarles de dónde salen las reglas. La herramienta automatiza los cruces y clasifica las posibles novedades, pero la revisión final también tiene un componente operativo. Por eso ahora le voy a dar la palabra a mi compañera Astrid, quien trabaja directamente con este informe y nos va a mostrar cómo realiza la revisión de los resultados y qué criterios utiliza para validar cada novedad.”
+Para explicar las diferentes validaciones se utilizará inicialmente un **archivo de simulación**, en el cual se encuentran ejemplos de las alertas que puede generar el proceso.
 
-## EN CASO DE REFORZAR LA EXPLICACIÓN
+Este archivo permite visualizar de manera sencilla qué significa cada alerta y cómo debe interpretarse.
+
+Posteriormente, se presentará el **archivo final de validación**, que es el archivo que los usuarios encontrarán en la carpeta compartida y utilizarán para realizar la revisión de su zona.
+
+La finalidad del informe es facilitar la identificación de posibles novedades. La revisión final continúa dependiendo del criterio operativo del analista, especialmente cuando se presenten casos especiales o situaciones que requieran confirmar la regla de negocio.
+
+---
 
 # 📊 ¿Qué hace cada hoja del archivo final?
 
@@ -76,7 +98,8 @@ Estados principales:
 - `AMBOS`: faltan y sobran materiales.
 - `NO EXISTEN EN BD`: la mano de obra no está en la Base Maestra.
 
-**Pregunta que responde:**  
+**Pregunta que responde:**
+
 > ¿La mano de obra y los materiales del pedido cumplen con la regla definida?
 
 ---
@@ -87,65 +110,94 @@ Detecta una misma mano de obra registrada más de una vez para el mismo pedido y
 
 Ejemplo: `C01 x2`.
 
-**Pregunta que responde:**  
+**Pregunta que responde:**
+
 > ¿Existe una mano de obra repetida que deba revisarse?
 
 ---
 
 ## 🟠 `ALERTA_CANTIDADES`
 
-Revisa registros de materiales (`SUM`) cuya `cantidad` sea mayor a 1.
+Esta hoja muestra todos los materiales reportados cuya cantidad es mayor a 1.
 
-**Pregunta que responde:**  
+No valida una lista específica de materiales. Su función es identificar rápidamente cantidades superiores a 1 para que el analista revise si corresponden realmente a la operación.
+
+La alerta sirve como punto de revisión; no significa automáticamente que exista un error.
+
+**Pregunta que responde:**
+
 > ¿Hay materiales con cantidades superiores a 1 que requieran revisión?
 
 ---
 
 ## 🟣 `ALERTA_RURAL_URBANO`
 
-Cruza `urbrur` con la terminación de `item_cont`.
+Valida que la clasificación Rural/Urbano del pedido coincida con la terminación de `item_cont`.
 
 ```text
 R → el código debe terminar en R
 U → el código debe terminar en U
 ```
 
-Ejemplo: `urbrur = R` y `item_cont = D01U` genera inconsistencia.
+Ejemplo:
 
-**Pregunta que responde:**  
+`urbrur = R` y `item_cont = D01U` genera inconsistencia.
+
+La regla no aplica a una lista específica de ítems; revisa los códigos cuya terminación corresponda a `R` o `U`.
+
+**Pregunta que responde:**
+
 > ¿El código corresponde correctamente a la clasificación Rural/Urbano?
 
 ---
 
 ## 🔵 `ALERTA_ACTIVIDADES`
 
-Valida reglas específicas según `actividad`.
+Esta hoja aplica reglas específicas de acuerdo con la actividad reportada.
 
-### AMRTR - MOVIMENTO DE REDES
+### AMRTR - MOVIMIENTO DE REDES
 
-Válidos: `D02U`, `D02R`, `D03U`, `D03R`, `D04U`, `D04R`.
+Códigos válidos:
 
-Debe existir al menos uno. Otro `Dxx` genera `ERROR EN DIGITACIÓN`.
+`D02U`, `D02R`, `D03U`, `D03R`, `D04U`, `D04R`.
+
+Debe existir al menos uno de estos códigos.
+
+Si aparece otro código `Dxx` diferente a los permitidos, se genera una alerta de:
+
+`ERROR EN DIGITACIÓN`
 
 ### ACREV - PUNTOS DE CONEXIÓN
 
-Válidos: `D01U` o `D01R`.
+Códigos válidos:
 
-Debe existir al menos uno. Otro `Dxx` genera `ERROR EN DIGITACIÓN`.
+`D01U` o `D01R`.
 
-### AEJDO - HV(HABILITACIÓN VIVIENDA)
+Debe existir al menos uno.
 
-La regla técnica actual revisa `CALE1F`, `A12U`, `A18U` y `A19U`.
-proceso de validación de la regla de negocio con el analista.
+Si aparece otro código `Dxx` diferente a los permitidos, se genera una alerta de:
 
-**Pregunta que responde:**  
+`ERROR EN DIGITACIÓN`
+
+### AEJDO - HV (HABILITACIÓN VIVIENDA)
+
+Actualmente se está revisando la regla de negocio asociada a esta actividad.
+
+La validación existente considera los códigos:
+
+`CALE1F`, `A12U`, `A18U` y `A19U`.
+
+Sin embargo, esta condición se encuentra en proceso de revisión con los analistas, por lo que las alertas relacionadas con AEJDO deben tomarse como informativas hasta confirmar la regla definitiva.
+
+**Pregunta que responde:**
+
 > ¿Los códigos registrados corresponden con la actividad ejecutada?
 
 ---
 
 ## 🟢 `ALERTA_LEGALIZACIONES`
 
-Controla cantidades para:
+Controla cantidades para los siguientes ítems:
 
 `C01U/C01R`, `C02U/C02R`, `C03U/C03R`, `C04U/C04R`, `C05U/C05R`, `C07U/C07R`.
 
@@ -156,61 +208,53 @@ cantidad > 1  → alerta
 
 La regla se evalúa por registro; no suma filas distintas.
 
-**Pregunta que responde:**  
+**Pregunta que responde:**
+
 > ¿Alguna legalización controlada tiene cantidad mayor a 1?
 
 ---
 
 ## 🔷 `MASIVAS`
 
-Valida la consistencia de item_cont entre registros que comparten los primeros 14 dígitos del código de instalación.
+Para esta validación se utilizan los primeros 14 dígitos del campo `pagina`, con los cuales se genera el campo `pagina_base`.
 
-## ¿Qué representa el campo pagina?
+Para una misma `pagina_base`, todos los `item_cont` encontrados deben ser iguales.
 
-En el exporte de Fénix,lo qué entiendo el campo pagina contiene un código de instalación de 18 dígitos que permite identificar el punto asociado al servicio. Este código está relacionado con la dirección.
+Si dentro de esos mismos primeros 14 dígitos aparecen dos o más `item_cont` diferentes, se genera la alerta:
 
-pagina       = 190607100316666202
-pagina_base  = 19060710031666
-interior     = 6202
-
-Los últimos 4 dígitos permiten diferenciar el interior asociado al código de instalación. Para efectos de esta regla, los registros que comparten los primeros 14 dígitos se analizan como un mismo grupo.
+`ITEM_CONT_INCONSISTENTE`
 
 La validación se activa cuando dentro del grupo existe al menos uno de estos códigos:
 
-C02U, C02R, C03U, C03R, C04U, C04R.
+`C02U`, `C02R`, `C03U`, `C03R`, `C04U`, `C04R`.
 
-Si dentro de la misma pagina_base aparecen diferentes valores de item_cont, el desarrollo genera la alerta:
+### ¿Qué representa el campo `pagina`?
 
-ITEM_CONT_INCONSISTENTE
+En el exporte de Fénix, el campo `pagina` contiene un identificador proveniente del archivo origen.
+
+Para esta regla se utilizan únicamente sus primeros 14 dígitos con el fin de agrupar registros relacionados y validar la consistencia del `item_cont`.
 
 Ejemplo:
 
-pagina_base     interior     item_cont
-19060710031666    6201         C02U
-19060710031666    6202         C02U
-19060710031666    6203         C01U
-
-En este caso se genera una alerta porque, dentro del mismo grupo, aparece C01U mientras los demás registros presentan C02U.
-
-Pregunta que responde:
-
-¿Los registros que comparten los primeros 14 dígitos del código de instalación presentan diferentes códigos item_cont?
-
-### NO SE EXPLICA:
-
-### Nota técnica
-
-Esto **valida** que `pagina` tenga al menos 14 dígitos numéricos:
-
-```python
-mask_pagina_valida = df["pagina"].str.match(r"^\d{14,}$", na=False)
+```text
+pagina       = 190607100316666202
+pagina_base  = 19060710031666
 ```
 
-Esto **extrae** los primeros 14:
+Ejemplo de validación:
 
-```python
-df["pagina_base"] = df["pagina"].str[:14]
+```text
+pagina_base      item_cont
+19060710031666   C02U
+19060710031666   C02U
+19060710031666   C01U
 ```
+
+En este caso se genera una alerta porque dentro de la misma `pagina_base` aparecen diferentes valores de `item_cont`.
+
+**Pregunta que responde:**
+
+> ¿Los registros que comparten los primeros 14 dígitos del campo `pagina` presentan diferentes códigos `item_cont`?
 
 ---
 
@@ -220,7 +264,7 @@ df["pagina_base"] = df["pagina"].str[:14]
 |---|---|
 | `VALIDACION` | MO + materiales contra Base Maestra y reglas |
 | `MO_DUPLICADAS` | MO repetida por pedido/subzona |
-| `ALERTA_CANTIDADES` | Materiales con cantidad > 1 |
+| `ALERTA_CANTIDADES` | Materiales con cantidad > 1 para revisión |
 | `ALERTA_RURAL_URBANO` | R/U contra terminación del código |
 | `ALERTA_ACTIVIDADES` | Reglas AMRTR, ACREV y AEJDO |
 | `ALERTA_LEGALIZACIONES` | Cantidad > 1 en legalizaciones controladas |
@@ -228,26 +272,19 @@ df["pagina_base"] = df["pagina"].str[:14]
 
 ---
 
+## ✅ Cierre de la explicación
 
+Hasta aquí se presenta el funcionamiento general del proceso, de dónde salen las reglas de negocio y qué tipo de novedades identifica cada hoja.
 
-La división queda clara:
+El informe automatiza los cruces y facilita la identificación de posibles inconsistencias, pero la validación final continúa teniendo un componente operativo.
 
-```text
-Mi explicación
-→ Objetivo
-→ Exportación Fénix
-→ Base Maestra
-→ Qué automatiza Python
-→ Qué significa cada hoja
+Las reglas implementadas corresponden a los requerimientos definidos por los analistas y se mantienen abiertas a ajustes cuando, durante la revisión diaria, se identifique una nueva condición, excepción o necesidad de la operación.
 
-Astrid
-→ Revisión operativa
-→ Criterios del usuario
-→ Validación de las novedades
-```
+A continuación, utilizando el archivo de simulación, se pueden revisar ejemplos de las diferentes alertas. Finalmente, se presenta el archivo definitivo que quedará disponible en la carpeta compartida para la validación diaria.
 
 ---
-## NO TENER EN CUENTA PARA LA EXPLICACIÓN.
+
+## NO TENER EN CUENTA PARA LA EXPLICACIÓN
 
 # 🧑‍💻 Referencia técnica para el desarrollador
 
