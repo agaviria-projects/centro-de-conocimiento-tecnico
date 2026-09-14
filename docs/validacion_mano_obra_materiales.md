@@ -66,9 +66,9 @@ Por esta razón, los cruces que realiza el proceso se basan en reglas de negocio
 
 Para explicar las diferentes validaciones se utilizará inicialmente un **archivo de simulación**, en el cual se encuentran ejemplos de las alertas que puede generar el proceso.
 
-**Archivo de Simulación:**
-
-`C:\Users\hector.gaviria\Desktop\Launcher_Elite\Control_ANS_v5\Capacitacion_validacion_mo_materiales_20260913_110854.xlsx`
+**Archivo de Simulación:**<br>
+`C:\Users\hector.gaviria\Desktop\Launcher_Elite\Control_ANS_v5\`<br>
+`Capacitacion_validacion_mo_materiales_20260913_110854.xlsx`
 
 Este archivo permite visualizar de manera sencilla qué significa cada alerta y cómo debe interpretarse.
 
