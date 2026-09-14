@@ -68,8 +68,6 @@ Para explicar las diferentes validaciones se utilizará inicialmente un **archiv
 
 Este archivo permite visualizar de manera sencilla qué significa cada alerta y cómo debe interpretarse.
 
-Posteriormente, se presentará el **archivo final de validación**, que es el archivo que los usuarios encontrarán en la carpeta compartida y utilizarán para realizar la revisión de su zona.
-
 La finalidad del informe es facilitar la identificación de posibles novedades. La revisión final continúa dependiendo del criterio operativo del analista, especialmente cuando se presenten casos especiales o situaciones que requieran confirmar la regla de negocio.
 
 ---
