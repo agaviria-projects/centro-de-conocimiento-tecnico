@@ -101,32 +101,10 @@ Estados principales:
 
 \- \`NO EXISTEN EN BD\`: la mano de obra no está en la Base Maestra.
 
-**### Alerta de cantidad para manos de obra D**
+**### Alerta de cantidad para manos de obra A, C ,D**
 
-Además del cruce de materiales, esta hoja identifica las manos de obra de tipo \`CON\` correspondientes a:
-
-\`D01U/D01R\`, \`D02U/D02R\`, \`D03U/D03R\` y \`D04U/D04R\`.
-
-Cuando la cantidad registrada en una sola fila es mayor a 1, el informe muestra:
-
-\- \`alerta_cantidad_D = CANTIDAD_D>1\`;
-
-\- el detalle del código y la cantidad encontrada;
-
-\- el estado \`Presenta novedad en las cantidades (D)\`.
-
-**Regla:**
-
-| Condición | Resultado |
-|---|---|
-| Código D01–D04, terminación U/R y cantidad <= 1 | Sin alerta de cantidad D |
-| Código D01–D04, terminación U/R y cantidad > 1 | \`CANTIDAD_D>1\` |
-
-**Ejemplo:** \`D01U = 2\` para un pedido genera alerta. Esta alerta es informativa y no modifica el resultado del cruce de materiales en \`estado_codigo\`.
-
-**\*\*Pregunta que responde:\*\***
-
-\> ¿La mano de obra y los materiales del pedido cumplen con la regla definida?
+Además del cruce de materiales, la hoja VALIDACION revisa la cantidad registrada para cada mano de obra  y presenta controles independientes para los códigos que comienzan por A, C y D.
+Igual en la hoja VALIDACION detecta mano de obra registrada más de una vez para el mismo pedido y subzona. 
 
 \---
 
@@ -135,15 +113,6 @@ Cuando la cantidad registrada en una sola fila es mayor a 1, el informe muestra:
 Detecta una misma mano de obra registrada más de una vez para el mismo pedido y subzona.
 
 Ejemplo: \`C01 x2\`.
-
-La regla existente también cubre las manos de obra \`D01U/D01R\` a \`D04U/D04R\`; no fue necesario crear otra validación para estos códigos.
-
-**Regla:** se compara el mismo código exacto de tipo \`CON\` dentro de la combinación \`pedido + subzona\`. Si aparece en dos o más filas, se genera la alerta de duplicidad.
-
-| Caso | Resultado |
-|---|---|
-| \`D01U\` aparece dos veces en el mismo pedido y subzona | Alerta de MO duplicada |
-| \`D01U\` y \`D01R\` aparecen una vez cada uno | No son duplicados entre sí, porque son códigos diferentes |
 
 **\*\*Pregunta que responde:\*\***
 
@@ -256,15 +225,15 @@ Si no aparece ninguno, se genera \`FALTA ÍTEM VÁLIDO\`. Si para estas activida
 
 **## 🟢 \`ALERTA\_CANTIDADES\_MO\`**
 
-Presenta de forma detallada las manos de obra de tipo \`CON\` cuya cantidad registrada en una fila es mayor a 1.
+Presenta de forma detallada las manos de obra  cuya cantidad registrada en una fila es mayor a 1.
 
 Incluye:
 
-\- todos los códigos que comienzan por \`A\`;
+\- Los códigos que comienzan por \`A\`;
 
-\- todos los códigos que comienzan por \`C\`;
+\- Los códigos que comienzan por \`C\`;
 
-\- los códigos \`D01U/D01R\`, \`D02U/D02R\`, \`D03U/D03R\` y \`D04U/D04R\`.
+\- Los códigos que comienzan por \`D\`;`.
 
 | Cantidad | Resultado |
 |---|---|
@@ -282,19 +251,18 @@ La regla se evalúa por registro; no suma filas distintas. La hoja muestra el pe
 | \`D01U = 2\` | Alerta |
 | \`D05U = 2\` | No entra por la regla D01–D04 |
 
-La hoja \`VALIDACION\` conserva la alerta D dentro de la vista general del pedido. \`ALERTA_CANTIDADES_MO\` ofrece la vista especializada y más visual de las cantidades de mano de obra mayores a 1.
 
 **\*\*Pregunta que responde:\*\***
 
-\> ¿Hay manos de obra A, C o D01–D04 con cantidad mayor a 1 que requieran revisión?
+\> ¿Hay manos de obra A, C o D con cantidad mayor a 1 que requieran revisión?
 
 \---
 
 **## 🔷 \`MASIVAS\`**
 
-Para esta validación se utilizan los primeros 14 dígitos del campo \`pagina\`, con los cuales se genera el campo técnico \`pagina_base\`. Los últimos cuatro dígitos se entienden operativamente como el interior. No se asigna una definición oficial adicional a los primeros 14 dígitos.
+Para esta validación se utilizan los primeros 14 dígitos del campo \`pagina\`, con los cuales se genera el campo técnico \`pagina_base\`. Los últimos cuatro dígitos se entienden operativamente como el interior.
 
-El proceso agrupa por \`subzona + pagina_base\` y cuenta las instalaciones distintas usando el valor completo de \`pagina\`. De esta forma, varias filas asociadas a una misma instalación no aumentan artificialmente el conteo.
+El proceso agrupa los registros que pertenecen a una misma pagina_base y cuenta cuántas instalaciones diferentes existen. Si una instalación aparece en varias filas, se cuenta una sola vez.
 
 La mano de obra C esperada depende de la cantidad de instalaciones:
 
@@ -359,9 +327,9 @@ La alerta se presenta para revisión del analista y no declara automáticamente 
 
 \| \`ALERTA\_ACTIVIDADES\` | Reglas AMRTR, ACREV, AEJDO, ACAMN, ALECA, ALEGA y ALEGN |
 
-\| \`ALERTA\_CANTIDADES\_MO\` | MO A, C y D01–D04 con cantidad > 1 |
+\| \`ALERTA\_CANTIDADES\_MO\` | MO A, C y D con cantidad > 1 |
 
-\| \`MASIVAS\` | Código C01–C04 según cantidad de instalaciones por \`pagina_base\` |
+\| \`MASIVAS\` | Código C01–C02-C03-C04 según cantidad de instalaciones por \`pagina_base\` |
 
 \---
 
@@ -369,11 +337,9 @@ La alerta se presenta para revisión del analista y no declara automáticamente 
 
 Hasta aquí se presenta el funcionamiento general del proceso, de dónde salen las reglas de negocio y qué tipo de novedades identifica cada hoja.
 
-El informe automatiza los cruces y facilita la identificación de posibles inconsistencias, pero la validación final continúa teniendo un componente operativo.
+El informe automatiza los cruces y facilita la identificación de posibles inconsistencias; sin embargo, los resultados continúan siendo verificados por el analista, quien realiza la validación final de acuerdo con los criterios de la operación.
 
 Las reglas implementadas corresponden a los requerimientos definidos por los analistas y se mantienen abiertas a ajustes cuando, durante la revisión diaria, se identifique una nueva condición, excepción o necesidad de la operación.
-
-A continuación, utilizando el archivo de simulación, se pueden revisar ejemplos de las diferentes alertas. Finalmente, se presenta el archivo definitivo que quedará disponible en la carpeta compartida para la validación diaria.
 
 \---
 
