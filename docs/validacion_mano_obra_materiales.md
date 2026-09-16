@@ -2,7 +2,7 @@
 
 Buenos días a todos.
 
-En esta primera parte les voy a presentar el objetivo del proceso de validación, cómo funciona de manera general.
+En esta primera parte les voy a presentar el objetivo del proceso de validación,y cómo funciona de manera general.
 
 También voy a explicar de dónde salen las reglas de negocio que se aplican al informe y qué tipo de novedades se identifican en cada una de las hojas del archivo final.
 
