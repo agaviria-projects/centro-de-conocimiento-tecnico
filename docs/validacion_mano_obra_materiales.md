@@ -322,7 +322,7 @@ El informe está compuesto por siete hojas. Cada una presenta un tipo de validac
 | `ALERTA_CANTIDADES` | Muestra materiales tipo `SUM` cuya cantidad es mayor a 1. | Verificar si la cantidad reportada del material es correcta. |
 | `ALERTA_RURAL_URBANO` | Compara la clasificación Rural/Urbano con la terminación R/U del `item_cont`. | Confirmar que el código corresponda con la clasificación del pedido. |
 | `ALERTA_ACTIVIDADES` | Aplica las reglas específicas de las actividades AMRTR, ACREV, AEJDO, ACAMN, ALECA, ALEGA y ALEGN. | Revisar códigos obligatorios, faltantes o no permitidos para cada actividad. |
-| `ALERTA_CANTIDADES_MO` | Muestra las manos de obra A, C y los códigos D01–D04 U/R cuya cantidad es mayor a 1. | Confirmar si la cantidad reportada para cada `item_cont` es correcta. |
+| `ALERTA_CANTIDADES_MO` | Muestra las manos de obra A, C y D U/R cuya cantidad es mayor a 1. | Confirmar si la cantidad reportada para cada `item_cont` es correcta. |
 | `MASIVAS` | Determina si corresponde utilizar C01, C02, C03 o C04 según la cantidad de instalaciones agrupadas por `pagina_base`. | Verificar que el código registrado corresponda con el número de instalaciones. |
 
 Las alertas facilitan la identificación de posibles novedades; sin embargo, los resultados continúan siendo verificados por el analista, quien realiza la validación final de acuerdo con los criterios de la operación.
