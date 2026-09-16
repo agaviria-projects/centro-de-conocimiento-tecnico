@@ -72,7 +72,7 @@ Para explicar las diferentes validaciones se utilizará inicialmente un **\*\*ar
 
 \`C:\Users\hector.gaviria\Desktop\Launcher\_Elite\Control\_ANS\_v5\\\`  
 
-\`Capacitacion\_validacion\_mo\_materiales\_20260913\_110854.xlsx\`
+\`Capacitacion_V2_validacion_mo_materiales_20260915_131517.xlsx\`
 
 Este archivo permite visualizar de manera sencilla qué significa cada alerta y cómo debe interpretarse.
 
@@ -84,25 +84,10 @@ La finalidad del informe es facilitar la identificación de posibles novedades. 
 
 **## 🟢 \`VALIDACION\`**
 
-Es la hoja principal.
+Realizar la explicación con base al archivo de Excel, consolidado final.
 
-\`\`\`text
-
-Mano de obra reportada
-
-        +
-
-Materiales reportados
-
-        ↓
-
-Base Maestra y reglas especiales
-
-        ↓
-
-Resultado
-
-\`\`\`
+\`C:\Users\hector.gaviria\Desktop\Launcher_Elite\Control_ANS_v5\\\`
+\`Capacitacion_V2_validacion_mo_materiales_20260915_131517.xlsx\`
 
 Estados principales:
 
