@@ -311,27 +311,23 @@ La alerta se presenta para revisión del analista y no declara automáticamente 
 
 \---
 
-**## 🧭 Resumen rápido**
+## 🧭 Resumen de las hojas del archivo Excel
 
-\| Hoja | Qué revisa |
+El informe está compuesto por siete hojas. Cada una presenta un tipo de validación diferente para facilitar la revisión del analista.
 
-\|---|---|
+| Hoja | Función | ¿Qué debe revisar el analista? |
+|---|---|---|
+| `VALIDACION` | Compara las manos de obra y los materiales reportados contra la Base Maestra y las reglas especiales. | Materiales faltantes, sobrantes, cantidades de MO y resultado general del pedido. |
+| `MO_DUPLICADAS` | Identifica una misma mano de obra registrada más de una vez para el mismo pedido y subzona. | Confirmar si la repetición corresponde a una novedad o a una condición válida de la operación. |
+| `ALERTA_CANTIDADES` | Muestra materiales tipo `SUM` cuya cantidad es mayor a 1. | Verificar si la cantidad reportada del material es correcta. |
+| `ALERTA_RURAL_URBANO` | Compara la clasificación Rural/Urbano con la terminación R/U del `item_cont`. | Confirmar que el código corresponda con la clasificación del pedido. |
+| `ALERTA_ACTIVIDADES` | Aplica las reglas específicas de las actividades AMRTR, ACREV, AEJDO, ACAMN, ALECA, ALEGA y ALEGN. | Revisar códigos obligatorios, faltantes o no permitidos para cada actividad. |
+| `ALERTA_CANTIDADES_MO` | Muestra las manos de obra A, C y los códigos D01–D04 U/R cuya cantidad es mayor a 1. | Confirmar si la cantidad reportada para cada `item_cont` es correcta. |
+| `MASIVAS` | Determina si corresponde utilizar C01, C02, C03 o C04 según la cantidad de instalaciones agrupadas por `pagina_base`. | Verificar que el código registrado corresponda con el número de instalaciones. |
 
-\| \`VALIDACION\` | MO + materiales contra Base Maestra y reglas |
+Las alertas facilitan la identificación de posibles novedades; sin embargo, los resultados continúan siendo verificados por el analista, quien realiza la validación final de acuerdo con los criterios de la operación.
 
-\| \`MO\_DUPLICADAS\` | MO repetida por pedido/subzona |
-
-\| \`ALERTA\_CANTIDADES\` | Materiales con cantidad > 1 para revisión |
-
-\| \`ALERTA\_RURAL\_URBANO\` | R/U contra terminación del código |
-
-\| \`ALERTA\_ACTIVIDADES\` | Reglas AMRTR, ACREV, AEJDO, ACAMN, ALECA, ALEGA y ALEGN |
-
-\| \`ALERTA\_CANTIDADES\_MO\` | MO A, C y D con cantidad > 1 |
-
-\| \`MASIVAS\` | Código C01–C02-C03-C04 según cantidad de instalaciones por \`pagina_base\` |
-
-\---
+---
 
 **## ✅ Cierre de la explicación**
 
