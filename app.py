@@ -152,6 +152,7 @@ opciones = [
     "📊 Generador de Informes ANS",
     "🏢 Generador ANS - ATC CHEC",
     "🌐 ANS REDES - ATC CHEC",
+    "🔄 Power Query - Proyectos portátiles",
     "🖥️ Generar ejecutable Python",
     "📧 Seguimiento ANS",
     "🎓 Portal Formación Elite",
@@ -410,6 +411,39 @@ Artificial como herramienta de asistencia.
     else:
         st.error(
             "No se encontró el archivo docs/ans_redes_funcional.md"
+        )
+
+elif opcion == "🔄 Power Query - Proyectos portátiles":
+
+    st.header("🔄 Power Query - Proyectos portátiles")
+
+    st.info("""
+Guía paso a paso para construir y entregar informes de Excel con Power Query
+sin depender de rutas personales. Incluye el caso validado del maestro de
+coordenadas, una estructura para proyectos nuevos y pruebas de entrega.
+    """)
+
+    with st.expander("🎤 Cómo explicar este procedimiento", expanded=False):
+        st.markdown("""
+El informe obtiene su ubicación desde una celda de configuración y construye
+las rutas a partir de esa carpeta. Así se evita escribir el usuario del
+computador en cada consulta.
+
+Antes de entregarlo se revisan las consultas principales y auxiliares, la
+estructura de los archivos y los resultados. Se prueba desde otra carpeta
+y después en el equipo del destinatario.
+
+La ruta portátil resuelve la ubicación de los archivos; las pruebas permiten
+comprobar que el informe sigue produciendo los resultados esperados.
+        """)
+
+    ruta = Path("docs/power_query_proyectos_portatiles.md")
+
+    if ruta.exists():
+        mostrar_markdown(ruta)
+    else:
+        st.error(
+            "No se encontró el archivo docs/power_query_proyectos_portatiles.md"
         )
 
 elif opcion == "🖥️ Generar ejecutable Python":
