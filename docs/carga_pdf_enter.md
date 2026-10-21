@@ -84,6 +84,8 @@ Como control operativo, revisar que los archivos seleccionados correspondan al t
 
 Ingresar a la herramienta desarrollada por TI. La primera captura muestra la pantalla **Configurar carga** de la aplicación **Automatización Enter**.
 
+![Configuración del cargue en el bot desarrollado por TI](imagenes/enter/01_configuracion_bot.png)
+
 ### Paso 3. Revisar el operador
 
 En **Nombre del operador** aparece el usuario responsable de subir las evidencias a ENTER. Revisar que corresponda a la persona que realiza el cargue, ya que este dato queda asociado al registro de ejecución.
@@ -139,6 +141,8 @@ La compresión forma parte de la preparación del archivo. Para darlo por cargad
 
 El bot genera un archivo de Excel que permite consultar la trazabilidad del cargue. La segunda captura muestra una hoja llamada **Resultados**.
 
+![Registro de resultados generado en Excel](imagenes/enter/02_resultados_excel.png)
+
 | Información | Qué permite identificar |
 | --- | --- |
 | Operador | Persona que ejecutó el cargue. |
@@ -161,13 +165,17 @@ Al finalizar:
 4. Revisar la carpeta **INVALIDO ENTER** para identificar los archivos pendientes de resolver.
 5. Verificar en ENTER los casos dudosos antes de repetir su cargue.
 
-La cuarta captura muestra un contador de **49/49 archivos** y, al mismo tiempo, el mensaje **«La carga no se completó»**. Esto demuestra que llegar al total del contador no basta para concluir que la ejecución terminó correctamente. Deben revisarse el mensaje final y el detalle del log.
+La cuarta captura muestra un contador de **49/49 archivos** y, al mismo tiempo, el mensaje **«La carga no se completó»**.
+
+![Seguimiento de ejecución con mensaje de cargue incompleto](imagenes/enter/04_novedad_ejecucion.png) Esto demuestra que llegar al total del contador no basta para concluir que la ejecución terminó correctamente. Deben revisarse el mensaje final y el detalle del log.
 
 La causa exacta del error no puede establecerse con esa captura. Tampoco permite concluir por sí sola cuáles documentos quedaron cargados o pendientes.
 
 ## 6. Procedimiento anterior: cargue manual en ENTER
 
 Antes de utilizar el bot, el responsable cargaba los PDF manualmente desde el aplicativo ENTER, al que accedía mediante una dirección de SharePoint de EPM.
+
+![Pantalla de carga masiva en ENTER](imagenes/enter/03_carga_manual_enter.png)
 
 No se incluye una URL completa porque no fue suministrada. Para la operación se debe utilizar el enlace corporativo autorizado.
 
@@ -242,10 +250,10 @@ El contenido se elaboró con la explicación del responsable y cuatro capturas s
 
 | Captura | Contenido utilizado |
 | --- | --- |
-| 1 — image(8).png | Configuración del bot: operador, carpeta, navegador, tipo de proceso y fechas. |
-| 2 — image(9).png | Excel de resultados con operador, nombre del archivo y datos de ejecución. |
-| 3 — image(10).png | Pantalla de carga masiva de ENTER utilizada como referencia del procedimiento manual. |
-| 4 — image(20261021-185622).png | Seguimiento con contador, logs y mensaje «La carga no se completó». |
+| 1 — Configuración del bot | Configuración del bot: operador, carpeta, navegador, tipo de proceso y fechas. |
+| 2 — Resultados en Excel | Excel de resultados con operador, nombre del archivo y datos de ejecución. |
+| 3 — Carga manual en ENTER | Pantalla de carga masiva de ENTER utilizada como referencia del procedimiento manual. |
+| 4 — Novedad de ejecución | Seguimiento con contador, logs y mensaje «La carga no se completó». |
 
 No se revisó el código fuente del bot ni se ejecutó un cargue de prueba. Las funciones de renombrado, compresión, organización por lotes y traslado a INVALIDO ENTER se documentan según la explicación operativa recibida.
 
