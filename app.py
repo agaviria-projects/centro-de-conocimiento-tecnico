@@ -157,6 +157,7 @@ opciones = [
     "📧 Seguimiento ANS",
     "🎓 Portal Formación Elite",
     "📄 Compresor PDF",
+    "📤 Cargue de PDF a ENTER",
     "💬 WhatsApp + ANS + Formularios",
     "🛠️ Validación Mano de Obra Vs Materiales",
     "📘 Academia Excel BI",
@@ -862,6 +863,43 @@ La necesidad, las pruebas, los parámetros de compresión, la validación visual
     else:
         st.error(
             "No se encontró el archivo docs/compresor_pdf.md"
+        )
+
+elif opcion == "📤 Cargue de PDF a ENTER":
+
+    st.header("📤 Cargue de PDF a ENTER")
+
+    st.info("""
+Consulta el procedimiento de recepción de evidencias, preparación de PDF,
+cargue mediante el bot desarrollado por TI y revisión de resultados en ENTER.
+Incluye la comparación con el procedimiento manual anterior.
+    """)
+
+    with st.expander("🎤 Guía rápida para la reunión", expanded=False):
+        st.markdown("""
+Los técnicos reportan diariamente las evidencias desde el celular mediante un
+formulario. Los PDF quedan en Drive y cada día se descargan los del día anterior.
+Los movimientos de redes se reciben por correo.
+
+Para cargarlos a ENTER utilizamos el bot desarrollado por TI: revisamos el
+operador, seleccionamos la carpeta y elegimos el tipo de proceso. El bot renombra
+los PDF, comprime los que superan los 20 MB y organiza el cargue en lotes de hasta
+20 archivos. Al finalizar genera un Excel de resultados para revisar la ejecución.
+
+Las novedades se revisan en los mensajes, los logs y la carpeta INVALIDO ENTER.
+Un pedido puede tener varios PDF, por lo que la cantidad de archivos puede ser
+diferente de la cantidad de pedidos. El contador completo debe revisarse junto
+con el mensaje final antes de confirmar que terminó el cargue.
+        """)
+
+    ruta = Path(__file__).resolve().parent / "docs" / "carga_pdf_enter.md"
+
+    if ruta.exists():
+        mostrar_markdown(ruta)
+    else:
+        st.error(
+            "No se encontró el archivo docs/carga_pdf_enter.md. "
+            "Copia la guía en la carpeta docs del proyecto."
         )
 
 elif opcion == "💬 WhatsApp + ANS + Formularios":
