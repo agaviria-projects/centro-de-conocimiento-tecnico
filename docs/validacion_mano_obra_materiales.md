@@ -8,7 +8,20 @@ Verificar automáticamente la relación entre la mano de obra y los materiales r
 
 **La herramienta continúa en desarrollo.** A medida que los analistas e ingenieros identifiquen nuevas reglas, excepciones o necesidades operativas, estas se revisarán e implementarán progresivamente. Este trabajo también se apoya en la revisión de los criterios de EPM para la liquidación de actas, con el acompañamiento de los ingenieros para definir su aplicación en la herramienta.
 
-El proceso consolida archivos TXT exportados de Fénix y utiliza la Base Maestra `RELACION_MO_MATERIALES.xlsx`, junto con validaciones específicas. Las siguientes secciones explican, hoja por hoja, las reglas descritas en la guía del informe del 26/10/2026. Una alerta señala una posible novedad: la conclusión y la corrección correspondiente requieren la revisión del analista.
+El proceso reúne en un solo informe los archivos TXT exportados de Fénix de las diferentes zonas. Cada hoja muestra alertas sobre posibles novedades que el analista debe revisar después de filtrar su zona.
+
+Los informes se guardan en OneDrive, dentro de la carpeta Relación_MO_Vs_Materiales, organizados por mes y fecha de generación. Por ejemplo:
+
+Relación_MO_Vs_Materiales\Octubre\26-10-2026
+
+Los archivos se identifican según el período y el corte de la información:
+- Corte de las 10:00 a. m.: informe acumulado del período de revisión, con el nombre VALIDACION_MO_MATERIALES_ALMACEN DEL 2026-10-06 AL 2026-11-09.xlsx. Las fechas del nombre indican el rango del exporte.
+- Corte de las 2:30 p. m.: informe de lo registrado durante el día actual hasta esa hora, con el nombre VALIDACION_MO_MATERIALES_ALMACEN_2026-10-26.xlsx.
+Se recomienda descargar una copia del archivo y trabajarla desde el equipo, ya que otros analistas pueden estar utilizando el mismo informe en OneDrive. Así se evita que los filtros o cambios de un usuario interfieran con la revisión de los demás.
+
+La validación final corresponde al analista, quien debe confirmar si cada alerta requiere una corrección o si la información registrada es correcta.
+
+El libro contiene varias hojas de validación y una hoja llamada GUIA_REGLAS, donde se explica en qué consiste cada regla y cómo interpretar las alertas del informe.
 
 ## 1. GUIA_REGLAS
 
