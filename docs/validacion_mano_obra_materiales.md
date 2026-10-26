@@ -4,7 +4,9 @@
 
 ## Objetivo y alcance
 
-Verificar automáticamente la relación entre la mano de obra y los materiales reportados en Fénix, así como las cantidades, actividades y demás condiciones incluidas en las reglas de negocio, para facilitar la revisión del informe compartido con el equipo técnico.
+Generar un informe de la información digitada o procesada por los técnicos en Fénix, que sirva como herramienta de apoyo para identificar posibles inconsistencias en los registros de mano de obra, materiales, cantidades y actividades, de acuerdo con las reglas de negocio implementadas.
+
+El informe facilita la revisión de los analistas, quienes deben confirmar si las alertas requieren una corrección o si la información registrada es correcta.
 
 **La herramienta continúa en desarrollo.** A medida que los analistas e ingenieros identifiquen nuevas reglas, excepciones o necesidades operativas, estas se revisarán e implementarán progresivamente. Este trabajo también se apoya en la revisión de los criterios de EPM para la liquidación de actas, con el acompañamiento de los ingenieros para definir su aplicación en la herramienta.
 
@@ -18,8 +20,6 @@ Los archivos se identifican según el período y el corte de la información:
 - Corte de las 10:00 a. m.: informe acumulado del período de revisión, con el nombre VALIDACION_MO_MATERIALES_ALMACEN DEL 2026-10-06 AL 2026-11-09.xlsx. Las fechas del nombre indican el rango del exporte.
 - Corte de las 2:30 p. m.: informe de lo registrado durante el día actual hasta esa hora, con el nombre VALIDACION_MO_MATERIALES_ALMACEN_2026-10-26.xlsx.
 Se recomienda descargar una copia del archivo y trabajarla desde el equipo, ya que otros analistas pueden estar utilizando el mismo informe en OneDrive. Así se evita que los filtros o cambios de un usuario interfieran con la revisión de los demás.
-
-La validación final corresponde al analista, quien debe confirmar si cada alerta requiere una corrección o si la información registrada es correcta.
 
 El libro contiene varias hojas de validación y una hoja llamada GUIA_REGLAS, donde se explica en qué consiste cada regla y cómo interpretar las alertas del informe.
 
