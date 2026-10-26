@@ -1,522 +1,325 @@
-# Validación Mano de Obra Vs Materiales
+# Validación Mano de Obra vs. Materiales
 
-**Actualización documental: 14/10/2026.** Documento original complementado con la hoja de reglas suministrada, fechada 13/10/2026.
+**Actualización documental: 26/10/2026.**
 
-## 🎯 Entrada a la reunión
+## Objetivo y alcance
 
-Buenos días a todos.
+Verificar automáticamente la relación entre la mano de obra y los materiales reportados en Fénix, así como las cantidades, actividades y demás condiciones incluidas en las reglas de negocio, para facilitar la revisión del informe compartido con el equipo técnico.
 
-En esta primera parte les voy a presentar el objetivo del proceso de validación y cómo funciona de manera general.
+**La herramienta continúa en desarrollo.** A medida que los analistas e ingenieros identifiquen nuevas reglas, excepciones o necesidades operativas, estas se revisarán e implementarán progresivamente. Este trabajo también se apoya en la revisión de los criterios de EPM para la liquidación de actas, con el acompañamiento de los ingenieros para definir su aplicación en la herramienta.
 
-También voy a explicar de dónde salen las reglas de negocio que se aplican al informe y qué tipo de novedades se identifican en cada una de las hojas del archivo final.
+El proceso consolida archivos TXT exportados de Fénix y utiliza la Base Maestra `RELACION_MO_MATERIALES.xlsx`, junto con validaciones específicas. Las siguientes secciones explican, hoja por hoja, las reglas descritas en la guía del informe del 26/10/2026. Una alerta señala una posible novedad: la conclusión y la corrección correspondiente requieren la revisión del analista.
 
-Estas reglas se han venido definiendo a partir de los requerimientos y criterios entregados por los analistas que realizan la revisión de la información. Por esta razón, pueden ajustarse posteriormente si durante la operación se identifica una nueva condición, excepción o necesidad de validación.
+## 1. GUIA_REGLAS
 
-Para facilitar la explicación, voy a utilizar un archivo de simulación que contiene ejemplos de las diferentes alertas. Al finalizar, les mostraré el archivo final que encontrarán en la carpeta compartida y que será el utilizado para la revisión diaria.
+**¿Para qué sirve?** Explica las validaciones incluidas en el archivo generado y orienta la interpretación de sus alertas.
 
----
+Contiene la fecha de referencia de las reglas de esa ejecución. Debe consultarse al revisar el informe, especialmente cuando se incorporen nuevas condiciones.
 
-## 🎯 Objetivo
+**Qué revisar:** el alcance de la regla, los códigos involucrados y el significado de la alerta antes de concluir que existe un error.
 
-El proceso de **Validación Mano de Obra Vs Materiales** fue desarrollado para verificar automáticamente que los materiales reportados en Fénix correspondan con la mano de obra ejecutada en cada pedido, de acuerdo con las reglas de negocio definidas para la operación.
+## 2. VALIDACION
 
-El proceso permite trabajar con uno o múltiples archivos exportados desde Fénix para las diferentes zonas operativas y consolidar toda la información en un único informe de validación.
+**¿Para qué sirve?** Compara la mano de obra reportada con los materiales definidos en la Base Maestra y las reglas especiales aplicables.
 
-[Aquí explico brevemente cómo realizo los exportes desde Fénix y cuáles archivos utilizo como entrada para el proceso.]
+Según cada regla, pueden exigirse todos los materiales definidos o ser suficiente uno de los materiales permitidos. Por ejemplo, para A05 basta uno de `200492`, `200410`, `200411`, `200493` o `323739`; para la relación de medidores de A12, uno de `200092` o `200093`. Las condiciones complementarias de A12 en AEJDO se explican en `ALERTA_ACTIVIDADES`.
 
-Una vez obtenidos los archivos, se ejecuta el proceso de consolidación y se aplican automáticamente las diferentes reglas de validación definidas para Mano de Obra Vs Materiales.
+| Resultado | Interpretación |
+|---|---|
+| `OK` | Los materiales cumplen el cruce evaluado. |
+| `FALTAN` | No se encontraron materiales requeridos por la regla. |
+| `SOBRAN` | Hay materiales del pedido que no están asociados a la mano de obra evaluada en la Base Maestra. |
+| `AMBOS` | Faltan materiales requeridos y aparecen otros no asociados a esa mano de obra. |
+| `NO EXISTEN EN BD` | La mano de obra no tiene una regla en la Base Maestra; este resultado no permite concluir que falten o sobren materiales. |
 
-Las reglas actualmente implementadas corresponden a los requerimientos definidos por los analistas y pueden ser ajustadas cuando se identifique alguna novedad operativa, una excepción o un cambio en la regla de negocio.
+**Cómo interpretar los sobrantes:** un material puede aparecer como sobrante para una mano de obra y corresponder a otra del mismo pedido. Se debe revisar el pedido completo antes de concluir que realmente sobra.
 
-Al finalizar el proceso, el archivo generado se comparte a través de OneDrive, en la carpeta:
+### Cantidades y duplicidad de mano de obra
 
-`Relación_MO_Vs_Materiales`
+La hoja también presenta controles independientes del cruce de materiales:
 
-El informe correspondiente a la información del día anterior se almacena utilizando la siguiente nomenclatura:
-
-`VALIDACION_MO_MATERIALES_ALMACEN_2026-09-10.xlsx`
-
-Posteriormente, cada usuario responsable deberá filtrar la zona operativa que le corresponda para realizar la validación de su información.
-
-Como recomendación, debido a que varios usuarios pueden acceder al mismo archivo, se sugiere descargar una copia en el equipo local antes de iniciar la validación. De esta manera se evitan conflictos por ediciones simultáneas y se garantiza una revisión más estable de la información.
-
-Adicionalmente, sobre las **2:30 p. m.** se realiza un segundo corte correspondiente a la información digitada durante el día hasta ese momento.
-
-Este segundo archivo se genera con la siguiente nomenclatura:
-
-`INFORME_VALIDACION_MO_MATERIALES_ALMACEN_2026-09-11.xlsx`
-
----
-
-## 📘 Base Maestra: de dónde salen los cruces
-
-Cada código de mano de obra tiene asociados materiales definidos en una **Base Maestra de reglas de negocio**:
-
-`RELACION_MO_MATERIALES.xlsx`
-
-Esta base se fue construyendo de acuerdo con las reglas definidas y validadas con la operación. Por eso, los cruces que realiza el desarrollo se basan en reglas de negocio previamente definidas en la Base Maestra.
-
-Estas reglas no se consideran estáticas: pueden ajustarse cuando en la revisión diaria se detecte una nueva condición, excepción o necesidad operativa.
-
-### Ejemplos sencillos
-
-- `A05`: basta con uno de `200492`, `200410`, `200411`, `200493` o `323739`.
-
-- `A12`: basta con `200092` o `200093`.
-
-- `A18`: los materiales definidos son obligatorios.
-
----
-
-## 📄 Archivo de simulación y archivo final
-
-Para explicar las diferentes validaciones se utilizará inicialmente un **archivo de simulación**, en el cual se encuentran ejemplos de las alertas que puede generar el proceso.
-
-**Archivo de Simulación:**  
-
-`C:\Users\hector.gaviria\Desktop\Launcher_Elite\Control_ANS_v5\\`  
-
-`Capacitacion_V2_validacion_mo_materiales_20260915_131517.xlsx`
-
-Este archivo permite visualizar de manera sencilla qué significa cada alerta y cómo debe interpretarse.
-
-La finalidad del informe es facilitar la identificación de posibles novedades. La revisión final continúa dependiendo del criterio operativo del analista, especialmente cuando se presenten casos especiales o situaciones que requieran confirmar la regla de negocio.
-
----
-
-# 📊 ¿Qué hace cada hoja del archivo final?
-
-## 🟢 `VALIDACION`
-
-Realizar la explicación con base al archivo de Excel, consolidado final.
-
-`C:\Users\hector.gaviria\Desktop\Launcher_Elite\Control_ANS_v5\\`
-`Capacitacion_V2_validacion_mo_materiales_20260915_131517.xlsx`
-
-Estados principales:
-
-- `OK`: cumple la regla.
-
-- `FALTAN`: faltan materiales requeridos.
-
-- `SOBRAN`: aparecen materiales no asociados a la mano de obra evaluada en la Base Maestra. Pueden corresponder a otra mano de obra del mismo pedido; revisar el pedido completo antes de concluir que sobran.
-
-- `AMBOS`: faltan y sobran materiales.
-
-- `NO EXISTEN EN BD`: la mano de obra no está en la Base Maestra. No permite concluir por sí solo que falten o sobren materiales.
-
-### Alerta de cantidad para manos de obra A, C, D y F
-
-Además del cruce de materiales, la hoja VALIDACION revisa la cantidad registrada para cada mano de obra  y presenta controles independientes para los grupos A, C, D y F, según los códigos controlados de cada grupo.
-Igual en la hoja VALIDACION detecta mano de obra registrada más de una vez para el mismo pedido y subzona.
-
-| Columna de alerta | Condición | Ejemplo |
+| Columna | Condición | Alerta |
 |---|---|---|
-| `alerta_cantidad_A` | Código que comienza por A, cantidad mayor a 1. | A21R = 4: `CANTIDAD_A>1`. |
-| `alerta_cantidad_C` | Código que comienza por C, cantidad mayor a 1. | C02U = 2: `CANTIDAD>1`. |
-| `alerta_cantidad_D` | D01U/R, D02U/R, D03U/R o D04U/R, cantidad mayor a 1. | D01U = 2: `CANTIDAD_D>1`. |
-| `alerta_cantidad_F` | F01U o F01R, cantidad mayor a 1. | F01R = 2: `CANTIDAD_F>1`. |
-| `alerta_duplicado_MO` | Misma mano de obra repetida para un pedido y subzona. | `MO_DUPLICADA`. |
+| `alerta_cantidad_A` | Código que comienza por A, con cantidad mayor a 1. | `CANTIDAD_A>1` |
+| `alerta_cantidad_C` | Código que comienza por C, con cantidad mayor a 1. | `CANTIDAD>1` |
+| `alerta_cantidad_D` | D01U/R, D02U/R, D03U/R o D04U/R, con cantidad mayor a 1. | `CANTIDAD_D>1` |
+| `alerta_cantidad_F` | F01U o F01R, con cantidad mayor a 1. | `CANTIDAD_F>1` |
+| `alerta_duplicado_MO` | Misma mano de obra repetida para el mismo pedido y subzona. | `MO_DUPLICADA` |
 
-Las columnas `detalle_cantidad_A`, `detalle_cantidad_C`, `detalle_cantidad_D`, `detalle_cantidad_F` y `detalle_duplicado_MO` muestran la información que originó cada alerta.
+Las columnas `detalle_cantidad_A`, `detalle_cantidad_C`, `detalle_cantidad_D`, `detalle_cantidad_F` y `detalle_duplicado_MO` explican el registro que originó la alerta.
 
-El resultado del cruce de materiales y los controles de cantidad o duplicidad requieren revisión conjunta. Consultar las columnas adicionales aunque el cruce indique `OK`.
+**Qué revisar:** los materiales, las cantidades y las duplicidades conjuntamente. Un resultado `OK` en el cruce de materiales no elimina las alertas de las demás columnas.
 
+## 3. MO_DUPLICADAS
 
+**¿Para qué sirve?** Presenta las manos de obra registradas más de una vez para un mismo pedido y subzona.
 
----
+Permite consultar el pedido, el código y el número de repeticiones. La novedad también puede aparecer en `VALIDACION`.
 
-## 🔴 `MO_DUPLICADAS`
+**Ejemplo:** C01U registrado en dos filas para el mismo pedido y subzona genera una novedad por duplicidad.
 
-Detecta una misma mano de obra registrada más de una vez para el mismo pedido y subzona.
+**Qué revisar:** si la repetición corresponde a una duplicación que debe corregirse o a una condición operativa que deba confirmarse con el responsable.
 
-Ejemplo: `C01 x2`.
+## 4. ALERTA_CANTIDADES
 
-**Pregunta que responde:**
+**¿Para qué sirve?** Identifica cantidades de materiales que requieren revisión. Incluye **Actividad inmediatamente después de Pedido**, además de subzona, material, cantidad, alerta y detalle.
 
-> ¿Existe una mano de obra repetida que deba revisarse?
-
----
-
-## 🟠 `ALERTA_CANTIDADES`
-
-Esta hoja muestra todos los materiales reportados cuya cantidad es mayor a 1.
-
-Incluye la columna **Actividad inmediatamente después de Pedido**, seguida de subzona, material, cantidad, alerta y detalle. Esto permite identificar el contexto operativo de la cantidad reportada.
-
-El código de alerta es `MATERIAL_CANTIDAD>1`.
-
-No valida una lista específica de materiales. Su función es identificar rápidamente cantidades superiores a 1 para que el analista revise si corresponden realmente a la operación.
-
-La alerta sirve como punto de revisión; no significa automáticamente que exista un error.
-
-**Pregunta que responde:**
-
-> ¿Hay materiales con cantidades superiores a 1 que requieran revisión?
-
----
-
-## 🟣 `ALERTA_RURAL_URBANO`
-
-Valida que la clasificación Rural/Urbano del pedido coincida con la terminación de `item_cont`.
-
-```text
-
-R → el código debe terminar en R
-
-U → el código debe terminar en U
-
-```
-
-Ejemplo:
-
-`urbrur = R` y `item_cont = D01U` genera inconsistencia.
-
-La regla no aplica a una lista específica de ítems; revisa los códigos cuya terminación corresponda a `R` o `U`.
-
-**Pregunta que responde:**
-
-> ¿El código corresponde correctamente a la clasificación Rural/Urbano?
-
----
-
-## 🟣 `ALERTA_PAGINA_7MO_DIGITO`
-
-Esta hoja complementa la revisión Rural/Urbano con una validación basada en el campo `pagina`.
-
-Aplica únicamente cuando la página **comienza por 190**. Se cuenta el séptimo dígito desde la izquierda, empezando en 1.
-
-| Séptimo dígito | Clasificación requerida | Cruce que genera alerta |
+| Control | Condición | Alerta |
 |---|---|---|
-| 1 | U: urbano. | Séptimo dígito 1 con `urbrur = R`. |
-| 2 | R: rural. | Séptimo dígito 2 con `urbrur = U`. |
+| General | Material tipo `SUM` con cantidad reportada mayor a 1. | `MATERIAL_CANTIDAD>1` |
+| Suministros específicos | `200092`, `200093` y `CALE1F`: cuando aparecen en el TXT, su cantidad total debe ser igual a 1 por pedido, subzona y actividad. | `MATERIAL_CANTIDAD_DISTINTA_1` si el total es diferente de 1. |
 
-Los cruces 1 con U y 2 con R cumplen esta regla. No extenderla a otros prefijos o séptimos dígitos.
+Para los tres suministros específicos, se revisan también cantidades cero y varias filas cuya suma sea distinta de 1. Esta condición no equivale a exigir que los tres aparezcan en todos los pedidos; su obligatoriedad depende de las reglas de la actividad.
 
-**Ejemplos de capacitación:**
+**Ejemplos:** un material general con cantidad 3 requiere revisión; dos filas de `200092` con cantidad 1 cada una suman 2 y no cumplen la regla específica.
 
-| Página | Clasificación encontrada | Resultado |
+**Qué revisar:** si la cantidad corresponde al trabajo realizado. La alerta general de cantidad mayor a 1 no significa automáticamente que exista un error.
+
+## 5. ALERTA_RURAL_URBANO
+
+**¿Para qué sirve?** Verifica que la clasificación del pedido coincida con la terminación del código de mano de obra (`item_cont`).
+
+| Clasificación en Fénix (`urbrur`) | Terminación esperada |
+|---|---|
+| Rural: `R` | Código terminado en `R`. |
+| Urbano: `U` | Código terminado en `U`. |
+
+Si no coincide, se presenta `INCONSISTENCIA_RURAL_URBANO`. Se revisan los códigos cuya terminación corresponda a U o R.
+
+**Ejemplo:** un pedido rural con D01U presenta inconsistencia.
+
+**Qué revisar:** la clasificación del pedido y el código digitado, para determinar cuál requiere ajuste.
+
+## 6. ALERTA_PAGINA_7MO_DIGITO
+
+**¿Para qué sirve?** Complementa la revisión Rural/Urbano con controles sobre el campo `pagina`.
+
+### Páginas que comienzan por 190
+
+Se cuenta el séptimo dígito desde la izquierda, comenzando en 1.
+
+| Séptimo dígito | Clasificación esperada | Caso que genera alerta |
 |---|---|---|
-| `190000100000000001` | R | Alerta: el séptimo dígito es 1 y se espera U. |
-| `190000200000000001` | U | Alerta: el séptimo dígito es 2 y se espera R. |
-| `190000100000000001` | U | Sin alerta de este cruce. |
+| `1` | Urbano: `U`. | Dígito 1 con clasificación R. |
+| `2` | Rural: `R`. | Dígito 2 con clasificación U. |
+| Diferente de 1 o 2 | Valor no reconocido por esta regla. | Se solicita revisar en MARCOPOLO. |
 
-La hoja permite consultar pedido, subzona, página, séptimo dígito, clasificación encontrada, valor esperado, estado y detalle.
+Los cruces 1 con U y 2 con R cumplen la comparación. Como ejemplos ficticios, `190000100000000001` con R presenta inconsistencia y `190000200000000001` con U también.
 
-**Pregunta que responde:**
+### Páginas cuyo inicio está entre 200 y 999
 
-> ¿La clasificación Rural/Urbano corresponde al séptimo dígito de una página que comienza por 190?
+Toda página cuyos primeros tres dígitos estén entre 200 y 999 se muestra en amarillo como `VALIDAR_EN_MARCOPOLO`, para comprobar si existe un error de digitación. También se indica cuando el séptimo dígito es distinto de 1 o 2. Este control aplica a cualquier actividad.
 
----
+**Qué revisar:** consultar la página en MARCOPOLO antes de decidir si debe corregirse. La marca amarilla indica una consulta pendiente, no confirma por sí sola un error.
 
-## 🔵 `ALERTA_ACTIVIDADES`
+## 7. ALERTA_PAGINA_MUNICIPIO
 
-Esta hoja aplica reglas específicas de acuerdo con la actividad reportada.
+**¿Para qué sirve?** Cruza el municipio, el inicio de la página y la clasificación U/R registrada en Fénix.
 
-### AMRTR - MOVIMIENTO DE REDES
+Si el prefijo tiene una clasificación definida y no coincide con la registrada, se muestra `INCONSISTENCIA_PAGINA_MUNICIPIO`. Se conservan los ceros iniciales y se compara el prefijo completo.
 
-Códigos válidos:
-
-`D02U`, `D02R`, `D03U`, `D03R`, `D04U`, `D04R`.
-
-Debe existir al menos uno de estos códigos.
-
-Si aparece otro código `Dxx` diferente a los permitidos, se genera una alerta de:
-
-`ERROR EN DIGITACIÓN`
-
-### ACREV - PUNTOS DE CONEXIÓN
-
-Códigos válidos:
-
-`D01U` o `D01R`.
-
-Debe existir al menos uno.
-
-Si aparece otro código `Dxx` diferente a los permitidos, se genera una alerta de:
-
-`ERROR EN DIGITACIÓN`
-
-### AEJDO - HV (HABILITACIÓN VIVIENDA)
-
-La hoja de reglas suministrada establece una relación **bidireccional entre CALE1F y A12U o A12R**: si aparece uno, debe aparecer el otro.
-
-Esta explicación actualiza el texto anterior que describía la regla como pendiente de revisión. A18 y A19 no se presentan como parte de esa relación; A18 tiene el control complementario que se explica a continuación.
-
-### Reglas complementarias de AEJDO
-
-Estas novedades se consultan en la misma hoja `ALERTA_ACTIVIDADES`.
-
-| Condición encontrada | Requisito según la hoja de reglas | Alerta si no cumple |
+| Municipio | Prefijos urbanos (U) | Prefijos rurales (R) |
 |---|---|---|
-| Suministros 215887 o 219404 con cantidad. | Deben registrar cobro al usuario en `vlr_cliente`. | `COBRO_FALTANTE_AEJDO`. |
-| A18U o A18R. | Suministro obligatorio 211357. | `REGLA_AEJDO_A18`. |
-| A02U o A02R. | A06U/R o A08U/R con la misma terminación; uno es suficiente. | `REGLA_AEJDO_A02`. |
-| A10U o A10R. | A12U/R con la misma terminación. | `REGLA_AEJDO_A10`. |
-| A07U o A07R. | Suministro obligatorio 200384. | `REGLA_AEJDO_A07`. |
-| Suministro 200092. | 200410 o 200492; uno es suficiente. | `REGLA_AEJDO_200092`. |
-| Suministro 200093. | 200411, 200493 o 323739; uno es suficiente. | `REGLA_AEJDO_200093`. |
-| A32U o A32R. | Ambos suministros: 200151A y 211319A. | `REGLA_AEJDO_A32`. |
+| Medellín | 04, 05, 06, 08, 70, 116, 136 | 122, 124, 126, 130, 139, 146, 147, 148, 162 |
+| Itagüí | 07, 77 | Sin prefijos definidos. |
+| Envigado | 02 | 125, 166 |
+| La Estrella | 03 | Sin prefijos definidos. |
+| Sabaneta | 01 | Sin prefijos definidos. |
+| Caldas | 00 | 161, 1901302 |
 
-**Ejemplos:** A02U sin A06U ni A08U requiere revisión; A02U con A08U cumple esa relación. A32U con solo 200151A no cumple: también se requiere 211319A.
+**Caso particular:** en Caldas, el prefijo completo `1901302` corresponde a rural.
 
-La terminación debe coincidir cuando la regla lo exige: A02U con A06R no satisface la relación indicada para A02U.
+Los siguientes prefijos pueden corresponder a urbano o rural y se presentan como `VALIDAR_EN_MARCOPOLO`:
 
-El control de cobro tiene una diferencia entre el texto de la hoja y el script recibido. Consultar la nota de conciliación en la referencia técnica antes de afirmar que ambos evalúan exactamente la misma condición.
+| Municipio | Prefijos que requieren consulta |
+|---|---|
+| Medellín | 103, 114, 117, 119 |
+| Itagüí | 163 |
+| Envigado | 140 |
+| La Estrella | 159 |
+| Sabaneta | 167 |
 
-### DSPRE - A13 incluye la instalación del nuevo pase
+Si la página no comienza por ninguno de los prefijos definidos para su municipio, esta hoja no genera alerta por ese cruce. Esto significa que no existe una clasificación definida para ese caso, no que la página haya quedado validada.
 
-Para DSPRE, si aparece A13U debe incluirse A22U; si aparece A13R debe incluirse A22R, según la hoja de reglas.
+La columna `item_cont` reúne las manos de obra tipo `CON` del mismo pedido, subzona y página, separadas por comas y sin repetir códigos.
 
-Si falta el correspondiente, aparece una alerta en `ALERTA_ACTIVIDADES` con el detalle:
+**Qué revisar:** el municipio, el prefijo completo y la clasificación registrada; consultar MARCOPOLO cuando la alerta lo indique.
 
-> El ítem A13 incluye la instalación del nuevo pase (anterior acometida).
+## 8. ALERTA_ACTIVIDADES
 
-Ejemplo: A13R sin el A22 correspondiente requiere revisión. El script recibido también admite A022 con la misma terminación; esta equivalencia se indica en la nota técnica al final.
+**¿Para qué sirve?** Revisa los códigos, materiales y condiciones exigidos para actividades específicas. Las columnas `urbrur` y `tipre` permiten interpretar los controles que dependen de la zona o del tipo de prepago.
 
-### ACAMN y ALECA
+### Códigos requeridos por actividad
 
-Debe existir al menos uno de estos códigos válidos:
+| Actividad | Códigos requeridos | Criterio de revisión |
+|---|---|---|
+| AMRTR — Movimiento de redes | D02U/R, D03U/R o D04U/R. | Debe existir al menos uno. Otro código Dxx diferente a los permitidos genera error de digitación. |
+| ACREV — Puntos de conexión | D01U o D01R. | Debe existir al menos uno. Otro código Dxx diferente a los permitidos genera error de digitación. |
+| ACAMN / ALECA | C05U o C05R. | Debe existir uno de los códigos válidos; otros ítems requieren revisión. |
+| ALEGA / ALEGN | C01U/R, C02U/R, C03U/R o C04U/R. | Debe existir uno de los códigos válidos; otros ítems requieren revisión. |
 
-`C05U` o `C05R`.
+La ausencia de códigos válidos se presenta como `FALTA ÍTEM VÁLIDO`; los códigos no permitidos según el alcance de cada regla, como `ERROR EN DIGITACIÓN`.
 
-Si no aparece ninguno, se genera `FALTA ÍTEM VÁLIDO`. Si para estas actividades se registra un `item_cont` diferente, se genera `ERROR EN DIGITACIÓN`.
+### Reglas de AEJDO — Habilitación de vivienda
 
-### ALEGA y ALEGN
+La relación entre `CALE1F` y `A12U/R` es bidireccional: si aparece uno, debe aparecer el otro.
 
-Debe existir al menos uno de estos códigos válidos:
+| Condición encontrada en AEJDO | Requisito | Alerta si no cumple |
+|---|---|---|
+| 215887 o 219404 con cantidad. | Debe registrar cobro al usuario en `vlr_cliente`. | `COBRO_FALTANTE_AEJDO` |
+| A18U o A18R. | Suministro obligatorio 211357. | `REGLA_AEJDO_A18` |
+| A12U o A12R. | Uno de los medidores 200092/200093 y ambos suministros 215887 y 219404. También requiere CALE1F. | `REGLA_AEJDO_A12_MATERIALES`; la falta de CALE1F se indica en `REGLA_AEJDO`. |
+| A02U o A02R. | A06U/R o A08U/R con la misma terminación; uno es suficiente. | `REGLA_AEJDO_A02` |
+| A10U o A10R. | A12U/R con la misma terminación. | `REGLA_AEJDO_A10` |
+| A07U o A07R. | Suministro obligatorio 200384. | `REGLA_AEJDO_A07` |
+| Suministro 200092. | 200410 o 200492; uno es suficiente. | `REGLA_AEJDO_200092` |
+| Suministro 200093. | 200411, 200493 o 323739; uno es suficiente. | `REGLA_AEJDO_200093` |
+| A32U o A32R. | Ambos suministros: 200151A y 211319A. | `REGLA_AEJDO_A32` |
 
-`C01U/C01R`, `C02U/C02R`, `C03U/C03R` o `C04U/C04R`.
+**Ejemplos:** A02U con A08U cumple esa relación; A02U con A06R no cumple la misma terminación. A32U con solo 200151A requiere también 211319A.
 
-Si no aparece ninguno, se genera `FALTA ÍTEM VÁLIDO`. Si para estas actividades se registra un `item_cont` diferente, se genera `ERROR EN DIGITACIÓN`.
+### Relación A18–A19 en AEJDO e INPRE
 
-| Actividad | Ítem obligatorio válido | Alerta si falta | Alerta si aparece otro ítem |
-|---|---|---|---|
-| ACAMN / ALECA | C05U o C05R | `FALTA ÍTEM VÁLIDO` | `ERROR EN DIGITACIÓN` |
-| ALEGA / ALEGN | Uno de C01U/R, C02U/R, C03U/R o C04U/R | `FALTA ÍTEM VÁLIDO` | `ERROR EN DIGITACIÓN` |
+Si se registra A18U o A18R, debe aparecer A19U o A19R, respectivamente, dentro del mismo pedido, subzona y actividad. Si falta, se genera `REGLA_A18_REQUIERE_A19`.
 
-**Pregunta que responde:**
+### Relación A13–A22 en DSPRE
 
-> ¿Los códigos registrados corresponden con la actividad ejecutada?
+A13U requiere A22U y A13R requiere A22R. Si falta el correspondiente, la alerta explica que el ítem A13 incluye la instalación del nuevo pase (anterior acometida).
 
----
+### Condiciones de A22 según zona y tipo de prepago
 
-## 🟠 `LEGALIZACION_NO_COBRO`
+Estas condiciones se revisan en la línea `CON` del ítem A22.
 
-Identifica cobros no permitidos para las actividades **ACAMN, ALECA, ALEGA y ALEGN**.
+| Actividad e ítem | Condición encontrada | Resultado |
+|---|---|---|
+| AEJDO · A22U | Urbano y `tipre` diferente de ENESUB o ENEPIL. | `A22U_TIPO_PREPAGO_NO_VALIDO`: A22U solo es válido para esos dos tipos. |
+| DIPRE o DSPRE · A22U | Urbano y `tipre = ENEPRE`. | `A22U_NO_VALIDO_ENEPRE`: revisar el ítem, válido para ENESUB o ENEPIL. |
+| DIPRE o DSPRE · A22R | Rural y `tipre` vacío. | `OBSERVACION_A22R_POSTE`: comprobar si el medidor está en poste; si no, cambiar el ítem. |
 
-| Suministro | Descripción | Regla |
+### Correcciones de ítems según zona
+
+Aplican a **AEJDO, INPRE, DIPRE, REEQU y DSPRE**.
+
+| Condición encontrada | Corrección indicada | Alerta |
+|---|---|---|
+| Rural (R): A04R y A05R juntos. | Corregir por A06R. | `CORREGIR_A04R_A05R_POR_A06R` |
+| Urbano (U): A06R. | Corregir por A04U y A05U. | `CORREGIR_A06R_POR_A04U_A05U` |
+
+**Qué revisar:** la actividad, las manos de obra y suministros del pedido, la zona, el tipo de prepago y el detalle de cada alerta. Las diferencias históricas entre la guía y el código se conservan en la referencia técnica al final del documento.
+
+## 9. LEGALIZACION_NO_COBRO
+
+**¿Para qué sirve?** Identifica cobros no permitidos para las actividades **ACAMN, ALECA, ALEGA y ALEGN**.
+
+| Suministro | Descripción | Regla de la guía |
 |---|---|---|
 | 215887A | Tornillo. | No debe registrar valor en `vlr_cliente`. |
 | 219404A | Sello. | No debe registrar valor en `vlr_cliente`. |
 
-Según la hoja de reglas, un valor mayor a cero genera `COBRO_NO_PERMITIDO`. El analista debe consultar actividad, suministro, cantidad, valor cobrado y detalle.
+Según la guía, un valor mayor a cero genera `COBRO_NO_PERMITIDO`.
 
-**Ejemplo:** ALEGA con 215887A y cobro positivo genera una novedad para revisión.
+**Ejemplo:** ALEGA con 215887A y cobro positivo presenta una novedad.
 
-Distinguir este control del cobro AEJDO: aquí se utilizan **215887A y 219404A**, con sufijo A, y se exige no cobrar. En AEJDO se controlan 215887 y 219404.
+**Qué revisar:** actividad, suministro y valor cobrado. Estos códigos llevan sufijo A y se diferencian de 215887 y 219404, cuyo cobro se controla en AEJDO. La referencia técnica conserva la diferencia histórica sobre valores negativos.
 
-La comparación exacta del script recibido difiere del texto de la hoja para valores negativos; consultar la nota técnica de conciliación.
+## 10. ALERTA_CANTIDADES_MO
 
-**Pregunta que responde:**
+**¿Para qué sirve?** Presenta en una hoja de detalle las manos de obra controladas cuya cantidad registrada en una fila es mayor a 1.
 
-> ¿Se registró un cobro no permitido para estos suministros en una legalización?
+| Grupo | Códigos controlados | Ejemplo que genera alerta |
+|---|---|---|
+| A | Cualquier `item_cont` que comience por A. | A21R con cantidad 4. |
+| C | Cualquier `item_cont` que comience por C. | C02U con cantidad 2. |
+| D | D01U/R, D02U/R, D03U/R y D04U/R. | D01U con cantidad 2. |
+| F | F01U y F01R. | F01R con cantidad 2. |
 
----
+La alerta es `CANTIDAD_MO>1`. Este control se evalúa por registro, sin sumar filas distintas; por ejemplo, D05U no entra en la lista controlada del grupo D.
 
-## 🟢 `ALERTA_CANTIDADES_MO`
+**Qué revisar:** pedido, subzona, mano de obra, cantidad y detalle. Esta novedad también puede aparecer en `VALIDACION`; dos apariciones no representan dos casos diferentes.
 
-Presenta de forma detallada las manos de obra  cuya cantidad registrada en una fila es mayor a 1.
+## 11. MASIVAS
 
-Incluye:
+**¿Para qué sirve?** Verifica que la mano de obra C01–C04 corresponda a la cantidad de instalaciones y detecta páginas compartidas por varios pedidos de una misma subzona.
 
-- Los códigos que comienzan por `A`;
+### Cantidad de instalaciones y código esperado
 
-- Los códigos que comienzan por `C`;
+El proceso toma los primeros 14 dígitos de `pagina` para formar `pagina_base`. Agrupa por **subzona y página base**, y cuenta las instalaciones distintas a partir de la página completa. Si una instalación aparece en varias filas, se cuenta una sola vez.
 
-- D01U/R, D02U/R, D03U/R y D04U/R;
-
-- F01U y F01R.
-
-| Cantidad | Resultado |
-|---|---|
-| <= 1 | Sin alerta |
-| > 1 | `CANTIDAD_MO>1` |
-
-La regla se evalúa por registro; no suma filas distintas. La hoja muestra el pedido, la subzona, el `item_cont`, la cantidad, el tipo de alerta y el detalle para facilitar la revisión.
-
-**Ejemplos:**
-
-| Registro | Resultado |
-|---|---|
-| `A19U = 2` | Alerta |
-| `C02U = 2` | Alerta |
-| `D01U = 2` | Alerta |
-| `D05U = 2` | No entra por la regla D01–D04 |
-| `F01R = 2` | Alerta del grupo F |
-
-
-**Pregunta que responde:**
-
-> ¿Hay manos de obra A, C, D o F, dentro de los códigos controlados, con cantidad mayor a 1 que requieran revisión?
-
----
-
-## 🔷 `MASIVAS`
-
-Para esta validación se utilizan los primeros 14 dígitos del campo `pagina`, con los cuales se genera el campo técnico `pagina_base`. Los últimos cuatro dígitos se entienden operativamente como el interior.
-
-El proceso agrupa por **subzona y pagina_base** y cuenta las instalaciones diferentes usando el valor completo de `pagina`. Si una instalación aparece en varias filas, se cuenta una sola vez.
-
-La mano de obra C esperada depende de la cantidad de instalaciones:
-
-| Instalaciones distintas | Código esperado |
+| Instalaciones distintas | Mano de obra esperada |
 |---|---|
 | 1 | C01U o C01R |
 | 2 a 12 | C02U o C02R |
 | 13 a 24 | C03U o C03R |
 | 25 o más | C04U o C04R |
 
-La terminación U/R no cambia el rango. Cuando el código registrado no corresponde con la cantidad de instalaciones, se genera `ITEM_CONT_NO_CORRESPONDE_CANTIDAD` y se muestran la cantidad calculada, el código encontrado y el código esperado.
+La terminación U/R no cambia estos rangos. Si el código no corresponde a la cantidad, se muestra `ITEM_CONT_NO_CORRESPONDE_CANTIDAD`.
 
-### ¿Qué representa el campo `pagina`?
+**Ejemplo:** 14 instalaciones con C02U requieren revisión porque el rango corresponde a C03U/R. Como ejemplo de agrupación, `190607100316666202` tiene como página base `19060710031666`.
 
-En el exporte de Fénix, el campo `pagina` contiene un identificador proveniente del archivo origen.
+### Páginas duplicadas entre pedidos
 
-Para esta regla se utilizan únicamente sus primeros 14 dígitos con el fin de agrupar registros relacionados y validar la consistencia del `item_cont`.
+Si una misma página completa aparece en **dos o más pedidos distintos de la misma subzona**, se muestra `PAGINA_DUPLICADA` y se resalta la página en amarillo.
 
-Ejemplo:
+Varias filas de la misma página dentro de un solo pedido no se consideran duplicidad para este control. La alerta puede aparecer aunque el ítem C01–C04 corresponda correctamente a la cantidad de instalaciones.
 
-```text
+**Qué revisar:** la página completa, los pedidos involucrados, la subzona, el número de instalaciones y el código registrado.
 
-pagina       = 190607100316666202
+## Uso del informe compartido
 
-pagina_base  = 19060710031666
+El archivo se comparte en OneDrive, en la carpeta `Relación_MO_Vs_Materiales`. Para revisarlo:
 
-```
+1. Seleccionar el corte correspondiente y, de ser necesario, descargar una copia para evitar conflictos de edición.
+2. Filtrar la zona o subzona en cada hoja que se consulte; el filtro de una hoja no se aplica automáticamente a las demás.
+3. Leer la alerta junto con su detalle y revisar el pedido completo en Fénix.
+4. Confirmar la corrección o excepción con el responsable operativo cuando corresponda.
+5. Comunicar las nuevas condiciones detectadas para su revisión con los analistas e ingenieros y su posterior incorporación a las reglas y a esta documentación.
 
-Ejemplos de validación:
+Una misma novedad puede aparecer en varias hojas. El informe facilita la revisión, pero no acredita por sí solo que un pedido ya haya sido revisado por el analista.
 
-```text
+### Cortes de revisión
 
-2 instalaciones distintas  + C02U o C02R  → correcto
+| Hora aproximada | Alcance |
+|---|---|
+| 6:00 a. m. | Día anterior. |
+| 10:00 a. m. | Mes completo hasta el corte. |
+| 2:30 p. m. | Día actual hasta el corte. |
 
-14 instalaciones distintas + C02U         → alerta; corresponde C03U o C03R
+La nomenclatura documentada para el día anterior es `VALIDACION_MO_MATERIALES_ALMACEN_AAAA-MM-DD.xlsx`; para el día actual, `INFORME_VALIDACION_MO_MATERIALES_ALMACEN_AAAA-MM-DD.xlsx`. La fecha corresponde al período informado. No se define aquí un nombre nuevo para el corte mensual.
 
-25 instalaciones distintas + C03R         → alerta; corresponde C04U o C04R
+### Material de práctica
 
-```
+Como referencia histórica de capacitación se conserva el archivo `Capacitacion_V2_validacion_mo_materiales_20260915_131517.xlsx`, ubicado originalmente en `C:\Users\hector.gaviria\Desktop\Launcher_Elite\Control_ANS_v5\`.
 
-La alerta se presenta para revisión del analista y no declara automáticamente un error operativo.
-
-**Pregunta que responde:**
-
-> ¿El código C01–C04 corresponde con la cantidad de instalaciones asociadas a la misma `pagina_base`?
-
----
-
-## 🧭 Resumen de las hojas del archivo Excel
-
-El informe está compuesto por **diez hojas: una guía y nueve hojas de resultados**. Cada una presenta un tipo de validación diferente para facilitar la revisión del analista.
-
-| Hoja | Función | ¿Qué debe revisar el analista? |
-|---|---|---|
-| `GUIA_REGLAS` | Explica las reglas incluidas en el informe. | Consultar el alcance de cada alerta y la fecha indicada en la guía. |
-| `VALIDACION` | Compara las manos de obra y los materiales reportados contra la Base Maestra y las reglas especiales. | Materiales faltantes, sobrantes, cantidades de MO y resultado general del pedido. |
-| `MO_DUPLICADAS` | Identifica una misma mano de obra registrada más de una vez para el mismo pedido y subzona. | Confirmar si la repetición corresponde a una novedad o a una condición válida de la operación. |
-| `ALERTA_CANTIDADES` | Muestra materiales tipo `SUM` cuya cantidad es mayor a 1. | Verificar si la cantidad reportada del material es correcta. |
-| `ALERTA_RURAL_URBANO` | Compara la clasificación Rural/Urbano con la terminación R/U del `item_cont`. | Confirmar que el código corresponda con la clasificación del pedido. |
-| `ALERTA_PAGINA_7MO_DIGITO` | Compara el séptimo dígito de páginas 190 con Rural/Urbano. | Revisar los cruces 1 con R y 2 con U. |
-| `ALERTA_ACTIVIDADES` | Aplica las reglas específicas de AMRTR, ACREV, AEJDO, ACAMN, ALECA, ALEGA, ALEGN y DSPRE. | Revisar códigos obligatorios, faltantes o no permitidos para cada actividad. |
-| `LEGALIZACION_NO_COBRO` | Identifica cobros no permitidos de 215887A y 219404A en ACAMN, ALECA, ALEGA y ALEGN. | Revisar suministro, actividad y valor cobrado. |
-| `ALERTA_CANTIDADES_MO` | Muestra las MO controladas de A, C, D01–D04 U/R y F01U/R cuya cantidad es mayor a 1. | Confirmar si la cantidad reportada para cada `item_cont` es correcta. |
-| `MASIVAS` | Determina si corresponde utilizar C01, C02, C03 o C04 según la cantidad de instalaciones agrupadas por `pagina_base`. | Verificar que el código registrado corresponda con el número de instalaciones. |
-
-Las alertas facilitan la identificación de posibles novedades; sin embargo, los resultados continúan siendo verificados por el analista, quien realiza la validación final de acuerdo con los criterios de la operación.
+Antes de usarlo en una capacitación, comprobar que incluya las reglas actuales y complementar los ejemplos que falten. La explicación de este documento se apoya en la guía del 26/10/2026, no en que el archivo de práctica antiguo contenga todas las novedades.
 
 ---
 
-## 📘 Consulta de `GUIA_REGLAS` y revisión diaria
+# Referencia técnica para mantenimiento
 
-La hoja `GUIA_REGLAS` explica las validaciones del informe y contiene la fecha indicada para esa ejecución. Consultarla antes de interpretar las novedades.
-
-1. Elegir el archivo y el corte que se necesita revisar.
-2. Descargar una copia local y filtrar la subzona correspondiente.
-3. Revisar la hoja de resultados y leer la alerta junto con su detalle.
-4. Consultar el pedido completo en Fénix antes de concluir que existe un error.
-5. Confirmar con el analista la corrección o excepción que corresponda.
-
-Un filtro aplicado en una hoja no implica que las demás estén filtradas. Una novedad puede aparecer en `VALIDACION` y en una hoja de detalle; no sumar esas apariciones como pedidos distintos.
-
-El archivo de simulación V2 conservado en este documento es una referencia de la capacitación original. Antes de utilizarlo en una sesión nueva, comprobar que incluya los ejemplos de F01, séptimo dígito, AEJDO, DSPRE y legalizaciones sin cobro; si faltan, complementarlos en una copia de práctica.
-
-### Cortes de publicación
-
-| Corte | Información incluida | Nombre del archivo |
-|---|---|---|
-| Mañana, aproximadamente 6:00 a. m. | Día anterior. | `VALIDACION_MO_MATERIALES_ALMACEN_AAAA-MM-DD.xlsx` |
-| Tarde, aproximadamente 2:30 p. m. | Día actual hasta el corte. | `INFORME_VALIDACION_MO_MATERIALES_ALMACEN_AAAA-MM-DD.xlsx` |
-
-Ejemplo: el 22 de septiembre, el corte de la mañana puede llamarse `VALIDACION_MO_MATERIALES_ALMACEN_2026-09-21.xlsx`; el de la tarde, `INFORME_VALIDACION_MO_MATERIALES_ALMACEN_2026-09-22.xlsx`.
-
----
-
-## ✅ Cierre de la explicación
-
-Hasta aquí se presenta el funcionamiento general del proceso, de dónde salen las reglas de negocio y qué tipo de novedades identifica cada hoja.
-
-El informe automatiza los cruces y facilita la identificación de posibles inconsistencias; sin embargo, los resultados continúan siendo verificados por el analista, quien realiza la validación final de acuerdo con los criterios de la operación.
-
-Las reglas implementadas corresponden a los requerimientos definidos por los analistas y se mantienen abiertas a ajustes cuando, durante la revisión diaria, se identifique una nueva condición, excepción o necesidad de la operación.
-
----
-
-## NO TENER EN CUENTA PARA LA EXPLICACIÓN
-
-# 🧑‍💻 Referencia técnica para el desarrollador
+Esta sección se conserva para el desarrollador y no forma parte del recorrido hoja por hoja de la capacitación.
 
 ## Arquitectura
 
 ```text
-
 FÉNIX
-
-  ↓
-
+↓
 TXT por zona
-
-  ↓
-
+↓
 Pandas consolida
-
-  ↓
-
+↓
 CON = mano de obra / SUM = materiales
-
-  ↓
-
+↓
 Normalización
-
-  ↓
-
+↓
 RELACION_MO_MATERIALES.xlsx
-
-  ↓
-
+↓
 Reglas especiales Python
-
-  ↓
-
+↓
 DataFrames de validación
-
-  ↓
-
+↓
 Excel final
-
-  ↓
-
+↓
 OpenPyXL aplica formato
-
 ```
 
 ## Tecnologías
@@ -554,9 +357,13 @@ Versión de referencia en Git: commit `3aa755d`, mensaje `feat: agregar reglas D
 Alcance incorporado:
 
 1. cantidades mayores a 1 para D01–D04 U/R en `VALIDACION`;
+
 2. inclusión de D01–D04 U/R en `ALERTA_CANTIDADES_MO`, conservando A y C;
+
 3. confirmación de que `MO_DUPLICADAS` ya cubre estos códigos D;
+
 4. reglas de actividades para ACAMN, ALECA, ALEGA y ALEGN;
+
 5. rangos de instalaciones para C01–C04 en `MASIVAS`.
 
 Pruebas de aceptación realizadas:
@@ -573,7 +380,6 @@ Pruebas de aceptación realizadas:
 
 El formato y los colores del Excel facilitan la lectura de las novedades; no cambian la lógica de validación.
 
-
 ## Actualización documental — 2026-10-14
 
 Se complementó este documento original con la hoja de reglas suministrada. Se conservan el guion de capacitación, los ejemplos anteriores, la referencia al archivo de simulación, el cierre, la arquitectura, las tecnologías y el historial de septiembre.
@@ -581,14 +387,23 @@ Se complementó este documento original con la hoja de reglas suministrada. Se c
 Contenido incorporado o actualizado:
 
 1. Resumen de diez hojas, incluida `GUIA_REGLAS`.
+
 2. Alcance F01U/R y detalle de cantidades A, C, D y F.
+
 3. Columna Actividad después de Pedido en `ALERTA_CANTIDADES`.
+
 4. Hoja `ALERTA_PAGINA_7MO_DIGITO` y cruces que generan alerta.
+
 5. Relación CALE1F–A12 y controles complementarios de AEJDO.
+
 6. Regla DSPRE A13–A22.
+
 7. Hoja `LEGALIZACION_NO_COBRO`.
+
 8. Interpretación de sobrantes respecto de cada mano de obra.
+
 9. Agrupación de masivas por subzona y página base, contando páginas completas distintas.
+
 10. Orientación para mantener actualizada la documentación.
 
 ### Conciliación pendiente entre hoja y script
@@ -618,4 +433,10 @@ En cada nueva regla aprobada, actualizar conjuntamente:
 
 Si se agrega una hoja, incorporarla también al resumen. Registrar fecha, alcance y referencia al commit cuando esté disponible.
 
-**Este documento no se sincroniza automáticamente con Python ni con `GUIA_REGLAS`.** Reemplazar el Markdown actualiza la consulta del centro de conocimiento; las siguientes reglas requieren actualizarlo dentro de la misma entrega del cambio.
+****Este documento no se sincroniza automáticamente con Python ni con `GUIA_REGLAS`.**** Reemplazar el Markdown actualiza la consulta del centro de conocimiento; las siguientes reglas requieren actualizarlo dentro de la misma entrega del cambio.
+
+## Actualización documental — 26/10/2026
+
+Se reorganizó la explicación operativa por las once hojas identificadas en los documentos suministrados y se resumió la introducción. Se incorporaron las condiciones de la guía del 26/10/2026: cantidades específicas de materiales; páginas 190 y 200–999; prefijos por municipio; A18–A19 en AEJDO e INPRE; materiales de A12; cruces de A22; correcciones A04/A05/A06 y duplicidad de páginas en MASIVAS. Se actualizaron los tres cortes de revisión conforme al esquema operativo acordado.
+
+Se conserva el historial técnico anterior como referencia histórica. Su mención a diez hojas corresponde a la documentación del 14/10/2026; la organización actual incluye también ALERTA_PAGINA_MUNICIPIO. Las notas de conciliación anteriores quedan pendientes de comprobar contra el script vigente. En esta actualización se revisaron los dos documentos adjuntos; no se recibió ni se ejecutó el script y no se modificaron reglas de Python ni la Base Maestra.
