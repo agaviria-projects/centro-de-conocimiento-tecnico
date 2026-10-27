@@ -4,6 +4,8 @@ El **Generador de Informes ANS** consolida y analiza archivos CSV extraídos de 
 
 La extracción se realiza por zona: **MET** (Metropolitana), **OCC** (Occidente), **ORI** (Oriente), **NDC** (Nordeste) y **SOE** (Suroeste), para los conceptos **PPRG** (pendientes por programar) y **PROG** (programados), indicando una **fecha inicial y final**.
 
+Al hacer clic en **«Generar Informe ANS»**, la herramienta consolida y limpia los datos extraídos de Fénix, realiza los cálculos de tiempos de atención y genera el archivo **FENIX_ANS.xlsx**, con las columnas necesarias para el análisis y la actualización del **dashboard**.
+
 **Durante la capacitación:** abrir el informe ya generado para explicar sus columnas, fechas límite y estados con ejemplos.
 
 EPM establece un **tiempo máximo para atender cada pedido**. A partir de la **fecha de inicio ANS**, la herramienta calcula dos fechas límite:
