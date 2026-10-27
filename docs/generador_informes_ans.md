@@ -1,18 +1,17 @@
 ## 🎯 Objetivo
 
-El Generador de Informes ANS permite consolidar, transformar y analizar la información operativa extraída desde Fénix, con el fin de controlar el cumplimiento de los tiempos contractuales definidos por el cliente.
+El **Generador de Informes ANS** consolida y analiza archivos CSV extraídos de Fénix para controlar los tiempos de atención de los pedidos.
 
-Este desarrollo ayuda a identificar pedidos:
+La extracción se realiza por zona: **MET** (Metropolitana), **OCC** (Occidente), **ORI** (Oriente), **NDC** (Nordeste) y **SOE** (Suroeste), para los conceptos **PPRG** (pendientes por programar) y **PROG** (programados), indicando una fecha inicial y final.
 
-- A tiempo
-- En alerta
-- En alerta 0 días
-- Vencidos
+EPM establece un tiempo máximo para atender cada pedido. A partir de la **fecha de inicio ANS**, la herramienta calcula dos fechas límite:
 
-Además, proporciona herramientas de visualización y geolocalización para facilitar la toma de decisiones operativas.
+- **Límite ELITE:** fecha interna para atender el pedido con anticipación y contar con un margen de trabajo antes de que se venza el plazo de EPM.
+- **Límite EPM:** fecha máxima para atender el pedido, según el tiempo establecido por el cliente.
+
+Con estos cálculos, clasifica los pedidos en **A tiempo, En alerta, En alerta 0 días y Vencidos**. Los resultados alimentan un dashboard con visualización y geolocalización para priorizar la atención y facilitar las decisiones operativas.
 
 ---
-
 
 ## 📥 Fuente principal
 
