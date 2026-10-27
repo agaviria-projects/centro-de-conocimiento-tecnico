@@ -1,15 +1,17 @@
 ## 🎯 Objetivo
 
-El **Generador de Informes ANS** consolida y analiza archivos CSV extraídos de Fénix para controlar los tiempos de atención de los pedidos.
+El **Generador de Informes ANS** consolida y analiza archivos CSV extraídos de **Fénix** para **controlar los tiempos de atención de los pedidos**.
 
-La extracción se realiza por zona: **MET** (Metropolitana), **OCC** (Occidente), **ORI** (Oriente), **NDC** (Nordeste) y **SOE** (Suroeste), para los conceptos **PPRG** (pendientes por programar) y **PROG** (programados), indicando una fecha inicial y final.
+La extracción se realiza por zona: **MET** (Metropolitana), **OCC** (Occidente), **ORI** (Oriente), **NDC** (Nordeste) y **SOE** (Suroeste), para los conceptos **PPRG** (pendientes por programar) y **PROG** (programados), indicando una **fecha inicial y final**.
 
-EPM establece un tiempo máximo para atender cada pedido. A partir de la **fecha de inicio ANS**, la herramienta calcula dos fechas límite:
+**Durante la capacitación:** abrir el informe ya generado para explicar sus columnas, fechas límite y estados con ejemplos.
+
+EPM establece un **tiempo máximo para atender cada pedido**. A partir de la **fecha de inicio ANS**, la herramienta calcula dos fechas límite:
 
 - **Límite ELITE:** fecha interna para atender el pedido con anticipación y contar con un margen de trabajo antes de que se venza el plazo de EPM.
 - **Límite EPM:** fecha máxima para atender el pedido, según el tiempo establecido por el cliente.
 
-Con estos cálculos, clasifica los pedidos en **A tiempo, En alerta, En alerta 0 días y Vencidos**. Los resultados alimentan un dashboard con visualización y geolocalización para priorizar la atención y facilitar las decisiones operativas.
+Con estos cálculos, clasifica los pedidos en **A tiempo, En alerta, En alerta 0 días y Vencidos**. Los resultados alimentan un **dashboard con visualización y geolocalización** para priorizar la atención y facilitar las decisiones operativas.
 
 El informe se genera **tres veces al día**, aproximadamente a las **6:00 a. m., al mediodía y antes de finalizar la jornada laboral**. Cada corte se comparte en **OneDrive** para consulta y análisis de los analistas y técnicos.
 
