@@ -14,6 +14,7 @@ Con estos cálculos, clasifica los pedidos en **A tiempo, En alerta, En alerta 0
 El informe se genera **tres veces al día**, aproximadamente a las **6:00 a. m., al mediodía y antes de finalizar la jornada laboral**. Cada corte se comparte en **OneDrive** para consulta y análisis de los analistas y técnicos.
 
 Se recomienda **descargar una copia en el equipo** para trabajar sobre el informe correspondiente al corte consultado.
+
 ---
 
 ## 📥 Fuente principal
