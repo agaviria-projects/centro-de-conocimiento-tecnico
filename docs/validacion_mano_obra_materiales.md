@@ -8,7 +8,7 @@ Generar un informe de la información digitada o procesada por los técnicos en 
 
 El informe facilita la revisión por los analistas, quienes deben confirmar si las alertas requieren una corrección o si la información registrada es correcta.
 
-**La herramienta continúa en desarrollo.** A medida que los analistas e ingenieros identifiquen nuevas reglas, excepciones o necesidades operativas, estas se revisarán e implementarán progresivamente. Este trabajo también se apoya en la revisión de los criterios de EPM para la liquidación de actas, con el acompañamiento de los ingenieros para definir su aplicación en la herramienta.
+**La herramienta continúa en desarrollo.** A medida que los analistas e ingenieros identifiquen nuevas reglas, excepciones o necesidades operativas, estas se revisarán e implementarán progresivamente. Este trabajo también toma como referencia las reglas de EPM para la revisión y liquidación de actas, con el acompañamiento de los ingenieros para definir su aplicación en la herramienta.
 
 El proceso reúne en un solo informe los archivos TXT exportados de Fénix de las diferentes zonas. Cada hoja muestra alertas sobre posibles novedades que el analista debe revisar después de filtrar su zona.
 
