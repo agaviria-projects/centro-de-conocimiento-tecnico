@@ -6,7 +6,7 @@
 
 Generar un informe de la información digitada o procesada por los técnicos en Fénix, que sirva como herramienta de apoyo para identificar posibles inconsistencias en los registros de mano de obra, materiales, cantidades y actividades, de acuerdo con las reglas de negocio implementadas.
 
-El informe facilita la revisión de los analistas, quienes deben confirmar si las alertas requieren una corrección o si la información registrada es correcta.
+El informe facilita la revisión por los analistas, quienes deben confirmar si las alertas requieren una corrección o si la información registrada es correcta.
 
 **La herramienta continúa en desarrollo.** A medida que los analistas e ingenieros identifiquen nuevas reglas, excepciones o necesidades operativas, estas se revisarán e implementarán progresivamente. Este trabajo también se apoya en la revisión de los criterios de EPM para la liquidación de actas, con el acompañamiento de los ingenieros para definir su aplicación en la herramienta.
 
